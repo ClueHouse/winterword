@@ -4,13 +4,6 @@ export function renderClueList(app, data, navigate) {
     currentClue = 0
   } = data || {};
 
-  function esc(v) {
-    return String(v ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-  }
-
   function pad(n) {
     return String(n).padStart(2, "0");
   }
@@ -22,7 +15,12 @@ export function renderClueList(app, data, navigate) {
       const unlocked = i <= currentClue;
 
       html += `
-        <button class="clue ${unlocked ? "open" : "locked"}" data-id="${i}">
+        <button
+          class="clue ${unlocked ? "open" : "locked"}"
+          data-id="${i}"
+          ${unlocked ? "" : "disabled"}
+          type="button"
+        >
           <div class="clue-num">${pad(i)}</div>
           <div class="clue-state">${unlocked ? "OPEN" : "LOCKED"}</div>
         </button>
@@ -46,9 +44,34 @@ export function renderClueList(app, data, navigate) {
         padding: 40px;
       }
 
+      .topbar {
+        margin-bottom: 20px;
+      }
+
+      .back {
+        padding: 10px 16px;
+        cursor: pointer;
+        border: 1px solid #c87b2a;
+        background: #12283b;
+        color: #fff;
+        border-radius: 8px;
+        font: inherit;
+      }
+
+      .back:hover {
+        background: #18344d;
+      }
+
       .title {
         font-size: 42px;
-        margin-bottom: 20px;
+        margin: 0 0 10px;
+        color: #f19a2a;
+      }
+
+      .meta {
+        margin: 0 0 24px;
+        color: #c7d3df;
+        font-size: 16px;
       }
 
       .grid {
@@ -63,6 +86,9 @@ export function renderClueList(app, data, navigate) {
         background: #111;
         color: #fff;
         cursor: pointer;
+        border-radius: 10px;
+        text-align: left;
+        font: inherit;
       }
 
       .clue.open {
@@ -70,9 +96,15 @@ export function renderClueList(app, data, navigate) {
         background: #16283a;
       }
 
+      .clue.open:hover {
+        background: #1c3349;
+      }
+
       .clue.locked {
         opacity: 0.5;
-        cursor: default;
+        cursor: not-allowed;
+        background: #161616;
+        border-color: #333;
       }
 
       .clue-num {
@@ -83,24 +115,17 @@ export function renderClueList(app, data, navigate) {
       .clue-state {
         font-size: 12px;
         margin-top: 6px;
-      }
-
-      .topbar {
-        margin-bottom: 20px;
-      }
-
-      .back {
-        padding: 10px 16px;
-        cursor: pointer;
+        letter-spacing: 0.12em;
       }
     </style>
 
     <div class="wrap">
       <div class="topbar">
-        <button class="back" id="back">← Base Station</button>
+        <button class="back" id="back" type="button">← Base Station</button>
       </div>
 
       <h1 class="title">Clue List</h1>
+      <p class="meta">${currentClue} of ${totalClues} clues unlocked</p>
 
       <div class="grid">
         ${buildClues()}
@@ -110,9 +135,9 @@ export function renderClueList(app, data, navigate) {
 
   document.getElementById("back").onclick = () => navigate("base-station");
 
-  document.querySelectorAll(".clue.open").forEach(el => {
+  document.querySelectorAll(".clue.open").forEach((el) => {
     el.onclick = () => {
-      const id = el.getAttribute("data-id");
+      const id = Number(el.getAttribute("data-id")) || 1;
       navigate("clue", { id });
     };
   });
