@@ -2,6 +2,7 @@ import { renderBaseStation } from "/modules/base-station.js";
 import { renderClueList } from "/modules/clue-list.js";
 import { renderCluePage } from "/modules/clue-page.js";
 import { renderAnswerPage } from "/modules/answer-page.js";
+import { renderLifelinePage } from "/modules/lifeline.js";
 
 (async function () {
   const app = document.getElementById("app");
@@ -120,6 +121,9 @@ import { renderAnswerPage } from "/modules/answer-page.js";
   const seasonState = orgState.season_state || "pre";
   const totalClues = Number(orgState.total_clues || game.total_clues || 12);
 
+  const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
+  const lifelineAvailable = seasonState === "complete" || currentClue >= lifelineUnlockClue;
+
   if (seasonState === "tech_diff") {
     renderError("Technical Difficulties", "Please try again a little later.");
     return;
@@ -221,7 +225,13 @@ import { renderAnswerPage } from "/modules/answer-page.js";
       }
 
       case "lifeline":
-        renderPlaceholder("Lifeline");
+        renderLifelinePage(app, {
+          isAvailable: lifelineAvailable,
+          unlockClue: lifelineUnlockClue,
+          currentClue: currentClue,
+          lifelineTitle: game.lifeline_title || "Need a nudge?",
+          lifelineBody: game.lifeline_body || "Your lifeline content goes here."
+        }, navigate);
         break;
 
       case "leaderboard":
