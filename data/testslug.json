@@ -28,5 +28,25 @@
       "title": "Clue 03",
       "body": "I speak without a mouth and hear without ears. What am I?"
     }
+  ],
+  "answers": [
+    {
+      "id": 1,
+      "title": "Answer 01",
+      "body": "The answer is a map.",
+      "letter": "M"
+    },
+    {
+      "id": 2,
+      "title": "Answer 02",
+      "body": "The answer is footsteps.",
+      "letter": "F"
+    },
+    {
+      "id": 3,
+      "title": "Answer 03",
+      "body": "The answer is an echo.",
+      "letter": "E"
+    }
   ]
 }
