@@ -1,52 +1,57 @@
 {
   "org_name": "WinterWord • Test Org",
   "season_label": "WINTERWORD • 2026",
+
   "base_station_intro_line_1": "A letter per week from a wintry scroll,",
   "base_station_intro_line_2": "Piece them together — reveal the whole.",
+
   "how_it_works_paragraphs": [
-    "Each week, a new clue unlocks — revealing a single letter.",
-    "Guard your answers as the season unfolds.",
-    "Together, they form the WinterWord.",
-    "One guess only."
+    "Each clue reveals a single letter.",
+    "Collect all letters to form the final word.",
+    "Use the lifeline if you get stuck."
   ],
+
   "updates_text": "Clues are beginning to stir.",
-  "current_clue": 3,
+
   "total_clues": 12,
+
+  "lifeline_unlock_clue": 6,
+  "lifeline_title": "Need a nudge?",
+  "lifeline_body": "Think about the setting. What stands out that shouldn't be there?",
+
   "clues": [
     {
       "id": 1,
       "title": "Clue 01",
-      "body": "I have towns without people, rivers without water, and roads without cars. What am I?"
+      "body": "Your first clue goes here.",
+      "image": "",
+      "audio": ""
     },
     {
       "id": 2,
       "title": "Clue 02",
-      "body": "The more of me you take, the more you leave behind. What am I?"
-    },
-    {
-      "id": 3,
-      "title": "Clue 03",
-      "body": "I speak without a mouth and hear without ears. What am I?"
+      "body": "Your second clue goes here.",
+      "image": "",
+      "audio": ""
     }
   ],
+
   "answers": [
     {
       "id": 1,
       "title": "Answer 01",
-      "body": "The answer is a map.",
-      "letter": "M"
+      "body": "Explanation for clue 1.",
+      "letter": "A",
+      "image": "",
+      "audio": ""
     },
     {
       "id": 2,
       "title": "Answer 02",
-      "body": "The answer is footsteps.",
-      "letter": "F"
-    },
-    {
-      "id": 3,
-      "title": "Answer 03",
-      "body": "The answer is an echo.",
-      "letter": "E"
+      "body": "Explanation for clue 2.",
+      "letter": "B",
+      "image": "",
+      "audio": ""
     }
   ]
 }
