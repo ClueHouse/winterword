@@ -1,88 +1,155 @@
 export async function onRequestGet(context) {
   try {
-    const url = new URL(context.request.url);
-    const slug = (url.searchParams.get("slug") || "").trim();
+    const { request, env } = context;
+
+    const url = new URL(request.url);
+    const slug = url.searchParams.get("slug");
 
     if (!slug) {
-      return Response.json(
-        { ok: false, error: "Missing slug" },
-        { status: 400 }
-      );
+      return Response.json({ ok: false, error: "Missing slug" }, { status: 400 });
     }
 
-    const AIRTABLE_TOKEN = context.env.AIRTABLE_TOKEN;
-    const AIRTABLE_BASE_ID = context.env.AIRTABLE_BASE_ID;
-    const AIRTABLE_TABLE_NAME = context.env.AIRTABLE_TABLE_NAME;
+    const AIRTABLE_TOKEN = env.AIRTABLE_TOKEN;
+    const AIRTABLE_BASE_ID = env.AIRTABLE_BASE_ID;
+    const AIRTABLE_TABLE_NAME = env.AIRTABLE_TABLE_NAME;
 
     if (!AIRTABLE_TOKEN || !AIRTABLE_BASE_ID || !AIRTABLE_TABLE_NAME) {
-      return Response.json(
-        { ok: false, error: "Missing Airtable environment variables" },
-        { status: 500 }
-      );
+      return Response.json({
+        ok: false,
+        error: "Missing Airtable environment variables"
+      });
     }
 
-    const airtableUrl =
-      `https://api.airtable.com/v0/${encodeURIComponent(AIRTABLE_BASE_ID)}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}` +
-      `?maxRecords=1&filterByFormula=${encodeURIComponent(`{slug}="${slug}"`)}`;
+    const endpoint = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}?filterByFormula=${encodeURIComponent(`{slug}='${slug}'`)}`;
 
-    const airtableRes = await fetch(airtableUrl, {
+    const res = await fetch(endpoint, {
       headers: {
         Authorization: `Bearer ${AIRTABLE_TOKEN}`
       }
     });
 
-    if (!airtableRes.ok) {
-      const text = await airtableRes.text();
-      return Response.json(
-        { ok: false, error: "Airtable request failed", detail: text },
-        { status: 502 }
-      );
-    }
-
-    const airtableData = await airtableRes.json();
-    const record = airtableData.records && airtableData.records[0];
-
-    if (!record) {
-      return Response.json(
-        { ok: false, error: "Org not found" },
-        { status: 404 }
-      );
-    }
-
-    const f = record.fields || {};
-
-    const payload = {
-      ok: true,
-      slug: f.slug || slug,
-      org_name: f.org_name || "",
-      status: f.status || "live",
-      timezone: f.timezone || "Pacific/Auckland",
-      season_start: f.season_start || "",
-      drop_frequency: f.drop_frequency || "weekly",
-      updates_content: f.updates_content || "",
-      total_clues: Number(f.total_clues || 12),
-      current_clue_override:
-        f.current_clue_override === undefined || f.current_clue_override === null || f.current_clue_override === ""
-          ? null
-          : Number(f.current_clue_override),
-      season_end: f.season_end || "",
-      is_visible: Boolean(f.is_visible),
-      notes: f.notes || ""
-    };
-
-    return Response.json(payload, {
-      headers: {
-        "Cache-Control": "no-store"
-      }
-    });
-  } catch (error) {
-    return Response.json(
-      {
+    if (!res.ok) {
+      const text = await res.text();
+      return Response.json({
         ok: false,
-        error: "Unhandled server error",
-        detail: String(error && error.message ? error.message : error)
-      },
-      { status: 500 }
-    );
+        error: "Airtable request failed",
+        detail: text
+      });
+    }
+
+    const data = await res.json();
+
+    if (!data.records || data.records.length === 0) {
+      return Response.json({
+        ok: false,
+        error: "Organisation not found"
+      });
+    }
+
+    const record = data.records[0].fields;
+
+    // ---------- CALCULATION ----------
+
+    const totalClues = Number(record.total_clues || 12);
+
+    function parseFrequency(freq) {
+      if (freq === "weekly") return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
+      if (freq === "hourly") return { type: "fixed", ms: 60 * 60 * 1000 };
+      if (freq === "quarter_hourly") return { type: "fixed", ms: 15 * 60 * 1000 };
+      if (freq === "daily_weekdays") return { type: "weekdays" };
+      return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
+    }
+
+    function calculateCurrentClue() {
+      if (record.current_clue_override !== null && record.current_clue_override !== undefined && record.current_clue_override !== "") {
+        const override = Number(record.current_clue_override);
+        if (!Number.isNaN(override)) {
+          return Math.max(0, Math.min(override, totalClues));
+        }
+      }
+
+      if (!record.season_start) return 0;
+
+      const startMs = new Date(record.season_start).getTime();
+      const nowMs = Date.now();
+
+      if (Number.isNaN(startMs)) return 0;
+      if (nowMs < startMs) return 0;
+
+      const parsed = parseFrequency(record.drop_frequency);
+
+      if (parsed.type === "weekdays") {
+        let count = 0;
+        const cursor = new Date(startMs);
+
+        while (cursor.getTime() <= nowMs && count < totalClues) {
+          const day = cursor.getDay();
+          if (day !== 0 && day !== 6) {
+            count++;
+          }
+          cursor.setDate(cursor.getDate() + 1);
+        }
+
+        return Math.max(0, Math.min(count, totalClues));
+      }
+
+      const diff = nowMs - startMs;
+      const clue = Math.floor(diff / parsed.ms) + 1;
+
+      return Math.max(0, Math.min(clue, totalClues));
+    }
+
+    const current_clue = calculateCurrentClue();
+
+    function getSeasonState() {
+      if (!record.is_visible) return "hidden";
+      if (record.status === "paused") return "paused";
+      if (record.status === "tech_diff") return "tech_diff";
+      if (record.status === "complete") return "complete";
+
+      if (record.season_end) {
+        const endMs = new Date(record.season_end).getTime();
+        if (!Number.isNaN(endMs) && Date.now() > endMs) {
+          return "complete";
+        }
+      }
+
+      if (current_clue <= 0) return "pre";
+
+      return "live";
+    }
+
+    const season_state = getSeasonState();
+
+    const is_complete = season_state === "complete";
+
+    // ---------- RESPONSE ----------
+
+    return Response.json({
+      ok: true,
+      slug: record.slug || slug,
+      org_name: record.org_name || "",
+      status: record.status || "",
+      timezone: record.timezone || "",
+      season_start: record.season_start || "",
+      drop_frequency: record.drop_frequency || "weekly",
+      updates_content: record.updates_content || "",
+      total_clues: totalClues,
+      current_clue_override: record.current_clue_override ?? null,
+      current_clue: current_clue,
+      season_end: record.season_end || "",
+      is_visible: record.is_visible ?? true,
+      notes: record.notes || "",
+      season_state: season_state,
+      is_complete: is_complete,
+      now_iso: new Date().toISOString()
+    });
+
+  } catch (err) {
+    return Response.json({
+      ok: false,
+      error: "Server error",
+      detail: err.message
+    });
   }
 }
