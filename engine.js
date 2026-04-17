@@ -97,20 +97,26 @@ import { renderAnswerPage } from "/modules/answer-page.js";
   }
 
   function parseFrequency(freq) {
-    if (freq === "weekly") return 7 * 24 * 60 * 60 * 1000;
-    if (freq === "hourly") return 60 * 60 * 1000;
-    if (freq === "quarter_hourly") return 15 * 60 * 1000;
-    if (freq === "daily_weekdays") return 24 * 60 * 60 * 1000;
-    return 7 * 24 * 60 * 60 * 1000;
+    if (freq === "weekly") return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
+    if (freq === "hourly") return { type: "fixed", ms: 60 * 60 * 1000 };
+    if (freq === "quarter_hourly") return { type: "fixed", ms: 15 * 60 * 1000 };
+    if (freq === "daily_weekdays") return { type: "weekdays" };
+    return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
   }
 
   function calculateCurrentClue(orgState) {
     if (!orgState) return 0;
 
-    if (orgState.current_clue_override !== null && orgState.current_clue_override !== undefined && orgState.current_clue_override !== "") {
+    const totalClues = Number(orgState.total_clues || 12);
+
+    if (
+      orgState.current_clue_override !== null &&
+      orgState.current_clue_override !== undefined &&
+      orgState.current_clue_override !== ""
+    ) {
       const overridden = Number(orgState.current_clue_override);
       if (!Number.isNaN(overridden)) {
-        return Math.max(0, Math.min(overridden, orgState.total_clues || 12));
+        return Math.max(0, Math.min(overridden, totalClues));
       }
     }
 
@@ -123,26 +129,25 @@ import { renderAnswerPage } from "/modules/answer-page.js";
 
     if (nowMs < startMs) return 0;
 
-    const totalClues = orgState.total_clues || 12;
+    const parsed = parseFrequency(orgState.drop_frequency);
 
-    if (orgState.drop_frequency === "daily_weekdays") {
-      let clueCount = 0;
-      let cursor = new Date(startMs);
+    if (parsed.type === "weekdays") {
+      let count = 0;
+      const cursor = new Date(startMs);
 
-      while (cursor.getTime() <= nowMs && clueCount < totalClues) {
+      while (cursor.getTime() <= nowMs && count < totalClues) {
         const day = cursor.getDay();
         if (day !== 0 && day !== 6) {
-          clueCount += 1;
+          count += 1;
         }
         cursor.setDate(cursor.getDate() + 1);
       }
 
-      return Math.max(0, Math.min(clueCount, totalClues));
+      return Math.max(0, Math.min(count, totalClues));
     }
 
-    const freqMs = parseFrequency(orgState.drop_frequency);
     const diffMs = nowMs - startMs;
-    const clueNumber = Math.floor(diffMs / freqMs) + 1;
+    const clueNumber = Math.floor(diffMs / parsed.ms) + 1;
 
     return Math.max(0, Math.min(clueNumber, totalClues));
   }
@@ -183,13 +188,15 @@ import { renderAnswerPage } from "/modules/answer-page.js";
     };
   }
 
-  function getAnswerById(id, game, currentClue) {
+  function getAnswerById(id, game, currentClue, seasonState) {
     const clueId = Number(id) || 1;
     const answers = Array.isArray(game.answers) ? game.answers : [];
 
     const found = answers.find(function (item) {
       return Number(item.id) === clueId;
     });
+
+    const answersUnlocked = seasonState === "complete";
 
     return {
       id: clueId,
@@ -198,7 +205,7 @@ import { renderAnswerPage } from "/modules/answer-page.js";
       image: found && found.image ? found.image : "",
       audio: found && found.audio ? found.audio : "",
       letter: found && found.letter ? found.letter : "",
-      unlocked: clueId <= currentClue
+      unlocked: answersUnlocked && clueId <= currentClue
     };
   }
 
@@ -224,6 +231,7 @@ import { renderAnswerPage } from "/modules/answer-page.js";
 
   const currentClue = calculateCurrentClue(orgState);
   const seasonState = getSeasonState(orgState, currentClue);
+  const totalClues = Number(orgState.total_clues || game.total_clues || 12);
 
   if (seasonState === "tech_diff") {
     renderError("Technical Difficulties", "Please try again a little later.");
@@ -241,7 +249,7 @@ import { renderAnswerPage } from "/modules/answer-page.js";
           howParagraphs: game.how_it_works_paragraphs,
           updatesText: orgState.updates_content || game.updates_text,
           currentClue: currentClue,
-          totalClues: orgState.total_clues || game.total_clues || 12,
+          totalClues: totalClues,
           seasonState: seasonState
         }, navigate);
         break;
@@ -249,14 +257,14 @@ import { renderAnswerPage } from "/modules/answer-page.js";
       case "clues":
         renderClueList(app, {
           currentClue: currentClue,
-          totalClues: orgState.total_clues || game.total_clues || 12
+          totalClues: totalClues
         }, navigate);
         break;
 
       case "clue":
         renderCluePage(app, {
           clueId: Number(options.id) || 1,
-          totalClues: orgState.total_clues || game.total_clues || 12,
+          totalClues: totalClues,
           clue: getClueById(options.id, game, currentClue)
         }, navigate);
         break;
@@ -264,8 +272,8 @@ import { renderAnswerPage } from "/modules/answer-page.js";
       case "answer":
         renderAnswerPage(app, {
           clueId: Number(options.id) || 1,
-          totalClues: orgState.total_clues || game.total_clues || 12,
-          answer: getAnswerById(options.id, game, currentClue)
+          totalClues: totalClues,
+          answer: getAnswerById(options.id, game, currentClue, seasonState)
         }, navigate);
         break;
 
