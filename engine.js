@@ -1,5 +1,6 @@
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderClueList } from "/modules/clue-list.js";
+import { renderCluePage } from "/modules/clue-page.js";
 
 (async function () {
   const app = document.getElementById("app");
@@ -53,18 +54,55 @@ import { renderClueList } from "/modules/clue-list.js";
     });
   }
 
-  function navigate(pageName) {
+  function getClueById(id) {
+    const clueId = Number(id) || 1;
+    const clues = Array.isArray(game.clues) ? game.clues : [];
+    const currentClue = game.current_clue || 0;
+
+    const found = clues.find(function (item) {
+      return Number(item.id) === clueId;
+    });
+
+    return {
+      id: clueId,
+      title: found && found.title ? found.title : `Clue ${String(clueId).padStart(2, "0")}`,
+      body: found && found.body ? found.body : "No clue content yet.",
+      image: found && found.image ? found.image : "",
+      audio: found && found.audio ? found.audio : "",
+      unlocked: clueId <= currentClue
+    };
+  }
+
+  function navigate(pageName, options = {}) {
     switch (pageName) {
       case "base-station":
-        renderBaseStation(app, game, navigate);
+        renderBaseStation(app, {
+          orgName: game.org_name,
+          seasonLabel: game.season_label,
+          introLine1: game.base_station_intro_line_1,
+          introLine2: game.base_station_intro_line_2,
+          howParagraphs: game.how_it_works_paragraphs,
+          updatesText: game.updates_text,
+          currentClue: game.current_clue || 0,
+          totalClues: game.total_clues || 12
+        }, navigate);
         break;
 
-case "clues":
-renderClueList(app, {
-currentClue: game.current_clue || 3,
-totalClues: game.total_clues || 12
-}, navigate);
-break;
+      case "clues":
+        renderClueList(app, {
+          currentClue: game.current_clue || 0,
+          totalClues: game.total_clues || 12
+        }, navigate);
+        break;
+
+      case "clue":
+        renderCluePage(app, {
+          clueId: Number(options.id) || 1,
+          totalClues: game.total_clues || 12,
+          clue: getClueById(options.id)
+        }, navigate);
+        break;
+
       case "lifeline":
         renderPlaceholder("Lifeline");
         break;
@@ -75,6 +113,10 @@ break;
 
       case "legal":
         renderPlaceholder("Legal");
+        break;
+
+      case "answer":
+        renderPlaceholder(`Answer ${String(options.id || 1).padStart(2, "0")}`);
         break;
 
       default:
