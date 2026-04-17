@@ -96,119 +96,6 @@ import { renderAnswerPage } from "/modules/answer-page.js";
     `;
   }
 
-  function parseFrequency(freq) {
-    if (freq === "weekly") return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
-    if (freq === "hourly") return { type: "fixed", ms: 60 * 60 * 1000 };
-    if (freq === "quarter_hourly") return { type: "fixed", ms: 15 * 60 * 1000 };
-    if (freq === "daily_weekdays") return { type: "weekdays" };
-    return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
-  }
-
-  function calculateCurrentClue(orgState) {
-    if (!orgState) return 0;
-
-    const totalClues = Number(orgState.total_clues || 12);
-
-    if (
-      orgState.current_clue_override !== null &&
-      orgState.current_clue_override !== undefined &&
-      orgState.current_clue_override !== ""
-    ) {
-      const overridden = Number(orgState.current_clue_override);
-      if (!Number.isNaN(overridden)) {
-        return Math.max(0, Math.min(overridden, totalClues));
-      }
-    }
-
-    if (!orgState.season_start) return 0;
-
-    const startMs = new Date(orgState.season_start).getTime();
-    if (Number.isNaN(startMs)) return 0;
-
-    const nowMs = Date.now();
-
-    if (nowMs < startMs) return 0;
-
-    const parsed = parseFrequency(orgState.drop_frequency);
-
-    if (parsed.type === "weekdays") {
-      let count = 0;
-      const cursor = new Date(startMs);
-
-      while (cursor.getTime() <= nowMs && count < totalClues) {
-        const day = cursor.getDay();
-        if (day !== 0 && day !== 6) {
-          count += 1;
-        }
-        cursor.setDate(cursor.getDate() + 1);
-      }
-
-      return Math.max(0, Math.min(count, totalClues));
-    }
-
-    const diffMs = nowMs - startMs;
-    const clueNumber = Math.floor(diffMs / parsed.ms) + 1;
-
-    return Math.max(0, Math.min(clueNumber, totalClues));
-  }
-
-  function getSeasonState(orgState, currentClue) {
-    if (!orgState) return "unavailable";
-    if (!orgState.is_visible) return "hidden";
-    if (orgState.status === "paused") return "paused";
-    if (orgState.status === "tech_diff") return "tech_diff";
-    if (orgState.status === "complete") return "complete";
-
-    if (orgState.season_end) {
-      const endMs = new Date(orgState.season_end).getTime();
-      if (!Number.isNaN(endMs) && Date.now() > endMs) {
-        return "complete";
-      }
-    }
-
-    if (currentClue <= 0) return "pre";
-    return "live";
-  }
-
-  function getClueById(id, game, currentClue) {
-    const clueId = Number(id) || 1;
-    const clues = Array.isArray(game.clues) ? game.clues : [];
-
-    const found = clues.find(function (item) {
-      return Number(item.id) === clueId;
-    });
-
-    return {
-      id: clueId,
-      title: found && found.title ? found.title : `Clue ${String(clueId).padStart(2, "0")}`,
-      body: found && found.body ? found.body : "No clue content yet.",
-      image: found && found.image ? found.image : "",
-      audio: found && found.audio ? found.audio : "",
-      unlocked: clueId <= currentClue
-    };
-  }
-
-  function getAnswerById(id, game, currentClue, seasonState) {
-    const clueId = Number(id) || 1;
-    const answers = Array.isArray(game.answers) ? game.answers : [];
-
-    const found = answers.find(function (item) {
-      return Number(item.id) === clueId;
-    });
-
-    const answersUnlocked = seasonState === "complete";
-
-    return {
-      id: clueId,
-      title: found && found.title ? found.title : `Answer ${String(clueId).padStart(2, "0")}`,
-      body: found && found.body ? found.body : "No answer content yet.",
-      image: found && found.image ? found.image : "",
-      audio: found && found.audio ? found.audio : "",
-      letter: found && found.letter ? found.letter : "",
-      unlocked: answersUnlocked && clueId <= currentClue
-    };
-  }
-
   const slug = getSlug();
   const orgState = await loadOrgState(slug);
 
@@ -229,13 +116,52 @@ import { renderAnswerPage } from "/modules/answer-page.js";
     return;
   }
 
-  const currentClue = calculateCurrentClue(orgState);
-  const seasonState = getSeasonState(orgState, currentClue);
+  const currentClue = Number(orgState.current_clue || 0);
+  const seasonState = orgState.season_state || "pre";
   const totalClues = Number(orgState.total_clues || game.total_clues || 12);
 
   if (seasonState === "tech_diff") {
     renderError("Technical Difficulties", "Please try again a little later.");
     return;
+  }
+
+  function getClueById(id) {
+    const clueId = Number(id) || 1;
+    const clues = Array.isArray(game.clues) ? game.clues : [];
+
+    const found = clues.find(function (item) {
+      return Number(item.id) === clueId;
+    });
+
+    return {
+      id: clueId,
+      title: found && found.title ? found.title : `Clue ${String(clueId).padStart(2, "0")}`,
+      body: found && found.body ? found.body : "No clue content yet.",
+      image: found && found.image ? found.image : "",
+      audio: found && found.audio ? found.audio : "",
+      unlocked: clueId <= currentClue
+    };
+  }
+
+  function getAnswerById(id) {
+    const clueId = Number(id) || 1;
+    const answers = Array.isArray(game.answers) ? game.answers : [];
+
+    const found = answers.find(function (item) {
+      return Number(item.id) === clueId;
+    });
+
+    const answersUnlocked = seasonState === "complete";
+
+    return {
+      id: clueId,
+      title: found && found.title ? found.title : `Answer ${String(clueId).padStart(2, "0")}`,
+      body: found && found.body ? found.body : "No answer content yet.",
+      image: found && found.image ? found.image : "",
+      audio: found && found.audio ? found.audio : "",
+      letter: found && found.letter ? found.letter : "",
+      unlocked: answersUnlocked && clueId <= currentClue
+    };
   }
 
   function navigate(pageName, options = {}) {
@@ -261,21 +187,38 @@ import { renderAnswerPage } from "/modules/answer-page.js";
         }, navigate);
         break;
 
-      case "clue":
-        renderCluePage(app, {
-          clueId: Number(options.id) || 1,
-          totalClues: totalClues,
-          clue: getClueById(options.id, game, currentClue)
-        }, navigate);
-        break;
+      case "clue": {
+        const clueId = Number(options.id) || 1;
 
-      case "answer":
-        renderAnswerPage(app, {
-          clueId: Number(options.id) || 1,
+        if (clueId > currentClue) {
+          navigate("clues");
+          return;
+        }
+
+        renderCluePage(app, {
+          clueId: clueId,
           totalClues: totalClues,
-          answer: getAnswerById(options.id, game, currentClue, seasonState)
+          clue: getClueById(clueId)
         }, navigate);
         break;
+      }
+
+      case "answer": {
+        const answerId = Number(options.id) || 1;
+        const answer = getAnswerById(answerId);
+
+        if (!answer.unlocked) {
+          navigate("clue", { id: answerId });
+          return;
+        }
+
+        renderAnswerPage(app, {
+          clueId: answerId,
+          totalClues: totalClues,
+          answer: answer
+        }, navigate);
+        break;
+      }
 
       case "lifeline":
         renderPlaceholder("Lifeline");
