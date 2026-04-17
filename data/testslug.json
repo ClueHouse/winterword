@@ -1,3 +1,32 @@
 {
-  "org_name": "WinterWord • Test Org"
+  "org_name": "WinterWord • Test Org",
+  "season_label": "WINTERWORD • 2026",
+  "base_station_intro_line_1": "A letter per week from a wintry scroll,",
+  "base_station_intro_line_2": "Piece them together — reveal the whole.",
+  "how_it_works_paragraphs": [
+    "Each week, a new clue unlocks — revealing a single letter.",
+    "Guard your answers as the season unfolds.",
+    "Together, they form the WinterWord.",
+    "One guess only."
+  ],
+  "updates_text": "Clues are beginning to stir.",
+  "current_clue": 3,
+  "total_clues": 12,
+  "clues": [
+    {
+      "id": 1,
+      "title": "Clue 01",
+      "body": "I have towns without people, rivers without water, and roads without cars. What am I?"
+    },
+    {
+      "id": 2,
+      "title": "Clue 02",
+      "body": "The more of me you take, the more you leave behind. What am I?"
+    },
+    {
+      "id": 3,
+      "title": "Clue 03",
+      "body": "I speak without a mouth and hear without ears. What am I?"
+    }
+  ]
 }
