@@ -1,6 +1,7 @@
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderClueList } from "/modules/clue-list.js";
 import { renderCluePage } from "/modules/clue-page.js";
+import { renderAnswerPage } from "/modules/answer-page.js";
 
 (async function () {
   const app = document.getElementById("app");
@@ -73,6 +74,26 @@ import { renderCluePage } from "/modules/clue-page.js";
     };
   }
 
+  function getAnswerById(id) {
+    const clueId = Number(id) || 1;
+    const answers = Array.isArray(game.answers) ? game.answers : [];
+    const currentClue = game.current_clue || 0;
+
+    const found = answers.find(function (item) {
+      return Number(item.id) === clueId;
+    });
+
+    return {
+      id: clueId,
+      title: found && found.title ? found.title : `Answer ${String(clueId).padStart(2, "0")}`,
+      body: found && found.body ? found.body : "No answer content yet.",
+      image: found && found.image ? found.image : "",
+      audio: found && found.audio ? found.audio : "",
+      letter: found && found.letter ? found.letter : "",
+      unlocked: clueId <= currentClue
+    };
+  }
+
   function navigate(pageName, options = {}) {
     switch (pageName) {
       case "base-station":
@@ -103,6 +124,14 @@ import { renderCluePage } from "/modules/clue-page.js";
         }, navigate);
         break;
 
+      case "answer":
+        renderAnswerPage(app, {
+          clueId: Number(options.id) || 1,
+          totalClues: game.total_clues || 12,
+          answer: getAnswerById(options.id)
+        }, navigate);
+        break;
+
       case "lifeline":
         renderPlaceholder("Lifeline");
         break;
@@ -113,10 +142,6 @@ import { renderCluePage } from "/modules/clue-page.js";
 
       case "legal":
         renderPlaceholder("Legal");
-        break;
-
-      case "answer":
-        renderPlaceholder(`Answer ${String(options.id || 1).padStart(2, "0")}`);
         break;
 
       default:
