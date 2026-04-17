@@ -1,4 +1,5 @@
 import { renderBaseStation } from "/modules/base-station.js";
+import { renderClueList } from "/modules/clue-list.js";
 
 (async function () {
   const app = document.getElementById("app");
