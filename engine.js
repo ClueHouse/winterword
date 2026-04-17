@@ -59,10 +59,12 @@ import { renderClueList } from "/modules/clue-list.js";
         renderBaseStation(app, game, navigate);
         break;
 
-      case "clues":
-        renderPlaceholder("Clue List");
-        break;
-
+case "clues":
+renderClueList(app, {
+currentClue: game.current_clue || 3,
+totalClues: game.total_clues || 12
+}, navigate);
+break;
       case "lifeline":
         renderPlaceholder("Lifeline");
         break;
