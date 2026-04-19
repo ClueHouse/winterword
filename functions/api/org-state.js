@@ -120,8 +120,51 @@ export async function onRequestGet(context) {
     }
 
     const season_state = getSeasonState();
-
     const is_complete = season_state === "complete";
+
+    // ---------- RESOLVED LOGIC (UPDATED) ----------
+
+    function calculateIsResolved() {
+      const override = record.base_station_resolved_override;
+
+      // --- manual override ---
+      if (override === true || override === "true") return true;
+      if (override === false || override === "false") return false;
+
+      // --- must be complete ---
+      if (!is_complete) return false;
+      if (!record.season_start) return false;
+
+      const startMs = new Date(record.season_start).getTime();
+      if (Number.isNaN(startMs)) return false;
+
+      const parsed = parseFrequency(record.drop_frequency);
+
+      let durationMs = 0;
+
+      if (parsed.type === "fixed") {
+        durationMs = (totalClues - 1) * parsed.ms;
+      } else if (parsed.type === "weekdays") {
+        durationMs = (totalClues + Math.floor(totalClues / 5) * 2) * 24 * 60 * 60 * 1000;
+      }
+
+      const lastClueTime = startMs + durationMs;
+
+      // ✅ NEW: use ONE drop interval instead of 7 days
+      let resolvedDelayMs = 0;
+
+      if (parsed.type === "fixed") {
+        resolvedDelayMs = parsed.ms;
+      } else if (parsed.type === "weekdays") {
+        resolvedDelayMs = 24 * 60 * 60 * 1000;
+      }
+
+      const resolvedTime = lastClueTime + resolvedDelayMs;
+
+      return Date.now() >= resolvedTime;
+    }
+
+    const is_resolved = calculateIsResolved();
 
     // ---------- RESPONSE ----------
 
@@ -142,6 +185,10 @@ export async function onRequestGet(context) {
       notes: record.notes || "",
       season_state: season_state,
       is_complete: is_complete,
+
+      // ✅ FINAL OUTPUT
+      is_resolved: is_resolved,
+
       now_iso: new Date().toISOString()
     });
 
