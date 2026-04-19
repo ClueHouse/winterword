@@ -26,9 +26,9 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     }
   }
 
-  async function loadGame(slug) {
+  async function loadGame() {
     try {
-      const res = await fetch(`/data/${slug}.json`, {
+      const res = await fetch(`/data/game.json`, {
         cache: "no-store"
       });
 
@@ -78,7 +78,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     return;
   }
 
-  const game = await loadGame(slug);
+  const game = await loadGame();
 
   if (!game) {
     renderError("Game not found", "No game data could be loaded.");
@@ -89,7 +89,6 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   const totalClues = Number(orgState.total_clues || game.total_clues || 12);
   const seasonState = orgState.season_state || "pre";
 
-  // ✅ NEW: resolved flag
   const isResolved = Boolean(orgState.is_resolved);
 
   const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
@@ -136,7 +135,6 @@ import { renderLifelinePage } from "/modules/lifeline.js";
 
       case "base-station":
 
-        // ✅ NEW: resolved routing
         if (isResolved) {
           renderBaseStationResolved(app, {
             orgName: orgState.org_name || game.org_name,
