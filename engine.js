@@ -1,4 +1,4 @@
-// v2
+// v2 FORCE UPDATE
 
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderBaseStationResolved } from "/modules/base-station-resolved.js";
@@ -87,13 +87,13 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     return;
   }
 
-  const currentClue = Math.max(0, Number(orgState.current_clue || 0));
-  const totalClues = Math.max(1, Number(orgState.total_clues || game.total_clues || 12));
-  const seasonState = String(orgState.season_state || "pre");
+  const currentClue = Number(orgState.current_clue || 0);
+  const totalClues = Number(orgState.total_clues || game.total_clues || 12);
+  const seasonState = orgState.season_state || "pre";
   const isResolved = Boolean(orgState.is_resolved);
-  const lifelineUnlockClue = Math.max(1, Number(game.lifeline_unlock_clue || 6));
+  const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
 
-  // ✅ Airtable-controlled lifeline
+  // ✅ FINAL CORRECT LOGIC
   function isLifelineAvailable() {
     return orgState.lifeline_live === true;
   }
@@ -101,7 +101,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   function getClueById(id) {
     const clueId = Number(id) || 1;
     const clues = Array.isArray(game.clues) ? game.clues : [];
-    const found = clues.find((c) => Number(c.id) === clueId);
+    const found = clues.find(c => Number(c.id) === clueId);
 
     return {
       id: clueId,
@@ -116,7 +116,8 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   function getAnswerById(id) {
     const clueId = Number(id) || 1;
     const answers = Array.isArray(game.answers) ? game.answers : [];
-    const found = answers.find((a) => Number(a.id) === clueId);
+    const found = answers.find(a => Number(a.id) === clueId);
+
     const answersUnlocked = seasonState === "complete";
 
     return {
