@@ -97,9 +97,9 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   const isResolved = Boolean(orgState.is_resolved);
   const lifelineUnlockClue = Math.max(1, Number(game.lifeline_unlock_clue || 6));
 
-  // 🔴 STEP 1 TEST — FORCE LOCK
+  // ✅ FINAL LOGIC — Airtable controlled
   function isLifelineAvailable() {
-    return false;
+    return orgState.lifeline_live === true;
   }
 
   function getClueById(id) {
