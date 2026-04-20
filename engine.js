@@ -195,6 +195,11 @@ import { renderLifelinePage } from "/modules/lifeline.js";
       }
 
       case "lifeline":
+        if (!lifelineAvailable) {
+          navigate("base-station");
+          return;
+        }
+
         renderLifelinePage(app, {
           isAvailable: lifelineAvailable,
           unlockClue: lifelineUnlockClue,
