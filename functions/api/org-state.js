@@ -184,8 +184,8 @@ export async function onRequestGet(context) {
       is_complete: is_complete,
       is_resolved: is_resolved,
 
-      // ✅ NEW: Lifeline manual control
-      lifeline_unlocked: record.lifeline_unlocked === true,
+      // ✅ UPDATED FIELD
+      lifeline_live: record.lifeline_live === true,
 
       now_iso: new Date().toISOString()
     });
