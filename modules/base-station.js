@@ -19,7 +19,7 @@ export function renderBaseStation(app, data, navigate) {
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
-  } 
+  }
 
   const howHtml = (howParagraphs.length ? howParagraphs : [
     "Each week, a new clue unlocks — revealing a single letter.",
@@ -29,13 +29,18 @@ export function renderBaseStation(app, data, navigate) {
     .map((p) => `<p>${esc(p)}</p>`)
     .join("");
 
-  const lifelineTitle = lifelineAvailable
-    ? "Open Lifeline"
-    : `Lifeline unlocks at clue ${lifelineUnlockClue}`;
+  const lifelineLockedHTML = `
+    <div class="nav-btn locked">
+      Lifeline
+      <div class="lifeline-tip">Not yet available.</div>
+    </div>
+  `;
 
-  const lifelineTip = lifelineAvailable
-    ? ""
-    : `Available after clue ${esc(lifelineUnlockClue)} is released.`;
+  const lifelineActiveHTML = `
+    <button class="nav-btn" id="lifeline" type="button">
+      Lifeline
+    </button>
+  `;
 
   app.innerHTML = `
     <style>
@@ -66,74 +71,22 @@ export function renderBaseStation(app, data, navigate) {
         background: #12283b;
         border: 1px solid #c87b2a;
         color: #fff;
-        cursor: pointer;
         text-align: center;
         border-radius: 8px;
         font: inherit;
-        width: 100%;
-        box-sizing: border-box;
-      }
-
-      .nav-btn:hover {
-        background: #18344d;
       }
 
       .nav-btn.locked {
         background: #1a1f26;
         border-color: #4b5563;
         color: #9ca3af;
-        cursor: not-allowed;
-        opacity: 0.7;
-      }
-
-      .nav-btn.locked:hover {
-        background: #1a1f26;
-      }
-
-      .main {
-        padding: 40px;
-      }
-
-      .title {
-        font-size: 48px;
-        color: #f19a2a;
-        margin: 0 0 10px;
-      }
-
-      .org {
-        margin-bottom: 20px;
-      }
-
-      .card {
-        background: #0f1f2f;
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #333;
-        border-radius: 12px;
-      }
-
-      .actions {
-        margin-top: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .link-btn {
-        padding: 12px;
-        border: 1px solid #c87b2a;
-        text-align: center;
-        border-radius: 8px;
-        background: transparent;
-        color: #fff;
-        font: inherit;
-        text-decoration: none;
-        cursor: pointer;
-        box-sizing: border-box;
-      }
-
-      .lifeline-wrap {
+        opacity: 0.6;
+        cursor: default;
         position: relative;
+      }
+
+      .nav-btn.locked:hover .lifeline-tip {
+        opacity: 1;
       }
 
       .lifeline-tip {
@@ -142,95 +95,44 @@ export function renderBaseStation(app, data, navigate) {
         top: 50%;
         transform: translateY(-50%);
         background: #111827;
-        color: #fff;
         border: 1px solid #4b5563;
-        border-radius: 8px;
-        padding: 8px 10px;
-        white-space: nowrap;
+        padding: 6px 10px;
+        border-radius: 6px;
         font-size: 12px;
-        line-height: 1.35;
         opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.15s ease;
-        z-index: 20;
+        transition: 0.2s;
+        white-space: nowrap;
       }
 
-      .lifeline-wrap:hover .lifeline-tip,
-      .lifeline-wrap:focus-within .lifeline-tip {
-        opacity: 1;
-      }
-
-      @media (max-width: 900px) {
-        .wrap {
-          grid-template-columns: 1fr;
-        }
-
-        .side {
-          border-right: 0;
-          border-bottom: 1px solid #c87b2a;
-        }
-
-        .lifeline-tip {
-          left: 0;
-          top: calc(100% + 8px);
-          transform: none;
-          white-space: normal;
-          width: 220px;
-        }
+      .main {
+        padding: 40px;
       }
     </style>
 
     <div class="wrap">
       <div class="side">
-        <button class="nav-btn" id="clues" type="button">Clues</button>
+        <button class="nav-btn" id="clues">Clues</button>
 
-        <div class="lifeline-wrap">
-          <button
-            class="nav-btn ${lifelineAvailable ? "" : "locked"}"
-            id="lifeline"
-            type="button"
-            aria-disabled="${lifelineAvailable ? "false" : "true"}"
-            title="${esc(lifelineTitle)}"
-          >
-            Lifeline TEST
-          </button>
-          ${
-            lifelineAvailable
-              ? ""
-              : `<div class="lifeline-tip" role="tooltip">${lifelineTip}</div>`
-          }
-        </div>
+        ${lifelineAvailable ? lifelineActiveHTML : lifelineLockedHTML}
 
-        <button class="nav-btn" id="leaderboard" type="button">Leaderboard</button>
+        <button class="nav-btn" id="leaderboard">Leaderboard</button>
       </div>
 
       <div class="main">
         <div>${esc(seasonLabel)}</div>
-        <h1 class="title">Base Station</h1>
-        <div class="org">${esc(orgName)}</div>
+        <h1>Base Station</h1>
+        <div>${esc(orgName)}</div>
 
         <p>${esc(introLine1)}<br>${esc(introLine2)}</p>
 
-        <div class="card">
+        <div>
           <strong>HOW THIS WORKS</strong>
           ${howHtml}
         </div>
 
-        <div class="card">
+        <div>
           <strong>UPDATES</strong>
           <p>${esc(updatesText)}</p>
-        </div>
-
-        <div class="card">
-          <strong>PROGRESS</strong>
-          <p>${currentClue} / ${totalClues} clues unlocked</p>
-        </div>
-
-        <div class="actions">
-          <a class="link-btn" href="mailto:fix@cluehouse.co.nz">Report a Problem</a>
-          <a class="link-btn" href="mailto:opt@cluehouse.co.nz">Subscribe</a>
-          <a class="link-btn" href="mailto:key@cluehouse.co.nz">Solve WinterWord</a>
-          <button class="link-btn" id="legal" type="button">Legal</button>
         </div>
       </div>
     </div>
@@ -239,20 +141,11 @@ export function renderBaseStation(app, data, navigate) {
   const cluesBtn = app.querySelector("#clues");
   const lifelineBtn = app.querySelector("#lifeline");
   const leaderboardBtn = app.querySelector("#leaderboard");
-  const legalBtn = app.querySelector("#legal");
 
   if (cluesBtn) cluesBtn.onclick = () => navigate("clues");
   if (leaderboardBtn) leaderboardBtn.onclick = () => navigate("leaderboard");
-  if (legalBtn) legalBtn.onclick = () => navigate("legal");
 
   if (lifelineBtn) {
-    lifelineBtn.onclick = (event) => {
-      if (!lifelineAvailable) {
-        event.preventDefault();
-        event.stopPropagation();
-        return;
-      }
-      navigate("lifeline");
-    };
+    lifelineBtn.onclick = () => navigate("lifeline");
   }
 }
