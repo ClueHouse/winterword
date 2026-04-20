@@ -19,7 +19,7 @@ export function renderBaseStation(app, data, navigate) {
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
-  }
+  } 
 
   const howHtml = (howParagraphs.length ? howParagraphs : [
     "Each week, a new clue unlocks — revealing a single letter.",
