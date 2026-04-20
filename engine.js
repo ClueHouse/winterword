@@ -19,10 +19,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
         cache: "no-store"
       });
 
-      if (!res.ok) {
-        throw new Error(`Org state failed: ${res.status}`);
-      }
-
+      if (!res.ok) throw new Error(`Org state failed: ${res.status}`);
       return await res.json();
     } catch {
       return null;
@@ -35,10 +32,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
         cache: "no-store"
       });
 
-      if (!res.ok) {
-        throw new Error(`Game load failed: ${res.status}`);
-      }
-
+      if (!res.ok) throw new Error("Game not found");
       return await res.json();
     } catch {
       return null;
@@ -97,7 +91,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   const isResolved = Boolean(orgState.is_resolved);
   const lifelineUnlockClue = Math.max(1, Number(game.lifeline_unlock_clue || 6));
 
-  // ✅ FINAL LOGIC — Airtable controlled
+  // ✅ Airtable-controlled lifeline
   function isLifelineAvailable() {
     return orgState.lifeline_live === true;
   }
@@ -138,42 +132,35 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     const lifelineAvailable = isLifelineAvailable();
 
     switch (pageName) {
-      case "base-station": {
+
+      case "base-station":
+
         if (isResolved) {
-          renderBaseStationResolved(
-            app,
-            {
-              orgName: orgState.org_name || game.org_name,
-              seasonLabel: game.season_label || "WINTERWORD • 2026",
-              currentClue: currentClue,
-              totalClues: totalClues,
-              lifelineAvailable: lifelineAvailable,
-              lifelineUnlockClue: lifelineUnlockClue
-            },
-            navigate
-          );
+          renderBaseStationResolved(app, {
+            orgName: orgState.org_name || game.org_name,
+            seasonLabel: game.season_label || "WINTERWORD • 2026",
+            currentClue,
+            totalClues,
+            lifelineAvailable,
+            lifelineUnlockClue
+          }, navigate);
           return;
         }
 
-        renderBaseStation(
-          app,
-          {
-            orgName: orgState.org_name || game.org_name,
-            seasonLabel: game.season_label || "WINTERWORD • 2026",
-            introLine1: game.base_station_intro_line_1,
-            introLine2: game.base_station_intro_line_2,
-            howParagraphs: game.how_it_works_paragraphs,
-            updatesText: orgState.updates_content || game.updates_text,
-            currentClue: currentClue,
-            totalClues: totalClues,
-            seasonState: seasonState,
-            lifelineAvailable: lifelineAvailable,
-            lifelineUnlockClue: lifelineUnlockClue
-          },
-          navigate
-        );
+        renderBaseStation(app, {
+          orgName: orgState.org_name || game.org_name,
+          seasonLabel: game.season_label,
+          introLine1: game.base_station_intro_line_1,
+          introLine2: game.base_station_intro_line_2,
+          howParagraphs: game.how_it_works_paragraphs,
+          updatesText: orgState.updates_content || game.updates_text,
+          currentClue,
+          totalClues,
+          seasonState,
+          lifelineAvailable,
+          lifelineUnlockClue
+        }, navigate);
         return;
-      }
 
       case "clues":
         renderClueList(app, { currentClue, totalClues }, navigate);
@@ -181,10 +168,12 @@ import { renderLifelinePage } from "/modules/lifeline.js";
 
       case "clue": {
         const clueId = Number(options.id) || 1;
+
         if (clueId > currentClue) {
           navigate("clues");
           return;
         }
+
         renderCluePage(app, {
           clueId,
           totalClues,
@@ -196,10 +185,12 @@ import { renderLifelinePage } from "/modules/lifeline.js";
       case "answer": {
         const answerId = Number(options.id) || 1;
         const answer = getAnswerById(answerId);
+
         if (!answer.unlocked) {
           navigate("clue", { id: answerId });
           return;
         }
+
         renderAnswerPage(app, {
           clueId: answerId,
           totalClues,
@@ -208,7 +199,8 @@ import { renderLifelinePage } from "/modules/lifeline.js";
         return;
       }
 
-      case "lifeline": {
+      case "lifeline":
+
         if (!lifelineAvailable) {
           navigate("base-station");
           return;
@@ -222,10 +214,14 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           lifelineBody: game.lifeline_body || "Your lifeline content goes here."
         }, navigate);
         return;
-      }
+
+      case "leaderboard":
+        renderError("Leaderboard", "Coming soon.");
+        return;
 
       default:
         renderError("Page Not Found", "This page does not exist.");
+        return;
     }
   }
 
