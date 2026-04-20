@@ -176,10 +176,10 @@ export function renderBaseStation(app, data, navigate) {
             id="lifeline"
             type="button"
             title="${esc(lifelineTitle)}"
-            ${lifelineAvailable ? "" : "disabled"}
           >
             Lifeline
           </button>
+
           ${
             lifelineAvailable
               ? ""
@@ -226,7 +226,9 @@ export function renderBaseStation(app, data, navigate) {
   document.getElementById("leaderboard").onclick = () => navigate("leaderboard");
   document.getElementById("legal").onclick = () => navigate("legal");
 
-  if (lifelineAvailable) {
-    document.getElementById("lifeline").onclick = () => navigate("lifeline");
-  }
+  // CRITICAL FIX: always bind click, but block if locked
+  document.getElementById("lifeline").onclick = () => {
+    if (!lifelineAvailable) return;
+    navigate("lifeline");
+  };
 }
