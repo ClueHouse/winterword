@@ -97,8 +97,9 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   const isResolved = Boolean(orgState.is_resolved);
   const lifelineUnlockClue = Math.max(1, Number(game.lifeline_unlock_clue || 6));
 
+  // 🔴 STEP 1 TEST — FORCE LOCK
   function isLifelineAvailable() {
-    return orgState.lifeline_live === true;
+    return false;
   }
 
   function getClueById(id) {
@@ -175,54 +176,35 @@ import { renderLifelinePage } from "/modules/lifeline.js";
       }
 
       case "clues":
-        renderClueList(
-          app,
-          {
-            currentClue: currentClue,
-            totalClues: totalClues
-          },
-          navigate
-        );
+        renderClueList(app, { currentClue, totalClues }, navigate);
         return;
 
       case "clue": {
         const clueId = Number(options.id) || 1;
-
         if (clueId > currentClue) {
           navigate("clues");
           return;
         }
-
-        renderCluePage(
-          app,
-          {
-            clueId: clueId,
-            totalClues: totalClues,
-            clue: getClueById(clueId)
-          },
-          navigate
-        );
+        renderCluePage(app, {
+          clueId,
+          totalClues,
+          clue: getClueById(clueId)
+        }, navigate);
         return;
       }
 
       case "answer": {
         const answerId = Number(options.id) || 1;
         const answer = getAnswerById(answerId);
-
         if (!answer.unlocked) {
           navigate("clue", { id: answerId });
           return;
         }
-
-        renderAnswerPage(
-          app,
-          {
-            clueId: answerId,
-            totalClues: totalClues,
-            answer: answer
-          },
-          navigate
-        );
+        renderAnswerPage(app, {
+          clueId: answerId,
+          totalClues,
+          answer
+        }, navigate);
         return;
       }
 
@@ -232,27 +214,15 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           return;
         }
 
-        renderLifelinePage(
-          app,
-          {
-            isAvailable: true,
-            unlockClue: lifelineUnlockClue,
-            currentClue: currentClue,
-            lifelineTitle: game.lifeline_title || "Need a nudge?",
-            lifelineBody: game.lifeline_body || "Your lifeline content goes here."
-          },
-          navigate
-        );
+        renderLifelinePage(app, {
+          isAvailable: true,
+          unlockClue: lifelineUnlockClue,
+          currentClue,
+          lifelineTitle: game.lifeline_title || "Need a nudge?",
+          lifelineBody: game.lifeline_body || "Your lifeline content goes here."
+        }, navigate);
         return;
       }
-
-      case "leaderboard":
-        renderError("Leaderboard", "Coming soon.");
-        return;
-
-      case "legal":
-        renderError("Legal", "Coming soon.");
-        return;
 
       default:
         renderError("Page Not Found", "This page does not exist.");
