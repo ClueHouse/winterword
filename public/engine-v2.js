@@ -1,6 +1,6 @@
 console.log("ENGINE V2 LIVE");
 
-// v2 FORCE UPDATE
+// v3 RESOLVE LOGIC UPDATE
 
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderBaseStationResolved } from "/modules/base-station-resolved.js";
@@ -92,10 +92,15 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   const currentClue = Number(orgState.current_clue || 0);
   const totalClues = Number(orgState.total_clues || game.total_clues || 12);
   const seasonState = orgState.season_state || "pre";
-  const isResolved = Boolean(orgState.is_resolved);
   const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
 
-  // ✅ FINAL CORRECT LOGIC
+  // Base Station Resolve appears only after all clues have released
+  // and one further full frequency interval has elapsed.
+  // org-state already expresses that moment as season_state === "complete".
+  const isResolved =
+    currentClue >= totalClues &&
+    seasonState === "complete";
+
   function isLifelineAvailable() {
     return orgState.lifeline_live === true;
   }
@@ -137,9 +142,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     const lifelineAvailable = isLifelineAvailable();
 
     switch (pageName) {
-
       case "base-station":
-
         if (isResolved) {
           renderBaseStationResolved(app, {
             orgName: orgState.org_name || game.org_name,
@@ -205,7 +208,6 @@ import { renderLifelinePage } from "/modules/lifeline.js";
       }
 
       case "lifeline":
-
         if (!lifelineAvailable) {
           navigate("base-station");
           return;
