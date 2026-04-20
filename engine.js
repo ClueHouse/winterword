@@ -91,6 +91,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   const isResolved = Boolean(orgState.is_resolved);
 
   const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
+
   const lifelineAvailable =
     seasonState === "complete" || currentClue >= lifelineUnlockClue;
 
@@ -132,33 +133,45 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     switch (pageName) {
       case "base-station":
         if (isResolved) {
-          renderBaseStationResolved(app, {
-            orgName: orgState.org_name || game.org_name,
-            seasonLabel: game.season_label || "WINTERWORD • 2026"
-          }, navigate);
+          renderBaseStationResolved(
+            app,
+            {
+              orgName: orgState.org_name || game.org_name,
+              seasonLabel: game.season_label || "WINTERWORD • 2026"
+            },
+            navigate
+          );
           return;
         }
 
-        renderBaseStation(app, {
-          orgName: orgState.org_name || game.org_name,
-          seasonLabel: game.season_label,
-          introLine1: game.base_station_intro_line_1,
-          introLine2: game.base_station_intro_line_2,
-          howParagraphs: game.how_it_works_paragraphs,
-          updatesText: orgState.updates_content || game.updates_text,
-          currentClue: currentClue,
-          totalClues: totalClues,
-          seasonState: seasonState,
-          lifelineAvailable: lifelineAvailable,
-          lifelineUnlockClue: lifelineUnlockClue
-        }, navigate);
+        renderBaseStation(
+          app,
+          {
+            orgName: orgState.org_name || game.org_name,
+            seasonLabel: game.season_label,
+            introLine1: game.base_station_intro_line_1,
+            introLine2: game.base_station_intro_line_2,
+            howParagraphs: game.how_it_works_paragraphs,
+            updatesText: orgState.updates_content || game.updates_text,
+            currentClue: currentClue,
+            totalClues: totalClues,
+            seasonState: seasonState,
+            lifelineAvailable: lifelineAvailable,
+            lifelineUnlockClue: lifelineUnlockClue
+          },
+          navigate
+        );
         return;
 
       case "clues":
-        renderClueList(app, {
-          currentClue: currentClue,
-          totalClues: totalClues
-        }, navigate);
+        renderClueList(
+          app,
+          {
+            currentClue: currentClue,
+            totalClues: totalClues
+          },
+          navigate
+        );
         return;
 
       case "clue": {
@@ -169,11 +182,15 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           return;
         }
 
-        renderCluePage(app, {
-          clueId: clueId,
-          totalClues: totalClues,
-          clue: getClueById(clueId)
-        }, navigate);
+        renderCluePage(
+          app,
+          {
+            clueId: clueId,
+            totalClues: totalClues,
+            clue: getClueById(clueId)
+          },
+          navigate
+        );
         return;
       }
 
@@ -186,27 +203,37 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           return;
         }
 
-        renderAnswerPage(app, {
-          clueId: answerId,
-          totalClues: totalClues,
-          answer: answer
-        }, navigate);
+        renderAnswerPage(
+          app,
+          {
+            clueId: answerId,
+            totalClues: totalClues,
+            answer: answer
+          },
+          navigate
+        );
         return;
       }
 
       case "lifeline":
+        // HARD BLOCK before unlock
         if (!lifelineAvailable) {
           navigate("base-station");
           return;
         }
 
-        renderLifelinePage(app, {
-          isAvailable: lifelineAvailable,
-          unlockClue: lifelineUnlockClue,
-          currentClue: currentClue,
-          lifelineTitle: game.lifeline_title || "Need a nudge?",
-          lifelineBody: game.lifeline_body || "Your lifeline content goes here."
-        }, navigate);
+        renderLifelinePage(
+          app,
+          {
+            isAvailable: lifelineAvailable,
+            unlockClue: lifelineUnlockClue,
+            currentClue: currentClue,
+            lifelineTitle: game.lifeline_title || "Need a nudge?",
+            lifelineBody:
+              game.lifeline_body || "Your lifeline content goes here."
+          },
+          navigate
+        );
         return;
 
       case "leaderboard":
