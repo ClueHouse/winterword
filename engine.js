@@ -19,7 +19,10 @@ import { renderLifelinePage } from "/modules/lifeline.js";
         cache: "no-store"
       });
 
-      if (!res.ok) throw new Error(`Org state failed: ${res.status}`);
+      if (!res.ok) {
+        throw new Error(`Org state failed: ${res.status}`);
+      }
+
       return await res.json();
     } catch {
       return null;
@@ -32,7 +35,10 @@ import { renderLifelinePage } from "/modules/lifeline.js";
         cache: "no-store"
       });
 
-      if (!res.ok) throw new Error("Game not found");
+      if (!res.ok) {
+        throw new Error(`Game load failed: ${res.status}`);
+      }
+
       return await res.json();
     } catch {
       return null;
@@ -85,20 +91,19 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     return;
   }
 
-  const currentClue = Number(orgState.current_clue || 0);
-  const totalClues = Number(orgState.total_clues || game.total_clues || 12);
-  const seasonState = orgState.season_state || "pre";
+  const currentClue = Math.max(0, Number(orgState.current_clue || 0));
+  const totalClues = Math.max(1, Number(orgState.total_clues || game.total_clues || 12));
+  const seasonState = String(orgState.season_state || "pre");
   const isResolved = Boolean(orgState.is_resolved);
+  const lifelineUnlockClue = Math.max(1, Number(game.lifeline_unlock_clue || 6));
 
-  const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
-
-  const lifelineAvailable =
-    seasonState === "complete" || currentClue >= lifelineUnlockClue;
+  function isLifelineAvailable() {
+    return seasonState === "complete" || currentClue >= lifelineUnlockClue;
+  }
 
   function getClueById(id) {
     const clueId = Number(id) || 1;
     const clues = Array.isArray(game.clues) ? game.clues : [];
-
     const found = clues.find((c) => Number(c.id) === clueId);
 
     return {
@@ -114,7 +119,6 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   function getAnswerById(id) {
     const clueId = Number(id) || 1;
     const answers = Array.isArray(game.answers) ? game.answers : [];
-
     const found = answers.find((a) => Number(a.id) === clueId);
     const answersUnlocked = seasonState === "complete";
 
@@ -130,14 +134,20 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   }
 
   function navigate(pageName, options = {}) {
+    const lifelineAvailable = isLifelineAvailable();
+
     switch (pageName) {
-      case "base-station":
+      case "base-station": {
         if (isResolved) {
           renderBaseStationResolved(
             app,
             {
               orgName: orgState.org_name || game.org_name,
-              seasonLabel: game.season_label || "WINTERWORD • 2026"
+              seasonLabel: game.season_label || "WINTERWORD • 2026",
+              currentClue: currentClue,
+              totalClues: totalClues,
+              lifelineAvailable: lifelineAvailable,
+              lifelineUnlockClue: lifelineUnlockClue
             },
             navigate
           );
@@ -148,7 +158,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           app,
           {
             orgName: orgState.org_name || game.org_name,
-            seasonLabel: game.season_label,
+            seasonLabel: game.season_label || "WINTERWORD • 2026",
             introLine1: game.base_station_intro_line_1,
             introLine2: game.base_station_intro_line_2,
             howParagraphs: game.how_it_works_paragraphs,
@@ -162,6 +172,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           navigate
         );
         return;
+      }
 
       case "clues":
         renderClueList(
@@ -215,8 +226,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
         return;
       }
 
-      case "lifeline":
-        // HARD BLOCK before unlock
+      case "lifeline": {
         if (!lifelineAvailable) {
           navigate("base-station");
           return;
@@ -225,16 +235,16 @@ import { renderLifelinePage } from "/modules/lifeline.js";
         renderLifelinePage(
           app,
           {
-            isAvailable: lifelineAvailable,
+            isAvailable: true,
             unlockClue: lifelineUnlockClue,
             currentClue: currentClue,
             lifelineTitle: game.lifeline_title || "Need a nudge?",
-            lifelineBody:
-              game.lifeline_body || "Your lifeline content goes here."
+            lifelineBody: game.lifeline_body || "Your lifeline content goes here."
           },
           navigate
         );
         return;
+      }
 
       case "leaderboard":
         renderError("Leaderboard", "Coming soon.");
