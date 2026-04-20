@@ -192,7 +192,7 @@ export function renderBaseStation(app, data, navigate) {
             aria-disabled="${lifelineAvailable ? "false" : "true"}"
             title="${esc(lifelineTitle)}"
           >
-            Lifeline
+            Lifeline TEST
           </button>
           ${
             lifelineAvailable
@@ -241,17 +241,9 @@ export function renderBaseStation(app, data, navigate) {
   const leaderboardBtn = app.querySelector("#leaderboard");
   const legalBtn = app.querySelector("#legal");
 
-  if (cluesBtn) {
-    cluesBtn.onclick = () => navigate("clues");
-  }
-
-  if (leaderboardBtn) {
-    leaderboardBtn.onclick = () => navigate("leaderboard");
-  }
-
-  if (legalBtn) {
-    legalBtn.onclick = () => navigate("legal");
-  }
+  if (cluesBtn) cluesBtn.onclick = () => navigate("clues");
+  if (leaderboardBtn) leaderboardBtn.onclick = () => navigate("leaderboard");
+  if (legalBtn) legalBtn.onclick = () => navigate("legal");
 
   if (lifelineBtn) {
     lifelineBtn.onclick = (event) => {
@@ -260,7 +252,6 @@ export function renderBaseStation(app, data, navigate) {
         event.stopPropagation();
         return;
       }
-
       navigate("lifeline");
     };
   }
