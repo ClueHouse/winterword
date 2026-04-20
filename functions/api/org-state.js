@@ -122,16 +122,14 @@ export async function onRequestGet(context) {
     const season_state = getSeasonState();
     const is_complete = season_state === "complete";
 
-    // ---------- RESOLVED LOGIC (UPDATED) ----------
+    // ---------- RESOLVED LOGIC ----------
 
     function calculateIsResolved() {
       const override = record.base_station_resolved_override;
 
-      // --- manual override ---
       if (override === true || override === "true") return true;
       if (override === false || override === "false") return false;
 
-      // --- must be complete ---
       if (!is_complete) return false;
       if (!record.season_start) return false;
 
@@ -150,7 +148,6 @@ export async function onRequestGet(context) {
 
       const lastClueTime = startMs + durationMs;
 
-      // ✅ NEW: use ONE drop interval instead of 7 days
       let resolvedDelayMs = 0;
 
       if (parsed.type === "fixed") {
@@ -185,9 +182,10 @@ export async function onRequestGet(context) {
       notes: record.notes || "",
       season_state: season_state,
       is_complete: is_complete,
-
-      // ✅ FINAL OUTPUT
       is_resolved: is_resolved,
+
+      // ✅ NEW: Lifeline manual control
+      lifeline_unlocked: record.lifeline_unlocked === true,
 
       now_iso: new Date().toISOString()
     });
