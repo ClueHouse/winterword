@@ -29,18 +29,23 @@ export function renderBaseStation(app, data, navigate) {
     .map((p) => `<p>${esc(p)}</p>`)
     .join("");
 
-  // 🔴 TEST STRING ADDED HERE
   const lifelineLockedHTML = `
-    <div class="nav-btn locked">
-      LOCKED LIFELINE TEST
-      <div class="lifeline-tip">Not yet available.</div>
+    <div class="lifeline-wrap">
+      <div class="nav-btn locked" aria-disabled="true">
+        Lifeline
+      </div>
+      <div class="lifeline-tip" role="tooltip">
+        Available when Lifeline is set live.
+      </div>
     </div>
   `;
 
   const lifelineActiveHTML = `
-    <button class="nav-btn" id="lifeline" type="button">
-      Lifeline
-    </button>
+    <div class="lifeline-wrap">
+      <button class="nav-btn" id="lifeline" type="button">
+        Lifeline
+      </button>
+    </div>
   `;
 
   app.innerHTML = `
@@ -68,6 +73,7 @@ export function renderBaseStation(app, data, navigate) {
       }
 
       .nav-btn {
+        width: 100%;
         padding: 12px;
         background: #12283b;
         border: 1px solid #c87b2a;
@@ -75,19 +81,28 @@ export function renderBaseStation(app, data, navigate) {
         text-align: center;
         border-radius: 8px;
         font: inherit;
+        box-sizing: border-box;
+      }
+
+      button.nav-btn {
+        cursor: pointer;
+      }
+
+      button.nav-btn:hover {
+        background: #18344d;
+      }
+
+      .lifeline-wrap {
+        position: relative;
       }
 
       .nav-btn.locked {
         background: #1a1f26;
         border-color: #4b5563;
         color: #9ca3af;
-        opacity: 0.6;
+        opacity: 0.65;
         cursor: default;
-        position: relative;
-      }
-
-      .nav-btn.locked:hover .lifeline-tip {
-        opacity: 1;
+        user-select: none;
       }
 
       .lifeline-tip {
@@ -96,44 +111,121 @@ export function renderBaseStation(app, data, navigate) {
         top: 50%;
         transform: translateY(-50%);
         background: #111827;
+        color: #fff;
         border: 1px solid #4b5563;
-        padding: 6px 10px;
+        padding: 8px 10px;
         border-radius: 6px;
         font-size: 12px;
-        opacity: 0;
-        transition: 0.2s;
+        line-height: 1.35;
         white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s ease;
+        z-index: 20;
+      }
+
+      .lifeline-wrap:hover .lifeline-tip {
+        opacity: 1;
       }
 
       .main {
         padding: 40px;
       }
+
+      .title {
+        font-size: 48px;
+        color: #f19a2a;
+        margin: 0 0 10px;
+      }
+
+      .org {
+        margin-bottom: 20px;
+      }
+
+      .card {
+        background: #0f1f2f;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #333;
+        border-radius: 12px;
+      }
+
+      .actions {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .link-btn {
+        padding: 12px;
+        border: 1px solid #c87b2a;
+        text-align: center;
+        border-radius: 8px;
+        background: transparent;
+        color: #fff;
+        font: inherit;
+        text-decoration: none;
+        cursor: pointer;
+        box-sizing: border-box;
+      }
+
+      @media (max-width: 900px) {
+        .wrap {
+          grid-template-columns: 1fr;
+        }
+
+        .side {
+          border-right: 0;
+          border-bottom: 1px solid #c87b2a;
+        }
+
+        .lifeline-tip {
+          left: 0;
+          top: calc(100% + 8px);
+          transform: none;
+          white-space: normal;
+          width: 220px;
+        }
+      }
     </style>
 
     <div class="wrap">
       <div class="side">
-        <button class="nav-btn" id="clues">Clues</button>
+        <button class="nav-btn" id="clues" type="button">Clues</button>
 
         ${lifelineAvailable ? lifelineActiveHTML : lifelineLockedHTML}
 
-        <button class="nav-btn" id="leaderboard">Leaderboard</button>
+        <button class="nav-btn" id="leaderboard" type="button">Leaderboard</button>
       </div>
 
       <div class="main">
         <div>${esc(seasonLabel)}</div>
-        <h1>Base Station</h1>
-        <div>${esc(orgName)}</div>
+        <h1 class="title">Base Station</h1>
+        <div class="org">${esc(orgName)}</div>
 
         <p>${esc(introLine1)}<br>${esc(introLine2)}</p>
 
-        <div>
+        <div class="card">
           <strong>HOW THIS WORKS</strong>
           ${howHtml}
         </div>
 
-        <div>
+        <div class="card">
           <strong>UPDATES</strong>
           <p>${esc(updatesText)}</p>
+        </div>
+
+        <div class="card">
+          <strong>PROGRESS</strong>
+          <p>${currentClue} / ${totalClues} clues unlocked</p>
+        </div>
+
+        <div class="actions">
+          <a class="link-btn" href="mailto:fix@cluehouse.co.nz">Report a Problem</a>
+          <a class="link-btn" href="mailto:opt@cluehouse.co.nz">Subscribe</a>
+          <a class="link-btn" href="mailto:key@cluehouse.co.nz">Solve WinterWord</a>
+          <button class="link-btn" id="legal" type="button">Legal</button>
         </div>
       </div>
     </div>
@@ -142,11 +234,10 @@ export function renderBaseStation(app, data, navigate) {
   const cluesBtn = app.querySelector("#clues");
   const lifelineBtn = app.querySelector("#lifeline");
   const leaderboardBtn = app.querySelector("#leaderboard");
+  const legalBtn = app.querySelector("#legal");
 
   if (cluesBtn) cluesBtn.onclick = () => navigate("clues");
   if (leaderboardBtn) leaderboardBtn.onclick = () => navigate("leaderboard");
-
-  if (lifelineBtn) {
-    lifelineBtn.onclick = () => navigate("lifeline");
-  }
+  if (legalBtn) legalBtn.onclick = () => navigate("legal");
+  if (lifelineBtn) lifelineBtn.onclick = () => navigate("lifeline");
 }
