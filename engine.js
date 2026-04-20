@@ -88,7 +88,6 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   const currentClue = Number(orgState.current_clue || 0);
   const totalClues = Number(orgState.total_clues || game.total_clues || 12);
   const seasonState = orgState.season_state || "pre";
-
   const isResolved = Boolean(orgState.is_resolved);
 
   const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
@@ -99,7 +98,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     const clueId = Number(id) || 1;
     const clues = Array.isArray(game.clues) ? game.clues : [];
 
-    const found = clues.find(c => Number(c.id) === clueId);
+    const found = clues.find((c) => Number(c.id) === clueId);
 
     return {
       id: clueId,
@@ -115,8 +114,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     const clueId = Number(id) || 1;
     const answers = Array.isArray(game.answers) ? game.answers : [];
 
-    const found = answers.find(a => Number(a.id) === clueId);
-
+    const found = answers.find((a) => Number(a.id) === clueId);
     const answersUnlocked = seasonState === "complete";
 
     return {
@@ -132,9 +130,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
 
   function navigate(pageName, options = {}) {
     switch (pageName) {
-
       case "base-station":
-
         if (isResolved) {
           renderBaseStationResolved(app, {
             orgName: orgState.org_name || game.org_name,
@@ -152,16 +148,18 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           updatesText: orgState.updates_content || game.updates_text,
           currentClue: currentClue,
           totalClues: totalClues,
-          seasonState: seasonState
+          seasonState: seasonState,
+          lifelineAvailable: lifelineAvailable,
+          lifelineUnlockClue: lifelineUnlockClue
         }, navigate);
-        break;
+        return;
 
       case "clues":
         renderClueList(app, {
-          currentClue,
-          totalClues
+          currentClue: currentClue,
+          totalClues: totalClues
         }, navigate);
-        break;
+        return;
 
       case "clue": {
         const clueId = Number(options.id) || 1;
@@ -172,11 +170,11 @@ import { renderLifelinePage } from "/modules/lifeline.js";
         }
 
         renderCluePage(app, {
-          clueId,
-          totalClues,
+          clueId: clueId,
+          totalClues: totalClues,
           clue: getClueById(clueId)
         }, navigate);
-        break;
+        return;
       }
 
       case "answer": {
@@ -190,29 +188,32 @@ import { renderLifelinePage } from "/modules/lifeline.js";
 
         renderAnswerPage(app, {
           clueId: answerId,
-          totalClues,
-          answer
+          totalClues: totalClues,
+          answer: answer
         }, navigate);
-        break;
+        return;
       }
 
       case "lifeline":
         renderLifelinePage(app, {
           isAvailable: lifelineAvailable,
           unlockClue: lifelineUnlockClue,
-          currentClue,
+          currentClue: currentClue,
           lifelineTitle: game.lifeline_title || "Need a nudge?",
           lifelineBody: game.lifeline_body || "Your lifeline content goes here."
         }, navigate);
-        break;
+        return;
 
       case "leaderboard":
         renderError("Leaderboard", "Coming soon.");
-        break;
+        return;
+
+      case "legal":
+        renderError("Legal", "Coming soon.");
+        return;
 
       default:
         renderError("Page Not Found", "This page does not exist.");
-        break;
     }
   }
 
