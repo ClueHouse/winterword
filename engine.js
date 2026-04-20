@@ -98,7 +98,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   const lifelineUnlockClue = Math.max(1, Number(game.lifeline_unlock_clue || 6));
 
   function isLifelineAvailable() {
-    return seasonState === "complete" || currentClue >= lifelineUnlockClue;
+    return orgState.lifeline_live === true;
   }
 
   function getClueById(id) {
