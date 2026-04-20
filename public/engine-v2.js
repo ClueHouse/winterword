@@ -1,6 +1,6 @@
 console.log("ENGINE V2 LIVE");
 
-// v3 RESOLVE LOGIC UPDATE
+// v4 RESOLVE LOGIC (TIME-BASED, ENGINE-DRIVEN)
 
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderBaseStationResolved } from "/modules/base-station-resolved.js";
@@ -91,15 +91,38 @@ import { renderLifelinePage } from "/modules/lifeline.js";
 
   const currentClue = Number(orgState.current_clue || 0);
   const totalClues = Number(orgState.total_clues || game.total_clues || 12);
-  const seasonState = orgState.season_state || "pre";
+  const seasonStart = orgState.season_start ? new Date(orgState.season_start) : null;
+  const dropFrequency = orgState.drop_frequency || "weekly";
   const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
 
-  // Base Station Resolve appears only after all clues have released
-  // and one further full frequency interval has elapsed.
-  // org-state already expresses that moment as season_state === "complete".
-  const isResolved =
-    currentClue >= totalClues &&
-    seasonState === "complete";
+  // -----------------------------------
+  // 🔥 RESOLVE LOGIC (ENGINE-OWNED)
+  // -----------------------------------
+
+  function getFrequencyMs(freq) {
+    switch (freq) {
+      case "quarter_hourly": return 15 * 60 * 1000;
+      case "hourly": return 60 * 60 * 1000;
+      case "daily": return 24 * 60 * 60 * 1000;
+      case "weekly": return 7 * 24 * 60 * 60 * 1000;
+      default: return 7 * 24 * 60 * 60 * 1000;
+    }
+  }
+
+  const now = new Date();
+  const intervalMs = getFrequencyMs(dropFrequency);
+
+  let isResolved = false;
+
+  if (seasonStart && intervalMs > 0) {
+    const resolveTime = new Date(
+      seasonStart.getTime() + (totalClues * intervalMs)
+    );
+
+    isResolved = now >= resolveTime;
+  }
+
+  // -----------------------------------
 
   function isLifelineAvailable() {
     return orgState.lifeline_live === true;
@@ -125,7 +148,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     const answers = Array.isArray(game.answers) ? game.answers : [];
     const found = answers.find(a => Number(a.id) === clueId);
 
-    const answersUnlocked = seasonState === "complete";
+    const answersUnlocked = isResolved;
 
     return {
       id: clueId,
@@ -164,7 +187,6 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           updatesText: orgState.updates_content || game.updates_text,
           currentClue,
           totalClues,
-          seasonState,
           lifelineAvailable,
           lifelineUnlockClue
         }, navigate);
