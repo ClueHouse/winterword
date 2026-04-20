@@ -29,9 +29,10 @@ export function renderBaseStation(app, data, navigate) {
     .map((p) => `<p>${esc(p)}</p>`)
     .join("");
 
+  // 🔴 TEST STRING ADDED HERE
   const lifelineLockedHTML = `
     <div class="nav-btn locked">
-      Lifeline
+      LOCKED LIFELINE TEST
       <div class="lifeline-tip">Not yet available.</div>
     </div>
   `;
