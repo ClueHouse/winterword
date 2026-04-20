@@ -7,14 +7,18 @@ export function renderBaseStation(app, data, navigate) {
     howParagraphs = [],
     updatesText = "No updates yet.",
     currentClue = 0,
-    totalClues = 12
+    totalClues = 12,
+    lifelineAvailable = false,
+    lifelineUnlockClue = 6
   } = data || {};
 
   function esc(v) {
     return String(v ?? "")
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
 
   const howHtml = (howParagraphs.length ? howParagraphs : [
@@ -24,6 +28,10 @@ export function renderBaseStation(app, data, navigate) {
   ])
     .map(p => `<p>${esc(p)}</p>`)
     .join("");
+
+  const lifelineTitle = lifelineAvailable
+    ? "Open Lifeline"
+    : `Lifeline unlocks at clue ${lifelineUnlockClue}`;
 
   app.innerHTML = `
     <style>
@@ -56,6 +64,24 @@ export function renderBaseStation(app, data, navigate) {
         color: #fff;
         cursor: pointer;
         text-align: center;
+        border-radius: 8px;
+        font: inherit;
+      }
+
+      .nav-btn:hover {
+        background: #18344d;
+      }
+
+      .nav-btn.locked {
+        background: #1a1f26;
+        border-color: #4b5563;
+        color: #9ca3af;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .nav-btn.locked:hover {
+        background: #1a1f26;
       }
 
       .main {
@@ -77,6 +103,7 @@ export function renderBaseStation(app, data, navigate) {
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #333;
+        border-radius: 12px;
       }
 
       .actions {
@@ -90,14 +117,77 @@ export function renderBaseStation(app, data, navigate) {
         padding: 12px;
         border: 1px solid #c87b2a;
         text-align: center;
+        border-radius: 8px;
+      }
+
+      .lifeline-wrap {
+        position: relative;
+      }
+
+      .lifeline-tip {
+        position: absolute;
+        left: calc(100% + 10px);
+        top: 50%;
+        transform: translateY(-50%);
+        background: #111827;
+        color: #fff;
+        border: 1px solid #4b5563;
+        border-radius: 8px;
+        padding: 8px 10px;
+        white-space: nowrap;
+        font-size: 12px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s ease;
+        z-index: 20;
+      }
+
+      .lifeline-wrap:hover .lifeline-tip {
+        opacity: 1;
+      }
+
+      @media (max-width: 900px) {
+        .wrap {
+          grid-template-columns: 1fr;
+        }
+
+        .side {
+          border-right: 0;
+          border-bottom: 1px solid #c87b2a;
+        }
+
+        .lifeline-tip {
+          left: 0;
+          top: calc(100% + 8px);
+          transform: none;
+          white-space: normal;
+          width: 220px;
+        }
       }
     </style>
 
     <div class="wrap">
       <div class="side">
-        <button class="nav-btn" id="clues">Clues</button>
-        <button class="nav-btn" id="lifeline">Lifeline</button>
-        <button class="nav-btn" id="leaderboard">Leaderboard</button>
+        <button class="nav-btn" id="clues" type="button">Clues</button>
+
+        <div class="lifeline-wrap">
+          <button
+            class="nav-btn ${lifelineAvailable ? "" : "locked"}"
+            id="lifeline"
+            type="button"
+            title="${esc(lifelineTitle)}"
+            ${lifelineAvailable ? "" : "disabled"}
+          >
+            Lifeline
+          </button>
+          ${
+            lifelineAvailable
+              ? ""
+              : `<div class="lifeline-tip">Available after clue ${esc(lifelineUnlockClue)} is released.</div>`
+          }
+        </div>
+
+        <button class="nav-btn" id="leaderboard" type="button">Leaderboard</button>
       </div>
 
       <div class="main">
@@ -126,14 +216,17 @@ export function renderBaseStation(app, data, navigate) {
           <a class="link-btn" href="mailto:fix@cluehouse.co.nz">Report a Problem</a>
           <a class="link-btn" href="mailto:opt@cluehouse.co.nz">Subscribe</a>
           <a class="link-btn" href="mailto:key@cluehouse.co.nz">Solve WinterWord</a>
-          <button class="link-btn" id="legal">Legal</button>
+          <button class="link-btn" id="legal" type="button">Legal</button>
         </div>
       </div>
     </div>
   `;
 
   document.getElementById("clues").onclick = () => navigate("clues");
-  document.getElementById("lifeline").onclick = () => navigate("lifeline");
   document.getElementById("leaderboard").onclick = () => navigate("leaderboard");
   document.getElementById("legal").onclick = () => navigate("legal");
+
+  if (lifelineAvailable) {
+    document.getElementById("lifeline").onclick = () => navigate("lifeline");
+  }
 }
