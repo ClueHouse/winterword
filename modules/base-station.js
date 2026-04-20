@@ -26,12 +26,16 @@ export function renderBaseStation(app, data, navigate) {
     "Together, they form the WinterWord.",
     "One guess only."
   ])
-    .map(p => `<p>${esc(p)}</p>`)
+    .map((p) => `<p>${esc(p)}</p>`)
     .join("");
 
   const lifelineTitle = lifelineAvailable
     ? "Open Lifeline"
     : `Lifeline unlocks at clue ${lifelineUnlockClue}`;
+
+  const lifelineTip = lifelineAvailable
+    ? ""
+    : `Available after clue ${esc(lifelineUnlockClue)} is released.`;
 
   app.innerHTML = `
     <style>
@@ -66,6 +70,8 @@ export function renderBaseStation(app, data, navigate) {
         text-align: center;
         border-radius: 8px;
         font: inherit;
+        width: 100%;
+        box-sizing: border-box;
       }
 
       .nav-btn:hover {
@@ -118,6 +124,12 @@ export function renderBaseStation(app, data, navigate) {
         border: 1px solid #c87b2a;
         text-align: center;
         border-radius: 8px;
+        background: transparent;
+        color: #fff;
+        font: inherit;
+        text-decoration: none;
+        cursor: pointer;
+        box-sizing: border-box;
       }
 
       .lifeline-wrap {
@@ -136,13 +148,15 @@ export function renderBaseStation(app, data, navigate) {
         padding: 8px 10px;
         white-space: nowrap;
         font-size: 12px;
+        line-height: 1.35;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.15s ease;
         z-index: 20;
       }
 
-      .lifeline-wrap:hover .lifeline-tip {
+      .lifeline-wrap:hover .lifeline-tip,
+      .lifeline-wrap:focus-within .lifeline-tip {
         opacity: 1;
       }
 
@@ -175,15 +189,15 @@ export function renderBaseStation(app, data, navigate) {
             class="nav-btn ${lifelineAvailable ? "" : "locked"}"
             id="lifeline"
             type="button"
+            aria-disabled="${lifelineAvailable ? "false" : "true"}"
             title="${esc(lifelineTitle)}"
           >
             Lifeline
           </button>
-
           ${
             lifelineAvailable
               ? ""
-              : `<div class="lifeline-tip">Available after clue ${esc(lifelineUnlockClue)} is released.</div>`
+              : `<div class="lifeline-tip" role="tooltip">${lifelineTip}</div>`
           }
         </div>
 
@@ -222,13 +236,32 @@ export function renderBaseStation(app, data, navigate) {
     </div>
   `;
 
-  document.getElementById("clues").onclick = () => navigate("clues");
-  document.getElementById("leaderboard").onclick = () => navigate("leaderboard");
-  document.getElementById("legal").onclick = () => navigate("legal");
+  const cluesBtn = app.querySelector("#clues");
+  const lifelineBtn = app.querySelector("#lifeline");
+  const leaderboardBtn = app.querySelector("#leaderboard");
+  const legalBtn = app.querySelector("#legal");
 
-  // CRITICAL FIX: always bind click, but block if locked
-  document.getElementById("lifeline").onclick = () => {
-    if (!lifelineAvailable) return;
-    navigate("lifeline");
-  };
+  if (cluesBtn) {
+    cluesBtn.onclick = () => navigate("clues");
+  }
+
+  if (leaderboardBtn) {
+    leaderboardBtn.onclick = () => navigate("leaderboard");
+  }
+
+  if (legalBtn) {
+    legalBtn.onclick = () => navigate("legal");
+  }
+
+  if (lifelineBtn) {
+    lifelineBtn.onclick = (event) => {
+      if (!lifelineAvailable) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      navigate("lifeline");
+    };
+  }
 }
