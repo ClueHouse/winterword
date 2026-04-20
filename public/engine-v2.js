@@ -1,3 +1,5 @@
+console.log("ENGINE V2 LIVE");
+
 // v2 FORCE UPDATE
 
 import { renderBaseStation } from "/modules/base-station.js";
