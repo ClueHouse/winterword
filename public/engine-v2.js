@@ -1,6 +1,6 @@
 console.log("ENGINE V2 LIVE");
 
-// v5 RESOLVE LOGIC (BACKEND-FIRST)
+// v6 RESOLVE LOGIC (BACKEND-FIRST) + LEADERBOARD MODULE
 
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderBaseStationResolved } from "/modules/base-station-resolved.js";
@@ -8,6 +8,7 @@ import { renderClueList } from "/modules/clue-list.js";
 import { renderCluePage } from "/modules/clue-page.js";
 import { renderAnswerPage } from "/modules/answer-page.js";
 import { renderLifelinePage } from "/modules/lifeline.js";
+import { renderLeaderboardPage } from "/modules/leaderboard.js";
 
 (async function () {
   const app = document.getElementById("app");
@@ -267,7 +268,16 @@ import { renderLifelinePage } from "/modules/lifeline.js";
         return;
 
       case "leaderboard":
-        renderError("Leaderboard", "Coming soon.");
+        renderLeaderboardPage(
+          app,
+          {
+            orgName: orgState.org_name || game.org_name,
+            seasonLabel: game.season_label || "WINTERWORD • 2026",
+            slug,
+            leaderboardEndpoint: "/api/leaderboard"
+          },
+          navigate
+        );
         return;
 
       default:
