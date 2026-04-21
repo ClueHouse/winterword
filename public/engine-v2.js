@@ -1,6 +1,6 @@
 console.log("ENGINE V2 LIVE");
 
-// v4 RESOLVE LOGIC (TIME-BASED, ENGINE-DRIVEN)
+// v5 RESOLVE LOGIC (BACKEND-FIRST)
 
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderBaseStationResolved } from "/modules/base-station-resolved.js";
@@ -64,6 +64,34 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     `;
   }
 
+  function getFrequencyMs(freq) {
+    switch (freq) {
+      case "quarter_hourly":
+        return 15 * 60 * 1000;
+      case "hourly":
+        return 60 * 60 * 1000;
+      case "daily":
+        return 24 * 60 * 60 * 1000;
+      case "weekly":
+        return 7 * 24 * 60 * 60 * 1000;
+      default:
+        return 7 * 24 * 60 * 60 * 1000;
+    }
+  }
+
+  function computeResolvedFallback(orgState, totalClues) {
+    const seasonStart = orgState?.season_start ? new Date(orgState.season_start) : null;
+    const dropFrequency = orgState?.drop_frequency || "weekly";
+    const intervalMs = getFrequencyMs(dropFrequency);
+
+    if (!seasonStart || Number.isNaN(seasonStart.getTime()) || intervalMs <= 0) {
+      return false;
+    }
+
+    const resolveTime = seasonStart.getTime() + (Number(totalClues) * intervalMs);
+    return Date.now() >= resolveTime;
+  }
+
   const slug = getSlug();
   const orgState = await loadOrgState(slug);
 
@@ -91,38 +119,13 @@ import { renderLifelinePage } from "/modules/lifeline.js";
 
   const currentClue = Number(orgState.current_clue || 0);
   const totalClues = Number(orgState.total_clues || game.total_clues || 12);
-  const seasonStart = orgState.season_start ? new Date(orgState.season_start) : null;
-  const dropFrequency = orgState.drop_frequency || "weekly";
+  const seasonState = orgState.season_state || "pre";
   const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
 
-  // -----------------------------------
-  // 🔥 RESOLVE LOGIC (ENGINE-OWNED)
-  // -----------------------------------
-
-  function getFrequencyMs(freq) {
-    switch (freq) {
-      case "quarter_hourly": return 15 * 60 * 1000;
-      case "hourly": return 60 * 60 * 1000;
-      case "daily": return 24 * 60 * 60 * 1000;
-      case "weekly": return 7 * 24 * 60 * 60 * 1000;
-      default: return 7 * 24 * 60 * 60 * 1000;
-    }
-  }
-
-  const now = new Date();
-  const intervalMs = getFrequencyMs(dropFrequency);
-
-  let isResolved = false;
-
-  if (seasonStart && intervalMs > 0) {
-    const resolveTime = new Date(
-      seasonStart.getTime() + (totalClues * intervalMs)
-    );
-
-    isResolved = now >= resolveTime;
-  }
-
-  // -----------------------------------
+  const isResolved =
+    orgState.is_resolved === true
+      ? true
+      : computeResolvedFallback(orgState, totalClues);
 
   function isLifelineAvailable() {
     return orgState.lifeline_live === true;
@@ -131,7 +134,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   function getClueById(id) {
     const clueId = Number(id) || 1;
     const clues = Array.isArray(game.clues) ? game.clues : [];
-    const found = clues.find(c => Number(c.id) === clueId);
+    const found = clues.find((c) => Number(c.id) === clueId);
 
     return {
       id: clueId,
@@ -146,9 +149,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
   function getAnswerById(id) {
     const clueId = Number(id) || 1;
     const answers = Array.isArray(game.answers) ? game.answers : [];
-    const found = answers.find(a => Number(a.id) === clueId);
-
-    const answersUnlocked = isResolved;
+    const found = answers.find((a) => Number(a.id) === clueId);
 
     return {
       id: clueId,
@@ -157,7 +158,7 @@ import { renderLifelinePage } from "/modules/lifeline.js";
       image: found?.image || "",
       audio: found?.audio || "",
       letter: found?.letter || "",
-      unlocked: answersUnlocked && clueId <= currentClue
+      unlocked: isResolved && clueId <= totalClues
     };
   }
 
@@ -167,29 +168,38 @@ import { renderLifelinePage } from "/modules/lifeline.js";
     switch (pageName) {
       case "base-station":
         if (isResolved) {
-          renderBaseStationResolved(app, {
-            orgName: orgState.org_name || game.org_name,
-            seasonLabel: game.season_label || "WINTERWORD • 2026",
-            currentClue,
-            totalClues,
-            lifelineAvailable,
-            lifelineUnlockClue
-          }, navigate);
+          renderBaseStationResolved(
+            app,
+            {
+              orgName: orgState.org_name || game.org_name,
+              seasonLabel: game.season_label || "WINTERWORD • 2026",
+              currentClue,
+              totalClues,
+              lifelineAvailable,
+              lifelineUnlockClue
+            },
+            navigate
+          );
           return;
         }
 
-        renderBaseStation(app, {
-          orgName: orgState.org_name || game.org_name,
-          seasonLabel: game.season_label,
-          introLine1: game.base_station_intro_line_1,
-          introLine2: game.base_station_intro_line_2,
-          howParagraphs: game.how_it_works_paragraphs,
-          updatesText: orgState.updates_content || game.updates_text,
-          currentClue,
-          totalClues,
-          lifelineAvailable,
-          lifelineUnlockClue
-        }, navigate);
+        renderBaseStation(
+          app,
+          {
+            orgName: orgState.org_name || game.org_name,
+            seasonLabel: game.season_label,
+            introLine1: game.base_station_intro_line_1,
+            introLine2: game.base_station_intro_line_2,
+            howParagraphs: game.how_it_works_paragraphs,
+            updatesText: orgState.updates_content || game.updates_text,
+            currentClue,
+            totalClues,
+            seasonState,
+            lifelineAvailable,
+            lifelineUnlockClue
+          },
+          navigate
+        );
         return;
 
       case "clues":
@@ -204,11 +214,15 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           return;
         }
 
-        renderCluePage(app, {
-          clueId,
-          totalClues,
-          clue: getClueById(clueId)
-        }, navigate);
+        renderCluePage(
+          app,
+          {
+            clueId,
+            totalClues,
+            clue: getClueById(clueId)
+          },
+          navigate
+        );
         return;
       }
 
@@ -221,11 +235,15 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           return;
         }
 
-        renderAnswerPage(app, {
-          clueId: answerId,
-          totalClues,
-          answer
-        }, navigate);
+        renderAnswerPage(
+          app,
+          {
+            clueId: answerId,
+            totalClues,
+            answer
+          },
+          navigate
+        );
         return;
       }
 
@@ -235,13 +253,17 @@ import { renderLifelinePage } from "/modules/lifeline.js";
           return;
         }
 
-        renderLifelinePage(app, {
-          isAvailable: true,
-          unlockClue: lifelineUnlockClue,
-          currentClue,
-          lifelineTitle: game.lifeline_title || "Need a nudge?",
-          lifelineBody: game.lifeline_body || "Your lifeline content goes here."
-        }, navigate);
+        renderLifelinePage(
+          app,
+          {
+            isAvailable: true,
+            unlockClue: lifelineUnlockClue,
+            currentClue,
+            lifelineTitle: game.lifeline_title || "Need a nudge?",
+            lifelineBody: game.lifeline_body || "Your lifeline content goes here."
+          },
+          navigate
+        );
         return;
 
       case "leaderboard":
