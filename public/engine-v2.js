@@ -1,6 +1,6 @@
 console.log("ENGINE V2 LIVE");
 
-// v6 RESOLVE LOGIC (BACKEND-FIRST) + LEADERBOARD MODULE
+// v6 RESOLVE LOGIC (BACKEND-FIRST) + LEADERBOARD MODULE + FIRST-VISIT WELCOME INTRO
 
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderBaseStationResolved } from "/modules/base-station-resolved.js";
@@ -9,6 +9,7 @@ import { renderCluePage } from "/modules/clue-page.js";
 import { renderAnswerPage } from "/modules/answer-page.js";
 import { renderLifelinePage } from "/modules/lifeline.js";
 import { renderLeaderboardPage } from "/modules/leaderboard.js";
+import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
 
 (async function () {
   const app = document.getElementById("app");
@@ -93,6 +94,26 @@ import { renderLeaderboardPage } from "/modules/leaderboard.js";
     return Date.now() >= resolveTime;
   }
 
+  function getWelcomeStorageKey(slug) {
+    return `winterword_welcome_seen_${slug}`;
+  }
+
+  function hasSeenWelcome(slug) {
+    try {
+      return window.localStorage.getItem(getWelcomeStorageKey(slug)) === "true";
+    } catch {
+      return false;
+    }
+  }
+
+  function markWelcomeSeen(slug) {
+    try {
+      window.localStorage.setItem(getWelcomeStorageKey(slug), "true");
+    } catch {
+      // If localStorage is unavailable, continue without breaking the site.
+    }
+  }
+
   const slug = getSlug();
   const orgState = await loadOrgState(slug);
 
@@ -167,6 +188,20 @@ import { renderLeaderboardPage } from "/modules/leaderboard.js";
     const lifelineAvailable = isLifelineAvailable();
 
     switch (pageName) {
+      case "welcome":
+        renderWelcomeIntro(
+          app,
+          {
+            orgName: orgState.org_name || game.org_name,
+            slug
+          },
+          function () {
+            markWelcomeSeen(slug);
+            navigate("base-station");
+          }
+        );
+        return;
+
       case "base-station":
         if (isResolved) {
           renderBaseStationResolved(
@@ -286,5 +321,9 @@ import { renderLeaderboardPage } from "/modules/leaderboard.js";
     }
   }
 
-  navigate("base-station");
+  if (hasSeenWelcome(slug)) {
+    navigate("base-station");
+  } else {
+    navigate("welcome");
+  }
 })();
