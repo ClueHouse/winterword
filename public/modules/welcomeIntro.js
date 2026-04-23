@@ -9,7 +9,7 @@ export function renderWelcomeIntro(app, data, navigate) {
           playsinline
           preload="auto"
         >
-          <source src="/cgi/asset/welcome_WFjIMGqogODo2vmAtMvth.mp4" type="video/mp4">
+          <source src="/assets/winterword/videos/welcome.mp4" type="video/mp4">
         </video>
         <div class="ww-welcome-video-overlay"></div>
       </div>
