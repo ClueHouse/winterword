@@ -296,7 +296,8 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
             unlockClue: lifelineUnlockClue,
             currentClue,
             lifelineTitle: game.lifeline_title || "Need a nudge?",
-            lifelineBody: game.lifeline_body || "Your lifeline content goes here."
+            lifelineBody: game.lifeline_body || "Your lifeline content goes here.",
+            lifelineImage: game.lifeline_image || ""
           },
           navigate
         );
