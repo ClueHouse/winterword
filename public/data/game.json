@@ -13,6 +13,7 @@
   "lifeline_unlock_clue": 6,
   "lifeline_title": "Need a nudge?",
   "lifeline_body": "Think about the setting. What stands out that shouldn't be there?",
+  "lifeline_image": "/assets/winterword/shared/lifeline.png",
   "clues": [
     {
       "id": 1,
