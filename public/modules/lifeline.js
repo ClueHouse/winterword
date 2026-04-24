@@ -1,7 +1,24 @@
 export function renderLifelinePage(app, data, navigate) {
   const {
-    lifelineImage = "/assets/winterword/shared/lifelinebg.png"
+    lifelineImage = "/assets/winterword/shared/lifelinebg.png",
+    orgName = "WinterWord"
   } = data;
+
+  const subject = encodeURIComponent(`WinterWord Lifeline — ${orgName}`);
+
+  const body = encodeURIComponent(
+`Curator,
+
+The frost is thick on this one.
+Help me break through.
+
+Clue number:
+My question:
+
+—
+I understand I will receive only one reply:
+Yes, No, Warm, or Cold.`
+  );
 
   app.innerHTML = `
     <section id="wwPage">
@@ -17,7 +34,7 @@ export function renderLifelinePage(app, data, navigate) {
           </div>
 
           <div class="ww-main">
-            <a class="ww-lifeline" href="mailto:ask@cluehouse.co.nz">
+            <a class="ww-lifeline" href="mailto:ask@cluehouse.co.nz?subject=${subject}&body=${body}">
 
               <div class="ww-lifeline-media"></div>
 
@@ -210,7 +227,6 @@ function injectLifelineStyles(lifelineImage) {
       padding:3rem;
     }
 
-    /* ✅ PREMIUM TEXT */
     .ww-lifeline-copy{
       max-width:38rem;
       color:#f4f6f8;
