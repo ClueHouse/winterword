@@ -3,115 +3,97 @@ export function renderLifelinePage(app, data, navigate) {
     isAvailable = false,
     unlockClue = 6,
     currentClue = 0,
-    lifelineTitle = "Lifeline",
-    lifelineBody = "No lifeline content yet."
-  } = data || {};
+    lifelineTitle = "Need a nudge?",
+    lifelineBody = "Your lifeline content goes here.",
+    lifelineImage = ""
+  } = data;
 
-  function esc(v) {
-    return String(v ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-  }
+  const isUnlocked = currentClue >= unlockClue && isAvailable;
 
   app.innerHTML = `
-    <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #0b1724;
-        color: #fff;
-      }
+    <section class="ww-lifeline-page">
+      <div class="ww-lifeline-container">
+        <h1 class="ww-lifeline-title">${lifelineTitle}</h1>
 
-      .wrap {
-        min-height: 100vh;
-        padding: 40px;
-      }
+        ${
+          isUnlocked
+            ? `
+              ${lifelineImage ? `<img src="${lifelineImage}" class="ww-lifeline-image" />` : ""}
+              <p class="ww-lifeline-body">${lifelineBody}</p>
+            `
+            : `
+              <p class="ww-lifeline-locked">
+                Lifeline unlocks at clue ${unlockClue}.
+              </p>
+            `
+        }
 
-      .topbar {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-bottom: 24px;
-      }
-
-      .btn {
-        padding: 10px 16px;
-        cursor: pointer;
-        border: 1px solid #c87b2a;
-        background: #12283b;
-        color: #fff;
-        border-radius: 8px;
-        font: inherit;
-      }
-
-      .btn:hover {
-        background: #18344d;
-      }
-
-      .meta {
-        color: #b8c6d4;
-        font-size: 13px;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        margin-bottom: 12px;
-      }
-
-      .title {
-        font-size: 42px;
-        color: #f19a2a;
-        margin: 0 0 22px;
-      }
-
-      .card {
-        background: #0f1f2f;
-        padding: 24px;
-        border: 1px solid #2c3f52;
-        border-radius: 14px;
-        margin-bottom: 24px;
-      }
-
-      .body {
-        font-size: 18px;
-        line-height: 1.7;
-        color: #e7edf2;
-        white-space: pre-wrap;
-      }
-
-      .locked {
-        background: #2a1616;
-        border-color: #6b2a2a;
-        color: #ffd6d6;
-      }
-    </style>
-
-    <div class="wrap">
-      <div class="topbar">
-        <button class="btn" id="backToBase" type="button">← Base Station</button>
-        <button class="btn" id="backToClues" type="button">Clue List</button>
+        <button class="ww-lifeline-back">Back</button>
       </div>
-
-      <div class="meta">Support</div>
-      <h1 class="title">Lifeline</h1>
-
-      ${
-        isAvailable
-          ? `
-            <div class="card">
-              <div class="body"><strong>${esc(lifelineTitle)}</strong>\n\n${esc(lifelineBody)}</div>
-            </div>
-          `
-          : `
-            <div class="card locked">
-              <div class="body">This lifeline is not available yet.\n\nIt unlocks at clue ${esc(unlockClue)}.\nCurrent unlocked clue: ${esc(currentClue)}.</div>
-            </div>
-          `
-      }
-    </div>
+    </section>
   `;
 
-  document.getElementById("backToBase").onclick = () => navigate("base-station");
-  document.getElementById("backToClues").onclick = () => navigate("clues");
+  injectLifelineStyles();
+
+  app.querySelector(".ww-lifeline-back").addEventListener("click", () => {
+    navigate("base-station");
+  });
+}
+
+function injectLifelineStyles() {
+  if (document.getElementById("ww-lifeline-styles")) return;
+
+  const style = document.createElement("style");
+  style.id = "ww-lifeline-styles";
+
+  style.textContent = `
+    .ww-lifeline-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0b0b0b;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .ww-lifeline-container {
+      max-width: 600px;
+    }
+
+    .ww-lifeline-title {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .ww-lifeline-body {
+      font-size: 18px;
+      color: #ccc;
+      margin-top: 20px;
+    }
+
+    .ww-lifeline-locked {
+      font-size: 18px;
+      color: #888;
+    }
+
+    .ww-lifeline-image {
+      max-width: 100%;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
+    .ww-lifeline-back {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #222;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  `;
+
+  document.head.appendChild(style);
 }
