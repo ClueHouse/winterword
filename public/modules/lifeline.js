@@ -20,6 +20,8 @@ I understand I will receive only one reply:
 Yes, No, Warm, or Cold.`
   );
 
+  const mailto = `mailto:ask@cluehouse.co.nz?subject=${subject}&body=${body}`;
+
   app.innerHTML = `
     <section id="wwPage">
       <div id="wwShell">
@@ -34,7 +36,7 @@ Yes, No, Warm, or Cold.`
           </div>
 
           <div class="ww-main">
-            <a class="ww-lifeline" href="mailto:ask@cluehouse.co.nz?subject=${subject}&body=${body}">
+            <div class="ww-lifeline">
 
               <div class="ww-lifeline-media"></div>
 
@@ -61,13 +63,17 @@ Yes, No, Warm, or Cold.`
                     Use it early or save it for the coldest hour.<br>
                     But once it's gone... it's gone.</p>
 
-                    <p>When it is time, click here.</p>
+                    <p>
+                      <a class="ww-lifeline-email" href="${mailto}">
+                        When it is time, click here.
+                      </a>
+                    </p>
 
                   </div>
                 </div>
               </div>
 
-            </a>
+            </div>
           </div>
 
         </div>
@@ -98,7 +104,6 @@ function injectLifelineStyles(lifelineImage) {
   style.textContent = `
     :root{
       --ww-ink:#dce5ec;
-      --ww-muted:rgba(220,229,236,0.72);
     }
 
     *{box-sizing:border-box;}
@@ -123,10 +128,7 @@ function injectLifelineStyles(lifelineImage) {
       pointer-events:none;
     }
 
-    #wwPage{
-      min-height:100vh;
-      padding:2rem;
-    }
+    #wwPage{min-height:100vh;padding:2rem;}
 
     #wwShell{
       max-width:82rem;
@@ -167,10 +169,7 @@ function injectLifelineStyles(lifelineImage) {
       cursor:pointer;
     }
 
-    .ww-side-logo img{
-      width:9.6rem;
-      display:block;
-    }
+    .ww-side-logo img{width:9.6rem;}
 
     .ww-divider{
       width:36px;
@@ -184,23 +183,15 @@ function injectLifelineStyles(lifelineImage) {
       text-transform:uppercase;
       font-weight:900;
       color:#ffffff;
-      text-shadow:
-        0 1px 2px rgba(0,0,0,0.75),
-        0 0 4px rgba(255,255,255,0.04);
     }
 
-    .ww-main{
-      display:flex;
-      min-width:0;
-    }
+    .ww-main{display:flex;}
 
     .ww-lifeline{
       position:relative;
       width:100%;
       border-radius:1.4rem;
       overflow:hidden;
-      text-decoration:none;
-      color:inherit;
     }
 
     .ww-lifeline-media{
@@ -233,22 +224,23 @@ function injectLifelineStyles(lifelineImage) {
       text-align:center;
       line-height:2.05;
       font-size:1.08rem;
-      font-weight:400;
-      letter-spacing:0.015em;
-      text-shadow:
-        0 2px 8px rgba(0,0,0,0.65),
-        0 0 1px rgba(255,255,255,0.04);
     }
 
-    .ww-lifeline-copy p{
-      margin:0 0 1.25rem;
-    }
+    .ww-lifeline-copy p{margin:0 0 1.25rem;}
 
-    .ww-lifeline-copy p:last-child{
-      margin-bottom:0;
-      margin-top:1.6rem;
+    /* ✨ PREMIUM LINK */
+    .ww-lifeline-email{
+      color:#ffffff;
+      text-decoration:none;
       font-weight:600;
-      letter-spacing:0.04em;
+      letter-spacing:0.05em;
+      border-bottom:1px solid rgba(255,255,255,0.4);
+      transition:all .2s ease;
+    }
+
+    .ww-lifeline-email:hover{
+      border-bottom-color:#fff;
+      letter-spacing:0.08em;
     }
   `;
 }
