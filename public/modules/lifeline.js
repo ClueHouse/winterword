@@ -15,7 +15,7 @@ Help me break through.
 Clue number:
 My question:
 
-—
+-
 I understand I will receive only one reply:
 Yes, No, Warm, or Cold.`
   );
@@ -47,14 +47,14 @@ Yes, No, Warm, or Cold.`
                     <p>The line between knowing and not-knowing is thin.<br>
                     Sometimes it hums.<br>
                     Sometimes it mocks.<br>
-                    And sometimes — just once —<br>
+                    And sometimes - just once -<br>
                     you're allowed to speak across it.</p>
 
                     <p>You may ask one question to help you solve any clue.<br>
                     Just one.</p>
 
                     <p>Your question must be clear. Direct. Unriddled.<br>
-                    In return, you'll hear only one of four replies —<br>
+                    In return, you'll hear only one of four replies -<br>
                     Yes. No. Warm. Cold.</p>
 
                     <p>The answer may help you. It may not.<br>
