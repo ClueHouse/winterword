@@ -192,7 +192,7 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
         renderWelcomeIntro(
           app,
           {
-            orgName: orgState.org_name || game.org_name,
+            orgName: orgState.org_name || game.org_name || "WinterWord",
             slug
           },
           function () {
@@ -207,7 +207,7 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
           renderBaseStationResolved(
             app,
             {
-              orgName: orgState.org_name || game.org_name,
+              orgName: orgState.org_name || game.org_name || "WinterWord",
               seasonLabel: game.season_label || "WINTERWORD • 2026",
               currentClue,
               totalClues,
@@ -222,7 +222,7 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
         renderBaseStation(
           app,
           {
-            orgName: orgState.org_name || game.org_name,
+            orgName: orgState.org_name || game.org_name || "WinterWord",
             seasonLabel: game.season_label,
             introLine1: game.base_station_intro_line_1,
             introLine2: game.base_station_intro_line_2,
@@ -297,7 +297,8 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
             currentClue,
             lifelineTitle: game.lifeline_title || "Need a nudge?",
             lifelineBody: game.lifeline_body || "Your lifeline content goes here.",
-            lifelineImage: game.lifeline_image || ""
+            lifelineImage: game.lifeline_image || "",
+            orgName: orgState.org_name || game.org_name || "WinterWord"
           },
           navigate
         );
@@ -307,7 +308,7 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
         renderLeaderboardPage(
           app,
           {
-            orgName: orgState.org_name || game.org_name,
+            orgName: orgState.org_name || game.org_name || "WinterWord",
             seasonLabel: game.season_label || "WINTERWORD • 2026",
             slug,
             leaderboardEndpoint: "/api/leaderboard"
