@@ -184,8 +184,9 @@ export async function onRequestGet(context) {
       is_complete: is_complete,
       is_resolved: is_resolved,
 
-      // ✅ UPDATED FIELD
+      // ✅ LIVE FEATURE FLAGS
       lifeline_live: record.lifeline_live === true,
+      flash_clue_live: record.flash_clue_live === true,
 
       now_iso: new Date().toISOString()
     });
