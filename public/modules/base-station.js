@@ -39,16 +39,19 @@ export function renderBaseStation(app, data = {}, navigate) {
   const progressText = `${Number(currentClue) || 0} of ${Number(totalClues) || 12} clues released`;
 
   const reportProblemHref =
-    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}&body=SET%20THE%20SCENE%3A%0AWhich%20page%20were%20you%20on%3F%0A%0AORGANISATION%3A%0A${encodedOrgName}%0A%0APLOT%20TWIST%3A%0AWhat%20went%20wrong%3F%0A%0AALTERNATE%20ENDING%3A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0AYOUR%20TRAVELLER%E2%80%99S%20GEAR%3A%0AWhich%20device%20%2B%20browser%20you%20brought%20on%20this%20journey.%0A%0AThanks%20for%20sharing%20%E2%80%94%20we%E2%80%99ll%20follow%20the%20trail%20and%20set%20things%20right.`;
+    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}&body=SET%20THE%20SCENE%3A%0AWhich%20page%20were%20you%20on%3F%0A%0APLOT%20TWIST%3A%0AWhat%20went%20wrong%3F%0A%0AALTERNATE%20ENDING%3A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0AYOUR%20TRAVELLER%E2%80%99S%20GEAR%3A%0AWhich%20device%20%2B%20browser%20you%20brought%20on%20this%20journey.%0A%0AThanks%20for%20sharing%20%E2%80%94%20we%E2%80%99ll%20follow%20the%20trail%20and%20set%20things%20right.`;
 
   const subscribeHref =
-    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}&body=Sign%20me%20up.%20The%20winter%20hush%20is%20starting%20to%20feel%20personal.%0A%0AOrganisation%3A%20${encodedOrgName}`;
+    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}&body=Sign%20me%20up.%20The%20winter%20hush%20is%20starting%20to%20feel%20personal.`;
 
   const unsubscribeHref =
-    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Unsubscribe%20-%20${encodedOrgName}&body=Remove%20me%20from%20Winterword%20Clue%20Alerts.%20I%E2%80%99m%20embracing%20the%20quiet%20freeze%20of%20an%20uncluttered%20inbox.%0A%0AOrganisation%3A%20${encodedOrgName}`;
+    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Unsubscribe%20-%20${encodedOrgName}&body=Remove%20me%20from%20Winterword%20Clue%20Alerts.%20I%E2%80%99m%20embracing%20the%20quiet%20freeze%20of%20an%20uncluttered%20inbox.`;
 
   const solveHref =
     `mailto:key@cluehouse.co.nz?subject=FINAL%20Winterword%20Submission%20-%20${encodedOrgName}%20-%202026&body=You%20feel%20the%20pieces%20have%20settled.%0A%0AClues%20gathered.%20Letters%20found.%0AA%20pattern%2C%20perhaps%2C%20now%20clear%20beneath%20the%20frost.%0A%0AIf%20you%20believe%20you%20can%20name%20the%20WinterWord%2C%0Aset%20it%20down%20below.%0A%0AYour%20answer%3A%0A%0A%0A%0A(Only%20one%20submission%20is%20counted.%0AChoose%20your%20moment%20%E2%80%94%20winter%20does%20not%20answer%20twice.)`;
+
+  const contactHref =
+    `mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry`;
 
   app.innerHTML = `
     <style>
@@ -778,24 +781,25 @@ export function renderBaseStation(app, data = {}, navigate) {
         gap:0.42rem;
       }
 
-      .ww-footer-edition{
-        font-size:0.7rem;
-        letter-spacing:0.14em;
-        text-transform:uppercase;
-        color:rgba(214,221,230,0.58);
-      }
-
-      .ww-footer-brandline{
-        font-weight:750;
+      .ww-footer-brand{
+        font-weight:850;
         letter-spacing:0.08em;
         text-transform:uppercase;
-        color:rgba(214,221,230,0.76);
+        color:rgba(214,221,230,0.86);
+      }
+
+      .ww-footer-subtitle{
+        font-style:italic;
+        color:rgba(214,221,230,0.62);
       }
 
       .ww-footer-links{
         display:inline-flex;
         align-items:center;
         justify-content:flex-end;
+        text-transform:uppercase;
+        letter-spacing:0.12em;
+        font-size:0.68rem;
       }
 
       .ww-footer a,
@@ -1009,7 +1013,7 @@ export function renderBaseStation(app, data = {}, navigate) {
                     <div class="wwSubText">
                       Curious minds tend to wander.<br>
                       When each clue falls,<br>
-                      subscribers will feel the stir.
+                      subscribers will hear the click.
                     </div>
 
                     <a class="wwSubAction wwSubActionPrimary" href="${subscribeHref}">
@@ -1076,8 +1080,8 @@ export function renderBaseStation(app, data = {}, navigate) {
 
             <footer class="ww-footer">
               <div class="ww-footer-right">
-                <div class="ww-footer-edition">Edition 1</div>
-                <div class="ww-footer-brandline">Clue House 2026</div>
+                <div class="ww-footer-brand">WinterWord</div>
+                <div class="ww-footer-subtitle">Another Clue House Experience</div>
                 <div class="ww-footer-links">
                   <div class="ww-legal">
                     <button type="button">Legal</button>
@@ -1088,7 +1092,7 @@ export function renderBaseStation(app, data = {}, navigate) {
                     </div>
                   </div>
                   <span class="ww-footer-dot">•</span>
-                  <a href="mailto:hq@cluehouse.co.nz">Contact</a>
+                  <a href="${contactHref}">Contact</a>
                 </div>
               </div>
             </footer>
