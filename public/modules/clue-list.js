@@ -32,6 +32,10 @@ export function renderClueList(app, data = {}, navigate) {
     "twelve"
   ];
 
+  function numberWord(num) {
+    return clueNames[num - 1] || String(num);
+  }
+
   const visibleClues = clueAssets
     .map((file, index) => {
       const clueNum = index + 1;
@@ -47,15 +51,17 @@ export function renderClueList(app, data = {}, navigate) {
 
   const statusCurrent =
     currentClue <= 0
-      ? "No Clues Available Yet"
+      ? "NO CLUES ARE LIVE YET"
       : currentClue >= totalClues
-        ? "All Clues Available"
-        : `Week ${currentClue} Available`;
+        ? `ALL ${numberWord(totalClues).toUpperCase()} CLUES ARE NOW LIVE`
+        : currentClue === 1
+          ? "ONE CLUE IS NOW LIVE"
+          : `${numberWord(currentClue).toUpperCase()} CLUES ARE NOW LIVE`;
 
   const statusNext =
     currentClue >= totalClues
-      ? "Season Complete"
-      : "Next Unlock Coming Soon";
+      ? "SEASON COMPLETE"
+      : "NEXT DROP: WEDNESDAY NOON";
 
   app.innerHTML = `
     <style>
@@ -189,13 +195,27 @@ export function renderClueList(app, data = {}, navigate) {
         width:100%;
         margin:0 auto 34px;
         display:flex;
+        flex-direction:column;
+        align-items:center;
         justify-content:center;
-        gap:28px;
-        font-size:.98rem;
+        gap:.65rem;
+        text-align:center;
+        color:#ecf3fa;
+      }
+
+      .ww-status-main{
+        font-size:1.05rem;
         font-weight:950;
         letter-spacing:.20em;
         text-transform:uppercase;
-        color:#ecf3fa;
+      }
+
+      .ww-status-next{
+        font-size:.86rem;
+        font-weight:850;
+        letter-spacing:.16em;
+        text-transform:uppercase;
+        color:rgba(236,243,250,0.74);
       }
 
       .ww-banner{
@@ -310,12 +330,12 @@ export function renderClueList(app, data = {}, navigate) {
           padding:1rem 0 2rem;
         }
 
-        .ww-status{
-          flex-direction:column;
-          align-items:center;
-          gap:.6rem;
-          text-align:center;
-          font-size:.76rem;
+        .ww-status-main{
+          font-size:.82rem;
+        }
+
+        .ww-status-next{
+          font-size:.72rem;
         }
 
         .ww-clrow{
@@ -357,8 +377,8 @@ export function renderClueList(app, data = {}, navigate) {
                 <div class="ww-cllist">
 
                   <div class="ww-status">
-                    <span>${statusCurrent}</span>
-                    <span>${statusNext}</span>
+                    <div class="ww-status-main">${statusCurrent}</div>
+                    <div class="ww-status-next">${statusNext}</div>
                   </div>
 
                   ${
