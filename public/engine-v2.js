@@ -1,6 +1,6 @@
 console.log("ENGINE V2 LIVE");
 
-// v6 RESOLVE LOGIC (BACKEND-FIRST) + LEADERBOARD MODULE + FIRST-VISIT WELCOME INTRO
+// v7 POP CLUE V1
 
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderBaseStationResolved } from "/modules/base-station-resolved.js";
@@ -10,6 +10,7 @@ import { renderAnswerPage } from "/modules/answer-page.js";
 import { renderLifelinePage } from "/modules/lifeline.js";
 import { renderLeaderboardPage } from "/modules/leaderboard.js";
 import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
+import { renderPopCluePage } from "/modules/pop-clue.js";
 
 (async function () {
   const app = document.getElementById("app");
@@ -90,7 +91,7 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
       return false;
     }
 
-    const resolveTime = seasonStart.getTime() + (Number(totalClues) * intervalMs);
+    const resolveTime = seasonStart.getTime() + Number(totalClues) * intervalMs;
     return Date.now() >= resolveTime;
   }
 
@@ -110,7 +111,7 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
     try {
       window.localStorage.setItem(getWelcomeStorageKey(slug), "true");
     } catch {
-      // If localStorage is unavailable, continue without breaking the site.
+      // Continue if localStorage is unavailable.
     }
   }
 
@@ -143,6 +144,7 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
   const totalClues = Number(orgState.total_clues || game.total_clues || 12);
   const seasonState = orgState.season_state || "pre";
   const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
+  const popClueLive = orgState.flash_clue_live === true;
 
   const isResolved =
     orgState.is_resolved === true
@@ -212,7 +214,8 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
               currentClue,
               totalClues,
               lifelineAvailable,
-              lifelineUnlockClue
+              lifelineUnlockClue,
+              popClueLive
             },
             navigate
           );
@@ -232,7 +235,23 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
             totalClues,
             seasonState,
             lifelineAvailable,
-            lifelineUnlockClue
+            lifelineUnlockClue,
+            popClueLive
+          },
+          navigate
+        );
+        return;
+
+      case "pop-clue":
+        if (!popClueLive) {
+          navigate("base-station");
+          return;
+        }
+
+        renderPopCluePage(
+          app,
+          {
+            orgName: orgState.org_name || game.org_name || "WinterWord"
           },
           navigate
         );
