@@ -794,12 +794,12 @@ export function renderBaseStation(app, data = {}, navigate) {
         <div class="ww-rail">
           <div class="ww-left-shell">
             <div class="ww-left-logo">
-              <img src="/cgi/image/WWLogo_-IrZfgR1CvN9DRDc2uq8H.png?width=828&quality=80&format=auto" alt="WinterWord">
+              <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
             </div>
 
             <nav class="ww-left-nav">
               <button class="ww-left-item" type="button" data-nav="clues">
-                <img class="ww-left-icon" src="/cgi/image/Clue_ivx53yyYY6YAR7ZkHgMQJ.png?width=256&quality=80&format=auto" alt="Clues">
+                <img class="ww-left-icon" src="/assets/winterword/shared/clue.png" alt="Clues">
                 <div class="ww-left-label">CLUES</div>
                 <div class="ww-left-tooltip">
                   <div class="ww-left-tooltip-title">Clues</div>
@@ -809,7 +809,7 @@ export function renderBaseStation(app, data = {}, navigate) {
               </button>
 
               <button class="ww-left-item" type="button" data-nav="lifeline" data-disabled="${lifelineAvailable ? "false" : "true"}">
-                <img class="ww-left-icon" src="/cgi/image/Lifeline_oT0vP3H4BL6I-Z--NFPHA.png?width=256&quality=80&format=auto" alt="Lifeline">
+                <img class="ww-left-icon" src="/assets/winterword/shared/lifeline.png" alt="Lifeline">
                 <div class="ww-left-label">LIFELINE</div>
                 <div class="ww-left-tooltip">
                   ${
@@ -821,7 +821,7 @@ export function renderBaseStation(app, data = {}, navigate) {
               </button>
 
               <button class="ww-left-item" type="button" data-nav="leaderboard">
-                <img class="ww-left-icon" src="/cgi/image/Leaderboard_94LRTiQiFRVwCQT0zH-2y.png?width=256&quality=80&format=auto" alt="Leaderboard">
+                <img class="ww-left-icon" src="/assets/winterword/shared/leaderboard.png" alt="Leaderboard">
                 <div class="ww-left-label">LEADER</div>
                 <div class="ww-left-tooltip">
                   <div class="ww-left-tooltip-title">Leaderboard</div>
@@ -994,9 +994,7 @@ export function renderBaseStation(app, data = {}, navigate) {
       event.stopPropagation();
     });
 
-    setTimeout(() => {
-      document.addEventListener("click", closePanel, { once: true });
-    }, 0);
+    document.addEventListener("click", closePanel);
 
     app.addEventListener("keydown", (event) => {
       if (event.key === "Escape") closePanel();
