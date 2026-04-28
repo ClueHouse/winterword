@@ -9,7 +9,8 @@ export function renderBaseStation(app, data = {}, navigate) {
     currentClue = 0,
     totalClues = 12,
     lifelineAvailable = false,
-    lifelineUnlockClue = 6
+    lifelineUnlockClue = 6,
+    popClueLive = false
   } = data;
 
   const safeText = (value, fallback = "") =>
@@ -182,6 +183,9 @@ export function renderBaseStation(app, data = {}, navigate) {
         z-index:3;
         padding:0;
         font:inherit;
+        opacity:1;
+        transform:translateY(0) scale(1);
+        transition:opacity 180ms ease, transform 180ms ease, filter 180ms ease;
       }
 
       .ww-left-icon{
@@ -259,6 +263,45 @@ export function renderBaseStation(app, data = {}, navigate) {
 
       .ww-left-item:hover .ww-left-tooltip{
         opacity:1;
+      }
+
+      .ww-left-item--pop{
+        animation:wwPopRailIn 260ms ease-out both;
+      }
+
+      .ww-left-item--pop .ww-left-icon{
+        animation:wwPopPulse 1.45s ease-in-out infinite;
+      }
+
+      .ww-left-item--pop .ww-left-label{
+        color:rgba(240,138,36,0.96);
+        text-shadow:0 0 14px rgba(240,138,36,0.42);
+      }
+
+      @keyframes wwPopRailIn{
+        from{
+          opacity:0;
+          transform:translateY(10px) scale(0.94);
+        }
+        to{
+          opacity:1;
+          transform:translateY(0) scale(1);
+        }
+      }
+
+      @keyframes wwPopPulse{
+        0%,100%{
+          filter:
+            drop-shadow(0 0 6px rgba(240,138,36,0.38))
+            drop-shadow(0 0 12px rgba(240,138,36,0.18));
+          transform:translateY(0) scale(1);
+        }
+        50%{
+          filter:
+            drop-shadow(0 0 13px rgba(240,138,36,0.82))
+            drop-shadow(0 0 28px rgba(240,138,36,0.36));
+          transform:translateY(-2px) scale(1.045);
+        }
       }
 
       #wwRight{
@@ -807,6 +850,8 @@ export function renderBaseStation(app, data = {}, navigate) {
         color:inherit;
         text-decoration:none;
         font:inherit;
+        text-transform:uppercase;
+        letter-spacing:0.12em;
         background:none;
         border:0;
         padding:0;
@@ -960,6 +1005,21 @@ export function renderBaseStation(app, data = {}, navigate) {
                   }
                 </div>
               </button>
+
+              ${
+                popClueLive
+                  ? `
+                    <button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">
+                      <img class="ww-left-icon" src="/assets/winterword/shared/flash.png" alt="Pop Clue">
+                      <div class="ww-left-label">POP</div>
+                      <div class="ww-left-tooltip">
+                        <div class="ww-left-tooltip-title">Pop Clue</div>
+                        A brief signal has opened. Solve it first, and the next clue may arrive early.
+                      </div>
+                    </button>
+                  `
+                  : ""
+              }
 
               <button class="ww-left-item" type="button" data-nav="leaderboard">
                 <img class="ww-left-icon" src="/assets/winterword/shared/leaderboard.png" alt="Leaderboard">
