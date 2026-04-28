@@ -20,6 +20,12 @@ export function renderBaseStation(app, data = {}, navigate) {
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
 
+  const mailSafeOrgName = orgName && String(orgName).trim()
+    ? String(orgName).trim()
+    : "WinterWord";
+
+  const encodedOrgName = encodeURIComponent(mailSafeOrgName);
+
   const paragraphs =
     Array.isArray(howParagraphs) && howParagraphs.length
       ? howParagraphs
@@ -31,6 +37,18 @@ export function renderBaseStation(app, data = {}, navigate) {
         ];
 
   const progressText = `${Number(currentClue) || 0} of ${Number(totalClues) || 12} clues released`;
+
+  const reportProblemHref =
+    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}&body=SET%20THE%20SCENE%3A%0AWhich%20page%20were%20you%20on%3F%0A%0AORGANISATION%3A%0A${encodedOrgName}%0A%0APLOT%20TWIST%3A%0AWhat%20went%20wrong%3F%0A%0AALTERNATE%20ENDING%3A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0AYOUR%20TRAVELLER%E2%80%99S%20GEAR%3A%0AWhich%20device%20%2B%20browser%20you%20brought%20on%20this%20journey.%0A%0AThanks%20for%20sharing%20%E2%80%94%20we%E2%80%99ll%20follow%20the%20trail%20and%20set%20things%20right.`;
+
+  const subscribeHref =
+    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}&body=Sign%20me%20up.%20The%20winter%20hush%20is%20starting%20to%20feel%20personal.%0A%0AOrganisation%3A%20${encodedOrgName}`;
+
+  const unsubscribeHref =
+    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Unsubscribe%20-%20${encodedOrgName}&body=Remove%20me%20from%20Winterword%20Clue%20Alerts.%20I%E2%80%99m%20embracing%20the%20quiet%20freeze%20of%20an%20uncluttered%20inbox.%0A%0AOrganisation%3A%20${encodedOrgName}`;
+
+  const solveHref =
+    `mailto:key@cluehouse.co.nz?subject=FINAL%20Winterword%20Submission%20-%20${encodedOrgName}%20-%202026&body=You%20feel%20the%20pieces%20have%20settled.%0A%0AClues%20gathered.%20Letters%20found.%0AA%20pattern%2C%20perhaps%2C%20now%20clear%20beneath%20the%20frost.%0A%0AIf%20you%20believe%20you%20can%20name%20the%20WinterWord%2C%0Aset%20it%20down%20below.%0A%0AYour%20answer%3A%0A%0A%0A%0A(Only%20one%20submission%20is%20counted.%0AChoose%20your%20moment%20%E2%80%94%20winter%20does%20not%20answer%20twice.)`;
 
   app.innerHTML = `
     <style>
@@ -248,15 +266,18 @@ export function renderBaseStation(app, data = {}, navigate) {
 
       #wwScroll{
         height:100%;
-        overflow:hidden;
+        overflow:auto;
         background:var(--ww-page-bg);
         border-left:1px solid rgba(240,138,36,0.92);
       }
 
       #wwView{
         max-width:78rem;
+        min-height:100%;
         margin:0 auto;
-        padding:4rem;
+        padding:4rem 4rem 2.2rem;
+        display:flex;
+        flex-direction:column;
       }
 
       .ww-head{
@@ -279,6 +300,15 @@ export function renderBaseStation(app, data = {}, navigate) {
         font-size:2.55rem;
         color:var(--ww-orange);
         margin:0;
+      }
+
+      .ww-org-name{
+        margin:0.45rem 0 0;
+        font-size:0.84rem;
+        letter-spacing:0.18em;
+        text-transform:uppercase;
+        color:rgba(214,221,230,0.74);
+        font-weight:850;
       }
 
       .ww-signal-wrap{
@@ -731,6 +761,113 @@ export function renderBaseStation(app, data = {}, navigate) {
         color:var(--ww-white-muted);
       }
 
+      .ww-footer{
+        margin-top:auto;
+        padding-top:3rem;
+        display:flex;
+        justify-content:flex-end;
+        font-size:0.75rem;
+        color:rgba(214,221,230,0.72);
+      }
+
+      .ww-footer-right{
+        display:flex;
+        flex-direction:column;
+        align-items:flex-end;
+        text-align:right;
+        gap:0.42rem;
+      }
+
+      .ww-footer-edition{
+        font-size:0.7rem;
+        letter-spacing:0.14em;
+        text-transform:uppercase;
+        color:rgba(214,221,230,0.58);
+      }
+
+      .ww-footer-brandline{
+        font-weight:750;
+        letter-spacing:0.08em;
+        text-transform:uppercase;
+        color:rgba(214,221,230,0.76);
+      }
+
+      .ww-footer-links{
+        display:inline-flex;
+        align-items:center;
+        justify-content:flex-end;
+      }
+
+      .ww-footer a,
+      .ww-footer button{
+        color:inherit;
+        text-decoration:none;
+        font:inherit;
+        background:none;
+        border:0;
+        padding:0;
+        cursor:pointer;
+      }
+
+      .ww-footer a:hover,
+      .ww-footer button:hover{
+        text-decoration:underline;
+      }
+
+      .ww-footer-dot{
+        display:inline-block;
+        padding:0 0.6rem;
+        opacity:0.9;
+        transform:translateY(-0.5px);
+      }
+
+      .ww-legal{
+        position:relative;
+        display:inline-flex;
+        align-items:center;
+      }
+
+      .ww-legal-menu{
+        position:absolute;
+        right:0;
+        bottom:calc(100% + 10px);
+        min-width:170px;
+        border-radius:14px;
+        padding:0.5rem;
+        background:
+          radial-gradient(circle at 0 0, rgba(255,238,204,0.18), transparent 60%),
+          rgba(25, 15, 14, 0.95);
+        border:1px solid rgba(255,238,210,0.22);
+        box-shadow:0 18px 46px rgba(0,0,0,0.85);
+        opacity:0;
+        transform:translateY(8px);
+        pointer-events:none;
+        transition:opacity 0.14s ease, transform 0.14s ease;
+        z-index:100;
+      }
+
+      .ww-legal:hover .ww-legal-menu,
+      .ww-legal:focus-within .ww-legal-menu{
+        opacity:1;
+        transform:translateY(0);
+        pointer-events:auto;
+      }
+
+      .ww-legal-menu a{
+        display:block;
+        padding:0.5rem 0.65rem;
+        border-radius:10px;
+        text-decoration:none;
+        color:rgba(253,247,239,0.92);
+      }
+
+      .ww-legal-menu a:hover,
+      .ww-legal-menu a:focus-visible{
+        background:rgba(240,189,125,0.16);
+        text-decoration:none;
+        outline:none;
+      }
+
       @media (max-width:1180px){
         .ww-head{
           min-height:auto;
@@ -784,7 +921,7 @@ export function renderBaseStation(app, data = {}, navigate) {
         }
 
         #wwView{
-          padding:3rem 1.6rem 6rem;
+          padding:3rem 1.6rem 2rem;
         }
       }
     </style>
@@ -841,9 +978,10 @@ export function renderBaseStation(app, data = {}, navigate) {
             <div class="ww-head">
               <div class="ww-head-copy">
                 <p class="ww-slug">
-                  ${safeText(seasonLabel || `WINTERWORD • ${orgName} • 2026`)}
+                  ${safeText(seasonLabel || "WINTERWORD • 2026")}
                 </p>
                 <h2 class="ww-title">BASE STATION</h2>
+                <p class="ww-org-name">${safeText(orgName)}</p>
               </div>
 
               <div class="ww-signal-wrap">
@@ -854,7 +992,7 @@ export function renderBaseStation(app, data = {}, navigate) {
                   </div>
                 </div>
 
-                <a class="ww-action-btn" href="mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue&body=SET%20THE%20SCENE%3A%0AWhich%20page%20were%20you%20on%3F%0A%0APLOT%20TWIST%3A%0AWhat%20went%20wrong%3F%0A%0AALTERNATE%20ENDING%3A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0AYOUR%20TRAVELLER%E2%80%99S%20GEAR%3A%0AWhich%20device%20%2B%20browser%20you%20brought%20on%20this%20journey.%0A%0AThanks%20for%20sharing%20%E2%80%94%20we%E2%80%99ll%20follow%20the%20trail%20and%20set%20things%20right.">
+                <a class="ww-action-btn" href="${reportProblemHref}">
                   Report a problem
                 </a>
 
@@ -871,16 +1009,16 @@ export function renderBaseStation(app, data = {}, navigate) {
                     <div class="wwSubText">
                       Curious minds tend to wander.<br>
                       When each clue falls,<br>
-                      subscribers will feel the ripple.
+                      subscribers will feel the stir.
                     </div>
 
-                    <a class="wwSubAction wwSubActionPrimary" href="mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe&body=Sign%20me%20up.%20The%20winter%20hush%20is%20starting%20to%20feel%20personal.">
+                    <a class="wwSubAction wwSubActionPrimary" href="${subscribeHref}">
                       Subscribe to Clue Alerts
                     </a>
                   </div>
 
                   <div class="wwSubBottom">
-                    <a class="wwSubAction wwSubActionSecondary" href="mailto:opt@cluehouse.co.nz?subject=WinterWord%20Unsubscribe&body=Remove%20me%20from%20Winterword%20Clue%20Alerts.%20I%E2%80%99m%20embracing%20the%20quiet%20freeze%20of%20an%20uncluttered%20inbox.">
+                    <a class="wwSubAction wwSubActionSecondary" href="${unsubscribeHref}">
                       Unsubscribe
                     </a>
 
@@ -922,7 +1060,7 @@ export function renderBaseStation(app, data = {}, navigate) {
                 </p>
 
                 <div class="ww-primary-wrap">
-                  <a class="ww-primary" href="mailto:key@cluehouse.co.nz?subject=FINAL%20Winterword%20Submission%20-%20Endgame%20-%202026&body=You%20feel%20the%20pieces%20have%20settled.%0A%0AClues%20gathered.%20Letters%20found.%0AA%20pattern%2C%20perhaps%2C%20now%20clear%20beneath%20the%20frost.%0A%0AIf%20you%20believe%20you%20can%20name%20the%20WinterWord%2C%0Aset%20it%20down%20below.%0A%0AYour%20answer%3A%0A%0A%5BTYPE%20YOUR%20FINAL%20WORD%20HERE%5D%0A%0A%0A(Only%20one%20submission%20is%20counted.%0AChoose%20your%20moment%20%E2%80%94%20winter%20does%20not%20answer%20twice.)">
+                  <a class="ww-primary" href="${solveHref}">
                     Solve WinterWord
                   </a>
                   <div class="ww-primary-tooltip">Ready?</div>
@@ -935,6 +1073,25 @@ export function renderBaseStation(app, data = {}, navigate) {
                 </div>
               </div>
             </div>
+
+            <footer class="ww-footer">
+              <div class="ww-footer-right">
+                <div class="ww-footer-edition">Edition 1</div>
+                <div class="ww-footer-brandline">Clue House 2026</div>
+                <div class="ww-footer-links">
+                  <div class="ww-legal">
+                    <button type="button">Legal</button>
+                    <div class="ww-legal-menu">
+                      <a href="/legal/privacy-policy.html">Privacy</a>
+                      <a href="/legal/terms-of-use.html">Terms</a>
+                      <a href="/legal/disclaimer.html">Disclaimer</a>
+                    </div>
+                  </div>
+                  <span class="ww-footer-dot">•</span>
+                  <a href="mailto:hq@cluehouse.co.nz">Contact</a>
+                </div>
+              </div>
+            </footer>
           </div>
         </div>
       </main>
