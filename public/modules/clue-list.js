@@ -68,6 +68,11 @@ export function renderClueList(app, data = {}, navigate) {
 
       *{box-sizing:border-box;}
 
+      html,body{
+        margin:0;
+        padding:0;
+      }
+
       #wwPage{
         min-height:100vh;
         padding:2rem;
@@ -114,13 +119,23 @@ export function renderClueList(app, data = {}, navigate) {
         flex-direction:column;
         align-items:center;
         gap:.85rem;
-        text-decoration:none;
         cursor:pointer;
+        appearance:none;
+        -webkit-appearance:none;
+        background:transparent !important;
+        border:0 !important;
+        padding:0 !important;
+        margin:0;
+        outline:none;
+        box-shadow:none !important;
       }
 
       .ww-side-logo img{
         width:8.2rem;
         display:block;
+        background:transparent !important;
+        border:0 !important;
+        box-shadow:none !important;
       }
 
       .ww-side-divider{
