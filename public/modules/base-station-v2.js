@@ -1348,5 +1348,8 @@ export function renderBaseStation(app, data = {}, navigate) {
     app.addEventListener("keydown", (event) => {
       if (event.key === "Escape") closePanel();
     });
-  }
+      }
+    }
+  </style>
+`;
 }
