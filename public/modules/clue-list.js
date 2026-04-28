@@ -3,33 +3,13 @@ export function renderClueList(app, data = {}, navigate) {
   const totalClues = Number(data.totalClues || 12);
 
   const clueAssets = [
-    "01.png",
-    "02.png",
-    "03.png",
-    "04.png",
-    "05.png",
-    "06.png",
-    "07.png",
-    "08.png",
-    "09.png",
-    "10.png",
-    "11.png",
-    "12.gif"
+    "01.png","02.png","03.png","04.png","05.png","06.png",
+    "07.png","08.png","09.png","10.png","11.png","12.gif"
   ];
 
   const clueNames = [
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-    "ten",
-    "eleven",
-    "twelve"
+    "one","two","three","four","five","six",
+    "seven","eight","nine","ten","eleven","twelve"
   ];
 
   function numberWord(num) {
@@ -120,19 +100,19 @@ export function renderClueList(app, data = {}, navigate) {
         justify-content:center;
       }
 
-      .ww-side-logo{
+      .ww-side-wrap{
         display:flex;
         flex-direction:column;
         align-items:center;
         gap:.85rem;
-        cursor:pointer;
-        appearance:none;
-        -webkit-appearance:none;
+      }
+
+      .ww-side-logo{
+        display:block;
         background:transparent !important;
         border:0 !important;
         padding:0 !important;
         margin:0;
-        outline:none;
         box-shadow:none !important;
       }
 
@@ -142,6 +122,7 @@ export function renderClueList(app, data = {}, navigate) {
         background:transparent !important;
         border:0 !important;
         box-shadow:none !important;
+        pointer-events:none;
       }
 
       .ww-side-divider{
@@ -150,7 +131,14 @@ export function renderClueList(app, data = {}, navigate) {
         background:rgba(255,255,255,0.22);
       }
 
-      .ww-side-label{
+      .ww-side-button{
+        appearance:none;
+        -webkit-appearance:none;
+        background:transparent;
+        border:0;
+        padding:0;
+        margin:0;
+        cursor:pointer;
         font-size:.82rem;
         letter-spacing:.22em;
         text-transform:uppercase;
@@ -286,13 +274,8 @@ export function renderClueList(app, data = {}, navigate) {
         background:rgba(157,195,214,0.15);
         color:#ecf3fa;
         font:900 13px system-ui,-apple-system,"Segoe UI",sans-serif;
-        text-decoration:none;
         white-space:nowrap;
         cursor:pointer;
-      }
-
-      .ww-open:hover{
-        background:rgba(157,195,214,0.24);
       }
 
       .ww-empty{
@@ -304,23 +287,15 @@ export function renderClueList(app, data = {}, navigate) {
       }
 
       @media (max-width:760px){
-        #wwPage{
-          padding:1rem;
-        }
-
-        #wwShell{
-          height:calc(100vh - 2rem);
-        }
-
+        #wwPage{padding:1rem;}
+        #wwShell{height:calc(100vh - 2rem);}
         #wwContent{
           grid-template-columns:1fr;
           gap:1.2rem;
           padding:1.4rem;
         }
 
-        .ww-side{
-          height:auto;
-        }
+        .ww-side{height:auto;}
 
         .ww-side-logo img{
           width:6.5rem;
@@ -364,11 +339,15 @@ export function renderClueList(app, data = {}, navigate) {
         <div id="wwContent">
 
           <aside class="ww-side">
-            <button class="ww-side-logo" id="wwBaseStationButton" type="button" aria-label="Base Station">
-              <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
+            <div class="ww-side-wrap">
+              <div class="ww-side-logo">
+                <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
+              </div>
               <div class="ww-side-divider"></div>
-              <div class="ww-side-label">BASE STATION</div>
-            </button>
+              <button class="ww-side-button" id="wwBaseStationButton" type="button">
+                BASE STATION
+              </button>
+            </div>
           </aside>
 
           <main class="ww-main">
@@ -384,7 +363,7 @@ export function renderClueList(app, data = {}, navigate) {
                   ${
                     visibleClues.length
                       ? visibleClues.map((clue) => `
-                        <article class="ww-banner" data-clue="${clue.clueNum}">
+                        <article class="ww-banner">
                           <div class="ww-clrow">
                             <div class="ww-img">
                               <img src="/assets/winterword/display/${clue.file}" alt="Clue ${clue.name}">
@@ -395,7 +374,9 @@ export function renderClueList(app, data = {}, navigate) {
                                 <div class="ww-num">${clue.name}</div>
                                 <div class="ww-line"></div>
                               </div>
-                              <button class="ww-open" type="button" data-clue-open="${clue.clueNum}">OPEN →</button>
+                              <button class="ww-open" type="button" data-clue-open="${clue.clueNum}">
+                                OPEN →
+                              </button>
                             </div>
                           </div>
                         </article>
