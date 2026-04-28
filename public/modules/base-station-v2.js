@@ -54,6 +54,32 @@ export function renderBaseStation(app, data = {}, navigate) {
   const contactHref =
     `mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry`;
 
+  const lifelineTooltipHtml = lifelineAvailable
+    ? `<div class="ww-left-tooltip-title">Lifeline</div>This passage is open. Step carefully.`
+    : `<div class="ww-left-tooltip-title">Lifeline</div>This passage waits its moment.`;
+
+  const popClueButtonHtml = popClueLive
+    ? `
+      <button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">
+        <img class="ww-left-icon" src="/assets/winterword/shared/flash.png" alt="Pop Clue">
+        <div class="ww-left-label">POP</div>
+        <div class="ww-left-tooltip">
+          <div class="ww-left-tooltip-title">Pop Clue</div>
+          A brief signal has opened. Solve it first, and the next clue may arrive early.
+        </div>
+      </button>
+    `
+    : "";
+
+  const updatesHtml =
+    updatesText && String(updatesText).trim()
+      ? `<p>${safeText(updatesText)}</p>`
+      : `<p>No new updates yet.</p>`;
+
+  const paragraphsHtml = paragraphs
+    .map((p) => `<p>${safeText(p)}</p>`)
+    .join("");
+
   app.innerHTML = `
     <style>
       :root{
@@ -1112,20 +1138,7 @@ export function renderBaseStation(app, data = {}, navigate) {
             </div>
 
             <nav class="ww-left-nav">
-              ${
-                popClueLive
-                  ? `
-                    <button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">
-                      <img class="ww-left-icon" src="/assets/winterword/shared/flash.png" alt="Pop Clue">
-                      <div class="ww-left-label">POP</div>
-                      <div class="ww-left-tooltip">
-                        <div class="ww-left-tooltip-title">Pop Clue</div>
-                        A brief signal has opened. Solve it first, and the next clue may arrive early.
-                      </div>
-                    </button>
-                  `
-                  : ""
-              }
+              ${popClueButtonHtml}
 
               <button class="ww-left-item" type="button" data-nav="clues">
                 <img class="ww-left-icon" src="/assets/winterword/shared/clue.png" alt="Clues">
@@ -1141,11 +1154,7 @@ export function renderBaseStation(app, data = {}, navigate) {
                 <img class="ww-left-icon" src="/assets/winterword/shared/lifeline.png" alt="Lifeline">
                 <div class="ww-left-label">LIFELINE</div>
                 <div class="ww-left-tooltip">
-                  ${
-                    lifelineAvailable
-                      ? `<div class="ww-left-tooltip-title">Lifeline</div>This passage is open. Step carefully.`
-                      : `<div class="ww-left-tooltip-title">Lifeline</div>This passage waits its moment.`
-                  }
+                  ${lifelineTooltipHtml}
                 </div>
               </button>
 
@@ -1229,16 +1238,12 @@ export function renderBaseStation(app, data = {}, navigate) {
               <div>
                 <div class="ww-card ww-card--rules">
                   <h3>How this works</h3>
-                  ${paragraphs.map((p) => `<p>${safeText(p)}</p>`).join("")}
+                  ${paragraphsHtml}
                 </div>
 
                 <div class="ww-card ww-card--updates" style="margin-top:1.25rem;">
                   <h3>Updates</h3>
-                  ${
-                    updatesText && String(updatesText).trim()
-                      ? `<p>${safeText(updatesText)}</p>`
-                      : `<p>No new updates yet.</p>`
-                  }
+                  ${updatesHtml}
                   <div class="ww-progress">${safeText(progressText)}</div>
                 </div>
               </div>
@@ -1348,8 +1353,5 @@ export function renderBaseStation(app, data = {}, navigate) {
     app.addEventListener("keydown", (event) => {
       if (event.key === "Escape") closePanel();
     });
-      }
-    }
-  </style>
-`;
+  }
 }
