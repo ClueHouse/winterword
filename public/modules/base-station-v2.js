@@ -54,6 +54,9 @@ export function renderBaseStation(app, data = {}, navigate) {
   const contactHref =
     `mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry`;
 
+  const railClass = popClueLive ? "ww-rail ww-rail--pop-live" : "ww-rail";
+  const lifelineDisabled = lifelineAvailable ? "false" : "true";
+
   const lifelineTooltipHtml = lifelineAvailable
     ? `<div class="ww-left-tooltip-title">Lifeline</div>This passage is open. Step carefully.`
     : `<div class="ww-left-tooltip-title">Lifeline</div>This passage waits its moment.`;
@@ -1131,7 +1134,7 @@ export function renderBaseStation(app, data = {}, navigate) {
 
     <div id="wwPortal">
       <aside id="wwLeft">
-        <div class="ww-rail ${popClueLive ? "ww-rail--pop-live" : ""}">
+        <div class="${railClass}">
           <div class="ww-left-shell">
             <div class="ww-left-logo">
               <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
@@ -1150,7 +1153,7 @@ export function renderBaseStation(app, data = {}, navigate) {
                 </div>
               </button>
 
-              <button class="ww-left-item" type="button" data-nav="lifeline" data-disabled="${lifelineAvailable ? "false" : "true"}">
+              <button class="ww-left-item" type="button" data-nav="lifeline" data-disabled="${lifelineDisabled}">
                 <img class="ww-left-icon" src="/assets/winterword/shared/lifeline.png" alt="Lifeline">
                 <div class="ww-left-label">LIFELINE</div>
                 <div class="ww-left-tooltip">
