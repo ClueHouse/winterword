@@ -67,7 +67,6 @@ export function renderBaseStation(app, data = {}, navigate) {
         --ww-white-muted:rgba(43,30,18,0.68);
         --ww-orange:#f08a24;
         --ww-orange-hot:#ff9f2e;
-        --ww-gold:#d7a24a;
         --ww-tooltip-orange-top:#f7d8b2;
         --ww-tooltip-orange-bot:#efbe86;
         --ww-tooltip-ink:#2b1e12;
@@ -162,7 +161,7 @@ export function renderBaseStation(app, data = {}, navigate) {
         background:
           radial-gradient(180px 520px at 50% 30%, rgba(255,145,28,0.30), transparent 72%),
           linear-gradient(180deg, rgba(255,126,12,0.18), rgba(255,126,12,0.05) 46%, rgba(255,126,12,0.15));
-        opacity:0;
+        opacity:0.18;
         pointer-events:none;
       }
 
@@ -172,8 +171,9 @@ export function renderBaseStation(app, data = {}, navigate) {
         inset:0;
         border-radius:0 1.15rem 1.15rem 0;
         box-shadow:
-          inset 0 0 0 1px rgba(255,159,46,0.44),
-          inset -8px 0 22px rgba(255,132,20,0.20);
+          inset 0 0 0 1px rgba(255,159,46,0.42),
+          inset -8px 0 22px rgba(255,132,20,0.18),
+          0 0 18px rgba(240,138,36,0.18);
         pointer-events:none;
       }
 
@@ -707,7 +707,6 @@ export function renderBaseStation(app, data = {}, navigate) {
         padding:1.75rem;
         border-radius:0.62rem;
         border:var(--ww-panel-line);
-        backdrop-filter:blur(3px);
       }
 
       .ww-card--rules{
