@@ -1,9 +1,8 @@
-```javascript
-console.log("ENGINE V2 LIVE");
+console.log("ENGINE V1 LIVE");
 
-// v7 POP CLUE V1 + BASE STATION V2 TEST
+// v7 POP CLUE V1 + BASE STATION V1
 
-import { renderBaseStation } from "/modules/base-station-v2.js";
+import { renderBaseStation } from "/modules/base-station.js";
 import { renderBaseStationResolved } from "/modules/base-station-resolved.js";
 import { renderClueList } from "/modules/clue-list.js";
 import { renderCluePage } from "/modules/clue-page.js";
@@ -349,4 +348,3 @@ import { renderPopCluePage } from "/modules/pop-clue.js";
     navigate("welcome");
   }
 })();
-```
