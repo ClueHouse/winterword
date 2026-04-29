@@ -157,32 +157,32 @@
     {
       "id": 4,
       "title": "Answer 04",
-      "variant": "plain",
+      "variant": "plain-audio",
       "body": "Explanation for clue 4.",
       "letter": "D",
       "image": "",
       "alt": "WinterWord Answer 4",
-      "audio": ""
+      "audio": "/assets/winterword/answers/04.mp3"
     },
     {
       "id": 5,
       "title": "Answer 05",
-      "variant": "plain",
+      "variant": "plain-audio",
       "body": "Explanation for clue 5.",
       "letter": "E",
       "image": "",
       "alt": "WinterWord Answer 5",
-      "audio": ""
+      "audio": "/assets/winterword/answers/05.mp3"
     },
     {
       "id": 6,
       "title": "Answer 06",
-      "variant": "plain",
+      "variant": "plain-audio",
       "body": "Explanation for clue 6.",
       "letter": "F",
       "image": "",
       "alt": "WinterWord Answer 6",
-      "audio": ""
+      "audio": "/assets/winterword/answers/06.mp3"
     },
     {
       "id": 7,
