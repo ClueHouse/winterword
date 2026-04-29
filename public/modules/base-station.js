@@ -78,35 +78,15 @@ export function renderBaseStation(app, data = {}, navigate) {
   --ww-night-2:#13202c;
   --ww-ink-night:#d6dde6;
   --ww-muted-night:rgba(214,221,230,0.68);
-  --ww-accent-ice:#9bb9c9;
-  --ww-accent-line:rgba(155,185,201,0.28);
   --ww-hairline-night:rgba(255,255,255,0.10);
-  --ww-white-cold:#f3f6f9;
-  --ww-white-ink:#1a2330;
-  --ww-white-muted:rgba(26,35,48,0.64);
-  --ww-gold-line:rgba(202,162,74,0.78);
   --ww-orange:#f08a24;
-  --ww-orange-soft:rgba(240,138,36,0.26);
-  --ww-orange-soft-2:rgba(240,138,36,0.14);
   --ww-tooltip-orange-top:#f7d8b2;
   --ww-tooltip-orange-bot:#efbe86;
   --ww-tooltip-ink:#2b1e12;
   --ww-tooltip-title:#6d4a24;
   --ww-tooltip-border:#b87629;
   --ww-radius:0.85rem;
-  --ww-radius-last:0.55rem;
   --ww-left-wide:13.5rem;
-  --ww-left-narrow:8.8rem;
-  --ww-frost-blue-soft:#ecf3fa;
-  --ww-ink:#3b4149;
-  --ww-muted:#6c7785;
-  --ww-accent:#5d8599;
-  --ww-card:rgba(255,255,255,0.92);
-  --ww-shadow:0 10px 30px rgba(0,0,0,0.06);
-  --ww-ink-blue:#1f3f57;
-  --ww-ink-blue-hover:#163244;
-  --ww-rail-width-ms:1600ms;
-  --ww-rail-fade-ms:1200ms;
   --ww-rail-bg:linear-gradient(90deg, var(--ww-night-0) 0%, var(--ww-night-1) 34%, var(--ww-night-2) 100%);
   --ww-page-bg:
     radial-gradient(760px 300px at 50% 0%, rgba(155,185,201,0.06), transparent 68%),
@@ -399,6 +379,15 @@ export function renderBaseStation(app, data = {}, navigate) {
   text-transform:uppercase;
 }
 
+.ww-org-name{
+  margin-top:0.65rem;
+  font-size:0.86rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(214,221,230,0.78);
+  font-weight:850;
+}
+
 .ww-signal-wrap{
   position:absolute;
   top:0.15rem;
@@ -683,7 +672,7 @@ export function renderBaseStation(app, data = {}, navigate) {
 
 .ww-lastword{
   background:var(--ww-premium-card-bg);
-  color:var(--ww-white-ink);
+  color:#1a2330;
   padding:2.9rem 2.1rem 3.05rem;
   border-radius:0.9rem;
   border:var(--ww-premium-card-border);
@@ -846,7 +835,7 @@ export function renderBaseStation(app, data = {}, navigate) {
 .ww-stakes{
   font-size:0.98rem;
   line-height:1.65;
-  color:var(--ww-white-muted);
+  color:rgba(26,35,48,0.64);
 }
 
 .ww-footer{
@@ -857,38 +846,38 @@ export function renderBaseStation(app, data = {}, navigate) {
   font-size:0.75rem;
   color:rgba(244,219,192,0.9);
   display:flex;
-  justify-content:flex-end;
+  justify-content:center;
   border-top:1px solid rgba(255,255,255,0.05);
 }
 
-.ww-footer-right{
-  margin-left:auto;
+.ww-footer-inner{
   display:flex;
   flex-direction:column;
-  align-items:flex-end;
-  text-align:right;
-  gap:0.45rem;
-}
-
-.ww-footer-edition{
-  font-size:0.72rem;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:rgba(244,219,192,0.82);
+  align-items:center;
+  text-align:center;
+  gap:0.42rem;
 }
 
 .ww-footer-brandline{
-  font-weight:650;
-  letter-spacing:0.08em;
+  font-weight:800;
+  letter-spacing:0.12em;
   text-transform:uppercase;
-  color:rgba(244,219,192,0.95);
+  color:rgba(244,219,192,0.96);
+}
+
+.ww-footer-experience{
+  font-style:italic;
+  color:rgba(244,219,192,0.82);
 }
 
 .ww-footer-links{
   display:inline-flex;
   align-items:center;
-  justify-content:flex-end;
+  justify-content:center;
   gap:0;
+  font-size:0.68rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
 }
 
 .ww-footer a,
@@ -900,6 +889,8 @@ export function renderBaseStation(app, data = {}, navigate) {
   border:0;
   padding:0;
   cursor:pointer;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
 }
 
 .ww-footer a:hover,
@@ -922,7 +913,7 @@ export function renderBaseStation(app, data = {}, navigate) {
 
 .ww-legal-menu{
   position:absolute;
-  right:0;
+  left:50%;
   bottom:calc(100% + 10px);
   min-width:170px;
   border-radius:14px;
@@ -933,7 +924,7 @@ export function renderBaseStation(app, data = {}, navigate) {
   border:1px solid rgba(255,238,210,0.22);
   box-shadow:0 18px 46px rgba(0,0,0,0.85);
   opacity:0;
-  transform:translateY(8px);
+  transform:translate(-50%, 8px);
   pointer-events:none;
   transition:opacity 0.14s ease, transform 0.14s ease;
   z-index:80;
@@ -942,7 +933,7 @@ export function renderBaseStation(app, data = {}, navigate) {
 .ww-legal:hover .ww-legal-menu,
 .ww-legal:focus-within .ww-legal-menu{
   opacity:1;
-  transform:translateY(0);
+  transform:translate(-50%, 0);
   pointer-events:auto;
 }
 
@@ -952,6 +943,8 @@ export function renderBaseStation(app, data = {}, navigate) {
   border-radius:10px;
   text-decoration:none;
   color:rgba(253,247,239,0.92);
+  text-transform:none;
+  letter-spacing:0;
 }
 
 .ww-legal-menu a:hover,
@@ -1025,7 +1018,7 @@ export function renderBaseStation(app, data = {}, navigate) {
       <div class="ww-left-shell">
 
         <div class="ww-left-logo">
-          <img src="/cgi/image/WWLogo_-IrZfgR1CvN9DRDc2uq8H.png?width=828&quality=80&format=auto" alt="WinterWord">
+          <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
         </div>
 
         <nav class="ww-left-nav">
@@ -1034,7 +1027,7 @@ export function renderBaseStation(app, data = {}, navigate) {
             popClueLive
               ? `
           <button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">
-            <img class="ww-left-icon" src="/cgi/image/Clue_ivx53yyYY6YAR7ZkHgMQJ.png?width=256&quality=80&format=auto" alt="Pop Clue">
+            <img class="ww-left-icon" src="/assets/winterword/shared/flash.png" alt="Pop Clue">
             <div class="ww-left-label">POP</div>
             <div class="ww-left-tooltip">
               <div class="ww-left-tooltip-title">Pop Clue</div>
@@ -1046,7 +1039,7 @@ export function renderBaseStation(app, data = {}, navigate) {
           }
 
           <button class="ww-left-item" type="button" data-nav="clues">
-            <img class="ww-left-icon" src="/cgi/image/Clue_ivx53yyYY6YAR7ZkHgMQJ.png?width=256&quality=80&format=auto" alt="Clues">
+            <img class="ww-left-icon" src="/assets/winterword/shared/clue.png" alt="Clues">
             <div class="ww-left-label">CLUES</div>
             <div class="ww-left-tooltip">
               <div class="ww-left-tooltip-title">Clues</div>
@@ -1061,7 +1054,7 @@ export function renderBaseStation(app, data = {}, navigate) {
             data-nav="lifeline"
             data-disabled="${lifelineAvailable ? "false" : "true"}"
           >
-            <img class="ww-left-icon" src="/cgi/image/Lifeline_oT0vP3H4BL6I-Z--NFPHA.png?width=256&quality=80&format=auto" alt="Lifeline">
+            <img class="ww-left-icon" src="/assets/winterword/shared/lifeline.png" alt="Lifeline">
             <div class="ww-left-label">LIFELINE</div>
             <div class="ww-left-tooltip">
               <div class="ww-left-tooltip-title">Lifeline</div>
@@ -1074,7 +1067,7 @@ export function renderBaseStation(app, data = {}, navigate) {
           </button>
 
           <button class="ww-left-item" type="button" data-nav="leaderboard">
-            <img class="ww-left-icon" src="/cgi/image/Leaderboard_94LRTiQiFRVwCQT0zH-2y.png?width=256&quality=80&format=auto" alt="Leaderboard">
+            <img class="ww-left-icon" src="/assets/winterword/shared/leaderboard.png" alt="Leaderboard">
             <div class="ww-left-label">LEADER</div>
             <div class="ww-left-tooltip">
               <div class="ww-left-tooltip-title">Leaderboard</div>
@@ -1099,6 +1092,7 @@ export function renderBaseStation(app, data = {}, navigate) {
               <span>${safeText(seasonLabel)}</span>
             </p>
             <h2 class="ww-title">Base Station</h2>
+            <div class="ww-org-name">${safeText(orgName)}</div>
           </div>
 
           <div class="ww-signal-wrap">
@@ -1194,16 +1188,16 @@ export function renderBaseStation(app, data = {}, navigate) {
         </div>
 
         <footer class="ww-footer" id="pageBottom">
-          <div class="ww-footer-right">
-            <div class="ww-footer-edition">Edition 1</div>
-            <div class="ww-footer-brandline">Clue House 2026</div>
+          <div class="ww-footer-inner">
+            <div class="ww-footer-brandline">WinterWord</div>
+            <div class="ww-footer-experience">Another Clue House Experience</div>
             <div class="ww-footer-links">
               <div class="ww-legal">
                 <button type="button">Legal</button>
                 <div class="ww-legal-menu">
-                  <a href="/legal/privacy-policy">Privacy</a>
-                  <a href="/legal/terms-of-use">Terms</a>
-                  <a href="/legal/disclaimer">Disclaimer</a>
+                  <a href="/legal/privacy-policy.html">Privacy</a>
+                  <a href="/legal/terms-of-use.html">Terms</a>
+                  <a href="/legal/disclaimer.html">Disclaimer</a>
                 </div>
               </div>
               <span class="ww-footer-dot">•</span>
