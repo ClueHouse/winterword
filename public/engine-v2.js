@@ -1,6 +1,7 @@
-console.log("ENGINE V2 LIVE");
+console.log("ENGINE V2 LIVE — RESOLVE TEST");
 
-// v6 RESOLVE LOGIC (BACKEND-FIRST) + LEADERBOARD MODULE + FIRST-VISIT WELCOME INTRO + POP CLUE READY
+// v6 RESOLVE LOGIC (BACKEND-FIRST) + LEADERBOARD MODULE + POP CLUE READY
+// TEMP TEST: Welcome intro bypassed to confirm Base Station Resolve loads.
 
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderBaseStationResolved } from "/modules/base-station-resolved.js";
@@ -94,26 +95,6 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
     return Date.now() >= resolveTime;
   }
 
-  function getWelcomeStorageKey(slug) {
-    return `winterword_welcome_seen_${slug}`;
-  }
-
-  function hasSeenWelcome(slug) {
-    try {
-      return window.localStorage.getItem(getWelcomeStorageKey(slug)) === "true";
-    } catch {
-      return false;
-    }
-  }
-
-  function markWelcomeSeen(slug) {
-    try {
-      window.localStorage.setItem(getWelcomeStorageKey(slug), "true");
-    } catch {
-      // If localStorage is unavailable, continue without breaking the site.
-    }
-  }
-
   const slug = getSlug();
   const orgState = await loadOrgState(slug);
 
@@ -194,57 +175,14 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
         justify-content:center;
         padding:40px;
         font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
-        background:
-          radial-gradient(circle at 50% 20%, rgba(240,138,36,0.18), transparent 45%),
-          linear-gradient(135deg,#070c12,#13202c);
+        background:#111;
         color:#fff;
         text-align:center;
       ">
-        <div style="
-          max-width:620px;
-          padding:38px;
-          border:1px solid rgba(240,138,36,0.55);
-          border-radius:22px;
-          background:rgba(255,255,255,0.055);
-          box-shadow:0 24px 70px rgba(0,0,0,0.45);
-        ">
-          <div style="
-            margin-bottom:14px;
-            color:#f08a24;
-            font-size:13px;
-            letter-spacing:0.22em;
-            text-transform:uppercase;
-            font-weight:900;
-          ">
-            Pop Clue
-          </div>
-
-          <h1 style="margin:0 0 16px;font-size:42px;color:#f3f6f9;">
-            Something brief has surfaced.
-          </h1>
-
-          <p style="margin:0 0 26px;font-size:18px;line-height:1.65;color:rgba(214,221,230,0.78);">
-            The signal is live, but the dedicated Pop Clue page has not been dressed yet.
-          </p>
-
-          <button
-            type="button"
-            id="wwBackToBase"
-            style="
-              appearance:none;
-              border:1px solid rgba(240,138,36,0.9);
-              background:#243242;
-              color:#fff;
-              padding:14px 20px;
-              border-radius:10px;
-              font-weight:900;
-              letter-spacing:0.12em;
-              text-transform:uppercase;
-              cursor:pointer;
-            "
-          >
-            Back to Base Station
-          </button>
+        <div>
+          <h1>Pop Clue</h1>
+          <p>The Pop Clue page has not been dressed yet.</p>
+          <button id="wwBackToBase" type="button">Back to Base Station</button>
         </div>
       </div>
     `;
@@ -270,7 +208,6 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
             slug
           },
           function () {
-            markWelcomeSeen(slug);
             navigate("base-station");
           }
         );
@@ -408,9 +345,5 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
     }
   }
 
-  if (hasSeenWelcome(slug)) {
-    navigate("base-station");
-  } else {
-    navigate("welcome");
-  }
+  navigate("base-station");
 })();
