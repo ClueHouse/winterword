@@ -10,8 +10,11 @@ export function renderBaseStation(app, data = {}, navigate) {
     totalClues = 12,
     lifelineAvailable = false,
     lifelineUnlockClue = 6,
-    popClueLive = false
+    popClueLive = false,
+    hasLeaderboardEntries = false
   } = data;
+
+  const leaderboardAvailable = hasLeaderboardEntries === true;
 
   const safeText = (value, fallback = "") =>
     String(value ?? fallback)
@@ -99,36 +102,6 @@ export function renderBaseStation(app, data = {}, navigate) {
     0 0 0 1px rgba(255,255,255,0.14) inset,
     0 12px 24px rgba(255,255,255,0.10) inset,
     0 -8px 20px rgba(201,124,41,0.08) inset;
-  --ww-action-bg:rgba(255,255,255,0.11);
-  --ww-action-bg-hover:rgba(255,255,255,0.16);
-  --ww-action-bg-open:rgba(255,255,255,0.17);
-  --ww-action-border:1px solid var(--ww-orange);
-  --ww-action-shadow:0 8px 22px rgba(0,0,0,0.22);
-  --ww-action-shadow-hover:0 12px 28px rgba(0,0,0,0.28), 0 0 0 1px rgba(240,138,36,0.18) inset;
-  --ww-action-shadow-open:0 12px 28px rgba(0,0,0,0.28), 0 0 0 1px rgba(240,138,36,0.24) inset;
-  --ww-panel-line:1px solid var(--ww-hairline-night);
-  --ww-panel-text:rgba(214,221,230,0.90);
-  --ww-panel-text-soft:rgba(214,221,230,0.74);
-  --ww-panel-bg-rules:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.038));
-  --ww-panel-bg-updates:rgba(255,255,255,0.035);
-  --ww-panel-shadow-rules:0 16px 44px rgba(0,0,0,0.35);
-  --ww-panel-border-updates:rgba(255,255,255,0.085);
-  --ww-premium-card-bg:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(236,228,214,0.98));
-  --ww-premium-card-border:1px solid rgba(202,162,74,0.72);
-  --ww-premium-card-shadow:
-    0 32px 95px rgba(0,0,0,0.68),
-    0 0 0 1px rgba(255,255,255,0.42) inset,
-    0 16px 28px rgba(202,162,74,0.08) inset;
-  --ww-primary-bg:linear-gradient(180deg, #243242 0%, #192532 100%);
-  --ww-primary-border:1px solid rgba(26,35,48,0.86);
-  --ww-primary-shadow:
-    0 12px 26px rgba(0,0,0,0.22),
-    0 0 0 1px rgba(255,255,255,0.07) inset,
-    0 10px 20px rgba(240,138,36,0.08);
-  --ww-primary-shadow-hover:
-    0 16px 32px rgba(0,0,0,0.28),
-    0 0 0 1px rgba(255,255,255,0.07) inset,
-    0 12px 24px rgba(240,138,36,0.12);
 }
 
 *{box-sizing:border-box;}
@@ -385,10 +358,6 @@ export function renderBaseStation(app, data = {}, navigate) {
   padding-right:340px;
 }
 
-.ww-head-copy{
-  min-width:0;
-}
-
 .ww-slug{
   font-size:0.76rem;
   letter-spacing:0.26em;
@@ -414,6 +383,113 @@ export function renderBaseStation(app, data = {}, navigate) {
   font-weight:850;
 }
 
+.ww-tagline{
+  margin:0 0 1.85rem;
+  font-size:1.12rem;
+  line-height:1.55;
+  font-style:italic;
+  color:var(--ww-ink-night);
+  opacity:0.92;
+  max-width:38rem;
+}
+
+.ww-base{
+  display:grid;
+  grid-template-columns:1.15fr 0.65fr;
+  gap:2.2rem;
+  align-items:start;
+}
+
+.ww-card{
+  padding:1.75rem;
+  border-radius:0.85rem;
+  border:1px solid rgba(255,255,255,0.10);
+}
+
+.ww-card--rules{
+  background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.038));
+  box-shadow:0 16px 44px rgba(0,0,0,0.35);
+}
+
+.ww-card--updates{
+  background:rgba(255,255,255,0.035);
+  border-color:rgba(255,255,255,0.085);
+}
+
+.ww-card h3{
+  margin:0 0 1rem;
+  font-size:0.92rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ww-ink-night);
+  padding-bottom:0.55rem;
+  border-bottom:1px solid rgba(255,255,255,0.16);
+}
+
+.ww-card p{
+  margin:0 0 0.85rem;
+  line-height:1.75;
+  color:rgba(214,221,230,0.90);
+}
+
+.ww-progress{
+  margin-top:1rem;
+  font-size:.78rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:rgba(214,221,230,.62);
+  font-weight:800;
+}
+
+.ww-lastword{
+  background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(236,228,214,0.98));
+  color:#1a2330;
+  padding:2.9rem 2.1rem 3.05rem;
+  border-radius:0.9rem;
+  border:1px solid rgba(202,162,74,0.72);
+  box-shadow:
+    0 32px 95px rgba(0,0,0,0.68),
+    0 0 0 1px rgba(255,255,255,0.42) inset,
+    0 16px 28px rgba(202,162,74,0.08) inset;
+  max-width:22rem;
+  text-align:center;
+  position:relative;
+  overflow:visible;
+}
+
+.ww-lastword h3{
+  margin:0 0 1.1rem;
+  font-size:0.92rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+}
+
+.ww-lastword-kicker{
+  font-size:1.05rem;
+  line-height:1.6;
+  margin:0 0 1.9rem;
+}
+
+.ww-primary{
+  display:inline-block;
+  padding:0.95rem 1.35rem;
+  border-radius:0.55rem;
+  background:linear-gradient(180deg, #243242 0%, #192532 100%);
+  border:1px solid rgba(26,35,48,0.86);
+  box-shadow:0 12px 26px rgba(0,0,0,0.22);
+  font-weight:950;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:#f5f0e7;
+  text-decoration:none;
+}
+
+.ww-stakes{
+  font-size:0.98rem;
+  line-height:1.65;
+  color:rgba(26,35,48,0.64);
+}
+
 .ww-signal-wrap{
   position:absolute;
   top:0.15rem;
@@ -422,8 +498,6 @@ export function renderBaseStation(app, data = {}, navigate) {
   flex-direction:column;
   align-items:flex-end;
   gap:0.75rem;
-  padding-top:0.15rem;
-  z-index:20;
 }
 
 .ww-signal{
@@ -434,7 +508,6 @@ export function renderBaseStation(app, data = {}, navigate) {
   border-radius:1.1rem;
   background:rgba(255,255,255,0.05);
   border:2px solid var(--ww-orange);
-  box-shadow:0 14px 34px rgba(0,0,0,0.26);
 }
 
 .ww-st-label{
@@ -460,11 +533,6 @@ export function renderBaseStation(app, data = {}, navigate) {
   animation:wwSignal 6s infinite;
 }
 
-.ww-signal-bar span:nth-child(2){animation-duration:5.4s;}
-.ww-signal-bar span:nth-child(3){animation-duration:6.8s;}
-.ww-signal-bar span:nth-child(4){animation-duration:5.9s;}
-.ww-signal-bar span:nth-child(5){animation-duration:7.2s;}
-
 @keyframes wwSignal{
   0%{height:28%; background:rgba(214,221,230,0.18);}
   45%{height:100%; background:rgba(214,221,230,0.52);}
@@ -473,8 +541,8 @@ export function renderBaseStation(app, data = {}, navigate) {
 
 .ww-action-btn{
   appearance:none;
-  border:var(--ww-action-border);
-  background:var(--ww-action-bg);
+  border:1px solid var(--ww-orange);
+  background:rgba(255,255,255,0.11);
   color:rgba(255,255,255,0.94);
   font-size:0.7rem;
   letter-spacing:0.16em;
@@ -483,392 +551,25 @@ export function renderBaseStation(app, data = {}, navigate) {
   padding:0.62rem 0.92rem;
   border-radius:0.6rem;
   cursor:pointer;
-  transition:background 160ms ease, border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
   text-decoration:none;
   display:inline-block;
-  box-shadow:var(--ww-action-shadow);
-  position:relative;
-  z-index:25;
 }
 
-.ww-action-btn:hover{
-  background:var(--ww-action-bg-hover);
-  border-color:var(--ww-orange);
-  transform:translateY(-1px);
-  box-shadow:var(--ww-action-shadow-hover);
-}
-
-.ww-action-btn[aria-expanded="true"]{
-  background:var(--ww-action-bg-open);
-  border-color:rgba(240,138,36,0.98);
-  box-shadow:var(--ww-action-shadow-open);
-}
-
-.wwSubPanelWrap{
-  position:absolute;
-  top:2.2rem;
-  right:18.8rem;
-  width:300px;
-  min-height:1px;
-  z-index:40;
-  pointer-events:none;
-}
-
-.wwSubPanel{
-  position:absolute;
-  top:0;
-  left:0;
-  width:300px;
-  border-radius:18px;
-  box-shadow:0 24px 52px rgba(0,0,0,0.22);
-  z-index:40;
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(8px);
-  pointer-events:none;
-  transition:opacity 180ms ease, transform 180ms ease;
-}
-
-.wwSubPanel.is-previewing,
-.wwSubPanel.is-open{
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
-}
-
-.wwSubTop{
-  background:rgba(255,255,255,0.985);
-  border:1px solid rgba(31,63,87,0.12);
-  padding:1rem 1rem 0.95rem;
-}
-
-.wwSubBottom{
-  background:linear-gradient(180deg,#f39a3f 0%, #ef8420 100%);
-  border:1px solid rgba(173,94,26,0.34);
-  border-top:none;
-  max-height:0;
-  opacity:0;
-  overflow:hidden;
-  padding:0 1rem;
-  transition:max-height 180ms ease, opacity 140ms ease, padding-top 180ms ease, padding-bottom 180ms ease;
-}
-
-.wwSubPanel.is-open .wwSubBottom{
-  max-height:10rem;
-  opacity:1;
-  padding-top:0.95rem;
-  padding-bottom:1rem;
-}
-
-.wwSubTitle{
-  font-size:.8rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:#a85f1f;
-  font-weight:800;
-  margin-bottom:.5rem;
-}
-
-.wwSubText{
-  font-size:.92rem;
-  line-height:1.5;
-  color:#4b5d6b;
-  margin-bottom:.45rem;
-}
-
-.wwSubAction{
-  display:block;
-  width:100%;
-  text-align:center;
-  padding:.78rem .7rem;
-  border-radius:999px;
-  font-size:.75rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  font-weight:800;
-  text-decoration:none;
-  transition:transform 140ms ease, box-shadow 140ms ease, background 140ms ease, border-color 140ms ease;
-}
-
-.wwSubAction:hover{
-  transform:translateY(-1px);
-}
-
-.wwSubActionPrimary{
-  background:#c7772d;
-  color:#fff;
-  box-shadow:0 8px 18px rgba(199,119,45,0.22);
-}
-
-.wwSubActionPrimary:hover{
-  background:#b86a25;
-  box-shadow:0 12px 22px rgba(199,119,45,0.28);
-}
-
-.wwSubActionSecondary{
-  background:rgba(255,255,255,0.22);
-  color:#fffdf9;
-  border:1px solid rgba(255,255,255,0.34);
-  box-shadow:0 8px 18px rgba(137,73,15,0.16);
-}
-
-.wwSubActionSecondary:hover{
-  background:rgba(255,255,255,0.28);
-}
-
+.wwSubPanelWrap,
+.wwSubPanel,
+.wwSubTop,
+.wwSubBottom,
+.wwSubTitle,
+.wwSubText,
+.wwSubAction,
 .wwSubSub{
-  font-size:.72rem;
-  color:rgba(255,255,255,0.92);
-  text-align:center;
-  margin-top:.55rem;
-  margin-bottom:0;
-  font-weight:600;
-}
-
-.ww-tagline{
-  margin:0 0 1.85rem;
-  font-size:1.12rem;
-  line-height:1.55;
-  font-style:italic;
-  color:var(--ww-ink-night);
-  opacity:0.92;
-  max-width:38rem;
-}
-
-.ww-base{
-  display:grid;
-  grid-template-columns:1.15fr 0.65fr;
-  gap:2.2rem;
-  align-items:start;
-}
-
-.ww-card{
-  padding:1.75rem;
-  border-radius:var(--ww-radius);
-  border:var(--ww-panel-line);
-}
-
-.ww-card--rules{
-  background:var(--ww-panel-bg-rules);
-  box-shadow:var(--ww-panel-shadow-rules);
-}
-
-.ww-card--rules h3{
-  opacity:0.86;
-}
-
-.ww-card--updates{
-  background:var(--ww-panel-bg-updates);
-  box-shadow:none;
-  border-color:var(--ww-panel-border-updates);
-}
-
-.ww-card h3{
-  margin:0 0 1rem;
-  font-size:0.92rem;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:var(--ww-ink-night);
-  padding-bottom:0.55rem;
-  border-bottom:1px solid rgba(255,255,255,0.16);
-}
-
-.ww-card p{
-  margin:0 0 0.85rem;
-  line-height:1.75;
-  color:var(--ww-panel-text);
-}
-
-.ww-card p:last-child{
-  margin-bottom:0;
-}
-
-.ww-card--updates p{
-  color:var(--ww-panel-text-soft);
-}
-
-.ww-progress{
-  margin-top:1rem;
-  font-size:.78rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:rgba(214,221,230,.62);
-  font-weight:800;
-}
-
-.ww-lastword{
-  background:var(--ww-premium-card-bg);
-  color:#1a2330;
-  padding:2.9rem 2.1rem 3.05rem;
-  border-radius:0.9rem;
-  border:var(--ww-premium-card-border);
-  box-shadow:var(--ww-premium-card-shadow);
-  max-width:22rem;
-  text-align:center;
-  position:relative;
-  overflow:visible;
-}
-
-.ww-lastword::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  opacity:0.52;
-  background:
-    radial-gradient(140% 180% at 20% 20%, rgba(0,0,0,0.07), transparent 55%),
-    radial-gradient(120% 160% at 80% 75%, rgba(202,162,74,0.09), transparent 60%);
-  mix-blend-mode:multiply;
-  pointer-events:none;
-}
-
-.ww-lastword::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0) 24%);
-  pointer-events:none;
-}
-
-.ww-lastword h3,
-.ww-lastword-kicker,
-.ww-primary-wrap,
-.ww-stakes{
-  position:relative;
-  z-index:1;
-}
-
-.ww-lastword h3{
-  margin:0 0 1.1rem;
-  font-size:0.92rem;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-}
-
-.ww-lastword-kicker{
-  font-size:1.05rem;
-  line-height:1.6;
-  margin:0 0 1.9rem;
-}
-
-.ww-primary-wrap{
-  display:inline-block;
-  position:relative;
-  margin:0 auto 1.9rem;
-}
-
-.ww-primary{
-  display:inline-block;
-  padding:0.95rem 1.35rem;
-  border-radius:0.55rem;
-  background:var(--ww-primary-bg);
-  border:var(--ww-primary-border);
-  box-shadow:var(--ww-primary-shadow);
-  font-weight:950;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:#f5f0e7;
-  text-decoration:none;
-  position:relative;
-  overflow:hidden;
-  text-shadow:0 1px 0 rgba(0,0,0,0.28);
-}
-
-.ww-primary::before{
-  content:"";
-  position:absolute;
-  inset:1px;
-  border-radius:0.48rem;
-  border:1px solid rgba(255,255,255,0.06);
-  pointer-events:none;
-}
-
-.ww-primary::after{
-  content:"";
-  position:absolute;
-  top:-18%;
-  bottom:-18%;
-  left:-34%;
-  width:22%;
-  background:linear-gradient(
-    90deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.12) 30%,
-    rgba(255,255,255,0.72) 50%,
-    rgba(255,255,255,0.12) 70%,
-    rgba(255,255,255,0) 100%
-  );
-  transform:skewX(-22deg);
-  animation:wwSolveStreak 3s ease-in-out infinite;
-  pointer-events:none;
-}
-
-.ww-primary:hover{
-  transform:translateY(-1px);
-  box-shadow:var(--ww-primary-shadow-hover);
-}
-
-.ww-primary-tooltip{
-  position:absolute;
-  bottom:calc(100% + 0.85rem);
-  left:50%;
-  transform:translate(-50%, 4px);
-  min-width:7rem;
-  max-width:12rem;
-  padding:0.95rem 1.1rem;
-  background:var(--ww-tooltip-bg);
-  border:1px solid var(--ww-tooltip-border);
-  border-radius:1rem;
-  box-shadow:var(--ww-tooltip-shadow);
-  color:var(--ww-tooltip-ink);
-  font-size:0.95rem;
-  font-weight:800;
-  letter-spacing:0.04em;
-  line-height:1.2;
-  text-align:center;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 160ms ease-out, transform 160ms ease-out;
-  z-index:30;
-}
-
-.ww-primary-tooltip::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:-7px;
-  width:16px;
-  height:16px;
-  background:inherit;
-  border-radius:4px;
-  transform:translateX(-50%) rotate(45deg);
-  box-shadow:1px 1px 0 0 var(--ww-tooltip-border);
-}
-
-.ww-primary-wrap:hover .ww-primary-tooltip{
-  opacity:1;
-  transform:translate(-50%, 0);
-}
-
-@keyframes wwSolveStreak{
-  0%{left:-34%; opacity:0;}
-  10%{opacity:1;}
-  44%{left:118%; opacity:1;}
-  56%{left:118%; opacity:0;}
-  100%{left:118%; opacity:0;}
-}
-
-.ww-stakes{
-  font-size:0.98rem;
-  line-height:1.65;
-  color:rgba(26,35,48,0.64);
+  display:none;
 }
 
 .ww-footer{
   width:100%;
   margin:3.5rem 0 0;
   padding:1.8rem 0 0.9rem;
-  box-sizing:border-box;
   font-size:0.75rem;
   color:rgba(244,219,192,0.9);
   display:flex;
@@ -888,19 +589,16 @@ export function renderBaseStation(app, data = {}, navigate) {
   font-weight:800;
   letter-spacing:0.12em;
   text-transform:uppercase;
-  color:rgba(244,219,192,0.96);
 }
 
 .ww-footer-experience{
   font-style:italic;
-  color:rgba(244,219,192,0.82);
 }
 
 .ww-footer-links{
   display:inline-flex;
   align-items:center;
   justify-content:flex-end;
-  gap:0;
   font-size:0.68rem;
   letter-spacing:0.12em;
   text-transform:uppercase;
@@ -919,16 +617,9 @@ export function renderBaseStation(app, data = {}, navigate) {
   letter-spacing:0.12em;
 }
 
-.ww-footer a:hover,
-.ww-footer button:hover{
-  text-decoration:underline;
-}
-
 .ww-footer-dot{
   display:inline-block;
   padding:0 0.6rem;
-  opacity:0.95;
-  transform:translateY(-0.5px);
 }
 
 .ww-legal{
@@ -944,9 +635,7 @@ export function renderBaseStation(app, data = {}, navigate) {
   min-width:170px;
   border-radius:14px;
   padding:0.5rem;
-  background:
-    radial-gradient(circle at 0 0, rgba(255,238,204,0.18), transparent 60%),
-    rgba(25,15,14,0.95);
+  background:rgba(25,15,14,0.95);
   border:1px solid rgba(255,238,210,0.22);
   box-shadow:0 18px 46px rgba(0,0,0,0.85);
   opacity:0;
@@ -974,42 +663,6 @@ export function renderBaseStation(app, data = {}, navigate) {
   text-align:left;
 }
 
-.ww-legal-menu a:hover,
-.ww-legal-menu a:focus-visible{
-  background:rgba(240,189,125,0.16);
-  text-decoration:none;
-  outline:none;
-}
-
-@media (max-width:1180px){
-  .ww-head{
-    min-height:auto;
-    padding-right:0;
-  }
-
-  .ww-signal-wrap{
-    position:relative;
-    top:auto;
-    right:auto;
-    align-items:flex-start;
-    padding-top:0;
-    margin-top:1.35rem;
-  }
-
-  .wwSubPanelWrap{
-    position:relative;
-    top:auto;
-    right:auto;
-    width:300px;
-    margin-top:0.75rem;
-  }
-
-  .wwSubPanel{
-    position:relative;
-    width:300px;
-  }
-}
-
 @media (max-width:1100px){
   .ww-base{
     grid-template-columns:1fr;
@@ -1017,24 +670,6 @@ export function renderBaseStation(app, data = {}, navigate) {
 
   .ww-lastword{
     max-width:none;
-  }
-}
-
-@media (max-width:820px){
-  :root{
-    --ww-left-wide:12.8rem;
-  }
-
-  .ww-left-logo img{
-    width:8.9rem;
-  }
-
-  .ww-left-icon{
-    width:4.4rem;
-  }
-
-  #wwView{
-    padding:3rem 1.6rem 6rem;
   }
 }
 </style>
@@ -1093,14 +728,21 @@ export function renderBaseStation(app, data = {}, navigate) {
             </div>
           </button>
 
-          <button class="ww-left-item" type="button" data-nav="leaderboard">
+          <button
+            class="ww-left-item"
+            type="button"
+            data-nav="leaderboard"
+            data-disabled="${leaderboardAvailable ? "false" : "true"}"
+          >
             <img class="ww-left-icon" src="/assets/winterword/shared/leaderboard.png" alt="Leaderboard">
             <div class="ww-left-label">LEADER</div>
             <div class="ww-left-tooltip">
               <div class="ww-left-tooltip-title">Leaderboard</div>
-              The Leaderboard remembers all who enter the game.
-              It reflects those who find the answer,
-              and honours the one who found it first.
+              ${
+                leaderboardAvailable
+                  ? `The Leaderboard remembers those who found the answer, and honours the one who found it first.`
+                  : `No answers have been received. No correct ones, anyway...`
+              }
             </div>
           </button>
 
@@ -1133,36 +775,6 @@ export function renderBaseStation(app, data = {}, navigate) {
             <a class="ww-action-btn" href="${reportProblemHref}">
               Report a problem
             </a>
-
-            <button class="ww-action-btn" id="wwSubToggle" type="button" aria-expanded="false" aria-controls="wwSubPanel">
-              Subscribe
-            </button>
-          </div>
-
-          <div class="wwSubPanelWrap">
-            <div class="wwSubPanel" id="wwSubPanel">
-              <div class="wwSubTop">
-                <div class="wwSubTitle">Clue Alerts</div>
-
-                <div class="wwSubText">
-                  Curious minds tend to wander.<br>
-                  When each clue falls,<br>
-                  subscribers will hear the click.
-                </div>
-
-                <a class="wwSubAction wwSubActionPrimary" href="${subscribeHref}">
-                  Subscribe to Clue Alerts
-                </a>
-              </div>
-
-              <div class="wwSubBottom">
-                <a class="wwSubAction wwSubActionSecondary" href="${unsubscribeHref}">
-                  Unsubscribe
-                </a>
-
-                <div class="wwSubSub">Execute ESCAPE ROOM protocol.</div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -1202,7 +814,6 @@ export function renderBaseStation(app, data = {}, navigate) {
               <a class="ww-primary" href="${solveHref}">
                 Solve WinterWord
               </a>
-              <div class="ww-primary-tooltip">Ready?</div>
             </div>
 
             <div class="ww-stakes">
@@ -1253,61 +864,4 @@ export function renderBaseStation(app, data = {}, navigate) {
       }
     });
   });
-
-  const toggle = app.querySelector("#wwSubToggle");
-  const panel = app.querySelector("#wwSubPanel");
-
-  if (toggle && panel) {
-    const setPreview = (on) => {
-      if (panel.classList.contains("is-open")) return;
-      panel.classList.toggle("is-previewing", on);
-    };
-
-    const setOpen = (on) => {
-      panel.classList.toggle("is-open", on);
-      toggle.setAttribute("aria-expanded", on ? "true" : "false");
-
-      if (on) {
-        panel.classList.remove("is-previewing");
-      }
-    };
-
-    const closePanel = () => {
-      setOpen(false);
-      panel.classList.remove("is-previewing");
-    };
-
-    toggle.addEventListener("mouseenter", () => setPreview(true));
-    toggle.addEventListener("mouseleave", () => setPreview(false));
-
-    panel.addEventListener("mouseenter", () => {
-      if (!panel.classList.contains("is-open")) {
-        panel.classList.add("is-previewing");
-      }
-    });
-
-    panel.addEventListener("mouseleave", () => {
-      if (!panel.classList.contains("is-open")) {
-        panel.classList.remove("is-previewing");
-      }
-    });
-
-    toggle.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      setOpen(!panel.classList.contains("is-open"));
-    });
-
-    panel.addEventListener("click", (event) => {
-      event.stopPropagation();
-    });
-
-    document.addEventListener("click", closePanel);
-
-    app.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        closePanel();
-      }
-    });
-  }
 }
