@@ -162,20 +162,22 @@ export function renderBaseStation(app, data = {}, navigate) {
 }
 
 .ww-rail--pop-live{
-  animation:wwRailSoftOrangePulse 3.8s ease-in-out infinite;
+  animation:wwRailWarmGlow 4.6s ease-in-out infinite;
 }
 
-@keyframes wwRailSoftOrangePulse{
+@keyframes wwRailWarmGlow{
   0%,100%{
     box-shadow:
-      inset -1px 0 0 rgba(240,138,36,0.70),
-      0 0 18px rgba(240,138,36,0.18);
+      inset -1px 0 0 rgba(240,138,36,0.62),
+      inset -14px 0 32px rgba(240,138,36,0.045),
+      0 0 14px rgba(240,138,36,0.10);
   }
 
   50%{
     box-shadow:
-      inset -2px 0 0 rgba(240,138,36,0.95),
-      0 0 38px rgba(240,138,36,0.42);
+      inset -2px 0 0 rgba(240,138,36,0.96),
+      inset -28px 0 62px rgba(240,138,36,0.15),
+      0 0 34px rgba(240,138,36,0.30);
   }
 }
 
@@ -235,10 +237,11 @@ export function renderBaseStation(app, data = {}, navigate) {
 .ww-left-icon--pop{
   filter:
     sepia(1)
-    saturate(4)
-    hue-rotate(345deg)
-    brightness(1.35)
-    drop-shadow(0 0 10px rgba(240,138,36,.65));
+    saturate(8)
+    hue-rotate(348deg)
+    brightness(1.42)
+    contrast(1.08)
+    drop-shadow(0 0 11px rgba(240,138,36,0.64));
 }
 
 .ww-left-label{
@@ -251,8 +254,8 @@ export function renderBaseStation(app, data = {}, navigate) {
 }
 
 .ww-left-item--pop .ww-left-label{
-  color:rgba(240,138,36,0.95);
-  text-shadow:0 0 10px rgba(240,138,36,0.42);
+  color:rgba(240,138,36,0.98);
+  text-shadow:0 0 9px rgba(240,138,36,0.36);
 }
 
 .ww-left-tooltip{
@@ -329,28 +332,30 @@ export function renderBaseStation(app, data = {}, navigate) {
 }
 
 .ww-left-item--pop .ww-left-icon{
-  animation:wwPopSoftGlow 2.8s ease-in-out infinite;
+  animation:wwPopWarmGlow 3.9s ease-in-out infinite;
 }
 
-@keyframes wwPopSoftGlow{
+@keyframes wwPopWarmGlow{
   0%,100%{
     transform:translateY(0) scale(1);
     filter:
       sepia(1)
-      saturate(4)
-      hue-rotate(345deg)
-      brightness(1.28)
-      drop-shadow(0 0 8px rgba(240,138,36,.46));
+      saturate(8)
+      hue-rotate(348deg)
+      brightness(1.34)
+      contrast(1.08)
+      drop-shadow(0 0 8px rgba(240,138,36,0.42));
   }
 
   50%{
-    transform:translateY(-1px) scale(1.025);
+    transform:translateY(-1px) scale(1.035);
     filter:
       sepia(1)
-      saturate(4)
-      hue-rotate(345deg)
-      brightness(1.42)
-      drop-shadow(0 0 18px rgba(240,138,36,.78));
+      saturate(8)
+      hue-rotate(348deg)
+      brightness(1.55)
+      contrast(1.12)
+      drop-shadow(0 0 20px rgba(240,138,36,0.82));
   }
 }
 
@@ -867,15 +872,15 @@ export function renderBaseStation(app, data = {}, navigate) {
   font-size:0.75rem;
   color:rgba(244,219,192,0.9);
   display:flex;
-  justify-content:center;
+  justify-content:flex-end;
   border-top:1px solid rgba(255,255,255,0.05);
 }
 
 .ww-footer-inner{
   display:flex;
   flex-direction:column;
-  align-items:center;
-  text-align:center;
+  align-items:flex-end;
+  text-align:right;
   gap:0.42rem;
 }
 
@@ -894,7 +899,7 @@ export function renderBaseStation(app, data = {}, navigate) {
 .ww-footer-links{
   display:inline-flex;
   align-items:center;
-  justify-content:center;
+  justify-content:flex-end;
   gap:0;
   font-size:0.68rem;
   letter-spacing:0.12em;
@@ -934,7 +939,7 @@ export function renderBaseStation(app, data = {}, navigate) {
 
 .ww-legal-menu{
   position:absolute;
-  left:50%;
+  right:0;
   bottom:calc(100% + 10px);
   min-width:170px;
   border-radius:14px;
@@ -945,7 +950,7 @@ export function renderBaseStation(app, data = {}, navigate) {
   border:1px solid rgba(255,238,210,0.22);
   box-shadow:0 18px 46px rgba(0,0,0,0.85);
   opacity:0;
-  transform:translate(-50%, 8px);
+  transform:translateY(8px);
   pointer-events:none;
   transition:opacity 0.14s ease, transform 0.14s ease;
   z-index:80;
@@ -954,7 +959,7 @@ export function renderBaseStation(app, data = {}, navigate) {
 .ww-legal:hover .ww-legal-menu,
 .ww-legal:focus-within .ww-legal-menu{
   opacity:1;
-  transform:translate(-50%, 0);
+  transform:translateY(0);
   pointer-events:auto;
 }
 
@@ -966,6 +971,7 @@ export function renderBaseStation(app, data = {}, navigate) {
   color:rgba(253,247,239,0.92);
   text-transform:none;
   letter-spacing:0;
+  text-align:left;
 }
 
 .ww-legal-menu a:hover,
