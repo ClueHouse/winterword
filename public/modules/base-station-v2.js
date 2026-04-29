@@ -49,26 +49,6 @@ app.innerHTML = `{--ww-night-0:#070c12;--ww-night-1:#0b141d;--ww-night-2:#13202c
     overflow:visible;
   }
 
-  .ww-rail--pop-live{
-    animation:wwRailOrangePulse 2.2s ease-in-out infinite;
-  }
-
-  @keyframes wwRailOrangePulse{
-    0%,100%{
-      background:linear-gradient(90deg, rgba(7,12,18,1) 0%, rgba(11,20,29,1) 34%, rgba(19,32,44,1) 100%);
-      box-shadow:
-        inset -1px 0 0 rgba(240,138,36,0.92),
-        0 0 0 rgba(240,138,36,0);
-    }
-
-    50%{
-      background:linear-gradient(90deg, rgba(38,18,6,1) 0%, rgba(78,34,8,1) 34%, rgba(130,54,10,1) 100%);
-      box-shadow:
-        inset -2px 0 0 rgba(240,138,36,1),
-        0 0 28px rgba(240,138,36,0.38);
-    }
-  }
-
   .ww-left-shell{
     height:100%;
     padding:1.55rem 0 2.6rem;
@@ -909,7 +889,7 @@ app.innerHTML = `{--ww-night-0:#070c12;--ww-night-1:#0b141d;--ww-night-2:#13202c
 
 <div id="wwPortal">
   <aside id="wwLeft">
-    <div class="ww-rail ${popClueLive ? "ww-rail--pop-live" : ""}">
+    <div class="ww-rail">
       <div class="ww-left-shell">
         <div class="ww-left-logo">
           <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
@@ -1147,4 +1127,4 @@ app.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closePanel();
 });
 
-}}
+}
