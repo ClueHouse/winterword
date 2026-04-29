@@ -850,19 +850,115 @@ export function renderBaseStation(app, data = {}, navigate) {
 }
 
 .ww-footer{
-  margin-top:3rem;
-  padding-top:2rem;
-  font-size:.75rem;
-  color:rgba(214,221,230,.72);
+  width:100%;
+  margin:3.5rem 0 0;
+  padding:1.8rem 0 0.9rem;
+  box-sizing:border-box;
+  font-size:0.75rem;
+  color:rgba(244,219,192,0.9);
+  display:flex;
+  justify-content:flex-end;
+  border-top:1px solid rgba(255,255,255,0.05);
 }
 
-.ww-footer a{
+.ww-footer-right{
+  margin-left:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  text-align:right;
+  gap:0.45rem;
+}
+
+.ww-footer-edition{
+  font-size:0.72rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:rgba(244,219,192,0.82);
+}
+
+.ww-footer-brandline{
+  font-weight:650;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:rgba(244,219,192,0.95);
+}
+
+.ww-footer-links{
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:0;
+}
+
+.ww-footer a,
+.ww-footer button{
   color:inherit;
   text-decoration:none;
+  font:inherit;
+  background:none;
+  border:0;
+  padding:0;
+  cursor:pointer;
 }
 
-.ww-footer a:hover{
-  color:var(--ww-orange);
+.ww-footer a:hover,
+.ww-footer button:hover{
+  text-decoration:underline;
+}
+
+.ww-footer-dot{
+  display:inline-block;
+  padding:0 0.6rem;
+  opacity:0.95;
+  transform:translateY(-0.5px);
+}
+
+.ww-legal{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+}
+
+.ww-legal-menu{
+  position:absolute;
+  right:0;
+  bottom:calc(100% + 10px);
+  min-width:170px;
+  border-radius:14px;
+  padding:0.5rem;
+  background:
+    radial-gradient(circle at 0 0, rgba(255,238,204,0.18), transparent 60%),
+    rgba(25,15,14,0.95);
+  border:1px solid rgba(255,238,210,0.22);
+  box-shadow:0 18px 46px rgba(0,0,0,0.85);
+  opacity:0;
+  transform:translateY(8px);
+  pointer-events:none;
+  transition:opacity 0.14s ease, transform 0.14s ease;
+  z-index:80;
+}
+
+.ww-legal:hover .ww-legal-menu,
+.ww-legal:focus-within .ww-legal-menu{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
+.ww-legal-menu a{
+  display:block;
+  padding:0.5rem 0.65rem;
+  border-radius:10px;
+  text-decoration:none;
+  color:rgba(253,247,239,0.92);
+}
+
+.ww-legal-menu a:hover,
+.ww-legal-menu a:focus-visible{
+  background:rgba(240,189,125,0.16);
+  text-decoration:none;
+  outline:none;
 }
 
 @media (max-width:1180px){
@@ -934,6 +1030,21 @@ export function renderBaseStation(app, data = {}, navigate) {
 
         <nav class="ww-left-nav">
 
+          ${
+            popClueLive
+              ? `
+          <button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">
+            <img class="ww-left-icon" src="/cgi/image/Clue_ivx53yyYY6YAR7ZkHgMQJ.png?width=256&quality=80&format=auto" alt="Pop Clue">
+            <div class="ww-left-label">POP</div>
+            <div class="ww-left-tooltip">
+              <div class="ww-left-tooltip-title">Pop Clue</div>
+              Something brief has surfaced in the snow. Catch it before it disappears.
+            </div>
+          </button>
+          `
+              : ""
+          }
+
           <button class="ww-left-item" type="button" data-nav="clues">
             <img class="ww-left-icon" src="/cgi/image/Clue_ivx53yyYY6YAR7ZkHgMQJ.png?width=256&quality=80&format=auto" alt="Clues">
             <div class="ww-left-label">CLUES</div>
@@ -953,6 +1064,7 @@ export function renderBaseStation(app, data = {}, navigate) {
             <img class="ww-left-icon" src="/cgi/image/Lifeline_oT0vP3H4BL6I-Z--NFPHA.png?width=256&quality=80&format=auto" alt="Lifeline">
             <div class="ww-left-label">LIFELINE</div>
             <div class="ww-left-tooltip">
+              <div class="ww-left-tooltip-title">Lifeline</div>
               ${
                 lifelineAvailable
                   ? `The Lifeline is open. Step carefully.`
@@ -960,21 +1072,6 @@ export function renderBaseStation(app, data = {}, navigate) {
               }
             </div>
           </button>
-
-          ${
-            popClueLive
-              ? `
-          <button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">
-            <img class="ww-left-icon" src="/cgi/image/Clue_ivx53yyYY6YAR7ZkHgMQJ.png?width=256&quality=80&format=auto" alt="Pop Clue">
-            <div class="ww-left-label">POP</div>
-            <div class="ww-left-tooltip">
-              <div class="ww-left-tooltip-title">Pop Clue</div>
-              Something brief has surfaced in the snow. Catch it before it disappears.
-            </div>
-          </button>
-          `
-              : ""
-          }
 
           <button class="ww-left-item" type="button" data-nav="leaderboard">
             <img class="ww-left-icon" src="/cgi/image/Leaderboard_94LRTiQiFRVwCQT0zH-2y.png?width=256&quality=80&format=auto" alt="Leaderboard">
@@ -1029,7 +1126,7 @@ export function renderBaseStation(app, data = {}, navigate) {
                 <div class="wwSubText">
                   Curious minds tend to wander.<br>
                   When each clue falls,<br>
-                  subscribers will feel the ripple.
+                  subscribers will hear the click.
                 </div>
 
                 <a class="wwSubAction wwSubActionPrimary" href="${subscribeHref}">
@@ -1096,14 +1193,22 @@ export function renderBaseStation(app, data = {}, navigate) {
 
         </div>
 
-        <footer class="ww-footer">
-          <div>WinterWord • Another Clue House Experience</div>
-
-          <div style="margin-top:.7rem;">
-            <a href="/legal/privacy-policy">Privacy</a> •
-            <a href="/legal/terms-of-use">Terms</a> •
-            <a href="/legal/disclaimer">Disclaimer</a> •
-            <a href="${contactHref}">Contact</a>
+        <footer class="ww-footer" id="pageBottom">
+          <div class="ww-footer-right">
+            <div class="ww-footer-edition">Edition 1</div>
+            <div class="ww-footer-brandline">Clue House 2026</div>
+            <div class="ww-footer-links">
+              <div class="ww-legal">
+                <button type="button">Legal</button>
+                <div class="ww-legal-menu">
+                  <a href="/legal/privacy-policy">Privacy</a>
+                  <a href="/legal/terms-of-use">Terms</a>
+                  <a href="/legal/disclaimer">Disclaimer</a>
+                </div>
+              </div>
+              <span class="ww-footer-dot">•</span>
+              <a href="${contactHref}">Contact</a>
+            </div>
           </div>
         </footer>
 
