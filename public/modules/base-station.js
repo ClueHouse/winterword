@@ -43,112 +43,37 @@ export function renderBaseStation(app, data = {}, navigate) {
   const progressText = `${released} of ${clueTotal} clues released`;
 
   const reportProblemHref =
-    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}` +
-    `&body=SET%20THE%20SCENE%3A%0AWhich%20page%20were%20you%20on%3F%0A%0A` +
-    `PLOT%20TWIST%3A%0AWhat%20went%20wrong%3F%0A%0A` +
-    `ALTERNATE%20ENDING%3A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0A` +
-    `YOUR%20TRAVELLER%E2%80%99S%20GEAR%3A%0AWhich%20device%20%2B%20browser%20you%20brought%20on%20this%20journey.%0A%0A` +
-    `Thanks%20for%20sharing%20%E2%80%94%20we%E2%80%99ll%20follow%20the%20trail%20and%20set%20things%20right.`;
+    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}`;
 
   const subscribeHref =
-    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}` +
-    `&body=Sign%20me%20up.%20The%20winter%20hush%20is%20starting%20to%20feel%20personal.`;
+    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}`;
 
   const unsubscribeHref =
-    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Unsubscribe%20-%20${encodedOrgName}` +
-    `&body=Remove%20me%20from%20Winterword%20Clue%20Alerts.%20I%E2%80%99m%20embracing%20the%20quiet%20freeze%20of%20an%20uncluttered%20inbox.`;
+    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Unsubscribe%20-%20${encodedOrgName}`;
 
   const solveHref =
-    `mailto:key@cluehouse.co.nz?subject=FINAL%20Winterword%20Submission%20-%20${encodedOrgName}%20-%202026` +
-    `&body=You%20feel%20the%20pieces%20have%20settled.%0A%0A` +
-    `Clues%20gathered.%20Letters%20found.%0A` +
-    `A%20pattern%2C%20perhaps%2C%20now%20clear%20beneath%20the%20frost.%0A%0A` +
-    `If%20you%20believe%20you%20can%20name%20the%20WinterWord%2C%0A` +
-    `set%20it%20down%20below.%0A%0A` +
-    `Your%20answer%3A%0A%0A%5BTYPE%20YOUR%20FINAL%20WORD%20HERE%5D%0A%0A%0A` +
-    `(Only%20one%20submission%20is%20counted.%0AChoose%20your%20moment%20%E2%80%94%20winter%20does%20not%20answer%20twice.)`;
+    `mailto:key@cluehouse.co.nz?subject=FINAL%20Winterword%20Submission%20-%20${encodedOrgName}%20-%202026`;
 
   const contactHref = `mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry`;
 
   app.innerHTML = `
 <style>
 :root{
-  --ww-night-0:#070c12;
-  --ww-night-1:#0b141d;
-  --ww-night-2:#13202c;
-  --ww-ink-night:#d6dde6;
-  --ww-muted-night:rgba(214,221,230,0.68);
-  --ww-accent-ice:#9bb9c9;
-  --ww-accent-line:rgba(155,185,201,0.28);
-  --ww-hairline-night:rgba(255,255,255,0.10);
-  --ww-white-cold:#f3f6f9;
-  --ww-white-ink:#1a2330;
-  --ww-white-muted:rgba(26,35,48,0.64);
-  --ww-gold-line:rgba(202,162,74,0.78);
+  --ww-black:#050607;
+  --ww-night:#071019;
+  --ww-panel:rgba(5,8,10,.72);
+  --ww-panel-2:rgba(10,13,14,.82);
   --ww-orange:#f08a24;
-  --ww-orange-soft:rgba(240,138,36,0.26);
-  --ww-orange-soft-2:rgba(240,138,36,0.14);
-  --ww-tooltip-orange-top:#f7d8b2;
-  --ww-tooltip-orange-bot:#efbe86;
-  --ww-tooltip-ink:#2b1e12;
-  --ww-tooltip-title:#6d4a24;
-  --ww-tooltip-border:#b87629;
-  --ww-radius:0.85rem;
-  --ww-radius-last:0.55rem;
+  --ww-orange-hot:#ff9f2f;
+  --ww-orange-soft:rgba(240,138,36,.32);
+  --ww-orange-line:rgba(240,138,36,.72);
+  --ww-cream:#e8d0ac;
+  --ww-muted:#a98d68;
+  --ww-text:#f2e7d5;
   --ww-left-wide:13.5rem;
-  --ww-left-narrow:8.8rem;
-  --ww-frost-blue-soft:#ecf3fa;
-  --ww-ink:#3b4149;
-  --ww-muted:#6c7785;
-  --ww-accent:#5d8599;
-  --ww-card:rgba(255,255,255,0.92);
-  --ww-shadow:0 10px 30px rgba(0,0,0,0.06);
-  --ww-ink-blue:#1f3f57;
-  --ww-ink-blue-hover:#163244;
-  --ww-rail-width-ms:1600ms;
-  --ww-rail-fade-ms:1200ms;
-  --ww-rail-bg:linear-gradient(90deg, var(--ww-night-0) 0%, var(--ww-night-1) 34%, var(--ww-night-2) 100%);
-  --ww-page-bg:
-    radial-gradient(760px 300px at 50% 0%, rgba(155,185,201,0.06), transparent 68%),
-    radial-gradient(1200px 700px at 20% 18%, rgba(255,255,255,0.035), transparent 60%),
-    radial-gradient(900px 560px at 78% 30%, rgba(155,185,201,0.025), transparent 62%),
-    linear-gradient(90deg, var(--ww-night-0) 0%, var(--ww-night-1) 34%, var(--ww-night-2) 100%);
-  --ww-tooltip-bg:linear-gradient(180deg, var(--ww-tooltip-orange-top), var(--ww-tooltip-orange-bot));
-  --ww-tooltip-shadow:
-    0 24px 46px rgba(0,0,0,0.26),
-    0 0 0 1px rgba(255,255,255,0.14) inset,
-    0 12px 24px rgba(255,255,255,0.10) inset,
-    0 -8px 20px rgba(201,124,41,0.08) inset;
-  --ww-action-bg:rgba(255,255,255,0.11);
-  --ww-action-bg-hover:rgba(255,255,255,0.16);
-  --ww-action-bg-open:rgba(255,255,255,0.17);
-  --ww-action-border:1px solid var(--ww-orange);
-  --ww-action-shadow:0 8px 22px rgba(0,0,0,0.22);
-  --ww-action-shadow-hover:0 12px 28px rgba(0,0,0,0.28), 0 0 0 1px rgba(240,138,36,0.18) inset;
-  --ww-action-shadow-open:0 12px 28px rgba(0,0,0,0.28), 0 0 0 1px rgba(240,138,36,0.24) inset;
-  --ww-panel-line:1px solid var(--ww-hairline-night);
-  --ww-panel-text:rgba(214,221,230,0.90);
-  --ww-panel-text-soft:rgba(214,221,230,0.74);
-  --ww-panel-bg-rules:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.038));
-  --ww-panel-bg-updates:rgba(255,255,255,0.035);
-  --ww-panel-shadow-rules:0 16px 44px rgba(0,0,0,0.35);
-  --ww-panel-border-updates:rgba(255,255,255,0.085);
-  --ww-premium-card-bg:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(236,228,214,0.98));
-  --ww-premium-card-border:1px solid rgba(202,162,74,0.72);
-  --ww-premium-card-shadow:
-    0 32px 95px rgba(0,0,0,0.68),
-    0 0 0 1px rgba(255,255,255,0.42) inset,
-    0 16px 28px rgba(202,162,74,0.08) inset;
-  --ww-primary-bg:linear-gradient(180deg, #243242 0%, #192532 100%);
-  --ww-primary-border:1px solid rgba(26,35,48,0.86);
-  --ww-primary-shadow:
-    0 12px 26px rgba(0,0,0,0.22),
-    0 0 0 1px rgba(255,255,255,0.07) inset,
-    0 10px 20px rgba(240,138,36,0.08);
-  --ww-primary-shadow-hover:
-    0 16px 32px rgba(0,0,0,0.28),
-    0 0 0 1px rgba(255,255,255,0.07) inset,
-    0 12px 24px rgba(240,138,36,0.12);
+  --ww-rail-bg:
+    radial-gradient(circle at 50% 92%, rgba(240,138,36,.24), transparent 42%),
+    linear-gradient(180deg, rgba(35,14,2,.92), rgba(5,6,7,.98) 55%, rgba(35,14,2,.9));
 }
 
 *{box-sizing:border-box;}
@@ -156,25 +81,32 @@ export function renderBaseStation(app, data = {}, navigate) {
 #wwPortal{
   display:flex;
   height:100vh;
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
   overflow:hidden;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ww-text);
+  background:#050607;
 }
 
 #wwLeft{
   width:var(--ww-left-wide);
-  background:var(--ww-rail-bg);
+  flex:0 0 var(--ww-left-wide);
   height:100vh;
   position:sticky;
   top:0;
-  box-shadow:inset -1px 0 0 rgba(240,138,36,0.92);
   overflow:visible;
-  flex:0 0 var(--ww-left-wide);
+  z-index:5;
 }
 
 .ww-rail{
   position:absolute;
   inset:0;
   background:var(--ww-rail-bg);
+  border:1px solid rgba(240,138,36,.9);
+  border-radius:0 0 1.6rem 0;
+  box-shadow:
+    inset -1px 0 0 rgba(255,166,60,.8),
+    0 0 34px rgba(240,138,36,.52),
+    0 0 70px rgba(240,138,36,.18);
   overflow:visible;
 }
 
@@ -183,45 +115,23 @@ export function renderBaseStation(app, data = {}, navigate) {
 }
 
 @keyframes wwRailOrangePulse{
-  0%,100%{
-    background:linear-gradient(90deg,
-      rgba(7,12,18,1) 0%,
-      rgba(11,20,29,1) 34%,
-      rgba(19,32,44,1) 100%);
-    box-shadow:
-      inset -1px 0 0 rgba(240,138,36,0.92),
-      0 0 0 rgba(240,138,36,0);
-  }
-  50%{
-    background:linear-gradient(90deg,
-      rgba(38,18,6,1) 0%,
-      rgba(78,34,8,1) 34%,
-      rgba(130,54,10,1) 100%);
-    box-shadow:
-      inset -2px 0 0 rgba(240,138,36,1),
-      0 0 28px rgba(240,138,36,0.38);
-  }
+  0%,100%{box-shadow:inset -1px 0 0 rgba(255,166,60,.8),0 0 34px rgba(240,138,36,.52);}
+  50%{box-shadow:inset -2px 0 0 rgba(255,190,92,1),0 0 54px rgba(240,138,36,.85);}
 }
 
 .ww-left-shell{
   height:100%;
-  padding:1.55rem 0 2.6rem;
+  padding:1.1rem 0 1.6rem;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:1.85rem;
-  overflow:visible;
-}
-
-.ww-left-logo{
-  position:relative;
-  z-index:5;
+  gap:1.05rem;
 }
 
 .ww-left-logo img{
-  width:9.3rem;
-  height:auto;
+  width:8.75rem;
   display:block;
+  filter:drop-shadow(0 0 12px rgba(240,138,36,.46));
 }
 
 .ww-left-nav{
@@ -231,94 +141,37 @@ export function renderBaseStation(app, data = {}, navigate) {
   flex-direction:column;
   align-items:center;
   justify-content:space-evenly;
-  overflow:visible;
-  position:relative;
 }
 
 .ww-left-item{
+  width:100%;
   background:none;
-  border:none;
+  border:0;
+  padding:0;
   cursor:pointer;
   position:relative;
   display:flex;
   flex-direction:column;
   align-items:center;
-  user-select:none;
   text-decoration:none;
-  overflow:visible;
-  z-index:3;
-  padding:0;
+  color:var(--ww-text);
 }
 
 .ww-left-icon{
-  width:4.6rem;
-  height:auto;
-  transition:transform 160ms ease, filter 160ms ease, opacity 160ms ease;
+  width:4.75rem;
+  filter:
+    drop-shadow(0 0 8px rgba(240,138,36,.72))
+    drop-shadow(0 10px 14px rgba(0,0,0,.48));
 }
 
 .ww-left-label{
-  margin-top:0.4rem;
-  font-size:0.72rem;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:var(--ww-muted-night);
-  font-weight:700;
-}
-
-.ww-left-tooltip{
-  position:absolute;
-  top:50%;
-  left:calc(100% + 1rem);
-  transform:translateY(-50%);
-  max-width:18rem;
-  min-width:13.5rem;
-  padding:1rem 1.15rem;
-  background:var(--ww-tooltip-bg);
-  border:1px solid var(--ww-tooltip-border);
-  border-radius:1rem;
-  box-shadow:var(--ww-tooltip-shadow);
-  color:var(--ww-tooltip-ink);
-  font-size:0.82rem;
-  line-height:1.52;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 160ms ease-out;
-  z-index:60;
-  text-align:left;
-}
-
-.ww-left-tooltip::before{
-  content:"";
-  position:absolute;
-  left:-7px;
-  top:50%;
-  width:16px;
-  height:16px;
-  background:inherit;
-  border-radius:4px;
-  transform:translateY(-50%) rotate(45deg);
-  box-shadow:-1px -1px 0 0 var(--ww-tooltip-border);
-}
-
-.ww-left-tooltip-title{
-  font-size:0.68rem;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:var(--ww-tooltip-title);
-  margin-bottom:0.35rem;
-  text-align:center;
-  font-weight:800;
-}
-
-.ww-left-item[data-active="true"] .ww-left-label{
+  margin-top:.32rem;
+  font-size:.78rem;
+  letter-spacing:.15em;
   font-weight:900;
-  font-size:0.86rem;
-  color:var(--ww-ink-night);
-}
-
-.ww-left-item[data-active="true"] .ww-left-icon{
-  filter:drop-shadow(0 8px 14px rgba(0,0,0,0.18));
-  transform:translateY(-2px) scale(1.02);
+  color:var(--ww-cream);
+  text-transform:uppercase;
+  text-shadow:0 0 8px rgba(240,138,36,.44);
 }
 
 .ww-left-item[data-disabled="true"]{
@@ -326,192 +179,197 @@ export function renderBaseStation(app, data = {}, navigate) {
 }
 
 .ww-left-item[data-disabled="true"] .ww-left-icon{
-  opacity:0.35;
-  filter:grayscale(1);
+  opacity:.82;
 }
 
-.ww-left-item[data-disabled="true"] .ww-left-label{
-  opacity:0.45;
-}
-
-.ww-left-item:hover .ww-left-tooltip{
+.ww-left-tooltip{
+  position:absolute;
+  top:50%;
+  left:calc(100% - .25rem);
+  transform:translateY(-50%);
+  width:8.9rem;
+  padding:.7rem .72rem;
+  border-radius:.35rem;
+  background:rgba(7,8,8,.84);
+  border:1px solid rgba(240,138,36,.46);
+  box-shadow:0 0 14px rgba(240,138,36,.2);
+  color:#d8c5a8;
+  font-size:.62rem;
+  line-height:1.42;
+  text-align:left;
+  pointer-events:none;
   opacity:1;
 }
 
+.ww-left-tooltip-title{
+  color:var(--ww-orange);
+  font-weight:900;
+  margin-bottom:.2rem;
+}
+
 .ww-left-item--pop .ww-left-icon{
-  animation:wwPopPulse 1.45s ease-in-out infinite;
+  animation:wwPopPulse 1.35s ease-in-out infinite;
 }
 
 @keyframes wwPopPulse{
-  0%,100%{
-    filter:drop-shadow(0 0 6px rgba(240,138,36,.38));
-    transform:translateY(0) scale(1);
-  }
-  50%{
-    filter:drop-shadow(0 0 16px rgba(240,138,36,.88));
-    transform:translateY(-2px) scale(1.04);
-  }
+  0%,100%{transform:scale(1); filter:drop-shadow(0 0 10px rgba(240,138,36,.65));}
+  50%{transform:scale(1.06); filter:drop-shadow(0 0 22px rgba(255,166,60,1));}
 }
 
 #wwRight{
   flex:1;
-  overflow:hidden;
   min-width:0;
+  height:100vh;
+  overflow:hidden;
 }
 
 #wwScroll{
   height:100%;
   overflow:auto;
-  background:var(--ww-page-bg);
-  border-left:1px solid rgba(240,138,36,0.92);
+  background:
+    radial-gradient(700px 360px at 58% 18%, rgba(240,138,36,.18), transparent 64%),
+    radial-gradient(850px 480px at 84% 76%, rgba(240,92,18,.22), transparent 68%),
+    linear-gradient(90deg, rgba(3,6,8,.95), rgba(7,15,19,.92)),
+    url("/cgi/image/BaseStationMountain.png?width=1920&quality=80&format=auto");
+  background-size:cover;
+  background-position:center;
+  border-left:1px solid rgba(240,138,36,.72);
 }
 
 #wwView{
-  max-width:78rem;
+  max-width:86rem;
   margin:0 auto;
-  padding:4rem;
+  padding:2.25rem 2.25rem 0;
 }
 
 .ww-head{
   position:relative;
-  margin-bottom:1.15rem;
-  min-height:10.8rem;
-  padding-right:340px;
-}
-
-.ww-head-copy{
-  min-width:0;
+  min-height:7.4rem;
+  padding-right:26rem;
 }
 
 .ww-slug{
-  font-size:0.76rem;
-  letter-spacing:0.26em;
+  margin:0 0 .25rem;
+  color:var(--ww-orange);
+  font-size:.8rem;
+  letter-spacing:.24em;
+  font-weight:950;
   text-transform:uppercase;
-  color:var(--ww-muted-night);
-  font-weight:900;
-  margin:0 0 0.75rem;
 }
 
 .ww-title{
-  font-size:2.55rem;
-  color:var(--ww-orange);
   margin:0;
+  color:var(--ww-cream);
+  font-size:4.1rem;
+  line-height:.95;
+  letter-spacing:.16em;
+  font-weight:950;
+  text-transform:uppercase;
+  text-shadow:
+    0 0 16px rgba(240,138,36,.2),
+    0 6px 14px rgba(0,0,0,.6);
+}
+
+.ww-org-name{
+  margin-top:.45rem;
+  color:var(--ww-orange);
+  font-size:.95rem;
+  letter-spacing:.32em;
+  font-weight:900;
   text-transform:uppercase;
 }
 
 .ww-signal-wrap{
   position:absolute;
-  top:0.15rem;
+  top:0;
   right:0;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  gap:0.75rem;
-  padding-top:0.15rem;
-  z-index:20;
+  display:grid;
+  grid-template-columns:9rem 10.6rem;
+  gap:.7rem;
+  align-items:start;
 }
 
 .ww-signal{
-  display:flex;
-  align-items:flex-end;
-  gap:1.2rem;
-  padding:0.9rem 1.1rem;
-  border-radius:1.1rem;
-  background:rgba(255,255,255,0.05);
-  border:2px solid var(--ww-orange);
-  box-shadow:0 14px 34px rgba(0,0,0,0.26);
+  grid-row:span 2;
+  min-height:6.2rem;
+  border:1px solid var(--ww-orange-line);
+  background:rgba(3,6,8,.62);
+  border-radius:.35rem;
+  padding:.75rem;
+  box-shadow:0 0 18px rgba(240,138,36,.16);
 }
 
 .ww-st-label{
-  font-size:0.72rem;
-  letter-spacing:0.3em;
+  color:var(--ww-orange);
+  font-size:.62rem;
+  letter-spacing:.14em;
+  font-weight:950;
   text-transform:uppercase;
-  color:rgba(214,221,230,0.6);
-  font-weight:900;
 }
 
 .ww-signal-bar{
+  height:4.1rem;
   display:flex;
   align-items:flex-end;
-  gap:6px;
-  height:3.6rem;
+  gap:.45rem;
+  margin-top:.45rem;
 }
 
 .ww-signal-bar span{
-  width:12px;
-  height:30%;
-  background:rgba(214,221,230,0.22);
-  border-radius:4px;
-  animation:wwSignal 6s infinite;
+  width:.72rem;
+  border-radius:.08rem;
+  background:linear-gradient(180deg,#ffc36d,#f08a24 55%,#9f4d08);
+  box-shadow:0 0 12px rgba(240,138,36,.7);
+  animation:wwSignal 5.8s infinite;
 }
 
-.ww-signal-bar span:nth-child(2){animation-duration:5.4s;}
-.ww-signal-bar span:nth-child(3){animation-duration:6.8s;}
-.ww-signal-bar span:nth-child(4){animation-duration:5.9s;}
-.ww-signal-bar span:nth-child(5){animation-duration:7.2s;}
+.ww-signal-bar span:nth-child(1){height:24%;}
+.ww-signal-bar span:nth-child(2){height:38%;}
+.ww-signal-bar span:nth-child(3){height:56%;}
+.ww-signal-bar span:nth-child(4){height:76%;}
+.ww-signal-bar span:nth-child(5){height:100%;}
 
 @keyframes wwSignal{
-  0%{height:28%; background:rgba(214,221,230,0.18);}
-  45%{height:100%; background:rgba(214,221,230,0.52);}
-  100%{height:34%; background:rgba(214,221,230,0.20);}
+  0%,100%{opacity:.7;}
+  50%{opacity:1; filter:brightness(1.25);}
 }
 
 .ww-action-btn{
   appearance:none;
-  border:var(--ww-action-border);
-  background:var(--ww-action-bg);
-  color:rgba(255,255,255,0.94);
-  font-size:0.7rem;
-  letter-spacing:0.16em;
+  border:1px solid var(--ww-orange-line);
+  background:rgba(3,6,8,.6);
+  color:var(--ww-cream);
+  border-radius:.35rem;
+  padding:.76rem .85rem;
+  font-size:.64rem;
+  letter-spacing:.12em;
+  font-weight:950;
   text-transform:uppercase;
-  font-weight:900;
-  padding:0.62rem 0.92rem;
-  border-radius:0.6rem;
-  cursor:pointer;
-  transition:background 160ms ease, border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
   text-decoration:none;
-  display:inline-block;
-  box-shadow:var(--ww-action-shadow);
-  position:relative;
-  z-index:25;
+  cursor:pointer;
+  box-shadow:0 0 14px rgba(240,138,36,.12);
 }
 
-.ww-action-btn:hover{
-  background:var(--ww-action-bg-hover);
-  border-color:var(--ww-orange);
-  transform:translateY(-1px);
-  box-shadow:var(--ww-action-shadow-hover);
-}
-
+.ww-action-btn:hover,
 .ww-action-btn[aria-expanded="true"]{
-  background:var(--ww-action-bg-open);
-  border-color:rgba(240,138,36,0.98);
-  box-shadow:var(--ww-action-shadow-open);
+  background:rgba(240,138,36,.16);
 }
 
 .wwSubPanelWrap{
   position:absolute;
-  top:2.2rem;
-  right:18.8rem;
-  width:300px;
-  min-height:1px;
+  top:6.7rem;
+  right:0;
+  width:19.9rem;
   z-index:40;
   pointer-events:none;
 }
 
 .wwSubPanel{
-  position:absolute;
-  top:0;
-  left:0;
-  width:300px;
-  border-radius:18px;
-  box-shadow:0 24px 52px rgba(0,0,0,0.22);
-  z-index:40;
-  overflow:hidden;
+  width:19.9rem;
   opacity:0;
   transform:translateY(8px);
   pointer-events:none;
-  transition:opacity 180ms ease, transform 180ms ease;
+  transition:opacity 160ms ease, transform 160ms ease;
 }
 
 .wwSubPanel.is-previewing,
@@ -521,405 +379,271 @@ export function renderBaseStation(app, data = {}, navigate) {
   pointer-events:auto;
 }
 
-.wwSubTop{
-  background:rgba(255,255,255,0.985);
-  border:1px solid rgba(31,63,87,0.12);
-  padding:1rem 1rem 0.95rem;
+.wwSubTop,
+.wwSubBottom{
+  background:rgba(7,8,8,.74);
+  border:1px solid rgba(240,138,36,.48);
+  padding:.95rem;
+  box-shadow:0 0 16px rgba(240,138,36,.14);
 }
 
 .wwSubBottom{
-  background:linear-gradient(180deg,#f39a3f 0%, #ef8420 100%);
-  border:1px solid rgba(173,94,26,0.34);
-  border-top:none;
+  border-top:0;
   max-height:0;
   opacity:0;
   overflow:hidden;
-  padding:0 1rem;
-  transition:max-height 180ms ease, opacity 140ms ease, padding-top 180ms ease, padding-bottom 180ms ease;
+  padding-top:0;
+  padding-bottom:0;
+  transition:max-height 180ms ease, opacity 140ms ease, padding 180ms ease;
 }
 
 .wwSubPanel.is-open .wwSubBottom{
   max-height:10rem;
   opacity:1;
-  padding-top:0.95rem;
-  padding-bottom:1rem;
+  padding:.95rem;
 }
 
 .wwSubTitle{
-  font-size:.8rem;
-  letter-spacing:.18em;
+  color:var(--ww-orange);
+  font-size:.72rem;
+  letter-spacing:.15em;
+  font-weight:950;
   text-transform:uppercase;
-  color:#a85f1f;
-  font-weight:800;
-  margin-bottom:.5rem;
+  margin-bottom:.55rem;
 }
 
 .wwSubText{
-  font-size:.92rem;
+  font-size:.77rem;
   line-height:1.5;
-  color:#4b5d6b;
-  margin-bottom:.45rem;
+  color:#d8c5a8;
+  margin-bottom:.8rem;
 }
 
 .wwSubAction{
   display:block;
-  width:100%;
   text-align:center;
-  padding:.78rem .7rem;
-  border-radius:999px;
-  font-size:.75rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  font-weight:800;
   text-decoration:none;
-  transition:transform 140ms ease, box-shadow 140ms ease, background 140ms ease, border-color 140ms ease;
-}
-
-.wwSubAction:hover{
-  transform:translateY(-1px);
+  border-radius:.28rem;
+  padding:.74rem .8rem;
+  font-size:.64rem;
+  letter-spacing:.1em;
+  font-weight:950;
+  text-transform:uppercase;
 }
 
 .wwSubActionPrimary{
-  background:#c7772d;
-  color:#fff;
-  box-shadow:0 8px 18px rgba(199,119,45,0.22);
-}
-
-.wwSubActionPrimary:hover{
-  background:#b86a25;
-  box-shadow:0 12px 22px rgba(199,119,45,0.28);
+  background:linear-gradient(180deg,#ff9f2f,#cf6814);
+  color:#1b0d03;
 }
 
 .wwSubActionSecondary{
-  background:rgba(255,255,255,0.22);
-  color:#fffdf9;
-  border:1px solid rgba(255,255,255,0.34);
-  box-shadow:0 8px 18px rgba(137,73,15,0.16);
-}
-
-.wwSubActionSecondary:hover{
-  background:rgba(255,255,255,0.28);
+  color:var(--ww-cream);
+  border:1px solid rgba(240,138,36,.65);
 }
 
 .wwSubSub{
-  font-size:.72rem;
-  color:rgba(255,255,255,0.92);
+  margin:.55rem 0 0;
   text-align:center;
-  margin-top:.55rem;
-  margin-bottom:0;
-  font-weight:600;
+  color:#bfa27a;
+  font-size:.65rem;
 }
 
 .ww-tagline{
-  margin:0 0 1.85rem;
-  font-size:1.12rem;
-  line-height:1.55;
+  margin:1.15rem 0 1.65rem;
+  max-width:41rem;
+  color:#f1ddbd;
+  font-family:Georgia,serif;
   font-style:italic;
-  color:var(--ww-ink-night);
-  opacity:0.92;
-  max-width:38rem;
+  font-size:1.1rem;
+  line-height:1.55;
+  text-shadow:0 2px 8px rgba(0,0,0,.68);
 }
 
 .ww-base{
   display:grid;
-  grid-template-columns:1.15fr 0.65fr;
-  gap:2.2rem;
+  grid-template-columns:1.05fr .72fr;
+  gap:1.35rem;
   align-items:start;
+  max-width:50rem;
 }
 
 .ww-card{
-  padding:1.75rem;
-  border-radius:var(--ww-radius);
-  border:var(--ww-panel-line);
+  background:rgba(5,8,10,.62);
+  border:1px solid rgba(240,138,36,.54);
+  border-radius:.35rem;
+  padding:1.35rem 1.45rem;
+  box-shadow:0 0 18px rgba(240,138,36,.12);
+  backdrop-filter:blur(2px);
 }
 
-.ww-card--rules{
-  background:var(--ww-panel-bg-rules);
-  box-shadow:var(--ww-panel-shadow-rules);
-}
-
-.ww-card--rules h3{
-  opacity:0.86;
-}
-
-.ww-card--updates{
-  background:var(--ww-panel-bg-updates);
-  box-shadow:none;
-  border-color:var(--ww-panel-border-updates);
+.ww-card + .ww-card{
+  margin-top:1rem;
 }
 
 .ww-card h3{
   margin:0 0 1rem;
-  font-size:0.92rem;
-  letter-spacing:0.14em;
+  color:var(--ww-orange);
+  font-size:.95rem;
+  letter-spacing:.16em;
+  font-weight:950;
   text-transform:uppercase;
-  color:var(--ww-ink-night);
-  padding-bottom:0.55rem;
-  border-bottom:1px solid rgba(255,255,255,0.16);
+  border-bottom:1px solid rgba(240,138,36,.42);
+  padding-bottom:.55rem;
 }
 
 .ww-card p{
-  margin:0 0 0.85rem;
-  line-height:1.75;
-  color:var(--ww-panel-text);
+  margin:.55rem 0;
+  color:#d8c5a8;
+  font-size:.8rem;
+  line-height:1.55;
 }
 
-.ww-card p:last-child{
-  margin-bottom:0;
-}
-
-.ww-card--updates p{
-  color:var(--ww-panel-text-soft);
+.ww-card--rules p::before{
+  content:"✣";
+  color:var(--ww-orange);
+  margin-right:.55rem;
 }
 
 .ww-progress{
-  margin-top:1rem;
+  margin-top:.9rem;
+  color:var(--ww-orange);
   font-size:.78rem;
-  letter-spacing:.14em;
+  letter-spacing:.16em;
+  font-weight:950;
   text-transform:uppercase;
-  color:rgba(214,221,230,.62);
-  font-weight:800;
 }
 
 .ww-lastword{
-  background:var(--ww-premium-card-bg);
-  color:var(--ww-white-ink);
-  padding:2.9rem 2.1rem 3.05rem;
-  border-radius:0.9rem;
-  border:var(--ww-premium-card-border);
-  box-shadow:var(--ww-premium-card-shadow);
-  max-width:22rem;
-  text-align:center;
   position:relative;
-  overflow:visible;
-}
-
-.ww-lastword::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  opacity:0.52;
+  min-height:25.2rem;
+  padding:2rem 1.45rem;
+  text-align:center;
+  color:#2a1605;
   background:
-    radial-gradient(140% 180% at 20% 20%, rgba(0,0,0,0.07), transparent 55%),
-    radial-gradient(120% 160% at 80% 75%, rgba(202,162,74,0.09), transparent 60%);
-  mix-blend-mode:multiply;
-  pointer-events:none;
+    radial-gradient(circle at 50% 35%, rgba(255,244,210,.72), transparent 58%),
+    linear-gradient(180deg,#ecd19b,#c38438 62%,#5d3210);
+  border:2px solid rgba(240,138,36,.92);
+  border-radius:.36rem;
+  box-shadow:
+    0 0 24px rgba(240,138,36,.35),
+    inset 0 0 0 4px rgba(73,34,8,.45);
+  overflow:hidden;
 }
 
 .ww-lastword::after{
   content:"";
   position:absolute;
-  inset:0;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0) 24%);
+  inset:.45rem;
+  border:1px solid rgba(84,42,8,.55);
   pointer-events:none;
 }
 
-.ww-lastword h3,
-.ww-lastword-kicker,
-.ww-primary-wrap,
-.ww-stakes{
+.ww-lastword h3{
   position:relative;
   z-index:1;
-}
-
-.ww-lastword h3{
-  margin:0 0 1.1rem;
-  font-size:0.92rem;
-  letter-spacing:0.14em;
+  margin:0 0 1rem;
+  font-size:1.1rem;
+  letter-spacing:.16em;
+  font-weight:950;
   text-transform:uppercase;
 }
 
 .ww-lastword-kicker{
-  font-size:1.05rem;
-  line-height:1.6;
-  margin:0 0 1.9rem;
+  position:relative;
+  z-index:1;
+  margin:0 0 2rem;
+  font-family:Georgia,serif;
+  font-style:italic;
+  font-size:1rem;
+  line-height:1.5;
 }
 
 .ww-primary-wrap{
-  display:inline-block;
   position:relative;
-  margin:0 auto 1.9rem;
+  z-index:1;
+  display:inline-block;
+  margin:0 auto 3.2rem;
 }
 
 .ww-primary{
   display:inline-block;
-  padding:0.95rem 1.35rem;
-  border-radius:0.55rem;
-  background:var(--ww-primary-bg);
-  border:var(--ww-primary-border);
-  box-shadow:var(--ww-primary-shadow);
-  font-weight:950;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:#f5f0e7;
+  padding:1.05rem 1.2rem;
+  background:linear-gradient(180deg,#10191d,#050607);
+  border:1px solid rgba(240,138,36,.92);
+  border-radius:.25rem;
+  box-shadow:
+    0 0 16px rgba(240,138,36,.42),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+  color:var(--ww-orange);
   text-decoration:none;
-  position:relative;
-  overflow:hidden;
-  text-shadow:0 1px 0 rgba(0,0,0,0.28);
-}
-
-.ww-primary::before{
-  content:"";
-  position:absolute;
-  inset:1px;
-  border-radius:0.48rem;
-  border:1px solid rgba(255,255,255,0.06);
-  pointer-events:none;
-}
-
-.ww-primary::after{
-  content:"";
-  position:absolute;
-  top:-18%;
-  bottom:-18%;
-  left:-34%;
-  width:22%;
-  background:linear-gradient(
-    90deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.12) 30%,
-    rgba(255,255,255,0.72) 50%,
-    rgba(255,255,255,0.12) 70%,
-    rgba(255,255,255,0) 100%
-  );
-  transform:skewX(-22deg);
-  animation:wwSolveStreak 3s ease-in-out infinite;
-  pointer-events:none;
-}
-
-.ww-primary:hover{
-  transform:translateY(-1px);
-  box-shadow:var(--ww-primary-shadow-hover);
+  font-size:1rem;
+  letter-spacing:.1em;
+  font-weight:950;
+  text-transform:uppercase;
 }
 
 .ww-primary-tooltip{
   position:absolute;
-  bottom:calc(100% + 0.85rem);
-  left:50%;
-  transform:translate(-50%, 4px);
-  min-width:7rem;
-  max-width:12rem;
-  padding:0.95rem 1.1rem;
-  background:var(--ww-tooltip-bg);
-  border:1px solid var(--ww-tooltip-border);
-  border-radius:1rem;
-  box-shadow:var(--ww-tooltip-shadow);
-  color:var(--ww-tooltip-ink);
-  font-size:0.95rem;
-  font-weight:800;
-  letter-spacing:0.04em;
-  line-height:1.2;
-  text-align:center;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 160ms ease-out, transform 160ms ease-out;
-  z-index:30;
-}
-
-.ww-primary-tooltip::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:-7px;
-  width:16px;
-  height:16px;
-  background:inherit;
-  border-radius:4px;
-  transform:translateX(-50%) rotate(45deg);
-  box-shadow:1px 1px 0 0 var(--ww-tooltip-border);
-}
-
-.ww-primary-wrap:hover .ww-primary-tooltip{
-  opacity:1;
-  transform:translate(-50%, 0);
-}
-
-@keyframes wwSolveStreak{
-  0%{left:-34%; opacity:0;}
-  10%{opacity:1;}
-  44%{left:118%; opacity:1;}
-  56%{left:118%; opacity:0;}
-  100%{left:118%; opacity:0;}
+  right:-.65rem;
+  top:-1.05rem;
+  padding:.28rem .45rem;
+  background:rgba(8,9,9,.9);
+  border:1px solid rgba(240,138,36,.75);
+  color:var(--ww-orange);
+  font-size:.58rem;
+  border-radius:.22rem;
 }
 
 .ww-stakes{
-  font-size:0.98rem;
-  line-height:1.65;
-  color:var(--ww-white-muted);
+  position:relative;
+  z-index:1;
+  font-family:Georgia,serif;
+  font-style:italic;
+  color:#40260e;
+  line-height:1.55;
 }
 
 .ww-footer{
-  margin-top:3rem;
-  padding-top:2rem;
-  font-size:.75rem;
-  color:rgba(214,221,230,.72);
+  margin-top:1.2rem;
+  margin-left:calc(var(--ww-left-wide) * -1);
+  padding:.9rem 2rem;
+  border-top:1px solid rgba(240,138,36,.36);
+  background:rgba(5,6,7,.82);
+  color:#bfa27a;
+  font-size:.72rem;
+  display:flex;
+  justify-content:center;
+  gap:1rem;
 }
 
 .ww-footer a{
-  color:inherit;
+  color:#d6b180;
   text-decoration:none;
 }
 
-.ww-footer a:hover{
+.ww-footer strong{
   color:var(--ww-orange);
+  letter-spacing:.12em;
+  text-transform:uppercase;
 }
 
-@media (max-width:1180px){
-  .ww-head{
-    min-height:auto;
-    padding-right:0;
-  }
-
-  .ww-signal-wrap{
-    position:relative;
-    top:auto;
-    right:auto;
-    align-items:flex-start;
-    padding-top:0;
-    margin-top:1.35rem;
-  }
-
-  .wwSubPanelWrap{
-    position:relative;
-    top:auto;
-    right:auto;
-    width:300px;
-    margin-top:0.75rem;
-  }
-
-  .wwSubPanel{
-    position:relative;
-    width:300px;
-  }
+@media(max-width:1180px){
+  .ww-head{padding-right:0;}
+  .ww-signal-wrap{position:relative; margin-top:1rem;}
+  .wwSubPanelWrap{position:relative; top:auto; right:auto; margin-top:.7rem;}
 }
 
-@media (max-width:1100px){
-  .ww-base{
-    grid-template-columns:1fr;
-  }
-
-  .ww-lastword{
-    max-width:none;
-  }
+@media(max-width:1000px){
+  .ww-base{grid-template-columns:1fr; max-width:none;}
+  .ww-lastword{max-width:30rem;}
 }
 
-@media (max-width:820px){
-  :root{
-    --ww-left-wide:12.8rem;
-  }
-
-  .ww-left-logo img{
-    width:8.9rem;
-  }
-
-  .ww-left-icon{
-    width:4.4rem;
-  }
-
-  #wwView{
-    padding:3rem 1.6rem 6rem;
-  }
+@media(max-width:760px){
+  :root{--ww-left-wide:10.5rem;}
+  #wwView{padding:1.5rem;}
+  .ww-title{font-size:2.65rem;}
+  .ww-left-icon{width:3.8rem;}
+  .ww-left-tooltip{display:none;}
 }
 </style>
 
@@ -927,40 +651,11 @@ export function renderBaseStation(app, data = {}, navigate) {
   <aside id="wwLeft">
     <div class="ww-rail ${popClueLive ? "ww-rail--pop-live" : ""}">
       <div class="ww-left-shell">
-
         <div class="ww-left-logo">
           <img src="/cgi/image/WWLogo_-IrZfgR1CvN9DRDc2uq8H.png?width=828&quality=80&format=auto" alt="WinterWord">
         </div>
 
         <nav class="ww-left-nav">
-
-          <button class="ww-left-item" type="button" data-nav="clues">
-            <img class="ww-left-icon" src="/cgi/image/Clue_ivx53yyYY6YAR7ZkHgMQJ.png?width=256&quality=80&format=auto" alt="Clues">
-            <div class="ww-left-label">CLUES</div>
-            <div class="ww-left-tooltip">
-              <div class="ww-left-tooltip-title">Clues</div>
-              Each of your upcoming clues is designed to reveal just enough
-              to move you forward — and hide the rest where only patience can reach it.
-            </div>
-          </button>
-
-          <button
-            class="ww-left-item"
-            type="button"
-            data-nav="lifeline"
-            data-disabled="${lifelineAvailable ? "false" : "true"}"
-          >
-            <img class="ww-left-icon" src="/cgi/image/Lifeline_oT0vP3H4BL6I-Z--NFPHA.png?width=256&quality=80&format=auto" alt="Lifeline">
-            <div class="ww-left-label">LIFELINE</div>
-            <div class="ww-left-tooltip">
-              ${
-                lifelineAvailable
-                  ? `The Lifeline is open. Step carefully.`
-                  : `This passage waits its moment. It opens after clue ${safeText(lifelineUnlockClue)}.`
-              }
-            </div>
-          </button>
-
           ${
             popClueLive
               ? `
@@ -969,12 +664,33 @@ export function renderBaseStation(app, data = {}, navigate) {
             <div class="ww-left-label">POP</div>
             <div class="ww-left-tooltip">
               <div class="ww-left-tooltip-title">Pop Clue</div>
-              Something brief has surfaced in the snow. Catch it before it disappears.
+              A brief signal has opened. Solve it first, and the next clue may arrive early.
             </div>
-          </button>
-          `
+          </button>`
               : ""
           }
+
+          <button class="ww-left-item" type="button" data-nav="clues">
+            <img class="ww-left-icon" src="/cgi/image/Clue_ivx53yyYY6YAR7ZkHgMQJ.png?width=256&quality=80&format=auto" alt="Clues">
+            <div class="ww-left-label">CLUES</div>
+            <div class="ww-left-tooltip">
+              <div class="ww-left-tooltip-title">Clues</div>
+              Each of your upcoming clues is designed to reveal just enough to move you forward.
+            </div>
+          </button>
+
+          <button class="ww-left-item" type="button" data-nav="lifeline" data-disabled="${lifelineAvailable ? "false" : "true"}">
+            <img class="ww-left-icon" src="/cgi/image/Lifeline_oT0vP3H4BL6I-Z--NFPHA.png?width=256&quality=80&format=auto" alt="Lifeline">
+            <div class="ww-left-label">LIFELINE</div>
+            <div class="ww-left-tooltip">
+              <div class="ww-left-tooltip-title">Lifeline</div>
+              ${
+                lifelineAvailable
+                  ? "This passage is open."
+                  : `This passage waits its moment. It opens after clue ${safeText(lifelineUnlockClue)}.`
+              }
+            </div>
+          </button>
 
           <button class="ww-left-item" type="button" data-nav="leaderboard">
             <img class="ww-left-icon" src="/cgi/image/Leaderboard_94LRTiQiFRVwCQT0zH-2y.png?width=256&quality=80&format=auto" alt="Leaderboard">
@@ -982,11 +698,8 @@ export function renderBaseStation(app, data = {}, navigate) {
             <div class="ww-left-tooltip">
               <div class="ww-left-tooltip-title">Leaderboard</div>
               The Leaderboard remembers all who enter the game.
-              It reflects those who find the answer,
-              and honours the one who found it first.
             </div>
           </button>
-
         </nav>
       </div>
     </div>
@@ -995,13 +708,11 @@ export function renderBaseStation(app, data = {}, navigate) {
   <main id="wwRight">
     <div id="wwScroll">
       <div id="wwView">
-
         <div class="ww-head">
-          <div class="ww-head-copy">
-            <p class="ww-slug">
-              <span>${safeText(seasonLabel)}</span>
-            </p>
-            <h2 class="ww-title">Base Station</h2>
+          <div>
+            <p class="ww-slug">${safeText(seasonLabel)}</p>
+            <h1 class="ww-title">Base Station</h1>
+            <div class="ww-org-name">${safeText(orgName)}</div>
           </div>
 
           <div class="ww-signal-wrap">
@@ -1012,12 +723,10 @@ export function renderBaseStation(app, data = {}, navigate) {
               </div>
             </div>
 
-            <a class="ww-action-btn" href="${reportProblemHref}">
-              Report a problem
-            </a>
+            <a class="ww-action-btn" href="${reportProblemHref}">⚠ Report a problem</a>
 
             <button class="ww-action-btn" id="wwSubToggle" type="button" aria-expanded="false" aria-controls="wwSubPanel">
-              Subscribe
+              🔔 Subscribe⌄
             </button>
           </div>
 
@@ -1025,13 +734,11 @@ export function renderBaseStation(app, data = {}, navigate) {
             <div class="wwSubPanel" id="wwSubPanel">
               <div class="wwSubTop">
                 <div class="wwSubTitle">Clue Alerts</div>
-
                 <div class="wwSubText">
                   Curious minds tend to wander.<br>
                   When each clue falls,<br>
-                  subscribers will feel the ripple.
+                  subscribers will hear the click.
                 </div>
-
                 <a class="wwSubAction wwSubActionPrimary" href="${subscribeHref}">
                   Subscribe to Clue Alerts
                 </a>
@@ -1041,7 +748,6 @@ export function renderBaseStation(app, data = {}, navigate) {
                 <a class="wwSubAction wwSubActionSecondary" href="${unsubscribeHref}">
                   Unsubscribe
                 </a>
-
                 <div class="wwSubSub">Execute ESCAPE ROOM protocol.</div>
               </div>
             </div>
@@ -1054,14 +760,13 @@ export function renderBaseStation(app, data = {}, navigate) {
         </p>
 
         <div class="ww-base">
-
           <div>
             <div class="ww-card ww-card--rules">
               <h3>How this works</h3>
               ${paragraphs.map((p) => `<p>${safeText(p)}</p>`).join("")}
             </div>
 
-            <div class="ww-card ww-card--updates" style="margin-top:1.25rem;">
+            <div class="ww-card ww-card--updates">
               <h3>Updates</h3>
               ${
                 updatesText && String(updatesText).trim()
@@ -1081,9 +786,7 @@ export function renderBaseStation(app, data = {}, navigate) {
             </p>
 
             <div class="ww-primary-wrap">
-              <a class="ww-primary" href="${solveHref}">
-                Solve WinterWord
-              </a>
+              <a class="ww-primary" href="${solveHref}">Solve WinterWord</a>
               <div class="ww-primary-tooltip">Ready?</div>
             </div>
 
@@ -1093,20 +796,16 @@ export function renderBaseStation(app, data = {}, navigate) {
               Guess wrong, and the silence wins.
             </div>
           </div>
-
         </div>
 
         <footer class="ww-footer">
-          <div>WinterWord • Another Clue House Experience</div>
-
-          <div style="margin-top:.7rem;">
-            <a href="/legal/privacy-policy">Privacy</a> •
-            <a href="/legal/terms-of-use">Terms</a> •
-            <a href="/legal/disclaimer">Disclaimer</a> •
-            <a href="${contactHref}">Contact</a>
-          </div>
+          <strong>WinterWord</strong>
+          <span>Another Clue House Experience</span>
+          <span>•</span>
+          <a href="/legal/privacy-policy">Legal</a>
+          <span>•</span>
+          <a href="${contactHref}">Contact</a>
         </footer>
-
       </div>
     </div>
   </main>
