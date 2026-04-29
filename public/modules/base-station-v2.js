@@ -1,5 +1,7 @@
 /* BASE-STATION V2 MODULE */
-/* Fixed V2: conditionals moved outside app.innerHTML */
+/* V2 SAFE BUILD — no ternary expressions */
+
+console.log("BASE STATION V2 SAFE LOADED");
 
 export function renderBaseStation(app, data = {}, navigate) {
   const {
@@ -16,57 +18,78 @@ export function renderBaseStation(app, data = {}, navigate) {
     popClueLive = false
   } = data;
 
-  const safeText = (value, fallback = "") =>
-    String(value ?? fallback)
+  const safeText = (value, fallback = "") => {
+    let raw = fallback;
+
+    if (value !== undefined && value !== null) {
+      raw = value;
+    }
+
+    return String(raw)
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
+  };
 
-  const mailSafeOrgName =
-    orgName && String(orgName).trim()
-      ? String(orgName).trim()
-      : "WinterWord";
+  let mailSafeOrgName = "WinterWord";
+
+  if (orgName && String(orgName).trim()) {
+    mailSafeOrgName = String(orgName).trim();
+  }
 
   const encodedOrgName = encodeURIComponent(mailSafeOrgName);
 
-  const paragraphs =
-    Array.isArray(howParagraphs) && howParagraphs.length
-      ? howParagraphs
-      : [
-          "Each week, a new clue will quietly unlock — each one revealing a single letter.",
-          "Guard your answers, for as the season unfolds, they will begin to shift and settle… forming the anagram of the Winterword.",
-          "If you feel the answer stirring early, step forward and claim your place on the leaderboard.",
-          "But remember — one guess is all you get."
-        ];
+  let paragraphs = [
+    "Each week, a new clue will quietly unlock — each one revealing a single letter.",
+    "Guard your answers, for as the season unfolds, they will begin to shift and settle… forming the anagram of the Winterword.",
+    "If you feel the answer stirring early, step forward and claim your place on the leaderboard.",
+    "But remember — one guess is all you get."
+  ];
+
+  if (Array.isArray(howParagraphs) && howParagraphs.length > 0) {
+    paragraphs = howParagraphs;
+  }
 
   const currentClueNumber = Number(currentClue) || 0;
   const totalCluesNumber = Number(totalClues) || 12;
 
-  const railLiveClass = popClueLive ? "ww-rail--pop-live" : "";
+  let railLiveClass = "";
 
-  const popButtonHtml = popClueLive
-    ? [
-        '<button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">',
-        '<img class="ww-left-icon" src="/assets/winterword/shared/flash.png" alt="Pop Clue">',
-        '<div class="ww-left-label">POP</div>',
-        '</button>'
-      ].join("")
-    : "";
+  if (popClueLive === true) {
+    railLiveClass = "ww-rail--pop-live";
+  }
+
+  let popButtonHtml = "";
+
+  if (popClueLive === true) {
+    popButtonHtml = [
+      '<button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">',
+      '<img class="ww-left-icon" src="/assets/winterword/shared/flash.png" alt="Pop Clue">',
+      '<div class="ww-left-label">POP</div>',
+      '</button>'
+    ].join("");
+  }
 
   const howRowsHtml = paragraphs
-    .map((paragraph) =>
-      [
+    .map((paragraph) => {
+      return [
         '<div class="ww-how-row">',
         '<div class="ww-star">✣</div>',
-        `<div>${safeText(paragraph)}</div>`,
+        '<div>',
+        safeText(paragraph),
+        '</div>',
         '</div>'
-      ].join("")
-    )
+      ].join("");
+    })
     .join("");
 
-  const updatesHtml = updatesText ? safeText(updatesText) : "No new updates yet.";
+  let updatesHtml = "No new updates yet.";
+
+  if (updatesText) {
+    updatesHtml = safeText(updatesText);
+  }
 
   app.innerHTML = `
     <style>
@@ -869,7 +892,10 @@ export function renderBaseStation(app, data = {}, navigate) {
   navButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const target = button.getAttribute("data-nav");
-      if (typeof navigate === "function") navigate(target);
+
+      if (typeof navigate === "function") {
+        navigate(target);
+      }
     });
   });
 
@@ -881,14 +907,17 @@ export function renderBaseStation(app, data = {}, navigate) {
 
       if (action === "problem") {
         window.location.href = `mailto:fix@cluehouse.co.nz?subject=${encodedOrgName}%20WinterWord%20Issue`;
+        return;
       }
 
       if (action === "subscribe") {
         window.location.href = `mailto:opt@cluehouse.co.nz?subject=Subscribe%20to%20${encodedOrgName}%20WinterWord%20clue%20alerts`;
+        return;
       }
 
       if (action === "unsubscribe") {
         window.location.href = `mailto:opt@cluehouse.co.nz?subject=Unsubscribe%20from%20${encodedOrgName}%20WinterWord%20clue%20alerts`;
+        return;
       }
 
       if (action === "solve") {
