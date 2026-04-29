@@ -49,7 +49,7 @@ export function renderLeaderboardPage(app, data, navigate) {
         padding: 2rem;
         font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
         color: var(--ww-ink);
-        background-image: url("/cgi/image/LBOARD_GwUXASF-YOYOKGbezzuKq.png?width=1920&quality=80&format=auto");
+        background-image: url("/assets/winterword/shared/leaderboardbg.png");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -146,7 +146,7 @@ export function renderLeaderboardPage(app, data, navigate) {
       .ww-board-media {
         position: absolute;
         inset: 0;
-        background-image: url("/cgi/image/LBOARD_GwUXASF-YOYOKGbezzuKq.png?width=1920&quality=80&format=auto");
+        background-image: url("/assets/winterword/shared/leaderboardbg.png");
         background-size: cover;
         background-position: center;
         filter: brightness(.74);
@@ -194,7 +194,12 @@ export function renderLeaderboardPage(app, data, navigate) {
       .ww-record {
         border-radius: 1.25rem;
         padding: 1.35rem 1.45rem;
-        background: linear-gradient(135deg, rgba(186,152,86,0.32) 0%, rgba(128,104,62,0.22) 55%, rgba(255,255,255,0.08) 100%);
+        background: linear-gradient(
+          135deg,
+          rgba(186,152,86,0.32) 0%,
+          rgba(128,104,62,0.22) 55%,
+          rgba(255,255,255,0.08) 100%
+        );
         margin-bottom: 0.95rem;
       }
 
@@ -320,7 +325,7 @@ export function renderLeaderboardPage(app, data, navigate) {
 
           <div class="ww-side">
             <a href="/base-station" class="ww-side-logo" data-nav-base>
-              <img src="/cgi/image/WWLogo_-IrZfgR1CvN9DRDc2uq8H.png?width=828&quality=80&format=auto" alt="WinterWord">
+              <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
               <div class="ww-divider"></div>
               <div class="ww-side-label">BASE STATION</div>
             </a>
@@ -351,7 +356,7 @@ export function renderLeaderboardPage(app, data, navigate) {
                         <div class="ww-divider-centre">❄</div>
                         <div class="ww-status" data-status>Loading leaderboard…</div>
 
-                        <div class="ww-ranks" data-rows>
+                        <div class="ww-ranks">
                           ${Array.from({ length: 9 }, (_, index) => {
                             const rank = index + 2;
                             return `
@@ -425,6 +430,7 @@ export function renderLeaderboardPage(app, data, navigate) {
       }
 
       const payload = await res.json();
+
       const rows = normaliseRows(payload)
         .filter(row => row && row.rank != null)
         .sort((a, b) => Number(a.rank) - Number(b.rank));
