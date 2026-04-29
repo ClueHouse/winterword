@@ -1,153 +1,228 @@
-export function renderCluePage(app, data, navigate) {
+export function renderCluePage(app, data = {}, navigate) {
   const {
     clueId = 1,
     totalClues = 12,
-    clue = {}
-  } = data || {};
+    clue = {},
+    currentClue = 0,
+    isResolved = false
+  } = data;
 
-  function esc(v) {
-    return String(v ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
+  const {
+    title = `Clue ${String(clueId).padStart(2, "0")}`,
+    variant = "image-only",
+    image = "",
+    alt = title,
+    body = "",
+    audio = ""
+  } = clue;
+
+  function esc(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
   }
 
-  function pad(n) {
-    return String(n).padStart(2, "0");
+  function renderImageOnly() {
+    app.innerHTML = `
+<style>
+:root {
+  --ww-ink: #3b4149;
+  --ww-left-narrow: 8.8rem;
+  --ww-ink-blue: #1f3f57;
+  --ww-ink-blue-hover: #163244;
+  --ww-rail-bg: #f4f8fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background: #000;
+}
+
+#wwPortal {
+  display: flex;
+  height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  overflow: hidden;
+  background: #000;
+  position: relative;
+  z-index: 1;
+}
+
+#wwLeft {
+  width: var(--ww-left-narrow);
+  background: var(--ww-rail-bg);
+  box-shadow: inset -1px 0 0 rgba(0,0,0,0.04);
+  flex: 0 0 var(--ww-left-narrow);
+}
+
+.ww-mini-shell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.15rem;
+}
+
+.ww-mini-logo {
+  display: flex;
+}
+
+.ww-mini-logo img {
+  width: 7.2rem;
+  height: auto;
+  display: block;
+}
+
+.ww-mini-textnav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.ww-mini-textlink {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ww-ink-blue);
+  opacity: 0.92;
+  cursor: pointer;
+}
+
+.ww-mini-textlink:hover {
+  color: var(--ww-ink-blue-hover);
+  opacity: 1;
+}
+
+.ww-mini-textlink[data-active="true"] {
+  color: var(--ww-ink);
+  opacity: 1;
+}
+
+#wwRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  padding: 3.2vh 3.2vw;
+  min-width: 0;
+}
+
+#clueImage {
+  width: min(90vw, 1400px);
+  max-height: 90vh;
+  object-fit: contain;
+  display: block;
+}
+
+.ww-clue-fallback {
+  max-width: 760px;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  text-align: center;
+}
+
+.ww-clue-fallback h1 {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+}
+
+.ww-clue-fallback p {
+  margin: 0;
+  color: rgba(255,255,255,0.76);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 820px) {
+  :root {
+    --ww-left-narrow: 8.4rem;
   }
 
-  const title = clue.title || `Clue ${pad(clueId)}`;
-  const body = clue.body || "No clue content yet.";
-  const image = clue.image || "";
-  const audio = clue.audio || "";
-  const isUnlocked = clue.unlocked !== false;
+  .ww-mini-logo img {
+    width: 6.6rem;
+  }
+}
+</style>
 
-  app.innerHTML = `
-    <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #0b1724;
-        color: #fff;
-      }
+<div id="wwPortal">
 
-      .wrap {
-        min-height: 100vh;
-        padding: 40px;
-      }
+  <aside id="wwLeft" aria-label="Mini Rail">
+    <div class="ww-mini-shell">
 
-      .topbar {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-bottom: 24px;
-      }
-
-      .btn {
-        padding: 10px 16px;
-        cursor: pointer;
-        border: 1px solid #c87b2a;
-        background: #12283b;
-        color: #fff;
-        border-radius: 8px;
-        font: inherit;
-      }
-
-      .btn:hover {
-        background: #18344d;
-      }
-
-      .meta {
-        color: #b8c6d4;
-        font-size: 13px;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        margin-bottom: 12px;
-      }
-
-      .title {
-        font-size: 42px;
-        color: #f19a2a;
-        margin: 0 0 22px;
-      }
-
-      .card {
-        background: #0f1f2f;
-        padding: 24px;
-        border: 1px solid #2c3f52;
-        border-radius: 14px;
-        margin-bottom: 24px;
-      }
-
-      .clue-body {
-        font-size: 18px;
-        line-height: 1.7;
-        color: #e7edf2;
-        white-space: pre-wrap;
-      }
-
-      .media {
-        margin-top: 18px;
-      }
-
-      .media img {
-        display: block;
-        max-width: 100%;
-        height: auto;
-        border-radius: 12px;
-        border: 1px solid #33485c;
-      }
-
-      .audio {
-        width: 100%;
-        margin-top: 18px;
-      }
-
-      .footer {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-
-      .locked {
-        background: #2a1616;
-        border-color: #6b2a2a;
-        color: #ffd6d6;
-      }
-    </style>
-
-    <div class="wrap">
-      <div class="topbar">
-        <button class="btn" id="backToClues" type="button">← Clue List</button>
-        <button class="btn" id="backToBase" type="button">Base Station</button>
+      <div class="ww-mini-logo" aria-label="WinterWord">
+        <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
       </div>
 
-      <div class="meta">Clue ${pad(clueId)} of ${pad(totalClues)}</div>
-      <h1 class="title">${esc(title)}</h1>
+      <nav class="ww-mini-textnav" aria-label="Mini navigation">
+        <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
+        <button class="ww-mini-textlink" type="button" data-nav="clues" data-active="true">Clues</button>
+        <button class="ww-mini-textlink" type="button" data-nav="lifeline">Life</button>
+      </nav>
 
-      <div class="card ${isUnlocked ? "" : "locked"}">
-        <div class="clue-body">${esc(body)}</div>
-
-        ${image ? `
-          <div class="media">
-            <img src="${esc(image)}" alt="${esc(title)}">
-          </div>
-        ` : ""}
-
-        ${audio ? `
-          <audio class="audio" controls src="${esc(audio)}"></audio>
-        ` : ""}
-      </div>
-
-      <div class="footer">
-        <button class="btn" id="goAnswer" type="button">Answer Page</button>
-      </div>
     </div>
-  `;
+  </aside>
 
-  document.getElementById("backToClues").onclick = () => navigate("clues");
-  document.getElementById("backToBase").onclick = () => navigate("base-station");
-  document.getElementById("goAnswer").onclick = () => navigate("answer", { id: clueId });
+  <main id="wwRight">
+    ${
+      image
+        ? `
+          <img
+            id="clueImage"
+            src="${esc(image)}"
+            alt="${esc(alt)}"
+            loading="lazy"
+            decoding="async"
+          >
+        `
+        : `
+          <section class="ww-clue-fallback">
+            <h1>${esc(title)}</h1>
+            <p>${body ? esc(body) : "No clue image has been supplied yet."}</p>
+          </section>
+        `
+    }
+  </main>
+
+</div>
+`;
+
+    app.querySelectorAll("[data-nav]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = button.getAttribute("data-nav");
+
+        if (typeof navigate === "function") {
+          navigate(target);
+        }
+      });
+    });
+  }
+
+  switch (variant) {
+    case "image-only":
+    default:
+      renderImageOnly();
+      break;
+  }
 }
