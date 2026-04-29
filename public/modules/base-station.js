@@ -156,30 +156,26 @@ export function renderBaseStation(app, data = {}, navigate) {
   inset:0;
   background:var(--ww-rail-bg);
   overflow:visible;
+  box-shadow:
+    inset -1px 0 0 rgba(240,138,36,0.72),
+    0 0 18px rgba(240,138,36,0.08);
 }
 
 .ww-rail--pop-live{
-  animation:wwRailOrangePulse 2.2s ease-in-out infinite;
+  animation:wwRailSoftOrangePulse 3.8s ease-in-out infinite;
 }
 
-@keyframes wwRailOrangePulse{
+@keyframes wwRailSoftOrangePulse{
   0%,100%{
-    background:linear-gradient(90deg,
-      rgba(7,12,18,1) 0%,
-      rgba(11,20,29,1) 34%,
-      rgba(19,32,44,1) 100%);
     box-shadow:
-      inset -1px 0 0 rgba(240,138,36,0.92),
-      0 0 0 rgba(240,138,36,0);
+      inset -1px 0 0 rgba(240,138,36,0.70),
+      0 0 18px rgba(240,138,36,0.18);
   }
+
   50%{
-    background:linear-gradient(90deg,
-      rgba(38,18,6,1) 0%,
-      rgba(78,34,8,1) 34%,
-      rgba(130,54,10,1) 100%);
     box-shadow:
-      inset -2px 0 0 rgba(240,138,36,1),
-      0 0 28px rgba(240,138,36,0.38);
+      inset -2px 0 0 rgba(240,138,36,0.95),
+      0 0 38px rgba(240,138,36,0.42);
   }
 }
 
@@ -236,6 +232,15 @@ export function renderBaseStation(app, data = {}, navigate) {
   transition:transform 160ms ease, filter 160ms ease, opacity 160ms ease;
 }
 
+.ww-left-icon--pop{
+  filter:
+    sepia(1)
+    saturate(4)
+    hue-rotate(345deg)
+    brightness(1.35)
+    drop-shadow(0 0 10px rgba(240,138,36,.65));
+}
+
 .ww-left-label{
   margin-top:0.4rem;
   font-size:0.72rem;
@@ -243,6 +248,11 @@ export function renderBaseStation(app, data = {}, navigate) {
   text-transform:uppercase;
   color:var(--ww-muted-night);
   font-weight:700;
+}
+
+.ww-left-item--pop .ww-left-label{
+  color:rgba(240,138,36,0.95);
+  text-shadow:0 0 10px rgba(240,138,36,0.42);
 }
 
 .ww-left-tooltip{
@@ -319,17 +329,28 @@ export function renderBaseStation(app, data = {}, navigate) {
 }
 
 .ww-left-item--pop .ww-left-icon{
-  animation:wwPopPulse 1.45s ease-in-out infinite;
+  animation:wwPopSoftGlow 2.8s ease-in-out infinite;
 }
 
-@keyframes wwPopPulse{
+@keyframes wwPopSoftGlow{
   0%,100%{
-    filter:drop-shadow(0 0 6px rgba(240,138,36,.38));
     transform:translateY(0) scale(1);
+    filter:
+      sepia(1)
+      saturate(4)
+      hue-rotate(345deg)
+      brightness(1.28)
+      drop-shadow(0 0 8px rgba(240,138,36,.46));
   }
+
   50%{
-    filter:drop-shadow(0 0 16px rgba(240,138,36,.88));
-    transform:translateY(-2px) scale(1.04);
+    transform:translateY(-1px) scale(1.025);
+    filter:
+      sepia(1)
+      saturate(4)
+      hue-rotate(345deg)
+      brightness(1.42)
+      drop-shadow(0 0 18px rgba(240,138,36,.78));
   }
 }
 
@@ -1027,7 +1048,7 @@ export function renderBaseStation(app, data = {}, navigate) {
             popClueLive
               ? `
           <button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">
-            <img class="ww-left-icon" src="/assets/winterword/shared/flash.png" alt="Pop Clue">
+            <img class="ww-left-icon ww-left-icon--pop" src="/assets/winterword/shared/flash.png" alt="Pop Clue">
             <div class="ww-left-label">POP</div>
             <div class="ww-left-tooltip">
               <div class="ww-left-tooltip-title">Pop Clue</div>
