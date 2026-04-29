@@ -1,5 +1,5 @@
 /* BASE-STATION V2 MODULE */
-/* Stable V2: no inline conditional-template hazards */
+/* Fixed V2: conditionals moved outside app.innerHTML */
 
 export function renderBaseStation(app, data = {}, navigate) {
   const {
@@ -44,31 +44,29 @@ export function renderBaseStation(app, data = {}, navigate) {
   const currentClueNumber = Number(currentClue) || 0;
   const totalCluesNumber = Number(totalClues) || 12;
 
+  const railLiveClass = popClueLive ? "ww-rail--pop-live" : "";
+
   const popButtonHtml = popClueLive
-    ? `
-      <button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">
-        <img class="ww-left-icon" src="/assets/winterword/shared/flash.png" alt="Pop Clue">
-        <div class="ww-left-label">POP</div>
-      </button>
-    `
+    ? [
+        '<button class="ww-left-item ww-left-item--pop" type="button" data-nav="pop-clue">',
+        '<img class="ww-left-icon" src="/assets/winterword/shared/flash.png" alt="Pop Clue">',
+        '<div class="ww-left-label">POP</div>',
+        '</button>'
+      ].join("")
     : "";
 
   const howRowsHtml = paragraphs
-    .map((paragraph) => {
-      return `
-        <div class="ww-how-row">
-          <div class="ww-star">✣</div>
-          <div>${safeText(paragraph)}</div>
-        </div>
-      `;
-    })
+    .map((paragraph) =>
+      [
+        '<div class="ww-how-row">',
+        '<div class="ww-star">✣</div>',
+        `<div>${safeText(paragraph)}</div>`,
+        '</div>'
+      ].join("")
+    )
     .join("");
 
-  const updatesHtml = updatesText
-    ? safeText(updatesText)
-    : "No new updates yet.";
-
-  const railLiveClass = popClueLive ? "ww-rail--pop-live" : "";
+  const updatesHtml = updatesText ? safeText(updatesText) : "No new updates yet.";
 
   app.innerHTML = `
     <style>
@@ -77,13 +75,16 @@ export function renderBaseStation(app, data = {}, navigate) {
         --ww-night-1:#09111a;
         --ww-night-2:#111d28;
         --ww-panel:rgba(5,10,14,0.72);
+        --ww-panel-2:rgba(8,14,19,0.86);
         --ww-orange:#f08a24;
         --ww-orange-2:#ffb14a;
         --ww-gold:#f6c56a;
         --ww-cream:#ead7b7;
         --ww-muted:rgba(235,225,208,0.72);
         --ww-left-wide:14.7rem;
-        --ww-rail-bg:radial-gradient(circle at 50% 8%, rgba(240,138,36,0.18), transparent 28%), linear-gradient(90deg, #080b0d 0%, #0b1116 42%, #0e151b 100%);
+        --ww-rail-bg:
+          radial-gradient(circle at 50% 8%, rgba(240,138,36,0.18), transparent 28%),
+          linear-gradient(90deg, #080b0d 0%, #0b1116 42%, #0e151b 100%);
       }
 
       *{box-sizing:border-box;}
@@ -114,11 +115,14 @@ export function renderBaseStation(app, data = {}, navigate) {
         background:var(--ww-rail-bg);
         border-right:1px solid rgba(240,138,36,0.85);
         border-radius:0 1.65rem 1.65rem 0;
-        box-shadow:inset -1px 0 0 rgba(255,177,74,0.42), 0 0 18px rgba(240,138,36,0.24), 0 0 46px rgba(240,138,36,0.16);
+        box-shadow:
+          inset -1px 0 0 rgba(255,177,74,0.42),
+          0 0 18px rgba(240,138,36,0.24),
+          0 0 46px rgba(240,138,36,0.16);
         overflow:hidden;
       }
 
-      .ww-rail:before{
+      .ww-rail::before{
         content:"";
         position:absolute;
         inset:0.2rem 0.25rem 0.2rem 0.2rem;
@@ -128,12 +132,14 @@ export function renderBaseStation(app, data = {}, navigate) {
         pointer-events:none;
       }
 
-      .ww-rail:after{
+      .ww-rail::after{
         content:"";
         position:absolute;
         inset:auto 0 0 0;
         height:35%;
-        background:radial-gradient(circle at 24% 84%, rgba(240,138,36,0.15), transparent 38%), radial-gradient(circle at 76% 78%, rgba(240,138,36,0.12), transparent 42%);
+        background:
+          radial-gradient(circle at 24% 84%, rgba(240,138,36,0.15), transparent 38%),
+          radial-gradient(circle at 76% 78%, rgba(240,138,36,0.12), transparent 42%);
         pointer-events:none;
       }
 
@@ -143,10 +149,17 @@ export function renderBaseStation(app, data = {}, navigate) {
 
       @keyframes wwRailOrangePulse{
         0%,100%{
-          box-shadow:inset -1px 0 0 rgba(255,177,74,0.42), 0 0 18px rgba(240,138,36,0.24), 0 0 46px rgba(240,138,36,0.16);
+          box-shadow:
+            inset -1px 0 0 rgba(255,177,74,0.42),
+            0 0 18px rgba(240,138,36,0.24),
+            0 0 46px rgba(240,138,36,0.16);
         }
+
         50%{
-          box-shadow:inset -2px 0 0 rgba(255,177,74,0.82), 0 0 28px rgba(240,138,36,0.44), 0 0 68px rgba(240,138,36,0.26);
+          box-shadow:
+            inset -2px 0 0 rgba(255,177,74,0.82),
+            0 0 28px rgba(240,138,36,0.44),
+            0 0 68px rgba(240,138,36,0.26);
         }
       }
 
@@ -197,7 +210,7 @@ export function renderBaseStation(app, data = {}, navigate) {
         color:inherit;
       }
 
-      .ww-left-item:after{
+      .ww-left-item::after{
         content:"";
         width:4.9rem;
         height:1px;
@@ -209,7 +222,12 @@ export function renderBaseStation(app, data = {}, navigate) {
         width:4.95rem;
         height:auto;
         display:block;
-        filter:sepia(1) saturate(3.5) hue-rotate(345deg) brightness(1.12) drop-shadow(0 0 10px rgba(240,138,36,0.38));
+        filter:
+          sepia(1)
+          saturate(3.5)
+          hue-rotate(345deg)
+          brightness(1.12)
+          drop-shadow(0 0 10px rgba(240,138,36,0.38));
       }
 
       .ww-left-label{
@@ -233,11 +251,22 @@ export function renderBaseStation(app, data = {}, navigate) {
       @keyframes wwPopPulse{
         0%,100%{
           transform:scale(1);
-          filter:sepia(1) saturate(4.4) hue-rotate(345deg) brightness(1.1) drop-shadow(0 0 9px rgba(240,138,36,0.38));
+          filter:
+            sepia(1)
+            saturate(4.4)
+            hue-rotate(345deg)
+            brightness(1.1)
+            drop-shadow(0 0 9px rgba(240,138,36,0.38));
         }
+
         50%{
           transform:scale(1.045);
-          filter:sepia(1) saturate(5.2) hue-rotate(345deg) brightness(1.25) drop-shadow(0 0 20px rgba(240,138,36,0.68));
+          filter:
+            sepia(1)
+            saturate(5.2)
+            hue-rotate(345deg)
+            brightness(1.25)
+            drop-shadow(0 0 20px rgba(240,138,36,0.68));
         }
       }
 
@@ -245,7 +274,10 @@ export function renderBaseStation(app, data = {}, navigate) {
         flex:1;
         min-width:0;
         height:100vh;
-        background:linear-gradient(90deg, rgba(5,8,11,0.42), rgba(5,8,11,0.1) 38%, rgba(5,8,11,0.82)), radial-gradient(circle at 62% 42%, rgba(240,138,36,0.16), transparent 32%), #09111a;
+        background:
+          linear-gradient(90deg, rgba(5,8,11,0.42), rgba(5,8,11,0.1) 38%, rgba(5,8,11,0.82)),
+          radial-gradient(circle at 62% 42%, rgba(240,138,36,0.16), transparent 32%),
+          url("/assets/winterword/shared/base-station-bg.png");
         background-size:cover;
         background-position:center;
         overflow:auto;
@@ -292,7 +324,9 @@ export function renderBaseStation(app, data = {}, navigate) {
         letter-spacing:0.08em;
         text-transform:uppercase;
         font-weight:950;
-        text-shadow:0 2px 0 rgba(0,0,0,0.4), 0 0 18px rgba(240,138,36,0.12);
+        text-shadow:
+          0 2px 0 rgba(0,0,0,0.4),
+          0 0 18px rgba(240,138,36,0.12);
       }
 
       .ww-subtitle{
@@ -317,7 +351,9 @@ export function renderBaseStation(app, data = {}, navigate) {
         background:linear-gradient(180deg, rgba(7,13,17,0.86), rgba(5,9,12,0.74));
         border:1px solid rgba(240,138,36,0.5);
         border-radius:0.55rem;
-        box-shadow:inset 0 0 0 1px rgba(255,255,255,0.025), 0 0 22px rgba(0,0,0,0.35);
+        box-shadow:
+          inset 0 0 0 1px rgba(255,255,255,0.025),
+          0 0 22px rgba(0,0,0,0.35);
         backdrop-filter:blur(3px);
       }
 
@@ -334,7 +370,7 @@ export function renderBaseStation(app, data = {}, navigate) {
         font-weight:950;
       }
 
-      .ww-card-title:after{
+      .ww-card-title::after{
         content:"";
         display:block;
         width:8rem;
@@ -395,16 +431,21 @@ export function renderBaseStation(app, data = {}, navigate) {
         align-self:start;
         min-height:26.5rem;
         padding:1rem;
-        background:linear-gradient(rgba(92,52,16,0.1), rgba(92,52,16,0.1)), #c99b5b;
+        background:
+          linear-gradient(rgba(92,52,16,0.1), rgba(92,52,16,0.1)),
+          #c99b5b;
         border:1px solid rgba(255,177,74,0.92);
         border-radius:0.45rem;
-        box-shadow:0 0 0 3px rgba(39,20,6,0.78), 0 0 0 4px rgba(240,138,36,0.52), 0 18px 34px rgba(0,0,0,0.44);
+        box-shadow:
+          0 0 0 3px rgba(39,20,6,0.78),
+          0 0 0 4px rgba(240,138,36,0.52),
+          0 18px 34px rgba(0,0,0,0.44);
         color:#211407;
         position:relative;
         overflow:hidden;
       }
 
-      .ww-lastword:before{
+      .ww-lastword::before{
         content:"";
         position:absolute;
         inset:0.48rem;
@@ -412,11 +453,15 @@ export function renderBaseStation(app, data = {}, navigate) {
         pointer-events:none;
       }
 
-      .ww-lastword:after{
+      .ww-lastword::after{
         content:"";
         position:absolute;
         inset:0;
-        background:radial-gradient(circle at 50% 18%, rgba(255,244,210,0.5), transparent 38%), linear-gradient(180deg, transparent 60%, rgba(58,34,12,0.26));
+        background:
+          radial-gradient(circle at 50% 18%, rgba(255,244,210,0.5), transparent 38%),
+          linear-gradient(180deg, transparent 60%, rgba(58,34,12,0.26)),
+          url("/assets/winterword/shared/card-texture.png");
+        background-size:cover;
         opacity:0.55;
         pointer-events:none;
       }
@@ -487,7 +532,10 @@ export function renderBaseStation(app, data = {}, navigate) {
         font-size:1.08rem;
         font-weight:950;
         cursor:pointer;
-        box-shadow:inset 0 0 0 1px rgba(255,255,255,0.06), 0 0 14px rgba(240,138,36,0.24), 0 8px 18px rgba(0,0,0,0.42);
+        box-shadow:
+          inset 0 0 0 1px rgba(255,255,255,0.06),
+          0 0 14px rgba(240,138,36,0.24),
+          0 8px 18px rgba(0,0,0,0.42);
       }
 
       .ww-last-foot{
@@ -588,7 +636,9 @@ export function renderBaseStation(app, data = {}, navigate) {
         letter-spacing:0.08em;
         font-weight:950;
         cursor:pointer;
-        box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18), 0 0 18px rgba(240,138,36,0.28);
+        box-shadow:
+          inset 0 0 0 1px rgba(255,255,255,0.18),
+          0 0 18px rgba(240,138,36,0.28);
       }
 
       .ww-unsub{
@@ -790,7 +840,9 @@ export function renderBaseStation(app, data = {}, navigate) {
 
               <section class="ww-card ww-updates">
                 <h2 class="ww-card-title">Updates</h2>
-                <div class="ww-updates-text">${updatesHtml}</div>
+                <div class="ww-updates-text">
+                  ${updatesHtml}
+                </div>
 
                 <div class="ww-progress">
                   <strong>${currentClueNumber}</strong> of <strong>${totalCluesNumber}</strong> clues released
@@ -829,17 +881,14 @@ export function renderBaseStation(app, data = {}, navigate) {
 
       if (action === "problem") {
         window.location.href = `mailto:fix@cluehouse.co.nz?subject=${encodedOrgName}%20WinterWord%20Issue`;
-        return;
       }
 
       if (action === "subscribe") {
         window.location.href = `mailto:opt@cluehouse.co.nz?subject=Subscribe%20to%20${encodedOrgName}%20WinterWord%20clue%20alerts`;
-        return;
       }
 
       if (action === "unsubscribe") {
         window.location.href = `mailto:opt@cluehouse.co.nz?subject=Unsubscribe%20from%20${encodedOrgName}%20WinterWord%20clue%20alerts`;
-        return;
       }
 
       if (action === "solve") {
