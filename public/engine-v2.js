@@ -1,6 +1,6 @@
 console.log("ENGINE V2 LIVE");
 
-// v6 RESOLVE LOGIC (BACKEND-FIRST) + LEADERBOARD MODULE + FIRST-VISIT WELCOME INTRO
+// v6 RESOLVE LOGIC (BACKEND-FIRST) + LEADERBOARD MODULE + FIRST-VISIT WELCOME INTRO + POP CLUE READY
 
 import { renderBaseStation } from "/modules/base-station.js";
 import { renderBaseStationResolved } from "/modules/base-station-resolved.js";
@@ -143,6 +143,7 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
   const totalClues = Number(orgState.total_clues || game.total_clues || 12);
   const seasonState = orgState.season_state || "pre";
   const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
+  const popClueLive = orgState.flash_clue_live === true;
 
   const isResolved =
     orgState.is_resolved === true
@@ -184,6 +185,79 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
     };
   }
 
+  function renderPopCluePlaceholder() {
+    app.innerHTML = `
+      <div style="
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:40px;
+        font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+        background:
+          radial-gradient(circle at 50% 20%, rgba(240,138,36,0.18), transparent 45%),
+          linear-gradient(135deg,#070c12,#13202c);
+        color:#fff;
+        text-align:center;
+      ">
+        <div style="
+          max-width:620px;
+          padding:38px;
+          border:1px solid rgba(240,138,36,0.55);
+          border-radius:22px;
+          background:rgba(255,255,255,0.055);
+          box-shadow:0 24px 70px rgba(0,0,0,0.45);
+        ">
+          <div style="
+            margin-bottom:14px;
+            color:#f08a24;
+            font-size:13px;
+            letter-spacing:0.22em;
+            text-transform:uppercase;
+            font-weight:900;
+          ">
+            Pop Clue
+          </div>
+
+          <h1 style="margin:0 0 16px;font-size:42px;color:#f3f6f9;">
+            Something brief has surfaced.
+          </h1>
+
+          <p style="margin:0 0 26px;font-size:18px;line-height:1.65;color:rgba(214,221,230,0.78);">
+            The signal is live, but the dedicated Pop Clue page has not been dressed yet.
+          </p>
+
+          <button
+            type="button"
+            id="wwBackToBase"
+            style="
+              appearance:none;
+              border:1px solid rgba(240,138,36,0.9);
+              background:#243242;
+              color:#fff;
+              padding:14px 20px;
+              border-radius:10px;
+              font-weight:900;
+              letter-spacing:0.12em;
+              text-transform:uppercase;
+              cursor:pointer;
+            "
+          >
+            Back to Base Station
+          </button>
+        </div>
+      </div>
+    `;
+
+    const back = app.querySelector("#wwBackToBase");
+
+    if (back) {
+      back.addEventListener("click", () => {
+        navigate("base-station");
+      });
+    }
+  }
+
   function navigate(pageName, options = {}) {
     const lifelineAvailable = isLifelineAvailable();
 
@@ -212,7 +286,8 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
               currentClue,
               totalClues,
               lifelineAvailable,
-              lifelineUnlockClue
+              lifelineUnlockClue,
+              popClueLive
             },
             navigate
           );
@@ -232,10 +307,20 @@ import { renderWelcomeIntro } from "/modules/welcomeIntro.js";
             totalClues,
             seasonState,
             lifelineAvailable,
-            lifelineUnlockClue
+            lifelineUnlockClue,
+            popClueLive
           },
           navigate
         );
+        return;
+
+      case "pop-clue":
+        if (!popClueLive) {
+          navigate("base-station");
+          return;
+        }
+
+        renderPopCluePlaceholder();
         return;
 
       case "clues":
