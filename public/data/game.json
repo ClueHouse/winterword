@@ -1,30 +1,24 @@
 {
   "org_name": "WinterWord • Test Org",
   "season_label": "WINTERWORD • 2026",
-
   "base_station_intro_line_1": "A letter per week from a wintry scroll,",
   "base_station_intro_line_2": "Piece them together — reveal the whole.",
-
   "how_it_works_paragraphs": [
     "Each clue reveals a single letter.",
     "Collect all letters to form the final word.",
     "Use the Lifeline if it becomes available."
   ],
-
   "updates_text": "Clues are beginning to stir.",
-
   "total_clues": 12,
-
   "lifeline_title": "Need a nudge?",
   "lifeline_body": "Think carefully about what feels out of place. Sometimes the answer hides in contrast.",
   "lifeline_image": "/assets/winterword/shared/lifelinebg.png",
-
   "clues": [
     {
       "id": 1,
       "title": "Clue 01",
       "variant": "image-only",
-      "image": "/cgi/image/1_QqZTyhzPV2q7dhkkwywC3.png?width=1920&quality=80&format=auto",
+      "image": "/assets/winterword/clues/01.png",
       "alt": "WinterWord Clue 1",
       "body": "",
       "audio": ""
@@ -33,7 +27,7 @@
       "id": 2,
       "title": "Clue 02",
       "variant": "image-only",
-      "image": "/cgi/image/2_0I3FSbEKLVevU8gZkxlcS.png?width=1920&quality=80&format=auto",
+      "image": "/assets/winterword/clues/02.png",
       "alt": "WinterWord Clue 2",
       "body": "",
       "audio": ""
@@ -42,7 +36,7 @@
       "id": 3,
       "title": "Clue 03",
       "variant": "image-only",
-      "image": "/cgi/image/3_UhzIxTk9zXjWRqXxX5i0S.png?width=1920&quality=80&format=auto",
+      "image": "/assets/winterword/clues/03.png",
       "alt": "WinterWord Clue 3",
       "body": "",
       "audio": ""
@@ -51,7 +45,7 @@
       "id": 4,
       "title": "Clue 04",
       "variant": "image-only",
-      "image": "/cgi/image/4_M4KsEOY-FekNgfWHIRzuB.png?width=1920&quality=80&format=auto",
+      "image": "/assets/winterword/clues/04.png",
       "alt": "WinterWord Clue 4",
       "body": "",
       "audio": ""
@@ -59,17 +53,17 @@
     {
       "id": 5,
       "title": "Clue 05",
-      "variant": "image-only",
-      "image": "/cgi/image/5_zQW06nMk8r174jnRaANSy.png?width=1920&quality=80&format=auto",
+      "variant": "image-audio",
+      "image": "/assets/winterword/clues/05.png",
       "alt": "WinterWord Clue 5",
       "body": "",
-      "audio": ""
+      "audio": "/assets/winterword/clues/05.mp3"
     },
     {
       "id": 6,
       "title": "Clue 06",
       "variant": "image-only",
-      "image": "/cgi/image/6_SMquKsiqjg5xaiTfyue3l.png?width=1920&quality=80&format=auto",
+      "image": "/assets/winterword/clues/06.png",
       "alt": "WinterWord Clue 6",
       "body": "",
       "audio": ""
@@ -77,17 +71,17 @@
     {
       "id": 7,
       "title": "Clue 07",
-      "variant": "image-only",
-      "image": "/cgi/image/7_WKLKY5e50vfqzzJYu4KZ0.png?width=1920&quality=80&format=auto",
+      "variant": "image-audio",
+      "image": "/assets/winterword/clues/07.png",
       "alt": "WinterWord Clue 7",
       "body": "",
-      "audio": ""
+      "audio": "/assets/winterword/clues/07.mp3"
     },
     {
       "id": 8,
       "title": "Clue 08",
       "variant": "image-only",
-      "image": "/cgi/image/8_7usOjuFwgndpxnA8kvngH.png?width=1920&quality=80&format=auto",
+      "image": "/assets/winterword/clues/08.png",
       "alt": "WinterWord Clue 8",
       "body": "",
       "audio": ""
@@ -96,7 +90,7 @@
       "id": 9,
       "title": "Clue 09",
       "variant": "image-only",
-      "image": "/cgi/image/9_vdMUWpjtYGB_MPOZuQfRX.png?width=1920&quality=80&format=auto",
+      "image": "/assets/winterword/clues/09.png",
       "alt": "WinterWord Clue 9",
       "body": "",
       "audio": ""
@@ -105,7 +99,7 @@
       "id": 10,
       "title": "Clue 10",
       "variant": "image-only",
-      "image": "/cgi/image/10_v_W7iqPQ3yi3MLPwhN_nO.png?width=1920&quality=80&format=auto",
+      "image": "/assets/winterword/clues/10.png",
       "alt": "WinterWord Clue 10",
       "body": "",
       "audio": ""
@@ -114,7 +108,7 @@
       "id": 11,
       "title": "Clue 11",
       "variant": "image-only",
-      "image": "/cgi/image/11_R7uzpZr7nXhqOH4KX6HRg.png?width=1920&quality=80&format=auto",
+      "image": "/assets/winterword/clues/11.png",
       "alt": "WinterWord Clue 11",
       "body": "",
       "audio": ""
@@ -123,13 +117,12 @@
       "id": 12,
       "title": "Clue 12",
       "variant": "image-only",
-      "image": "/cgi/image/12_6zn-ucfLzutHdmo6_xSfY.gif?width=1920&quality=80&format=auto",
+      "image": "/assets/winterword/clues/12.gif",
       "alt": "WinterWord Clue 12",
       "body": "",
       "audio": ""
     }
   ],
-
   "answers": [
     {
       "id": 1,
