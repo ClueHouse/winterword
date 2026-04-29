@@ -13,6 +13,11 @@ export async function onRequestGet(context) {
     const AIRTABLE_BASE_ID = env.AIRTABLE_BASE_ID;
     const AIRTABLE_TABLE_NAME = env.AIRTABLE_TABLE_NAME;
 
+    const AIRTABLE_LEADERBOARD_TABLE_NAME =
+      env.AIRTABLE_LEADERBOARD_TABLE_NAME ||
+      env.AIRTABLE_LEADERBOARD_TABLE ||
+      "Leaderboard";
+
     if (!AIRTABLE_TOKEN || !AIRTABLE_BASE_ID || !AIRTABLE_TABLE_NAME) {
       return Response.json({
         ok: false,
@@ -20,7 +25,17 @@ export async function onRequestGet(context) {
       });
     }
 
-    const endpoint = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}?filterByFormula=${encodeURIComponent(`{slug}='${slug}'`)}`;
+    function escapeAirtableFormulaString(value) {
+      return String(value)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+    }
+
+    const safeSlug = escapeAirtableFormulaString(slug);
+
+    const endpoint =
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}` +
+      `?filterByFormula=${encodeURIComponent(`{slug}='${safeSlug}'`)}`;
 
     const res = await fetch(endpoint, {
       headers: {
@@ -48,6 +63,37 @@ export async function onRequestGet(context) {
 
     const record = data.records[0].fields;
 
+    // ---------- LEADERBOARD CHECK ----------
+
+    async function getLeaderboardCount() {
+      try {
+        const leaderboardEndpoint =
+          `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_LEADERBOARD_TABLE_NAME)}` +
+          `?filterByFormula=${encodeURIComponent(`{org}='${safeSlug}'`)}` +
+          `&pageSize=1`;
+
+        const leaderboardRes = await fetch(leaderboardEndpoint, {
+          headers: {
+            Authorization: `Bearer ${AIRTABLE_TOKEN}`
+          }
+        });
+
+        if (!leaderboardRes.ok) {
+          console.error("Leaderboard check failed:", leaderboardRes.status, await leaderboardRes.text());
+          return 0;
+        }
+
+        const leaderboardData = await leaderboardRes.json();
+        return Array.isArray(leaderboardData.records) ? leaderboardData.records.length : 0;
+      } catch (error) {
+        console.error("Leaderboard check error:", error);
+        return 0;
+      }
+    }
+
+    const leaderboard_count = await getLeaderboardCount();
+    const has_leaderboard_entries = leaderboard_count > 0;
+
     // ---------- CALCULATION ----------
 
     const totalClues = Number(record.total_clues || 12);
@@ -61,7 +107,11 @@ export async function onRequestGet(context) {
     }
 
     function calculateCurrentClue() {
-      if (record.current_clue_override !== null && record.current_clue_override !== undefined && record.current_clue_override !== "") {
+      if (
+        record.current_clue_override !== null &&
+        record.current_clue_override !== undefined &&
+        record.current_clue_override !== ""
+      ) {
         const override = Number(record.current_clue_override);
         if (!Number.isNaN(override)) {
           return Math.max(0, Math.min(override, totalClues));
@@ -187,6 +237,10 @@ export async function onRequestGet(context) {
       // ✅ LIVE FEATURE FLAGS
       lifeline_live: record.lifeline_live === true,
       flash_clue_live: record.flash_clue_live === true,
+
+      // ✅ LEADERBOARD STATE
+      has_leaderboard_entries: has_leaderboard_entries,
+      leaderboard_count: leaderboard_count,
 
       now_iso: new Date().toISOString()
     });
