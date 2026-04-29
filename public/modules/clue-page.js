@@ -1,10 +1,7 @@
 export function renderCluePage(app, data = {}, navigate) {
   const {
     clueId = 1,
-    totalClues = 12,
-    clue = {},
-    currentClue = 0,
-    isResolved = false
+    clue = {}
   } = data;
 
   const {
@@ -25,8 +22,9 @@ export function renderCluePage(app, data = {}, navigate) {
       .replaceAll("'", "&#39;");
   }
 
-  function renderImageOnly() {
-    app.innerHTML = `
+  const hasAudio = variant === "image-audio" && audio;
+
+  app.innerHTML = `
 <style>
 :root {
   --ww-ink: #3b4149;
@@ -34,6 +32,7 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-ink-blue: #1f3f57;
   --ww-ink-blue-hover: #163244;
   --ww-rail-bg: #f4f8fb;
+  --ww-orange: #f08a24;
 }
 
 * {
@@ -117,6 +116,49 @@ body {
   opacity: 1;
 }
 
+.ww-mini-play {
+  appearance: none;
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: 999px;
+  border: 2px solid rgba(240,138,36,0.85);
+  background: linear-gradient(180deg, #243242 0%, #192532 100%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow:
+    0 12px 24px rgba(0,0,0,0.18),
+    0 0 18px rgba(240,138,36,0.24);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.ww-mini-play:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow:
+    0 16px 30px rgba(0,0,0,0.24),
+    0 0 26px rgba(240,138,36,0.38);
+}
+
+.ww-mini-play-icon {
+  width: 0;
+  height: 0;
+  border-top: 0.68rem solid transparent;
+  border-bottom: 0.68rem solid transparent;
+  border-left: 1.05rem solid #fff;
+  margin-left: 0.18rem;
+}
+
+.ww-mini-play[data-playing="true"] .ww-mini-play-icon {
+  width: 1rem;
+  height: 1.25rem;
+  border: 0;
+  margin-left: 0;
+  background:
+    linear-gradient(90deg, #fff 0 35%, transparent 35% 65%, #fff 65% 100%);
+}
+
 #wwRight {
   flex: 1;
   display: flex;
@@ -175,6 +217,16 @@ body {
         <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
       </div>
 
+      ${
+        hasAudio
+          ? `
+            <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="Play clue audio" data-playing="false">
+              <span class="ww-mini-play-icon" aria-hidden="true"></span>
+            </button>
+          `
+          : ""
+      }
+
       <nav class="ww-mini-textnav" aria-label="Mini navigation">
         <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
         <button class="ww-mini-textlink" type="button" data-nav="clues" data-active="true">Clues</button>
@@ -208,21 +260,42 @@ body {
 </div>
 `;
 
-    app.querySelectorAll("[data-nav]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const target = button.getAttribute("data-nav");
+  app.querySelectorAll("[data-nav]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = button.getAttribute("data-nav");
 
-        if (typeof navigate === "function") {
-          navigate(target);
+      if (typeof navigate === "function") {
+        navigate(target);
+      }
+    });
+  });
+
+  if (hasAudio) {
+    const playButton = app.querySelector("#wwPlayButton");
+    const audioElement = new Audio(audio);
+
+    if (playButton) {
+      playButton.addEventListener("click", async () => {
+        try {
+          if (audioElement.paused) {
+            await audioElement.play();
+            playButton.setAttribute("data-playing", "true");
+            playButton.setAttribute("aria-label", "Pause clue audio");
+          } else {
+            audioElement.pause();
+            playButton.setAttribute("data-playing", "false");
+            playButton.setAttribute("aria-label", "Play clue audio");
+          }
+        } catch {
+          playButton.setAttribute("data-playing", "false");
+          playButton.setAttribute("aria-label", "Audio could not play");
         }
       });
-    });
-  }
 
-  switch (variant) {
-    case "image-only":
-    default:
-      renderImageOnly();
-      break;
+      audioElement.addEventListener("ended", () => {
+        playButton.setAttribute("data-playing", "false");
+        playButton.setAttribute("aria-label", "Play clue audio");
+      });
+    }
   }
 }
