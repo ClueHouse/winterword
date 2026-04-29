@@ -1,5 +1,5 @@
-// WinterWord Clean Engine v1
-// Full module router: Base Station, Resolve, Welcome, Clues, Answers, Lifeline, Leaderboard, Pop Clue
+// WinterWord Clean Engine v1.1
+// Airtable controls Lifeline. game.json no longer auto-unlocks Lifeline at clue 6.
 
 (async function winterwordEngine() {
   "use strict";
@@ -200,8 +200,10 @@
     return {
       id: clueId,
       title: found?.title || `Clue ${String(clueId).padStart(2, "0")}`,
-      body: found?.body || "No clue content yet.",
+      variant: found?.variant || "image-only",
+      body: found?.body || "",
       image: found?.image || "",
+      alt: found?.alt || found?.title || `WinterWord Clue ${clueId}`,
       audio: found?.audio || "",
       unlocked: clueId <= currentClue
     };
@@ -215,8 +217,10 @@
     return {
       id: clueId,
       title: found?.title || `Answer ${String(clueId).padStart(2, "0")}`,
+      variant: found?.variant || "plain",
       body: found?.body || "No answer content yet.",
       image: found?.image || "",
+      alt: found?.alt || found?.title || `WinterWord Answer ${clueId}`,
       audio: found?.audio || "",
       letter: found?.letter || "",
       unlocked: isResolved && clueId <= totalClues
@@ -402,10 +406,7 @@
       seasonState === "resolved" ||
       computeResolvedFallback(orgState, totalClues);
 
-    const lifelineAvailable =
-      orgState.lifeline_live === true ||
-      currentClue >= lifelineUnlockClue ||
-      isResolved;
+    const lifelineAvailable = orgState.lifeline_live === true;
 
     const popClueLive =
       orgState.flash_clue_live === true ||
@@ -547,7 +548,8 @@
               totalClues,
               clue: getClueById(game, currentClue, clueId),
               currentClue,
-              isResolved
+              isResolved,
+              lifelineAvailable
             },
             navigate
           );
@@ -592,7 +594,8 @@
               clueId: answerId,
               totalClues,
               answer,
-              isResolved
+              isResolved,
+              lifelineAvailable
             },
             navigate
           );
@@ -616,7 +619,6 @@
             app,
             {
               isAvailable: true,
-              unlockClue: lifelineUnlockClue,
               currentClue,
               lifelineTitle: game.lifeline_title || "Need a nudge?",
               lifelineBody: game.lifeline_body || "Your lifeline content goes here.",
