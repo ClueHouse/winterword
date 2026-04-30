@@ -9,6 +9,7 @@
     baseStationResolved: "/modules/base-station-resolved.js",
     clueList: "/modules/clue-list.js",
     cluePage: "/modules/clue-page.js",
+    answerList: "/modules/answer-list.js",
     answerPage: "/modules/answer-page.js",
     lifeline: "/modules/lifeline.js",
     leaderboard: "/modules/leaderboard.js",
@@ -225,81 +226,6 @@
       letter: found?.letter || "",
       unlocked: isResolved && clueId <= totalClues
     };
-  }
-
-  function renderAnswerList(app, data, navigate) {
-    const totalClues = Number(data.totalClues || 12);
-
-    app.innerHTML = `
-      <main style="
-        min-height:100vh;
-        background:#10141b;
-        color:#f5f7fb;
-        font-family:Arial,sans-serif;
-        padding:42px 24px;
-        box-sizing:border-box;
-      ">
-        <section style="max-width:860px;margin:0 auto;">
-          <button
-            type="button"
-            id="wwBackToBase"
-            style="
-              margin:0 0 28px;
-              border:1px solid rgba(255,255,255,0.22);
-              background:rgba(255,255,255,0.08);
-              color:#fff;
-              padding:12px 16px;
-              border-radius:10px;
-              cursor:pointer;
-              font-weight:700;
-            "
-          >
-            Back to Base Station
-          </button>
-
-          <h1 style="font-size:44px;margin:0 0 10px;">Answers</h1>
-          <p style="margin:0 0 28px;color:#cfd6df;font-size:18px;">The full answer list is now unlocked.</p>
-
-          <div style="display:grid;gap:12px;">
-            ${Array.from({ length: totalClues }, (_, index) => {
-              const id = index + 1;
-              return `
-                <button
-                  type="button"
-                  class="wwAnswerButton"
-                  data-answer-id="${id}"
-                  style="
-                    width:100%;
-                    text-align:left;
-                    border:1px solid rgba(255,255,255,0.14);
-                    background:rgba(255,255,255,0.07);
-                    color:#fff;
-                    padding:18px 20px;
-                    border-radius:14px;
-                    cursor:pointer;
-                    font-size:18px;
-                    font-weight:800;
-                  "
-                >
-                  Answer ${String(id).padStart(2, "0")}
-                </button>
-              `;
-            }).join("")}
-          </div>
-        </section>
-      </main>
-    `;
-
-    const back = app.querySelector("#wwBackToBase");
-    if (back) {
-      back.addEventListener("click", () => navigate("base-station"));
-    }
-
-    app.querySelectorAll(".wwAnswerButton").forEach((button) => {
-      button.addEventListener("click", () => {
-        navigate("answer", { id: Number(button.dataset.answerId) });
-      });
-    });
   }
 
   function renderPopCluePlaceholder(app, navigate) {
@@ -569,10 +495,19 @@
             return;
           }
 
+          const renderAnswerList = modules.answerList.renderAnswerList;
+
+          if (typeof renderAnswerList !== "function") {
+            renderError("Answer List module error", "renderAnswerList was not found.");
+            return;
+          }
+
           renderAnswerList(
             app,
             {
-              totalClues
+              orgName: orgState.org_name || game.org_name || "WinterWord",
+              totalClues,
+              final_word: orgState.final_word || game.final_word || "HOUSEWARMING"
             },
             navigate
           );
