@@ -47,24 +47,21 @@
           background:rgba(255,255,255,0.045);
           box-shadow:0 28px 90px rgba(0,0,0,0.38);
         ">
-          <div style="
-            margin:0 auto 24px;
-            width:88px;
-            height:88px;
-            border-radius:50%;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            border:1px solid rgba(240,138,36,0.55);
-            background:rgba(240,138,36,0.08);
-            box-shadow:0 0 34px rgba(240,138,36,0.16);
-            color:#f0b36a;
-            font-size:34px;
-            font-weight:900;
-            letter-spacing:-0.08em;
-          ">
-            WW
-          </div>
+          <img
+            src="/assets/winterword/shared/logo.png"
+            alt="WinterWord Logo"
+            style="
+              display:block;
+              width:min(220px, 70%);
+              height:auto;
+              margin:0 auto 26px;
+              user-select:none;
+              pointer-events:none;
+              filter:
+                drop-shadow(0 0 18px rgba(240,138,36,0.12))
+                drop-shadow(0 0 36px rgba(240,138,36,0.08));
+            "
+          />
 
           <p style="
             margin:0 0 12px;
@@ -77,7 +74,11 @@
             WinterWord Base Station
           </p>
 
-          <h1 style="margin:0 0 16px;font-size:42px;">
+          <h1 style="
+            margin:0 0 16px;
+            font-size:42px;
+            line-height:1.1;
+          ">
             Transmission Disrupted
           </h1>
 
