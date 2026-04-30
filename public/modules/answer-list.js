@@ -70,12 +70,21 @@ export function renderAnswerList(app, data = {}, navigate) {
         gap:.8rem;
         text-decoration:none;
         cursor:pointer;
+        background:none;
+        border:none;
+        padding:0;
       }
 
       .ww-side-logo img{
         width:9.6rem;
         max-width:none;
         display:block;
+        background:transparent !important;
+        mix-blend-mode:normal;
+        box-shadow:none !important;
+        border:none !important;
+        outline:none !important;
+        filter:drop-shadow(0 0 0 transparent);
       }
 
       .ww-divider{
@@ -143,11 +152,6 @@ export function renderAnswerList(app, data = {}, navigate) {
       .ww-word-btn:hover{
         transform:translateY(-2px);
         filter:brightness(1.05);
-        box-shadow:
-          0 16px 30px rgba(0,0,0,0.52),
-          0 0 34px rgba(170,40,58,0.22),
-          inset 0 1px 0 rgba(255,255,255,0.26),
-          inset 0 0 0 1px rgba(255,220,220,0.18);
       }
 
       .ww-word-btn:hover::before{
@@ -205,9 +209,6 @@ export function renderAnswerList(app, data = {}, navigate) {
         text-transform:uppercase;
         font-size:clamp(1.45rem,2vw,2.25rem);
         color:#fff3ec;
-        text-shadow:
-          0 2px 10px rgba(0,0,0,0.45),
-          0 0 28px rgba(255,166,166,0.10);
       }
 
       .ww-status{
@@ -234,48 +235,11 @@ export function renderAnswerList(app, data = {}, navigate) {
       .ww-card{
         border-radius:1rem;
         overflow:hidden;
-        text-decoration:none;
-        color:inherit;
         background:
           linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
         position:relative;
         border:1px solid rgba(255,255,255,0.05);
-        box-shadow:
-          0 14px 30px rgba(0,0,0,0.24),
-          inset 0 0 0 1px rgba(255,255,255,0.02);
-        transition:
-          transform .22s ease,
-          box-shadow .22s ease,
-          border-color .22s ease;
-      }
-
-      .ww-card:hover{
-        transform:translateY(-4px);
-        border-color:rgba(255,220,220,0.12);
-        box-shadow:
-          0 20px 38px rgba(0,0,0,0.34),
-          0 0 24px rgba(255,170,170,0.06),
-          inset 0 0 0 1px rgba(255,255,255,0.03);
-      }
-
-      .ww-card::after{
-        content:"";
-        position:absolute;
-        top:0;
-        left:-120%;
-        width:60%;
-        height:100%;
-        background:linear-gradient(110deg,transparent,rgba(255,255,255,.18),transparent);
-        transform:skewX(-20deg);
-        pointer-events:none;
-      }
-
-      .ww-card:hover::after{
-        animation:wwSweep .82s ease forwards;
-      }
-
-      @keyframes wwSweep{
-        to{left:140%;}
+        cursor:pointer;
       }
 
       .ww-thumb{
@@ -290,13 +254,6 @@ export function renderAnswerList(app, data = {}, navigate) {
         height:100%;
         object-fit:cover;
         display:block;
-        transform:scale(1.01);
-        transition:transform .28s ease, filter .28s ease;
-      }
-
-      .ww-card:hover .ww-thumb img{
-        transform:scale(1.05);
-        filter:brightness(1.04);
       }
 
       .ww-meta{
@@ -338,29 +295,6 @@ export function renderAnswerList(app, data = {}, navigate) {
         background:
           linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)),
           linear-gradient(145deg, rgba(88,12,23,0.98), rgba(38,6,12,0.98));
-        box-shadow:
-          0 40px 90px rgba(0,0,0,0.6),
-          0 0 42px rgba(168,40,56,0.14),
-          inset 0 1px 0 rgba(255,255,255,0.2);
-        transform:scale(.94);
-        opacity:0;
-        transition:
-          transform .44s cubic-bezier(.2,.8,.2,1),
-          opacity .34s ease;
-      }
-
-      .ww-modal.is-open .ww-modal-panel{
-        transform:scale(1);
-        opacity:1;
-      }
-
-      .ww-modal-kicker{
-        margin-bottom:.95rem;
-        opacity:0;
-        transform:translateY(8px);
-        transition:
-          opacity .3s ease .12s,
-          transform .3s ease .12s;
       }
 
       .ww-modal-kicker-line{
@@ -370,7 +304,6 @@ export function renderAnswerList(app, data = {}, navigate) {
         letter-spacing:.26em;
         text-transform:uppercase;
         color:#ffd4cf;
-        line-height:1.25;
       }
 
       .ww-modal-word{
@@ -379,20 +312,6 @@ export function renderAnswerList(app, data = {}, navigate) {
         letter-spacing:.14em;
         text-transform:uppercase;
         color:#fff7f3;
-        text-shadow:
-          0 2px 10px rgba(0,0,0,0.45),
-          0 0 22px rgba(255,190,190,0.12);
-        opacity:0;
-        transform:translateY(12px);
-        transition:
-          opacity .38s ease .2s,
-          transform .38s ease .2s;
-      }
-
-      .ww-modal.is-open .ww-modal-kicker,
-      .ww-modal.is-open .ww-modal-word{
-        opacity:1;
-        transform:translateY(0);
       }
 
       @media (max-width:1100px){
@@ -404,22 +323,13 @@ export function renderAnswerList(app, data = {}, navigate) {
           grid-template-columns:1fr;
         }
 
-        .ww-side{
-          gap:1.2rem;
-        }
-
         .ww-grid{grid-template-columns:repeat(2,1fr);}
       }
 
       @media (max-width:520px){
         .ww-answer-list{padding:1rem;}
 
-        .ww-answer-shell{
-          min-height:calc(100vh - 2rem);
-        }
-
         .ww-answer-content{
-          min-height:calc(100vh - 2rem);
           padding:1.3rem 1.1rem;
         }
 
@@ -432,13 +342,13 @@ export function renderAnswerList(app, data = {}, navigate) {
         <div class="ww-answer-content">
 
           <aside class="ww-side">
-            <button class="ww-side-logo" type="button" data-nav="/base-station" aria-label="Return to Base Station">
+            <button class="ww-side-logo" type="button" data-nav="base-station" aria-label="Return to Base Station">
               <img src="/assets/winterword/shared/logo.png" alt="${escapeHtml(orgName)}">
               <div class="ww-divider"></div>
               <div class="ww-side-label">BASE STATION</div>
             </button>
 
-            <button class="ww-word-btn" type="button" id="wwWordBtn" aria-haspopup="dialog" aria-controls="wwWordModal">
+            <button class="ww-word-btn" type="button" id="wwWordBtn">
               <span class="ww-word-line">The</span>
               <span class="ww-word-line">Winterword</span>
               <span class="ww-word-line">Is:</span>
@@ -459,7 +369,7 @@ export function renderAnswerList(app, data = {}, navigate) {
 
                 <div class="ww-grid">
                   ${answers.map((answer) => `
-                    <button class="ww-card" type="button" data-nav="${answer.path}" aria-label="${escapeHtml(answer.label)}">
+                    <button class="ww-card" type="button" data-nav="answer" data-id="${parseInt(answer.id, 10)}">
                       <div class="ww-thumb">
                         <img src="${answer.image}" alt="${escapeHtml(answer.label)}">
                       </div>
@@ -477,12 +387,12 @@ export function renderAnswerList(app, data = {}, navigate) {
     </main>
 
     <div class="ww-modal" id="wwWordModal" aria-hidden="true">
-      <div class="ww-modal-panel" role="dialog" aria-modal="true" aria-labelledby="wwWordHeading">
+      <div class="ww-modal-panel">
         <div class="ww-modal-kicker">
           <span class="ww-modal-kicker-line">The</span>
           <span class="ww-modal-kicker-line">Winterword</span>
         </div>
-        <div class="ww-modal-word" id="wwWordHeading">${escapeHtml(finalWord)}</div>
+        <div class="ww-modal-word">${escapeHtml(finalWord)}</div>
       </div>
     </div>
   `;
@@ -495,8 +405,14 @@ export function renderAnswerList(app, data = {}, navigate) {
   navButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const path = button.getAttribute("data-nav");
-      if (typeof navigate === "function" && path) {
-        navigate(path);
+      const id = button.getAttribute("data-id");
+
+      if (typeof navigate === "function") {
+        if (path === "answer" && id) {
+          navigate("answer", { id: Number(id) });
+        } else {
+          navigate(path);
+        }
       }
     });
   });
