@@ -15,6 +15,17 @@ export function renderLeaderboardPage(app, data, navigate) {
       .replace(/'/g, "&#39;");
   }
 
+  function getSlugFallback() {
+    const fromData = String(slug || "").trim();
+    if (fromData) return fromData;
+
+    const pathSlug = window.location.pathname
+      .split("/")
+      .filter(Boolean)[0];
+
+    return String(pathSlug || "").trim();
+  }
+
   function formatTimestamp(value) {
     if (!value) return "—";
     const d = new Date(value);
@@ -30,8 +41,7 @@ export function renderLeaderboardPage(app, data, navigate) {
   }
 
   const safeOrgName = esc(orgName || "WinterWord");
-  const safeSeasonLabel = esc(seasonLabel);
-  const safeSlug = String(slug || "").trim();
+  const safeSlug = getSlugFallback();
 
   app.innerHTML = `
     <style>
@@ -42,9 +52,7 @@ export function renderLeaderboardPage(app, data, navigate) {
 
       .ww-leaderboard-page {
         --ww-ink: #dce5ec;
-        --ww-muted: rgba(220,229,236,0.72);
         --ww-gold-soft: #f5ebd2;
-
         min-height: 100vh;
         padding: 2rem;
         font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -125,9 +133,6 @@ export function renderLeaderboardPage(app, data, navigate) {
         text-transform: uppercase;
         font-weight: 900;
         color: #ffffff;
-        text-shadow:
-          0 1px 2px rgba(0,0,0,0.75),
-          0 0 4px rgba(255,255,255,0.04);
       }
 
       .ww-main {
@@ -140,7 +145,6 @@ export function renderLeaderboardPage(app, data, navigate) {
         width: 100%;
         border-radius: 1.4rem;
         overflow: hidden;
-        text-decoration: none;
       }
 
       .ww-board-media {
@@ -194,12 +198,7 @@ export function renderLeaderboardPage(app, data, navigate) {
       .ww-record {
         border-radius: 1.25rem;
         padding: 1.35rem 1.45rem;
-        background: linear-gradient(
-          135deg,
-          rgba(186,152,86,0.32) 0%,
-          rgba(128,104,62,0.22) 55%,
-          rgba(255,255,255,0.08) 100%
-        );
+        background: linear-gradient(135deg, rgba(186,152,86,0.32), rgba(128,104,62,0.22), rgba(255,255,255,0.08));
         margin-bottom: 0.95rem;
       }
 
@@ -208,7 +207,6 @@ export function renderLeaderboardPage(app, data, navigate) {
         font-size: 2rem;
         line-height: 1.1;
         color: #fff;
-        text-shadow: 0 4px 16px rgba(0,0,0,0.35);
       }
 
       .ww-record-meta {
@@ -243,7 +241,6 @@ export function renderLeaderboardPage(app, data, navigate) {
         border-radius: 1.05rem;
         overflow: hidden;
         background: rgba(255,255,255,0.06);
-        backdrop-filter: blur(4px);
       }
 
       .ww-rankrow {
@@ -278,19 +275,9 @@ export function renderLeaderboardPage(app, data, navigate) {
           background-attachment: scroll;
         }
 
-        .ww-shell {
-          min-height: calc(100vh - 2rem);
-        }
-
         .ww-content {
-          min-height: calc(100vh - 2rem);
           grid-template-columns: 1fr;
-          gap: 1.25rem;
           padding: 1.25rem;
-        }
-
-        .ww-side {
-          justify-content: flex-start;
         }
 
         .ww-side-logo img {
@@ -322,7 +309,6 @@ export function renderLeaderboardPage(app, data, navigate) {
     <div class="ww-leaderboard-page">
       <div class="ww-shell">
         <div class="ww-content">
-
           <div class="ww-side">
             <a href="/base-station" class="ww-side-logo" data-nav-base>
               <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
@@ -343,7 +329,6 @@ export function renderLeaderboardPage(app, data, navigate) {
                   <div class="ww-leader-anchor">
                     <div class="ww-leader-wrap">
                       <div class="ww-leader-inner">
-
                         <div class="ww-record">
                           <h3>The WinterWord is known.</h3>
                           <div class="ww-record-meta">
@@ -368,7 +353,6 @@ export function renderLeaderboardPage(app, data, navigate) {
                             `;
                           }).join("")}
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -387,7 +371,7 @@ export function renderLeaderboardPage(app, data, navigate) {
   if (baseLink) {
     baseLink.addEventListener("click", event => {
       event.preventDefault();
-      navigate("/base-station");
+      if (typeof navigate === "function") navigate("/base-station");
     });
   }
 
