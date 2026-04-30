@@ -79,12 +79,18 @@ export async function onRequestGet(context) {
         });
 
         if (!leaderboardRes.ok) {
-          console.error("Leaderboard check failed:", leaderboardRes.status, await leaderboardRes.text());
+          console.error(
+            "Leaderboard check failed:",
+            leaderboardRes.status,
+            await leaderboardRes.text()
+          );
           return 0;
         }
 
         const leaderboardData = await leaderboardRes.json();
-        return Array.isArray(leaderboardData.records) ? leaderboardData.records.length : 0;
+        return Array.isArray(leaderboardData.records)
+          ? leaderboardData.records.length
+          : 0;
       } catch (error) {
         console.error("Leaderboard check error:", error);
         return 0;
@@ -99,10 +105,22 @@ export async function onRequestGet(context) {
     const totalClues = Number(record.total_clues || 12);
 
     function parseFrequency(freq) {
-      if (freq === "weekly") return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
-      if (freq === "hourly") return { type: "fixed", ms: 60 * 60 * 1000 };
-      if (freq === "quarter_hourly") return { type: "fixed", ms: 15 * 60 * 1000 };
-      if (freq === "daily_weekdays") return { type: "weekdays" };
+      if (freq === "weekly") {
+        return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
+      }
+
+      if (freq === "hourly") {
+        return { type: "fixed", ms: 60 * 60 * 1000 };
+      }
+
+      if (freq === "quarter_hourly") {
+        return { type: "fixed", ms: 15 * 60 * 1000 };
+      }
+
+      if (freq === "daily_weekdays") {
+        return { type: "weekdays" };
+      }
+
       return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
     }
 
@@ -113,18 +131,26 @@ export async function onRequestGet(context) {
         record.current_clue_override !== ""
       ) {
         const override = Number(record.current_clue_override);
+
         if (!Number.isNaN(override)) {
           return Math.max(0, Math.min(override, totalClues));
         }
       }
 
-      if (!record.season_start) return 0;
+      if (!record.season_start) {
+        return 0;
+      }
 
       const startMs = new Date(record.season_start).getTime();
       const nowMs = Date.now();
 
-      if (Number.isNaN(startMs)) return 0;
-      if (nowMs < startMs) return 0;
+      if (Number.isNaN(startMs)) {
+        return 0;
+      }
+
+      if (nowMs < startMs) {
+        return 0;
+      }
 
       const parsed = parseFrequency(record.drop_frequency);
 
@@ -134,9 +160,11 @@ export async function onRequestGet(context) {
 
         while (cursor.getTime() <= nowMs && count < totalClues) {
           const day = cursor.getDay();
+
           if (day !== 0 && day !== 6) {
             count++;
           }
+
           cursor.setDate(cursor.getDate() + 1);
         }
 
@@ -152,19 +180,33 @@ export async function onRequestGet(context) {
     const current_clue = calculateCurrentClue();
 
     function getSeasonState() {
-      if (!record.is_visible) return "hidden";
-      if (record.status === "paused") return "paused";
-      if (record.status === "tech_diff") return "tech_diff";
-      if (record.status === "complete") return "complete";
+      if (!record.is_visible) {
+        return "hidden";
+      }
+
+      if (record.status === "paused") {
+        return "paused";
+      }
+
+      if (record.status === "tech_diff") {
+        return "tech_diff";
+      }
+
+      if (record.status === "complete") {
+        return "complete";
+      }
 
       if (record.season_end) {
         const endMs = new Date(record.season_end).getTime();
+
         if (!Number.isNaN(endMs) && Date.now() > endMs) {
           return "complete";
         }
       }
 
-      if (current_clue <= 0) return "pre";
+      if (current_clue <= 0) {
+        return "pre";
+      }
 
       return "live";
     }
@@ -177,14 +219,23 @@ export async function onRequestGet(context) {
     function calculateIsResolved() {
       const override = record.base_station_resolved_override;
 
-      if (override === true || override === "true") return true;
-      if (override === false || override === "false") return false;
+      if (override === true || override === "true") {
+        return true;
+      }
 
-      if (!is_complete) return false;
-      if (!record.season_start) return false;
+      if (override === false || override === "false") {
+        return false;
+      }
+
+      if (!is_complete || !record.season_start) {
+        return false;
+      }
 
       const startMs = new Date(record.season_start).getTime();
-      if (Number.isNaN(startMs)) return false;
+
+      if (Number.isNaN(startMs)) {
+        return false;
+      }
 
       const parsed = parseFrequency(record.drop_frequency);
 
@@ -193,7 +244,12 @@ export async function onRequestGet(context) {
       if (parsed.type === "fixed") {
         durationMs = (totalClues - 1) * parsed.ms;
       } else if (parsed.type === "weekdays") {
-        durationMs = (totalClues + Math.floor(totalClues / 5) * 2) * 24 * 60 * 60 * 1000;
+        durationMs =
+          (totalClues + Math.floor(totalClues / 5) * 2) *
+          24 *
+          60 *
+          60 *
+          1000;
       }
 
       const lastClueTime = startMs + durationMs;
@@ -217,32 +273,65 @@ export async function onRequestGet(context) {
 
     return Response.json({
       ok: true,
+
       slug: record.slug || slug,
       org_name: record.org_name || "",
+      orgName: record.org_name || "",
+
       status: record.status || "",
       timezone: record.timezone || "",
+
       season_start: record.season_start || "",
+      seasonStart: record.season_start || "",
+
       drop_frequency: record.drop_frequency || "weekly",
+      dropFrequency: record.drop_frequency || "weekly",
+
       updates_content: record.updates_content || "",
+      updatesText: record.updates_content || "",
+
       total_clues: totalClues,
+      totalClues: totalClues,
+
       current_clue_override: record.current_clue_override ?? null,
+      currentClueOverride: record.current_clue_override ?? null,
+
       current_clue: current_clue,
+      currentClue: current_clue,
+
       season_end: record.season_end || "",
+      seasonEnd: record.season_end || "",
+
       is_visible: record.is_visible ?? true,
+      isVisible: record.is_visible ?? true,
+
       notes: record.notes || "",
+
       season_state: season_state,
+      seasonState: season_state,
+
       is_complete: is_complete,
+      isComplete: is_complete,
+
       is_resolved: is_resolved,
+      isResolved: is_resolved,
 
       // ✅ LIVE FEATURE FLAGS
       lifeline_live: record.lifeline_live === true,
+      lifelineLive: record.lifeline_live === true,
+
       flash_clue_live: record.flash_clue_live === true,
+      flashClueLive: record.flash_clue_live === true,
 
       // ✅ LEADERBOARD STATE
       has_leaderboard_entries: has_leaderboard_entries,
       leaderboard_count: leaderboard_count,
 
-      now_iso: new Date().toISOString()
+      hasLeaderboardEntries: has_leaderboard_entries,
+      leaderboardCount: leaderboard_count,
+
+      now_iso: new Date().toISOString(),
+      nowIso: new Date().toISOString()
     });
 
   } catch (err) {
