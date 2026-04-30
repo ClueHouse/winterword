@@ -22,6 +22,80 @@
 
   const app = document.getElementById("app") || document.body;
 
+  function renderTechDiff() {
+    app.innerHTML = `
+      <main style="
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:40px;
+        background:
+          radial-gradient(circle at 50% 30%, rgba(240,138,36,0.14), transparent 34%),
+          radial-gradient(circle at 50% 75%, rgba(120,160,210,0.10), transparent 42%),
+          #10141b;
+        color:#f5f7fb;
+        font-family:Arial,sans-serif;
+        text-align:center;
+        box-sizing:border-box;
+      ">
+        <section style="
+          max-width:720px;
+          padding:38px 34px;
+          border-radius:24px;
+          border:1px solid rgba(255,255,255,0.12);
+          background:rgba(255,255,255,0.045);
+          box-shadow:0 28px 90px rgba(0,0,0,0.38);
+        ">
+          <div style="
+            margin:0 auto 24px;
+            width:88px;
+            height:88px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border:1px solid rgba(240,138,36,0.55);
+            background:rgba(240,138,36,0.08);
+            box-shadow:0 0 34px rgba(240,138,36,0.16);
+            color:#f0b36a;
+            font-size:34px;
+            font-weight:900;
+            letter-spacing:-0.08em;
+          ">
+            WW
+          </div>
+
+          <p style="
+            margin:0 0 12px;
+            color:#f0b36a;
+            font-size:13px;
+            font-weight:900;
+            letter-spacing:0.26em;
+            text-transform:uppercase;
+          ">
+            WinterWord Base Station
+          </p>
+
+          <h1 style="margin:0 0 16px;font-size:42px;">
+            Transmission Disrupted
+          </h1>
+
+          <p style="
+            margin:0 auto;
+            max-width:560px;
+            font-size:18px;
+            line-height:1.55;
+            color:#cfd6df;
+          ">
+            Atmospheric interference is currently affecting Base Station communications.
+            Please try again a little later.
+          </p>
+        </section>
+      </main>
+    `;
+  }
+
   function renderError(title, message, detail = "") {
     app.innerHTML = `
       <main style="
@@ -314,7 +388,7 @@
     }
 
     if (orgState.season_state === "tech_diff") {
-      renderError("Technical Difficulties", "Please try again a little later.");
+      renderTechDiff();
       return;
     }
 
