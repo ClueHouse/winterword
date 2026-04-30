@@ -23,8 +23,11 @@ export function renderAnswerPage(app, data = {}, navigate) {
       .replaceAll("'", "&#39;");
   }
 
-  const hasImage = Boolean(image);
+  const hasMedia = Boolean(image);
   const hasAudio = Boolean(audio);
+  const isVideo =
+    variant === "video" ||
+    variant === "video-audio";
 
   app.innerHTML = `
 <style>
@@ -78,6 +81,7 @@ body {
   width: 7.2rem;
   height: auto;
   display: block;
+  background: transparent !important;
 }
 
 .ww-mini-textnav {
@@ -204,11 +208,12 @@ body {
   white-space: pre-wrap;
 }
 
-.ww-answer-image {
+.ww-answer-media {
   margin-top: 1.4rem;
 }
 
-.ww-answer-image img {
+.ww-answer-media img,
+.ww-answer-media video {
   display: block;
   width: 100%;
   max-height: 62vh;
@@ -279,14 +284,25 @@ body {
       <div class="ww-answer-body">${esc(body)}</div>
 
       ${
-        hasImage
+        hasMedia
           ? `
-            <div class="ww-answer-image">
-              <img src="${esc(image)}" alt="${esc(alt)}" loading="lazy" decoding="async">
+            <div class="ww-answer-media">
+              ${
+                isVideo
+                  ? `
+                    <video controls playsinline preload="metadata">
+                      <source src="${esc(image)}" type="video/mp4">
+                    </video>
+                  `
+                  : `
+                    <img src="${esc(image)}" alt="${esc(alt)}" loading="lazy" decoding="async">
+                  `
+              }
             </div>
           `
           : ""
       }
+
     </section>
   </main>
 
