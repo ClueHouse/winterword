@@ -237,28 +237,14 @@ export function renderLeaderboardPage(app, data, navigate) {
         min-height: 1.2em;
       }
 
-      .ww-ranks,
-      .ww-extended-ranks {
+      .ww-ranks {
         border-radius: 1.05rem;
         overflow: hidden;
         background: rgba(255,255,255,0.06);
       }
 
-      .ww-extended-wrap {
-        margin-top: 1.25rem;
-      }
-
-      .ww-extended-title {
-        margin: 0 0 0.75rem;
-        font-size: 0.78rem;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--ww-gold-soft);
-        opacity: 0.9;
-      }
-
-      .ww-extended-ranks {
-        max-height: 20rem;
+      .ww-ranks.scrollable {
+        max-height: 34rem;
         overflow-y: auto;
         scrollbar-width: thin;
       }
@@ -361,7 +347,7 @@ export function renderLeaderboardPage(app, data, navigate) {
                         <div class="ww-divider-centre">❄</div>
                         <div class="ww-status" data-status>Loading leaderboard…</div>
 
-                        <div class="ww-ranks">
+                        <div class="ww-ranks" data-ranks-container>
                           ${Array.from({ length: 9 }, (_, index) => {
                             const rank = index + 2;
                             return `
@@ -372,11 +358,6 @@ export function renderLeaderboardPage(app, data, navigate) {
                               </div>
                             `;
                           }).join("")}
-                        </div>
-
-                        <div class="ww-extended-wrap" data-extended-wrap style="display:none;">
-                          <div class="ww-extended-title">Additional Solvers</div>
-                          <div class="ww-extended-ranks" data-extended-ranks></div>
                         </div>
 
                       </div>
@@ -460,12 +441,30 @@ export function renderLeaderboardPage(app, data, navigate) {
         if (winnerTimeEl) winnerTimeEl.textContent = formatTimestamp(winner.timestamp);
       }
 
-      for (const row of rows) {
-        const rank = Number(row.rank);
+      const ranksContainer = app.querySelector("[data-ranks-container]");
+      const hasOverflow = rows.some(row => Number(row.rank) > 10);
 
-        if (!rank) continue;
+      if (hasOverflow && ranksContainer) {
+        ranksContainer.classList.add("scrollable");
 
-        if (rank >= 2 && rank <= 10) {
+        const rankedRows = rows
+          .filter(row => Number(row.rank) >= 2)
+          .map(row => `
+            <div class="ww-rankrow">
+              <div class="ww-rank">${row.rank}</div>
+              <div class="ww-name">${esc(row.player_name || "—")}</div>
+              <div class="ww-solved">${esc(formatTimestamp(row.timestamp))}</div>
+            </div>
+          `)
+          .join("");
+
+        ranksContainer.innerHTML = rankedRows;
+      } else {
+        for (const row of rows) {
+          const rank = Number(row.rank);
+
+          if (!rank || rank < 2 || rank > 10) continue;
+
           const rowEl = app.querySelector(`[data-rank="${rank}"]`);
           if (!rowEl) continue;
 
@@ -474,25 +473,6 @@ export function renderLeaderboardPage(app, data, navigate) {
 
           if (nameEl) nameEl.textContent = row.player_name || "—";
           if (solvedEl) solvedEl.textContent = formatTimestamp(row.timestamp);
-        }
-      }
-
-      const extendedRows = rows.filter(row => Number(row.rank) > 10);
-
-      if (extendedRows.length) {
-        const extendedWrap = app.querySelector("[data-extended-wrap]");
-        const extendedContainer = app.querySelector("[data-extended-ranks]");
-
-        if (extendedWrap && extendedContainer) {
-          extendedWrap.style.display = "block";
-
-          extendedContainer.innerHTML = extendedRows.map(row => `
-            <div class="ww-rankrow">
-              <div class="ww-rank">${row.rank}</div>
-              <div class="ww-name">${esc(row.player_name || "—")}</div>
-              <div class="ww-solved">${esc(formatTimestamp(row.timestamp))}</div>
-            </div>
-          `).join("");
         }
       }
 
