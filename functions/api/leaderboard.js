@@ -46,7 +46,7 @@ export async function onRequestGet(context) {
     params.set("filterByFormula", `{org}="${safeSlug}"`);
     params.set("sort[0][field]", "rank");
     params.set("sort[0][direction]", "asc");
-    params.set("pageSize", "10");
+    params.set("pageSize", "100");
 
     const endpoint =
       `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
