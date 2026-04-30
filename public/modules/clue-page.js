@@ -32,6 +32,7 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-ink-blue: #f2f5f8;
   --ww-ink-blue-hover: #ffffff;
   --ww-orange: #f08a24;
+  --ww-rail-gap: 2.1rem;
 }
 
 * {
@@ -108,11 +109,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.32rem;
 }
 
 .ww-mini-logo {
   display: flex;
+  margin-bottom: var(--ww-rail-gap);
   filter:
     drop-shadow(0 0 10px rgba(255,255,255,0.08))
     drop-shadow(0 0 18px rgba(240,138,36,0.05));
@@ -123,6 +124,57 @@ body {
   height: auto;
   display: block;
   opacity: 0.98;
+}
+
+.ww-mini-play {
+  appearance: none;
+  width: 4.83rem;
+  height: 4.83rem;
+  border-radius: 999px;
+  border: 2px solid rgba(240,138,36,0.88);
+  background: linear-gradient(180deg, #243242 0%, #192532 100%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow:
+    0 14px 28px rgba(0,0,0,0.28),
+    0 0 22px rgba(240,138,36,0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--ww-rail-gap);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.ww-mini-play:hover {
+  transform: translateY(-1px) scale(1.04);
+  box-shadow:
+    0 18px 34px rgba(0,0,0,0.34),
+    0 0 30px rgba(240,138,36,0.4);
+}
+
+.ww-mini-play-icon {
+  width: 0;
+  height: 0;
+  border-top: 0.78rem solid transparent;
+  border-bottom: 0.78rem solid transparent;
+  border-left: 1.21rem solid #fff;
+  margin-left: 0.22rem;
+}
+
+.ww-mini-play[data-playing="true"] .ww-mini-play-icon {
+  width: 1.15rem;
+  height: 1.42rem;
+  border: 0;
+  margin-left: 0;
+  background:
+    linear-gradient(
+      90deg,
+      #fff 0 35%,
+      transparent 35% 65%,
+      #fff 65% 100%
+    );
 }
 
 .ww-mini-textnav {
@@ -170,56 +222,6 @@ body {
     0 0 18px rgba(240,138,36,0.18);
 }
 
-.ww-mini-play {
-  appearance: none;
-  width: 4.83rem;
-  height: 4.83rem;
-  border-radius: 999px;
-  border: 2px solid rgba(240,138,36,0.88);
-  background: linear-gradient(180deg, #243242 0%, #192532 100%);
-  color: #fff;
-  cursor: pointer;
-  box-shadow:
-    0 14px 28px rgba(0,0,0,0.28),
-    0 0 22px rgba(240,138,36,0.28);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease;
-}
-
-.ww-mini-play:hover {
-  transform: translateY(-1px) scale(1.04);
-  box-shadow:
-    0 18px 34px rgba(0,0,0,0.34),
-    0 0 30px rgba(240,138,36,0.4);
-}
-
-.ww-mini-play-icon {
-  width: 0;
-  height: 0;
-  border-top: 0.78rem solid transparent;
-  border-bottom: 0.78rem solid transparent;
-  border-left: 1.21rem solid #fff;
-  margin-left: 0.22rem;
-}
-
-.ww-mini-play[data-playing="true"] .ww-mini-play-icon {
-  width: 1.15rem;
-  height: 1.42rem;
-  border: 0;
-  margin-left: 0;
-  background:
-    linear-gradient(
-      90deg,
-      #fff 0 35%,
-      transparent 35% 65%,
-      #fff 65% 100%
-    );
-}
-
 #wwRight {
   flex: 1;
   display: flex;
@@ -261,6 +263,7 @@ body {
 @media (max-width: 820px) {
   :root {
     --ww-left-narrow: 9.4rem;
+    --ww-rail-gap: 1.8rem;
   }
 
   .ww-mini-logo img {
