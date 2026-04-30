@@ -7,8 +7,6 @@ export function renderAnswerPage(app, data = {}, navigate) {
   const {
     title = `Answer ${String(clueId).padStart(2, "0")}`,
     variant = "plain",
-    body = "No answer content yet.",
-    letter = "",
     image = "",
     alt = title,
     audio = ""
@@ -25,9 +23,8 @@ export function renderAnswerPage(app, data = {}, navigate) {
 
   const hasMedia = Boolean(image);
   const hasAudio = Boolean(audio);
-  const isVideo =
-    variant === "video" ||
-    variant === "video-audio";
+  const isVideo = variant === "video" || variant === "video-audio";
+  const hasPlayableMedia = isVideo || hasAudio;
 
   app.innerHTML = `
 <style>
@@ -153,74 +150,47 @@ body {
 #wwRight {
   flex: 1;
   min-width: 0;
-  padding: 4rem;
+  padding: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.ww-answer-card {
-  width: min(920px, 100%);
-  padding: 2.2rem;
-  border-radius: 1.4rem;
-  background:
-    radial-gradient(circle at 20% 0%, rgba(240,138,36,0.10), transparent 38%),
-    rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 28px 80px rgba(0,0,0,0.35);
-}
-
-.ww-answer-meta {
-  margin: 0 0 0.7rem;
-  font-size: 0.76rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(245,247,251,0.58);
-  font-weight: 900;
-}
-
-.ww-answer-title {
-  margin: 0 0 1rem;
-  color: var(--ww-orange);
-  font-size: 2.8rem;
-  line-height: 1;
-}
-
-.ww-answer-letter {
-  display: inline-flex;
+.ww-answer-stage {
+  width: min(66vw, 1200px);
+  max-width: calc(100vw - var(--ww-left-narrow) - 6rem);
+  display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 4.2rem;
-  height: 4.2rem;
-  margin: 0 0 1.4rem;
-  border-radius: 999px;
-  background: rgba(240,138,36,0.96);
-  color: #fff;
-  font-size: 2rem;
-  font-weight: 950;
-  box-shadow: 0 12px 28px rgba(240,138,36,0.22);
-}
-
-.ww-answer-body {
-  font-size: 1.08rem;
-  line-height: 1.75;
-  color: rgba(245,247,251,0.86);
-  white-space: pre-wrap;
 }
 
 .ww-answer-media {
-  margin-top: 1.4rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ww-answer-media img,
 .ww-answer-media video {
   display: block;
   width: 100%;
-  max-height: 62vh;
+  max-height: 78vh;
   object-fit: contain;
   border-radius: 1rem;
-  border: 1px solid rgba(255,255,255,0.12);
   background: #000;
+  box-shadow: 0 28px 90px rgba(0,0,0,0.42);
+}
+
+.ww-answer-empty {
+  width: min(66vw, 900px);
+  padding: 3rem;
+  border-radius: 1.4rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  text-align: center;
+  color: rgba(245,247,251,0.78);
+  font-size: 1.1rem;
 }
 
 @media (max-width: 820px) {
@@ -233,11 +203,17 @@ body {
   }
 
   #wwRight {
-    padding: 2rem 1.2rem;
+    padding: 1.4rem;
   }
 
-  .ww-answer-title {
-    font-size: 2.15rem;
+  .ww-answer-stage {
+    width: calc(100vw - var(--ww-left-narrow) - 2.8rem);
+    max-width: calc(100vw - var(--ww-left-narrow) - 2.8rem);
+  }
+
+  .ww-answer-media img,
+  .ww-answer-media video {
+    max-height: 82vh;
   }
 }
 </style>
@@ -252,9 +228,9 @@ body {
       </div>
 
       ${
-        hasAudio
+        hasPlayableMedia
           ? `
-            <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="Play answer audio" data-playing="false">
+            <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="Play answer media" data-playing="false">
               <span class="ww-mini-play-icon" aria-hidden="true"></span>
             </button>
           `
@@ -271,18 +247,7 @@ body {
   </aside>
 
   <main id="wwRight">
-    <section class="ww-answer-card">
-      <p class="ww-answer-meta">Answer ${String(clueId).padStart(2, "0")}</p>
-      <h1 class="ww-answer-title">${esc(title)}</h1>
-
-      ${
-        letter
-          ? `<div class="ww-answer-letter">${esc(letter)}</div>`
-          : ""
-      }
-
-      <div class="ww-answer-body">${esc(body)}</div>
-
+    <section class="ww-answer-stage" aria-label="${esc(title)}">
       ${
         hasMedia
           ? `
@@ -290,7 +255,7 @@ body {
               ${
                 isVideo
                   ? `
-                    <video controls playsinline preload="metadata">
+                    <video id="wwAnswerVideo" playsinline preload="metadata" aria-label="${esc(alt)}">
                       <source src="${esc(image)}" type="video/mp4">
                     </video>
                   `
@@ -300,9 +265,10 @@ body {
               }
             </div>
           `
-          : ""
+          : `
+            <div class="ww-answer-empty">No answer media found.</div>
+          `
       }
-
     </section>
   </main>
 
@@ -319,32 +285,73 @@ body {
     });
   });
 
-  if (hasAudio) {
-    const playButton = app.querySelector("#wwPlayButton");
-    const audioElement = new Audio(audio);
+  const playButton = app.querySelector("#wwPlayButton");
+  const videoElement = app.querySelector("#wwAnswerVideo");
+  const audioElement = hasAudio ? new Audio(audio) : null;
 
-    if (playButton) {
-      playButton.addEventListener("click", async () => {
-        try {
-          if (audioElement.paused) {
-            await audioElement.play();
-            playButton.setAttribute("data-playing", "true");
-            playButton.setAttribute("aria-label", "Pause answer audio");
-          } else {
-            audioElement.pause();
-            playButton.setAttribute("data-playing", "false");
-            playButton.setAttribute("aria-label", "Play answer audio");
-          }
-        } catch {
-          playButton.setAttribute("data-playing", "false");
-          playButton.setAttribute("aria-label", "Audio could not play");
-        }
-      });
+  function setPlayingState(isPlaying) {
+    if (!playButton) return;
+    playButton.setAttribute("data-playing", isPlaying ? "true" : "false");
+    playButton.setAttribute("aria-label", isPlaying ? "Pause answer media" : "Play answer media");
+  }
 
-      audioElement.addEventListener("ended", () => {
-        playButton.setAttribute("data-playing", "false");
-        playButton.setAttribute("aria-label", "Play answer audio");
-      });
+  function pauseAll() {
+    if (videoElement && !videoElement.paused) {
+      videoElement.pause();
     }
+
+    if (audioElement && !audioElement.paused) {
+      audioElement.pause();
+    }
+
+    setPlayingState(false);
+  }
+
+  if (playButton) {
+    playButton.addEventListener("click", async () => {
+      try {
+        const videoPaused = videoElement ? videoElement.paused : true;
+        const audioPaused = audioElement ? audioElement.paused : true;
+        const shouldPlay = videoPaused && audioPaused;
+
+        if (shouldPlay) {
+          if (videoElement) {
+            await videoElement.play();
+          }
+
+          if (audioElement) {
+            await audioElement.play();
+          }
+
+          setPlayingState(true);
+        } else {
+          pauseAll();
+        }
+      } catch {
+        pauseAll();
+        playButton.setAttribute("aria-label", "Media could not play");
+      }
+    });
+  }
+
+  if (videoElement) {
+    videoElement.addEventListener("ended", () => {
+      if (audioElement && !audioElement.paused) {
+        audioElement.pause();
+        audioElement.currentTime = 0;
+      }
+
+      setPlayingState(false);
+    });
+  }
+
+  if (audioElement) {
+    audioElement.addEventListener("ended", () => {
+      if (videoElement && !videoElement.paused) {
+        videoElement.pause();
+      }
+
+      setPlayingState(false);
+    });
   }
 }
