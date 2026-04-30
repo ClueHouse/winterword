@@ -408,6 +408,11 @@
 
     const lifelineAvailable = orgState.lifeline_live === true;
 
+    const hasLeaderboardEntries =
+      orgState.hasLeaderboardEntries === true ||
+      orgState.has_leaderboard_entries === true ||
+      Number(orgState.leaderboardCount || orgState.leaderboard_count || 0) > 0;
+
     const popClueLive =
       orgState.flash_clue_live === true ||
       orgState.pop_clue_live === true ||
@@ -458,6 +463,7 @@
                 lifelineAvailable,
                 lifelineUnlockClue,
                 popClueLive,
+                hasLeaderboardEntries,
                 isResolved: true
               },
               navigate
@@ -487,6 +493,7 @@
               lifelineAvailable,
               lifelineUnlockClue,
               popClueLive,
+              hasLeaderboardEntries,
               isResolved: false
             },
             navigate
