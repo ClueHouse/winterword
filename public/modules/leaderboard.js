@@ -118,8 +118,6 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
         flex-direction: column;
         align-items: center;
         gap: .8rem;
-        text-decoration: none;
-        cursor: default;
         user-select: none;
       }
 
@@ -134,12 +132,18 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
         background: rgba(255,255,255,0.18);
       }
 
-      .ww-side-label {
+      .ww-side-label-link {
         font-size: .72rem;
         letter-spacing: .22em;
         text-transform: uppercase;
         font-weight: 900;
         color: #ffffff;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .ww-side-label-link:hover {
+        opacity: 0.78;
       }
 
       .ww-main {
@@ -294,7 +298,7 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
             <div class="ww-side-logo">
               <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
               <div class="ww-divider"></div>
-              <div class="ww-side-label">BASE STATION</div>
+              <a href="#" class="ww-side-label-link" data-nav-base>BASE STATION</a>
             </div>
           </div>
 
@@ -339,6 +343,16 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
     </div>
   `;
 
+  const baseLink = app.querySelector("[data-nav-base]");
+  if (baseLink) {
+    baseLink.addEventListener("click", function(event) {
+      event.preventDefault();
+      if (typeof navigate === "function") {
+        navigate("base-station");
+      }
+    });
+  }
+
   function setStatus(message) {
     const statusEl = app.querySelector("[data-status]");
     if (statusEl) statusEl.textContent = message;
@@ -348,7 +362,7 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
     if (Array.isArray(payload && payload.rows)) return payload.rows;
 
     if (Array.isArray(payload && payload.records)) {
-      return payload.records.map(function (record) {
+      return payload.records.map(function(record) {
         const fields = record.fields || {};
 
         return {
@@ -384,10 +398,10 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
       const payload = await res.json();
 
       const rows = normaliseRows(payload)
-        .filter(function (row) {
+        .filter(function(row) {
           return row && row.rank != null;
         })
-        .sort(function (a, b) {
+        .sort(function(a, b) {
           return Number(a.rank) - Number(b.rank);
         });
 
@@ -396,7 +410,7 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
         return;
       }
 
-      const winner = rows.find(function (row) {
+      const winner = rows.find(function(row) {
         return Number(row.rank) === 1;
       });
 
@@ -409,7 +423,7 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
       }
 
       const ranksContainer = app.querySelector("[data-ranks-container]");
-      const hasOverflow = rows.some(function (row) {
+      const hasOverflow = rows.some(function(row) {
         return Number(row.rank) > 10;
       });
 
@@ -417,10 +431,10 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
         ranksContainer.classList.add("scrollable");
 
         ranksContainer.innerHTML = rows
-          .filter(function (row) {
+          .filter(function(row) {
             return Number(row.rank) >= 2;
           })
-          .map(function (row) {
+          .map(function(row) {
             return (
               '<div class="ww-rankrow">' +
                 '<div class="ww-rank">' + esc(row.rank) + '</div>' +
@@ -431,7 +445,7 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
           })
           .join("");
       } else {
-        rows.forEach(function (row) {
+        rows.forEach(function(row) {
           const rank = Number(row.rank);
 
           if (!rank || rank < 2 || rank > 10) return;
