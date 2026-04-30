@@ -32,7 +32,7 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-ink-blue: #f2f5f8;
   --ww-ink-blue-hover: #ffffff;
   --ww-orange: #f08a24;
-  --ww-rail-gap: 2.1rem;
+  --ww-rail-gap: 2.35rem;
 }
 
 * {
@@ -142,9 +142,60 @@ body {
   align-items: center;
   justify-content: center;
   margin-bottom: var(--ww-rail-gap);
+  position: relative;
+  overflow: hidden;
   transition:
     transform 160ms ease,
     box-shadow 160ms ease;
+}
+
+.ww-mini-play::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: -85%;
+  width: 55%;
+  height: 160%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.16) 42%,
+    rgba(255,255,255,0.42) 50%,
+    rgba(255,255,255,0.16) 58%,
+    transparent 100%
+  );
+  transform: rotate(24deg);
+  animation: wwPlayShine 3.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes wwPlayShine {
+  0% {
+    left: -85%;
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 0;
+  }
+
+  32% {
+    opacity: 1;
+  }
+
+  52% {
+    left: 130%;
+    opacity: 0.9;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    left: 130%;
+    opacity: 0;
+  }
 }
 
 .ww-mini-play:hover {
@@ -155,6 +206,8 @@ body {
 }
 
 .ww-mini-play-icon {
+  position: relative;
+  z-index: 2;
   width: 0;
   height: 0;
   border-top: 0.78rem solid transparent;
@@ -189,6 +242,7 @@ body {
   background: transparent;
   border: 0;
   padding: 0;
+  line-height: 1;
   text-decoration: none;
   font-weight: 900;
   font-size: 0.9rem;
@@ -263,7 +317,7 @@ body {
 @media (max-width: 820px) {
   :root {
     --ww-left-narrow: 9.4rem;
-    --ww-rail-gap: 1.8rem;
+    --ww-rail-gap: 2rem;
   }
 
   .ww-mini-logo img {
