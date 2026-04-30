@@ -14,10 +14,17 @@ export async function onRequestGet(context) {
 
     const AIRTABLE_TOKEN = env.AIRTABLE_TOKEN;
     const AIRTABLE_BASE_ID = env.AIRTABLE_BASE_ID;
-    const AIRTABLE_LEADERBOARD_TABLE_NAME =
-      env.AIRTABLE_LEADERBOARD_TABLE_NAME || "leaderboard";
 
-    if (!AIRTABLE_TOKEN || !AIRTABLE_BASE_ID || !AIRTABLE_LEADERBOARD_TABLE_NAME) {
+    const AIRTABLE_LEADERBOARD_TABLE_NAME =
+      env.AIRTABLE_LEADERBOARD_TABLE_NAME ||
+      env.AIRTABLE_LEADERBOARD_TABLE ||
+      "Leaderboard";
+
+    if (
+      !AIRTABLE_TOKEN ||
+      !AIRTABLE_BASE_ID ||
+      !AIRTABLE_LEADERBOARD_TABLE_NAME
+    ) {
       return Response.json(
         {
           ok: false,
@@ -42,7 +49,9 @@ export async function onRequestGet(context) {
     params.set("pageSize", "10");
 
     const endpoint =
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_LEADERBOARD_TABLE_NAME)}?${params.toString()}`;
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
+        AIRTABLE_LEADERBOARD_TABLE_NAME
+      )}?${params.toString()}`;
 
     const airtableRes = await fetch(endpoint, {
       headers: {
@@ -53,6 +62,7 @@ export async function onRequestGet(context) {
 
     if (!airtableRes.ok) {
       const detail = await airtableRes.text();
+
       return Response.json(
         {
           ok: false,
@@ -64,7 +74,10 @@ export async function onRequestGet(context) {
     }
 
     const airtableData = await airtableRes.json();
-    const records = Array.isArray(airtableData.records) ? airtableData.records : [];
+
+    const records = Array.isArray(airtableData.records)
+      ? airtableData.records
+      : [];
 
     const rows = records
       .map((record) => {
@@ -88,6 +101,7 @@ export async function onRequestGet(context) {
       count: rows.length,
       rows
     });
+
   } catch (err) {
     return Response.json(
       {
