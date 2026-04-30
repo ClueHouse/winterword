@@ -383,7 +383,7 @@
       return;
     }
 
-    if (orgState.is_visible === false) {
+    if (orgState.is_visible !== true) {
       renderError("Unavailable", "This WinterWord is not currently visible.");
       return;
     }
