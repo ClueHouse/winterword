@@ -235,7 +235,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.98rem;
-  margin-top: 1.85rem;
+  margin-top: 2rem;
 }
 
 .ww-mini-textlink {
