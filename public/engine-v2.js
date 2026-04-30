@@ -383,11 +383,6 @@
       return;
     }
 
-    if (orgState.is_visible !== true) {
-      renderError("Unavailable", "This WinterWord is not currently visible.");
-      return;
-    }
-
     if (orgState.season_state === "tech_diff") {
       renderTechDiff();
       return;
@@ -395,7 +390,7 @@
 
     const game = await loadGame();
 
-    const totalClues = Number(orgState.total_clues || game.total_clues || 12);
+    const totalClues = Number(game.total_clues || 12);
     const currentClue = Math.max(0, Math.min(Number(orgState.current_clue || 0), totalClues));
     const seasonState = orgState.season_state || "pre";
     const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
