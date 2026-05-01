@@ -29,7 +29,7 @@ export function renderAnswerPage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-left-narrow: 10.12rem;
+  --ww-left-narrow: 18rem;
   --ww-orange: #f0a13a;
   --ww-orange-soft: rgba(240,161,58,0.72);
   --ww-gold-light: rgba(255,226,155,0.92);
@@ -104,9 +104,9 @@ body {
 #wwLeft::after {
   content: "";
   position: absolute;
-  inset: 0.25rem;
-  border-left: 1px solid rgba(240,161,58,0.24);
-  border-right: 1px solid rgba(240,161,58,0.18);
+  inset: 0.38rem;
+  border-left: 1px solid rgba(240,161,58,0.28);
+  border-right: 1px solid rgba(240,161,58,0.22);
   pointer-events: none;
 }
 
@@ -136,7 +136,7 @@ body {
 }
 
 .ww-mini-logo img {
-  width: 8.28rem;
+  width: 8.8rem;
   height: auto;
   display: block;
   opacity: 0.98;
@@ -145,8 +145,8 @@ body {
 
 .ww-mini-play {
   appearance: none;
-  width: 4.83rem;
-  height: 4.83rem;
+  width: 5.35rem;
+  height: 5.35rem;
   border-radius: 999px;
   border: 2px solid rgba(240,161,58,0.95);
   background:
@@ -172,27 +172,32 @@ body {
 .ww-mini-play::before {
   content: "";
   position: absolute;
-  top: -30%;
-  left: -85%;
-  width: 55%;
-  height: 160%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255,255,255,0.18) 42%,
-    rgba(255,238,188,0.6) 50%,
-    rgba(255,255,255,0.18) 58%,
-    transparent 100%
-  );
-  transform: rotate(24deg);
-  animation: wwPlayShine 3.8s ease-in-out infinite;
+  inset: -3px;
+  border-radius: 999px;
+  padding: 2px;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 292deg,
+      rgba(255,238,188,0.98) 313deg,
+      rgba(240,161,58,0.98) 326deg,
+      transparent 342deg,
+      transparent 360deg
+    );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: wwRimGleam 4.2s linear infinite;
   pointer-events: none;
 }
 
 .ww-mini-play::after {
   content: "";
   position: absolute;
-  inset: -4px;
+  inset: 0;
   border-radius: inherit;
   box-shadow:
     0 0 16px rgba(240,161,58,0.24),
@@ -200,32 +205,13 @@ body {
   pointer-events: none;
 }
 
-@keyframes wwPlayShine {
-  0% {
-    left: -85%;
-    opacity: 0;
+@keyframes wwRimGleam {
+  from {
+    transform: rotate(0deg);
   }
 
-  18% {
-    opacity: 0;
-  }
-
-  32% {
-    opacity: 1;
-  }
-
-  52% {
-    left: 130%;
-    opacity: 0.95;
-  }
-
-  70% {
-    opacity: 0;
-  }
-
-  100% {
-    left: 130%;
-    opacity: 0;
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -242,15 +228,15 @@ body {
   z-index: 2;
   width: 0;
   height: 0;
-  border-top: 0.78rem solid transparent;
-  border-bottom: 0.78rem solid transparent;
-  border-left: 1.21rem solid #fff;
-  margin-left: 0.22rem;
+  border-top: 0.86rem solid transparent;
+  border-bottom: 0.86rem solid transparent;
+  border-left: 1.34rem solid #fff;
+  margin-left: 0.24rem;
 }
 
 .ww-mini-play[data-playing="true"] .ww-mini-play-icon {
-  width: 1.15rem;
-  height: 1.42rem;
+  width: 1.24rem;
+  height: 1.52rem;
   border: 0;
   margin-left: 0;
   background:
@@ -266,7 +252,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.08rem;
+  gap: 1.18rem;
   margin-top: 2rem;
 }
 
@@ -278,8 +264,8 @@ body {
   line-height: 1;
   text-decoration: none;
   font-weight: 900;
-  font-size: 0.9rem;
-  letter-spacing: 0.36em;
+  font-size: 1rem;
+  letter-spacing: 0.42em;
   text-transform: uppercase;
   color: var(--ww-ink-soft);
   opacity: 0.94;
@@ -318,7 +304,7 @@ body {
   content: "";
   position: absolute;
   top: 50%;
-  width: 1.35rem;
+  width: 1.6rem;
   height: 1px;
   background: linear-gradient(
     90deg,
@@ -332,20 +318,20 @@ body {
 }
 
 .ww-mini-textlink[data-active="true"]::before {
-  right: calc(100% + 0.65rem);
+  right: calc(100% + 0.75rem);
   transform: translateY(-50%);
 }
 
 .ww-mini-textlink[data-active="true"]::after {
-  left: calc(100% + 0.65rem);
+  left: calc(100% + 0.75rem);
   transform: translateY(-50%) rotate(180deg);
 }
 
 .ww-mini-sprig {
   position: absolute;
-  bottom: 0.2rem;
+  bottom: 0.45rem;
   left: 50%;
-  width: 9.2rem;
+  width: 15.5rem;
   height: auto;
   transform: translateX(-50%);
   pointer-events: none;
@@ -372,8 +358,8 @@ body {
 }
 
 .ww-answer-stage {
-  width: min(66vw, 1200px);
-  max-width: calc(100vw - var(--ww-left-narrow) - 6rem);
+  width: min(78vw, 1520px);
+  max-width: calc(100vw - var(--ww-left-narrow) - 5rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -390,11 +376,12 @@ body {
 .ww-answer-media video {
   display: block;
   width: 100%;
-  max-height: 78vh;
+  max-height: 86vh;
   object-fit: contain;
-  border-radius: 1rem;
+  border-radius: 1.2rem;
   background: #000;
-  box-shadow: 0 28px 90px rgba(0,0,0,0.42);
+  box-shadow:
+    0 38px 110px rgba(0,0,0,0.52);
 }
 
 .ww-answer-empty {
@@ -410,7 +397,7 @@ body {
 
 @media (max-width: 820px) {
   :root {
-    --ww-left-narrow: 9.4rem;
+    --ww-left-narrow: 11rem;
     --ww-rail-gap: 2rem;
   }
 
@@ -418,9 +405,18 @@ body {
     width: 7.4rem;
   }
 
+  .ww-mini-play {
+    width: 4.7rem;
+    height: 4.7rem;
+  }
+
+  .ww-mini-textlink {
+    font-size: 0.84rem;
+  }
+
   .ww-mini-sprig {
-    width: 8rem;
-    bottom: 0.15rem;
+    width: 9.6rem;
+    bottom: 0.25rem;
   }
 
   #wwRight {
