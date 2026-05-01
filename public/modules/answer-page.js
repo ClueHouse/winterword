@@ -44,7 +44,7 @@ body {
 }
 
 body {
-  background: #000;
+  background: #07110b;
 }
 
 #wwPortal {
@@ -53,8 +53,9 @@ body {
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   overflow: hidden;
   background:
-    radial-gradient(circle at 24% 50%, rgba(58,92,54,0.18), transparent 34%),
-    linear-gradient(90deg, #020403 0%, #07110c 34%, #08140e 100%);
+    radial-gradient(circle at 42% 45%, rgba(82,118,62,0.24) 0%, rgba(38,63,33,0.52) 34%, rgba(7,16,10,0.98) 78%),
+    radial-gradient(circle at 12% 50%, rgba(108,145,70,0.14), transparent 36%),
+    linear-gradient(90deg, #07110b 0%, #0d1b11 38%, #08120d 72%, #030604 100%);
   position: relative;
   color: #f5f7fb;
 }
@@ -63,8 +64,9 @@ body {
   width: var(--ww-left-narrow);
   flex: 0 0 var(--ww-left-narrow);
   position: relative;
-  overflow: hidden;
-  background: #050907;
+  overflow: visible;
+  background: transparent;
+  z-index: 3;
 }
 
 .ww-rail-frame {
@@ -281,14 +283,12 @@ body {
 #wwRight {
   flex: 1;
   min-width: 0;
+  margin-left: 0;
   padding: 2.8vh 3vw 2.8vh 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background:
-    radial-gradient(circle at 42% 45%, rgba(95,138,74,0.22) 0%, rgba(42,68,36,0.48) 34%, rgba(8,18,12,0.96) 78%),
-    radial-gradient(circle at 12% 50%, rgba(118,160,78,0.14), transparent 36%),
-    linear-gradient(90deg, #07110b 0%, #102014 38%, #08120d 72%, #030604 100%);
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
