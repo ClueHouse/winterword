@@ -283,15 +283,59 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
+  background:
+    radial-gradient(circle at center, rgba(78,112,94,0.22) 0%, rgba(20,40,28,0.92) 45%, #000 100%),
+    linear-gradient(180deg, #07110d 0%, #020605 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+#wwRight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, rgba(255,215,120,0.03), transparent 60%),
+    repeating-radial-gradient(circle at center, rgba(255,210,120,0.012) 0 2px, transparent 2px 6px);
+  opacity: 0.65;
+  pointer-events: none;
 }
 
 .ww-answer-stage {
-  width: min(78vw, 1520px);
-  max-width: calc(100vw - var(--ww-left-narrow) - 5rem);
+  width: min(68.5vw, 1335px);
+  max-width: calc(100vw - var(--ww-left-narrow) - 8rem);
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.ww-answer-frame {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 1.6rem;
+  background:
+    linear-gradient(145deg,
+      rgba(255,240,184,0.96) 0%,
+      rgba(231,178,78,0.98) 18%,
+      rgba(164,103,36,0.98) 42%,
+      rgba(245,202,112,0.98) 68%,
+      rgba(112,64,15,0.98) 100%);
+  box-shadow:
+    0 0 0 1px rgba(255,228,155,0.18),
+    0 1.6rem 3.8rem rgba(0,0,0,0.72),
+    0 0 2.2rem rgba(239,174,74,0.14);
+}
+
+.ww-answer-inner {
+  width: 100%;
+  border-radius: 1.15rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at center, rgba(30,50,38,0.22), rgba(0,0,0,0.92));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,242,184,0.08);
 }
 
 .ww-answer-media {
@@ -305,12 +349,9 @@ body {
 .ww-answer-media video {
   display: block;
   width: 100%;
-  max-height: 86vh;
+  max-height: 75vh;
   object-fit: contain;
-  border-radius: 1.2rem;
   background: #000;
-  box-shadow:
-    0 38px 110px rgba(0,0,0,0.52);
 }
 
 .ww-answer-empty {
@@ -341,6 +382,11 @@ body {
 
   .ww-mini-textlink {
     font-size: 1rem;
+  }
+
+  .ww-answer-media img,
+  .ww-answer-media video {
+    max-height: 70vh;
   }
 }
 </style>
@@ -379,18 +425,22 @@ body {
       ${
         hasMedia
           ? `
-            <div class="ww-answer-media">
-              ${
-                isVideo
-                  ? `
-                    <video id="wwAnswerVideo" playsinline preload="metadata" aria-label="${esc(alt)}">
-                      <source src="${esc(image)}" type="video/mp4">
-                    </video>
-                  `
-                  : `
-                    <img src="${esc(image)}" alt="${esc(alt)}" loading="lazy" decoding="async">
-                  `
-              }
+            <div class="ww-answer-frame">
+              <div class="ww-answer-inner">
+                <div class="ww-answer-media">
+                  ${
+                    isVideo
+                      ? `
+                        <video id="wwAnswerVideo" playsinline preload="metadata" aria-label="${esc(alt)}">
+                          <source src="${esc(image)}" type="video/mp4">
+                        </video>
+                      `
+                      : `
+                        <img src="${esc(image)}" alt="${esc(alt)}" loading="lazy" decoding="async">
+                      `
+                  }
+                </div>
+              </div>
             </div>
           `
           : `
