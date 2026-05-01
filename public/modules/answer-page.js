@@ -61,16 +61,11 @@ body {
   color: #f5f7fb;
 }
 
-/* -----------------------------------------------------------
-   UPDATED RAIL — MATCHES THE PHOTO EXACTLY
------------------------------------------------------------ */
-
 #wwLeft {
   width: var(--ww-left-narrow);
   flex: 0 0 var(--ww-left-narrow);
   position: relative;
   overflow: hidden;
-
   background:
     radial-gradient(circle at 18% 18%, rgba(240,161,58,0.22), transparent 1.4px),
     radial-gradient(circle at 72% 26%, rgba(255,226,155,0.18), transparent 1.3px),
@@ -79,13 +74,19 @@ body {
     radial-gradient(circle at 26% 82%, rgba(240,161,58,0.18), transparent 1.4px),
     linear-gradient(
       90deg,
-      #0a0f0c 0%,
-      #122018 12%,
-      #1c3525 28%,
-      #2d4a2f 50%,
-      #1c3525 72%,
-      #122018 88%,
-      #0a0f0c 100%
+      #050807 0%,
+      #090d0b 8%,
+      #0f1712 14%,
+      #17241b 19%,
+      #223724 25%,
+      #2d4a2f 34%,
+      #3d643e 50%,
+      #2d4a2f 66%,
+      #223724 75%,
+      #17241b 81%,
+      #0f1712 86%,
+      #090d0b 92%,
+      #050807 100%
     );
   background-size:
     2.8rem 3rem,
@@ -100,20 +101,19 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-
   background:
-    radial-gradient(ellipse at 50% 12%, rgba(255,226,155,0.10), transparent 26%),
-    radial-gradient(ellipse at 50% 48%, rgba(122,164,96,0.22), transparent 38%),
-    radial-gradient(ellipse at 50% 88%, rgba(240,161,58,0.14), transparent 28%),
-    radial-gradient(circle at 22% 30%, rgba(240,161,58,0.10), transparent 34%),
-    radial-gradient(circle at 78% 62%, rgba(240,161,58,0.10), transparent 34%),
+    radial-gradient(ellipse at 50% 12%, rgba(255,226,155,0.08), transparent 26%),
+    radial-gradient(ellipse at 50% 48%, rgba(122,164,96,0.18), transparent 38%),
+    radial-gradient(ellipse at 50% 88%, rgba(240,161,58,0.12), transparent 28%),
+    radial-gradient(circle at 22% 30%, rgba(240,161,58,0.08), transparent 34%),
+    radial-gradient(circle at 78% 62%, rgba(240,161,58,0.08), transparent 34%),
     linear-gradient(
       90deg,
       rgba(0,0,0,0.92) 0%,
       rgba(0,0,0,0.82) 9%,
       rgba(0,0,0,0.52) 15%,
       rgba(0,0,0,0.18) 24%,
-      rgba(255,255,255,0.04) 50%,
+      rgba(255,255,255,0.035) 50%,
       rgba(0,0,0,0.18) 76%,
       rgba(0,0,0,0.52) 85%,
       rgba(0,0,0,0.82) 91%,
@@ -127,23 +127,15 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
-
-  left: 3.2rem;
-  right: 3.2rem;
-
-  border-left: 1px solid rgba(240,161,58,0.38);
-  border-right: 1px solid rgba(240,161,58,0.38);
-
+  left: 3.4rem;
+  right: 3.4rem;
+  border-left: 1px solid rgba(240,161,58,0.34);
+  border-right: 1px solid rgba(240,161,58,0.34);
   box-shadow:
-    inset 1px 0 0 rgba(255,226,155,0.10),
-    inset -1px 0 0 rgba(255,226,155,0.10),
-    0 0 22px rgba(240,161,58,0.18);
+    inset 1px 0 0 rgba(255,226,155,0.06),
+    inset -1px 0 0 rgba(255,226,155,0.06);
   pointer-events: none;
 }
-
-/* -----------------------------------------------------------
-   EVERYTHING BELOW HERE IS YOUR ORIGINAL CODE
------------------------------------------------------------ */
 
 .ww-mini-shell {
   position: relative;
@@ -227,6 +219,17 @@ body {
   -webkit-mask-composite: xor;
           mask-composite: exclude;
   animation: wwRimGleam 4.2s linear infinite;
+  pointer-events: none;
+}
+
+.ww-mini-play::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    0 0 18px rgba(240,161,58,0.26),
+    0 0 26px rgba(255,226,155,0.12);
   pointer-events: none;
 }
 
