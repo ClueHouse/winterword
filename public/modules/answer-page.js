@@ -35,7 +35,6 @@ export function renderAnswerPage(app, data = {}, navigate) {
   --ww-gold-soft: rgba(255,226,155,0.44);
   --ww-ink-main: #f2efe4;
   --ww-ink-soft: #d8d4c3;
-  --ww-rail-gap: 1.55rem;
 }
 
 * {
@@ -66,75 +65,7 @@ body {
   flex: 0 0 var(--ww-left-narrow);
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(240,161,58,0.22), transparent 1.4px),
-    radial-gradient(circle at 72% 26%, rgba(255,226,155,0.18), transparent 1.3px),
-    radial-gradient(circle at 42% 46%, rgba(240,161,58,0.18), transparent 1.5px),
-    radial-gradient(circle at 84% 68%, rgba(255,226,155,0.15), transparent 1.3px),
-    radial-gradient(circle at 26% 82%, rgba(240,161,58,0.18), transparent 1.4px),
-    linear-gradient(
-      90deg,
-      #050807 0%,
-      #090d0b 8%,
-      #0f1712 14%,
-      #17241b 19%,
-      #223724 25%,
-      #2d4a2f 34%,
-      #3d643e 50%,
-      #2d4a2f 66%,
-      #223724 75%,
-      #17241b 81%,
-      #0f1712 86%,
-      #090d0b 92%,
-      #050807 100%
-    );
-  background-size:
-    2.8rem 3rem,
-    3rem 3.2rem,
-    3.2rem 3.4rem,
-    3rem 3.1rem,
-    2.9rem 3.2rem,
-    auto;
-}
-
-#wwLeft::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 12%, rgba(255,226,155,0.08), transparent 26%),
-    radial-gradient(ellipse at 50% 48%, rgba(122,164,96,0.18), transparent 38%),
-    radial-gradient(ellipse at 50% 88%, rgba(240,161,58,0.12), transparent 28%),
-    radial-gradient(circle at 22% 30%, rgba(240,161,58,0.08), transparent 34%),
-    radial-gradient(circle at 78% 62%, rgba(240,161,58,0.08), transparent 34%),
-    linear-gradient(
-      90deg,
-      rgba(0,0,0,0.92) 0%,
-      rgba(0,0,0,0.82) 9%,
-      rgba(0,0,0,0.52) 15%,
-      rgba(0,0,0,0.18) 24%,
-      rgba(255,255,255,0.035) 50%,
-      rgba(0,0,0,0.18) 76%,
-      rgba(0,0,0,0.52) 85%,
-      rgba(0,0,0,0.82) 91%,
-      rgba(0,0,0,0.92) 100%
-    );
-  pointer-events: none;
-}
-
-#wwLeft::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 3.4rem;
-  right: 3.4rem;
-  border-left: 1px solid rgba(240,161,58,0.34);
-  border-right: 1px solid rgba(240,161,58,0.34);
-  box-shadow:
-    inset 1px 0 0 rgba(255,226,155,0.06),
-    inset -1px 0 0 rgba(255,226,155,0.06);
-  pointer-events: none;
+  background: #000 url("/assets/winterword/shared/answer-rail.png") center center / cover no-repeat;
 }
 
 .ww-mini-shell {
@@ -147,29 +78,14 @@ body {
 }
 
 .ww-mini-core {
-  flex: 1;
+  position: absolute;
+  top: 38.5%;
+  left: 50%;
   width: 100%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  transform: translateY(-4.8rem);
-}
-
-.ww-mini-logo {
-  display: flex;
-  margin-bottom: var(--ww-rail-gap);
-  filter:
-    drop-shadow(0 4px 8px rgba(0,0,0,0.6))
-    drop-shadow(0 0 14px rgba(255,255,255,0.12));
-}
-
-.ww-mini-logo img {
-  width: 10.8rem;
-  height: auto;
-  display: block;
-  opacity: 0.98;
-  background: transparent !important;
 }
 
 .ww-mini-play {
@@ -189,12 +105,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--ww-rail-gap);
+  margin-bottom: 3.2rem;
   position: relative;
   overflow: hidden;
   transition:
     transform 160ms ease,
     box-shadow 160ms ease;
+}
+
+.ww-mini-play:hover {
+  transform: scale(1.035);
+  box-shadow:
+    0 18px 36px rgba(0,0,0,0.56),
+    0 0 30px rgba(240,161,58,0.48);
 }
 
 .ww-mini-play::before {
@@ -268,8 +191,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  margin-top: 0.8rem;
+  gap: 1.25rem;
 }
 
 .ww-mini-textlink {
@@ -290,6 +212,14 @@ body {
   text-shadow:
     0 2px 5px rgba(0,0,0,0.82),
     0 0 8px rgba(255,255,255,0.04);
+}
+
+.ww-mini-textlink:hover {
+  color: #ffffff;
+  text-shadow:
+    0 2px 5px rgba(0,0,0,0.82),
+    0 0 12px rgba(255,255,255,0.22),
+    0 0 16px rgba(240,161,58,0.32);
 }
 
 .ww-mini-textlink[data-active="true"] {
@@ -327,27 +257,6 @@ body {
 .ww-mini-textlink[data-active="true"]::after {
   left: calc(100% + 0.72rem);
   transform: translateY(-50%) rotate(180deg);
-}
-
-.ww-mini-sprig {
-  position: absolute;
-  bottom: 1.4rem;
-  left: 50%;
-  width: 16.8rem;
-  height: auto;
-  transform: translateX(-50%);
-  pointer-events: none;
-  filter:
-    brightness(0.78)
-    saturate(0.82)
-    drop-shadow(0 8px 12px rgba(0,0,0,0.44));
-}
-
-.ww-mini-sprig img {
-  width: 100%;
-  height: auto;
-  display: block;
-  opacity: 0.9;
 }
 
 #wwRight {
@@ -402,12 +311,7 @@ body {
 <div id="wwPortal">
   <aside id="wwLeft" aria-label="Answer Rail">
     <div class="ww-mini-shell">
-
       <div class="ww-mini-core">
-
-        <div class="ww-mini-logo" aria-label="WinterWord">
-          <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
-        </div>
 
         ${
           hasPlayableMedia
@@ -426,11 +330,6 @@ body {
         </nav>
 
       </div>
-
-      <div class="ww-mini-sprig" aria-hidden="true">
-        <img src="/assets/winterword/shared/sprig.png" alt="">
-      </div>
-
     </div>
   </aside>
 
