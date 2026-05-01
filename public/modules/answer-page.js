@@ -283,7 +283,10 @@ body {
 #wwRight {
   flex: 1;
   min-width: 0;
-  margin-left: -5.25rem;
+
+  /* FIX APPLIED — removed negative margin */
+  margin-left: 0;
+
   padding: 2.8vh 3vw 2.8vh 5.25rem;
   display: flex;
   align-items: center;
@@ -520,31 +523,4 @@ body {
 
         if (shouldPlay) {
           if (videoElement) await videoElement.play();
-          if (audioElement) await audioElement.play();
-          setPlayingState(true);
-        } else {
-          pauseAll();
-        }
-      } catch {
-        pauseAll();
-      }
-    });
-  }
-
-  if (videoElement) {
-    videoElement.addEventListener("ended", () => {
-      if (audioElement && !audioElement.paused) {
-        audioElement.pause();
-        audioElement.currentTime = 0;
-      }
-      setPlayingState(false);
-    });
-  }
-
-  if (audioElement) {
-    audioElement.addEventListener("ended", () => {
-      if (videoElement && !videoElement.paused) videoElement.pause();
-      setPlayingState(false);
-    });
-  }
-}
+          if (audioElement) await audio
