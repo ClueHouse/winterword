@@ -76,7 +76,7 @@ body {
 
 .ww-mini-core {
   position: absolute;
-  top: 50%;
+  top: 44%;
   left: 37%;
   width: 100%;
   transform: translate(-50%, -50%);
