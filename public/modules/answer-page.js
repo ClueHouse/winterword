@@ -29,12 +29,16 @@ export function renderAnswerPage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-ink: #d8dde3;
+  --ww-ink: #e9eadf;
   --ww-left-narrow: 10.12rem;
-  --ww-ink-blue: #f2f5f8;
+  --ww-ink-blue: #f5f1df;
   --ww-ink-blue-hover: #ffffff;
-  --ww-orange: #f08a24;
+  --ww-orange: #f0a13a;
   --ww-rail-gap: 2.35rem;
+  --ww-leaf: #cfd7bf;
+  --ww-rail-green-deep: #101b13;
+  --ww-rail-green-mid: #1f3422;
+  --ww-rail-green-soft: #314b31;
 }
 
 * {
@@ -66,30 +70,35 @@ body {
   flex: 0 0 var(--ww-left-narrow);
   position: relative;
   background:
+    radial-gradient(circle at 50% 18%, rgba(246,215,142,0.12), transparent 28%),
+    radial-gradient(circle at 50% 82%, rgba(240,161,58,0.18), transparent 34%),
+    radial-gradient(circle at 20% 46%, rgba(255,255,255,0.055), transparent 36%),
     linear-gradient(
       90deg,
-      rgba(0,0,0,0.96) 0%,
-      rgba(10,12,14,0.94) 45%,
-      rgba(18,22,26,0.88) 75%,
-      rgba(28,34,40,0.65) 100%
+      #0d160f 0%,
+      #142416 18%,
+      #233924 50%,
+      #2f4a30 76%,
+      #1a2a1c 100%
     ),
     repeating-linear-gradient(
       0deg,
-      rgba(255,255,255,0.015) 0px,
-      rgba(255,255,255,0.015) 1px,
+      rgba(255,255,255,0.026) 0px,
+      rgba(255,255,255,0.026) 1px,
       transparent 1px,
-      transparent 3px
+      transparent 4px
     ),
     repeating-linear-gradient(
       90deg,
-      rgba(255,255,255,0.01) 0px,
-      rgba(255,255,255,0.01) 1px,
+      rgba(0,0,0,0.12) 0px,
+      rgba(0,0,0,0.12) 1px,
       transparent 1px,
-      transparent 4px
+      transparent 5px
     );
   box-shadow:
-    inset -1px 0 0 rgba(255,255,255,0.05),
-    inset -24px 0 36px rgba(255,255,255,0.015),
+    inset -1px 0 0 rgba(247,210,127,0.28),
+    inset 1px 0 0 rgba(247,210,127,0.12),
+    inset -24px 0 40px rgba(0,0,0,0.28),
     6px 0 24px rgba(0,0,0,0.45);
   overflow: hidden;
 }
@@ -99,9 +108,25 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 45%),
-    radial-gradient(circle at bottom left, rgba(240,138,36,0.04), transparent 38%);
+    radial-gradient(circle at 28% 12%, rgba(255,236,170,0.14), transparent 1.2px),
+    radial-gradient(circle at 62% 22%, rgba(240,161,58,0.18), transparent 1.4px),
+    radial-gradient(circle at 44% 38%, rgba(255,255,255,0.08), transparent 1px),
+    radial-gradient(circle at 74% 58%, rgba(240,161,58,0.16), transparent 1.2px),
+    radial-gradient(circle at 31% 76%, rgba(255,236,170,0.12), transparent 1.2px),
+    radial-gradient(circle at 66% 88%, rgba(240,161,58,0.18), transparent 1.4px);
+  background-size: 2.9rem 3.1rem;
+  opacity: 0.54;
   pointer-events: none;
+}
+
+#wwLeft::after {
+  content: "";
+  position: absolute;
+  inset: 0.45rem;
+  border-left: 1px solid rgba(240,161,58,0.32);
+  border-right: 1px solid rgba(240,161,58,0.18);
+  pointer-events: none;
+  opacity: 0.8;
 }
 
 .ww-mini-shell {
@@ -125,8 +150,8 @@ body {
   display: flex;
   margin-bottom: var(--ww-rail-gap);
   filter:
-    drop-shadow(0 0 10px rgba(255,255,255,0.08))
-    drop-shadow(0 0 18px rgba(240,138,36,0.05));
+    drop-shadow(0 0 10px rgba(255,255,255,0.18))
+    drop-shadow(0 0 18px rgba(240,161,58,0.14));
 }
 
 .ww-mini-logo img {
@@ -142,13 +167,13 @@ body {
   width: 4.83rem;
   height: 4.83rem;
   border-radius: 999px;
-  border: 2px solid rgba(240,138,36,0.88);
-  background: linear-gradient(180deg, #243242 0%, #192532 100%);
+  border: 2px solid rgba(240,161,58,0.92);
+  background: linear-gradient(180deg, #263a35 0%, #12201b 100%);
   color: #fff;
   cursor: pointer;
   box-shadow:
-    0 14px 28px rgba(0,0,0,0.28),
-    0 0 22px rgba(240,138,36,0.28);
+    0 14px 28px rgba(0,0,0,0.36),
+    0 0 24px rgba(240,161,58,0.38);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,7 +196,7 @@ body {
     90deg,
     transparent 0%,
     rgba(255,255,255,0.16) 42%,
-    rgba(255,255,255,0.42) 50%,
+    rgba(255,255,255,0.46) 50%,
     rgba(255,255,255,0.16) 58%,
     transparent 100%
   );
@@ -212,8 +237,8 @@ body {
 .ww-mini-play:hover {
   transform: translateY(-1px) scale(1.04);
   box-shadow:
-    0 18px 34px rgba(0,0,0,0.34),
-    0 0 30px rgba(240,138,36,0.4);
+    0 18px 34px rgba(0,0,0,0.42),
+    0 0 34px rgba(240,161,58,0.52);
 }
 
 .ww-mini-play-icon {
@@ -245,7 +270,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.98rem;
+  gap: 1.08rem;
   margin-top: 2rem;
 }
 
@@ -258,12 +283,14 @@ body {
   text-decoration: none;
   font-weight: 900;
   font-size: 0.9rem;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.36em;
   text-transform: uppercase;
   color: var(--ww-ink-blue);
-  opacity: 0.9;
+  opacity: 0.92;
   cursor: pointer;
-  text-shadow: 0 0 8px rgba(255,255,255,0.04);
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.34),
+    0 0 8px rgba(255,255,255,0.05);
   transition:
     color 180ms ease,
     opacity 180ms ease,
@@ -276,26 +303,48 @@ body {
   opacity: 1;
   transform: scale(1.06);
   text-shadow:
-    0 0 10px rgba(255,255,255,0.08),
-    0 0 18px rgba(240,138,36,0.12);
+    0 0 10px rgba(255,255,255,0.18),
+    0 0 18px rgba(240,161,58,0.28);
 }
 
 .ww-mini-textlink[data-active="true"] {
+  position: relative;
   color: #ffffff;
   opacity: 1;
   text-shadow:
-    0 0 10px rgba(255,255,255,0.08),
-    0 0 18px rgba(240,138,36,0.18);
+    0 0 10px rgba(255,255,255,0.18),
+    0 0 20px rgba(240,161,58,0.38);
+}
+
+.ww-mini-textlink[data-active="true"]::before,
+.ww-mini-textlink[data-active="true"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 1.05rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(240,161,58,0.95));
+  box-shadow: 0 0 10px rgba(240,161,58,0.52);
+}
+
+.ww-mini-textlink[data-active="true"]::before {
+  right: calc(100% + 0.55rem);
+  transform: translateY(-50%);
+}
+
+.ww-mini-textlink[data-active="true"]::after {
+  left: calc(100% + 0.55rem);
+  transform: translateY(-50%) rotate(180deg);
 }
 
 .ww-mini-sprig {
   position: absolute;
-  bottom: 1.85rem;
+  bottom: 0.45rem;
   left: 50%;
-  width: 5.9rem;
-  height: 3.2rem;
+  width: 9.7rem;
+  height: 11.2rem;
   transform: translateX(-50%);
-  opacity: 0.82;
+  opacity: 0.96;
   pointer-events: none;
 }
 
@@ -305,27 +354,45 @@ body {
   display: block;
   overflow: visible;
   filter:
-    drop-shadow(0 0 7px rgba(240,138,36,0.14))
-    drop-shadow(0 0 14px rgba(255,255,255,0.05));
+    drop-shadow(0 0 8px rgba(240,161,58,0.22))
+    drop-shadow(0 0 18px rgba(255,255,255,0.07));
 }
 
 .ww-mini-sprig .sprig-stem {
   fill: none;
-  stroke: rgba(240,138,36,0.58);
-  stroke-width: 1.8;
+  stroke: rgba(214,150,61,0.82);
+  stroke-width: 1.72;
+  stroke-linecap: round;
+}
+
+.ww-mini-sprig .sprig-vein {
+  fill: none;
+  stroke: rgba(236,231,197,0.44);
+  stroke-width: 0.62;
   stroke-linecap: round;
 }
 
 .ww-mini-sprig .sprig-leaf {
-  fill: none;
-  stroke: rgba(216,221,227,0.58);
-  stroke-width: 1.45;
+  fill: rgba(207,215,191,0.2);
+  stroke: rgba(229,233,210,0.78);
+  stroke-width: 1.05;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
+.ww-mini-sprig .sprig-leaf-dark {
+  fill: rgba(128,152,111,0.18);
+  stroke: rgba(198,213,181,0.66);
+}
+
 .ww-mini-sprig .sprig-berry {
-  fill: rgba(240,138,36,0.56);
+  fill: rgba(240,161,58,0.88);
+  stroke: rgba(255,228,157,0.48);
+  stroke-width: 0.55;
+}
+
+.ww-mini-sprig .sprig-glow {
+  fill: rgba(255,226,155,0.72);
 }
 
 #wwRight {
@@ -386,8 +453,9 @@ body {
   }
 
   .ww-mini-sprig {
-    width: 5.2rem;
-    bottom: 1.35rem;
+    width: 8.4rem;
+    height: 9.6rem;
+    bottom: 0.35rem;
   }
 
   #wwRight {
@@ -436,21 +504,59 @@ body {
       </div>
 
       <div class="ww-mini-sprig" aria-hidden="true">
-        <svg viewBox="0 0 100 54" role="img">
-          <path class="sprig-stem" d="M50 47 C48 38, 45 31, 39 24 C34 18, 27 13, 18 9" />
-          <path class="sprig-stem" d="M50 47 C52 38, 56 30, 63 23 C69 17, 76 12, 84 8" />
+        <svg viewBox="0 0 120 150" role="img">
+          <path class="sprig-stem" d="M60 144 C55 119, 48 96, 35 75 C26 60, 17 48, 8 38" />
+          <path class="sprig-stem" d="M60 144 C65 119, 73 96, 86 75 C95 60, 104 48, 113 38" />
+          <path class="sprig-stem" d="M60 144 C59 118, 59 93, 60 66 C61 50, 62 34, 64 18" />
 
-          <path class="sprig-leaf" d="M37 23 C30 22, 26 25, 23 30 C30 30, 34 28, 37 23Z" />
-          <path class="sprig-leaf" d="M31 17 C25 16, 21 18, 18 22 C24 23, 28 21, 31 17Z" />
-          <path class="sprig-leaf" d="M25 12 C20 11, 16 12, 13 16 C18 17, 22 15, 25 12Z" />
+          <path class="sprig-leaf" d="M34 75 C24 72, 16 76, 11 84 C22 86, 30 83, 34 75Z" />
+          <path class="sprig-vein" d="M33 76 C25 78, 19 80, 12 84" />
 
-          <path class="sprig-leaf" d="M63 23 C70 22, 74 25, 77 30 C70 30, 66 28, 63 23Z" />
-          <path class="sprig-leaf" d="M69 17 C75 16, 79 18, 82 22 C76 23, 72 21, 69 17Z" />
-          <path class="sprig-leaf" d="M75 12 C80 11, 84 12, 87 16 C82 17, 78 15, 75 12Z" />
+          <path class="sprig-leaf sprig-leaf-dark" d="M27 61 C18 58, 11 60, 6 67 C16 70, 23 68, 27 61Z" />
+          <path class="sprig-vein" d="M26 62 C19 63, 13 65, 7 67" />
 
-          <circle class="sprig-berry" cx="50" cy="47" r="2.3" />
-          <circle class="sprig-berry" cx="45" cy="37" r="1.9" />
-          <circle class="sprig-berry" cx="55" cy="37" r="1.9" />
+          <path class="sprig-leaf" d="M20 48 C12 44, 6 45, 1 51 C10 55, 16 54, 20 48Z" />
+          <path class="sprig-vein" d="M19 49 C13 50, 8 50, 2 51" />
+
+          <path class="sprig-leaf" d="M46 99 C36 96, 27 101, 22 110 C34 112, 42 108, 46 99Z" />
+          <path class="sprig-vein" d="M45 100 C36 102, 30 105, 23 110" />
+
+          <path class="sprig-leaf sprig-leaf-dark" d="M51 117 C42 116, 35 121, 31 129 C41 130, 48 126, 51 117Z" />
+          <path class="sprig-vein" d="M50 118 C43 121, 38 124, 32 129" />
+
+          <path class="sprig-leaf" d="M86 75 C96 72, 104 76, 109 84 C98 86, 90 83, 86 75Z" />
+          <path class="sprig-vein" d="M87 76 C95 78, 101 80, 108 84" />
+
+          <path class="sprig-leaf sprig-leaf-dark" d="M93 61 C102 58, 109 60, 114 67 C104 70, 97 68, 93 61Z" />
+          <path class="sprig-vein" d="M94 62 C101 63, 107 65, 113 67" />
+
+          <path class="sprig-leaf" d="M100 48 C108 44, 114 45, 119 51 C110 55, 104 54, 100 48Z" />
+          <path class="sprig-vein" d="M101 49 C107 50, 112 50, 118 51" />
+
+          <path class="sprig-leaf" d="M74 99 C84 96, 93 101, 98 110 C86 112, 78 108, 74 99Z" />
+          <path class="sprig-vein" d="M75 100 C84 102, 90 105, 97 110" />
+
+          <path class="sprig-leaf sprig-leaf-dark" d="M69 117 C78 116, 85 121, 89 129 C79 130, 72 126, 69 117Z" />
+          <path class="sprig-vein" d="M70 118 C77 121, 82 124, 88 129" />
+
+          <path class="sprig-leaf" d="M60 69 C52 62, 52 52, 59 43 C66 52, 67 61, 60 69Z" />
+          <path class="sprig-vein" d="M60 68 C60 60, 60 52, 59 44" />
+
+          <path class="sprig-leaf sprig-leaf-dark" d="M64 43 C57 36, 58 27, 65 20 C71 29, 71 37, 64 43Z" />
+          <path class="sprig-vein" d="M64 42 C64 35, 65 28, 65 21" />
+
+          <circle class="sprig-berry" cx="60" cy="140" r="4.2" />
+          <circle class="sprig-glow" cx="58.7" cy="138.5" r="1.05" />
+
+          <circle class="sprig-berry" cx="49" cy="128" r="3.35" />
+          <circle class="sprig-glow" cx="47.9" cy="126.8" r="0.85" />
+
+          <circle class="sprig-berry" cx="71" cy="128" r="3.35" />
+          <circle class="sprig-glow" cx="69.9" cy="126.8" r="0.85" />
+
+          <circle class="sprig-berry" cx="39" cy="105" r="2.85" />
+          <circle class="sprig-berry" cx="81" cy="105" r="2.85" />
+          <circle class="sprig-berry" cx="60" cy="84" r="2.55" />
         </svg>
       </div>
 
