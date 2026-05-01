@@ -61,17 +61,34 @@ body {
   flex: 0 0 var(--ww-left-narrow);
   position: relative;
   overflow: hidden;
-  background:
-    #000
-    url("/assets/winterword/shared/answer-rail.png")
-    58% center / cover
-    no-repeat;
+  background: #000;
+}
+
+.ww-rail-frame {
+  position: absolute;
+  top: 0;
+  left: 58%;
+  height: 100%;
+  aspect-ratio: 1024 / 1792;
+  transform: translateX(-50%);
+  overflow: visible;
+}
+
+.ww-rail-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: fill;
+  user-select: none;
+  pointer-events: none;
 }
 
 .ww-mini-shell {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
-  height: 100%;
 }
 
 .ww-mini-core {
@@ -307,10 +324,6 @@ body {
 }
 
 @media (max-height: 760px) {
-  .ww-mini-core {
-    top: 52%;
-  }
-
   .ww-mini-play {
     width: 5.65rem;
     height: 5.65rem;
@@ -329,25 +342,29 @@ body {
 
 <div id="wwPortal">
   <aside id="wwLeft" aria-label="Answer Rail">
-    <div class="ww-mini-shell">
-      <div class="ww-mini-core">
+    <div class="ww-rail-frame">
+      <img class="ww-rail-image" src="/assets/winterword/shared/answer-rail.png" alt="" aria-hidden="true">
 
-        ${
-          hasPlayableMedia
-            ? `
-              <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="Play answer media" data-playing="false">
-                <span class="ww-mini-play-icon" aria-hidden="true"></span>
-              </button>
-            `
-            : ""
-        }
+      <div class="ww-mini-shell">
+        <div class="ww-mini-core">
 
-        <nav class="ww-mini-textnav" aria-label="Answer navigation">
-          <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
-          <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">Answers</button>
-          <button class="ww-mini-textlink" type="button" data-nav="leaderboard">Leader</button>
-        </nav>
+          ${
+            hasPlayableMedia
+              ? `
+                <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="Play answer media" data-playing="false">
+                  <span class="ww-mini-play-icon" aria-hidden="true"></span>
+                </button>
+              `
+              : ""
+          }
 
+          <nav class="ww-mini-textnav" aria-label="Answer navigation">
+            <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
+            <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">Answers</button>
+            <button class="ww-mini-textlink" type="button" data-nav="leaderboard">Leader</button>
+          </nav>
+
+        </div>
       </div>
     </div>
   </aside>
