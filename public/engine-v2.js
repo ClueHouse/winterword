@@ -1,5 +1,5 @@
-// WinterWord Clean Engine v1.1
-// Airtable controls Lifeline. game.json no longer auto-unlocks Lifeline at clue 6.
+// WinterWord Clean Engine v1.2
+// Airtable status is now authoritative: complete immediately resolves season.
 
 (async function winterwordEngine() {
   "use strict";
@@ -234,6 +234,14 @@
     }
   }
 
+  function normaliseStatus(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "_")
+      .replace(/-/g, "_");
+  }
+
   function normalisePageName(pageName) {
     const page = String(pageName || "").toLowerCase();
 
@@ -383,7 +391,15 @@
       return;
     }
 
-    if (orgState.season_state === "tech_diff") {
+    const airtableStatus = normaliseStatus(orgState.status);
+    const endpointSeasonState = normaliseStatus(orgState.season_state);
+    const rawSeasonState = airtableStatus || endpointSeasonState || "pre";
+
+    if (
+      rawSeasonState === "tech_diff" ||
+      rawSeasonState === "technical" ||
+      rawSeasonState === "technical_difficulties"
+    ) {
       renderTechDiff();
       return;
     }
@@ -391,17 +407,21 @@
     const game = await loadGame();
 
     const totalClues = Number(game.total_clues || 12);
-    const currentClue = Math.max(0, Math.min(Number(orgState.current_clue || 0), totalClues));
-    const seasonState = orgState.season_state || "pre";
-    const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
 
     const isResolved =
+      rawSeasonState === "complete" ||
+      rawSeasonState === "resolved" ||
       orgState.is_resolved === true ||
       orgState.is_complete === true ||
-      seasonState === "complete" ||
-      seasonState === "resolved" ||
       computeResolvedFallback(orgState, totalClues);
 
+    const seasonState = isResolved ? "complete" : rawSeasonState;
+
+    const currentClue = isResolved
+      ? totalClues
+      : Math.max(0, Math.min(Number(orgState.current_clue || 0), totalClues));
+
+    const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
     const lifelineAvailable = orgState.lifeline_live === true;
 
     const hasLeaderboardEntries =
@@ -498,7 +518,7 @@
         }
 
         case "pop-clue": {
-          if (!popClueLive) {
+          if (!popClueLive || isResolved) {
             navigate("base-station");
             return;
           }
@@ -508,6 +528,11 @@
         }
 
         case "clues": {
+          if (isResolved) {
+            navigate("answers");
+            return;
+          }
+
           const renderClueList = modules.clueList.renderClueList;
 
           if (typeof renderClueList !== "function") {
@@ -530,9 +555,14 @@
         }
 
         case "clue": {
+          if (isResolved) {
+            navigate("answers");
+            return;
+          }
+
           const clueId = Number(options.id) || 1;
 
-          if (clueId > currentClue && !isResolved) {
+          if (clueId > currentClue) {
             navigate("clues");
             return;
           }
