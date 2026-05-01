@@ -44,7 +44,7 @@ body {
 }
 
 body {
-  background: #07110b;
+  background: #000;
 }
 
 #wwPortal {
@@ -66,13 +66,13 @@ body {
   position: relative;
   overflow: visible;
   background: transparent;
-  z-index: 3;
+  z-index: 4;
 }
 
 .ww-rail-frame {
   position: absolute;
   top: 0;
-  left: 58%;
+  left: 73%;
   height: 100%;
   aspect-ratio: 1024 / 1792;
   transform: translateX(-50%);
@@ -283,14 +283,15 @@ body {
 #wwRight {
   flex: 1;
   min-width: 0;
-  margin-left: 0;
-  padding: 2.8vh 3vw 2.8vh 0;
+  margin-left: -5.25rem;
+  padding: 2.8vh 3vw 2.8vh 5.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 #wwRight::before {
