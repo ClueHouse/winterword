@@ -25,6 +25,7 @@ export function renderAnswerPage(app, data = {}, navigate) {
   const hasAudio = Boolean(audio);
   const isVideo = variant === "video" || variant === "video-audio";
   const hasPlayableMedia = isVideo || hasAudio;
+  const showRailButton = true;
 
   app.innerHTML = `
 <style>
@@ -93,8 +94,8 @@ body {
 
 .ww-mini-core {
   position: absolute;
-  top: 44%;
-  left: 37%;
+  top: 45.6%;
+  left: 37.4%;
   width: 100%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -104,19 +105,19 @@ body {
 
 .ww-mini-play {
   appearance: none;
-  width: 6.35rem;
-  height: 6.35rem;
+  width: 6.2rem;
+  height: 6.2rem;
   border-radius: 999px;
   border: 0;
   padding: 0;
   background:
-    linear-gradient(145deg, #fff0b8 0%, #e6b04d 18%, #9b621f 38%, #f5ca70 62%, #70400f 100%);
+    linear-gradient(145deg, #fff0b8 0%, #e7b24e 17%, #a46724 38%, #f5ca70 62%, #70400f 100%);
   cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 3.15rem;
+  margin-bottom: 3.05rem;
   box-shadow:
     0 1.15rem 2.15rem rgba(0,0,0,0.64),
     0 0 1.1rem rgba(239,174,74,0.22);
@@ -157,10 +158,10 @@ body {
 .ww-mini-play::after {
   content: "";
   position: absolute;
-  top: 0.8rem;
-  right: 0.8rem;
-  width: 1.05rem;
-  height: 1.05rem;
+  top: 0.76rem;
+  right: 0.76rem;
+  width: 1rem;
+  height: 1rem;
   background:
     radial-gradient(circle, #ffffff 0%, #fff1b0 24%, rgba(246,186,76,0.72) 42%, rgba(246,186,76,0) 72%);
   clip-path: polygon(
@@ -324,6 +325,10 @@ body {
 }
 
 @media (max-height: 760px) {
+  .ww-mini-core {
+    top: 46.4%;
+  }
+
   .ww-mini-play {
     width: 5.65rem;
     height: 5.65rem;
@@ -349,9 +354,9 @@ body {
         <div class="ww-mini-core">
 
           ${
-            hasPlayableMedia
+            showRailButton
               ? `
-                <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="Play answer media" data-playing="false">
+                <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="${hasPlayableMedia ? "Play answer media" : "Play"}" data-playing="false">
                   <span class="ww-mini-play-icon" aria-hidden="true"></span>
                 </button>
               `
@@ -422,6 +427,8 @@ body {
 
   if (playButton) {
     playButton.addEventListener("click", async () => {
+      if (!hasPlayableMedia) return;
+
       try {
         const shouldPlay =
           (videoElement ? videoElement.paused : true) &&
