@@ -94,7 +94,7 @@ body {
 
 .ww-mini-core {
   position: absolute;
-  top: 45.6%;
+  top: 46.8%;
   left: 44%;
   width: 100%;
   transform: translate(-50%, -50%);
@@ -105,8 +105,8 @@ body {
 
 .ww-mini-play {
   appearance: none;
-  width: 6.2rem;
-  height: 6.2rem;
+  width: 6rem;
+  height: 6rem;
   border-radius: 999px;
   border: 0;
   padding: 0;
@@ -158,8 +158,8 @@ body {
 .ww-mini-play::after {
   content: "";
   position: absolute;
-  top: 0.76rem;
-  right: 0.76rem;
+  top: 0.42rem;
+  right: 0.42rem;
   width: 1rem;
   height: 1rem;
   background:
@@ -185,9 +185,9 @@ body {
   z-index: 2;
   width: 0;
   height: 0;
-  border-top: 1.02rem solid transparent;
-  border-bottom: 1.02rem solid transparent;
-  border-left: 1.62rem solid #ffffff;
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-left: 1.58rem solid #ffffff;
   margin-left: 0.28rem;
   filter:
     drop-shadow(0 0 0.28rem rgba(255,255,255,0.18))
@@ -195,8 +195,8 @@ body {
 }
 
 .ww-mini-play[data-playing="true"] .ww-mini-play-icon {
-  width: 1.38rem;
-  height: 1.74rem;
+  width: 1.34rem;
+  height: 1.68rem;
   border: 0;
   margin-left: 0;
   background:
@@ -326,12 +326,12 @@ body {
 
 @media (max-height: 760px) {
   .ww-mini-core {
-    top: 46.4%;
+    top: 47.4%;
   }
 
   .ww-mini-play {
-    width: 5.65rem;
-    height: 5.65rem;
+    width: 5.5rem;
+    height: 5.5rem;
     margin-bottom: 2.35rem;
   }
 
