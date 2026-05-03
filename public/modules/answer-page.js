@@ -30,7 +30,7 @@ export function renderAnswerPage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-left-narrow: 10rem;
+  --ww-rail-width: 19.5rem;
   --ww-ink-soft: #d8d4c3;
 }
 
@@ -61,10 +61,10 @@ body {
 }
 
 #wwLeft {
-  width: var(--ww-left-narrow);
-  flex: 0 0 var(--ww-left-narrow);
+  width: var(--ww-rail-width);
+  flex: 0 0 var(--ww-rail-width);
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   background: transparent;
   z-index: 4;
 }
@@ -73,18 +73,20 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  width: var(--ww-rail-width);
   height: 100%;
-  aspect-ratio: 1024 / 1792;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .ww-rail-image {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
+  left: 0;
+  width: var(--ww-rail-width);
   height: 100%;
   display: block;
-  object-fit: fill;
+  object-fit: cover;
+  object-position: left center;
   user-select: none;
   pointer-events: none;
 }
@@ -98,7 +100,7 @@ body {
 .ww-mini-core {
   position: absolute;
   top: 46.8%;
-  left: 44%;
+  left: 50%;
   width: 100%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -282,8 +284,8 @@ body {
 #wwRight {
   flex: 1;
   min-width: 0;
-  margin-left: -5.25rem;
-  padding: 2.8vh 3vw 2.8vh 5.25rem;
+  margin-left: 0;
+  padding: 2.8vh 3vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -316,7 +318,7 @@ body {
 
 .ww-answer-stage {
   width: min(64vw, 1240px);
-  max-width: calc(100vw - var(--ww-left-narrow) - 5rem);
+  max-width: calc(100vw - var(--ww-rail-width) - 5rem);
   display: flex;
   align-items: center;
   justify-content: center;
