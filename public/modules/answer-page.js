@@ -71,7 +71,7 @@ body {
 .ww-rail-frame {
   position: absolute;
   top: 0;
-  left: 58%;
+  left: 62%;
   height: 100%;
   aspect-ratio: 1024 / 1792;
   transform: translateX(-50%);
