@@ -64,7 +64,7 @@ body {
   width: var(--ww-left-narrow);
   flex: 0 0 var(--ww-left-narrow);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background: transparent;
   z-index: 4;
 }
@@ -72,7 +72,7 @@ body {
 .ww-rail-frame {
   position: absolute;
   top: 0;
-  left: 10;
+  left: 0;
   height: 100%;
   aspect-ratio: 1024 / 1792;
   overflow: visible;
