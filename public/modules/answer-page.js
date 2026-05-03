@@ -68,14 +68,14 @@ body {
   background: transparent;
   z-index: 4;
 }
-
 .ww-rail-frame {
   position: absolute;
   top: 0;
-  left: 0;
-  width: var(--ww-rail-width);
+  left: 58%;
   height: 100%;
-  overflow: hidden;
+  aspect-ratio: 1024 / 1792;
+  transform: translateX(-50%);
+  overflow: visible;
 }
 
 .ww-rail-image {
