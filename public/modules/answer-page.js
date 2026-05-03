@@ -51,7 +51,7 @@ body {
   display: flex;
   height: 100vh;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  overflow: hidden;
+  overflow: visible;
   background:
     radial-gradient(circle at 42% 45%, rgba(82,118,62,0.24) 0%, rgba(38,63,33,0.52) 34%, rgba(7,16,10,0.98) 78%),
     radial-gradient(circle at 12% 50%, rgba(108,145,70,0.14), transparent 36%),
