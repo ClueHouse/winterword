@@ -30,7 +30,7 @@ export function renderAnswerPage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-left-narrow: 21.5rem;
+  --ww-left-narrow: 17.5rem;
   --ww-ink-soft: #d8d4c3;
 }
 
