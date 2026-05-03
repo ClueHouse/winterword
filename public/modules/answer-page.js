@@ -50,6 +50,7 @@ body {
 #wwPortal {
   display: flex;
   height: 100vh;
+  width: 100vw;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   overflow: hidden;
   background:
@@ -284,8 +285,7 @@ body {
 #wwRight {
   flex: 1;
   min-width: 0;
-  margin-left: -4.5rem;
-  padding: 3.2vh 3.2vw 3.2vh 4.5rem;
+  padding: 3.2vh 3.2vw 3.2vh 3.2vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -490,53 +490,4 @@ body {
   const videoElement = app.querySelector("#wwAnswerVideo");
   const audioElement = hasAudio ? new Audio(audio) : null;
 
-  function setPlayingState(isPlaying) {
-    if (!playButton) return;
-    playButton.setAttribute("data-playing", isPlaying ? "true" : "false");
-    playButton.setAttribute("aria-label", isPlaying ? "Pause answer media" : "Play answer media");
-  }
-
-  function pauseAll() {
-    if (videoElement && !videoElement.paused) {
-      videoElement.pause();
-      videoElement.currentTime = 0;
-    }
-
-    if (audioElement && !audioElement.paused) {
-      audioElement.pause();
-      audioElement.currentTime = 0;
-    }
-
-    setPlayingState(false);
-  }
-
-  if (playButton) {
-    playButton.addEventListener("click", async () => {
-      if (!hasPlayableMedia) return;
-
-      try {
-        const shouldPlay =
-          (videoElement ? videoElement.paused : true) &&
-          (audioElement ? audioElement.paused : true);
-
-        if (shouldPlay) {
-          if (videoElement) await videoElement.play();
-          if (audioElement) await audioElement.play();
-          setPlayingState(true);
-        } else {
-          pauseAll();
-        }
-      } catch {
-        pauseAll();
-      }
-    });
-  }
-
-  if (videoElement) {
-    videoElement.addEventListener("ended", pauseAll);
-  }
-
-  if (audioElement) {
-    audioElement.addEventListener("ended", pauseAll);
-  }
-}
+  function setPlayingState(isPlaying)
