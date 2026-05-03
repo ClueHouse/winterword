@@ -309,8 +309,8 @@ body {
 }
 
 .ww-answer-stage {
-  width: min(68.5vw, 1335px);
-  max-width: calc(100vw - var(--ww-left-narrow) - 8rem);
+  width: 100%;
+  max-width: 1335px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -381,7 +381,8 @@ body {
 }
 
 .ww-answer-empty {
-  width: min(66vw, 900px);
+  width: 100%;
+  max-width: 900px;
   padding: 3rem;
   border-radius: 1.4rem;
   background: rgba(255,255,255,0.07);
