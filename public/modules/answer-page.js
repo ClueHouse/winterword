@@ -284,7 +284,8 @@ body {
 #wwRight {
   flex: 1;
   min-width: 0;
-  padding: 3.2vh 3.2vw;
+  margin-left: -4.5rem;
+  padding: 3.2vh 3.2vw 3.2vh 4.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
