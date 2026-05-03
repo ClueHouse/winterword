@@ -490,4 +490,56 @@ body {
   const videoElement = app.querySelector("#wwAnswerVideo");
   const audioElement = hasAudio ? new Audio(audio) : null;
 
-  function setPlayingState(isPlaying)
+  function setPlayingState(isPlaying) {
+    if (!playButton) return;
+    playButton.setAttribute("data-playing", isPlaying ? "true" : "false");
+    playButton.setAttribute(
+      "aria-label",
+      isPlaying ? "Pause answer media" : "Play answer media"
+    );
+  }
+
+  function pauseAll() {
+    if (videoElement && !videoElement.paused) {
+      videoElement.pause();
+      videoElement.currentTime = 0;
+    }
+
+    if (audioElement && !audioElement.paused) {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+    }
+
+    setPlayingState(false);
+  }
+
+  if (playButton) {
+    playButton.addEventListener("click", async () => {
+      if (!hasPlayableMedia) return;
+
+      try {
+        const shouldPlay =
+          (videoElement ? videoElement.paused : true) &&
+          (audioElement ? audioElement.paused : true);
+
+        if (shouldPlay) {
+          if (videoElement) await videoElement.play();
+          if (audioElement) await audioElement.play();
+          setPlayingState(true);
+        } else {
+          pauseAll();
+        }
+      } catch {
+        pauseAll();
+      }
+    });
+  }
+
+  if (videoElement) {
+    videoElement.addEventListener("ended", pauseAll);
+  }
+
+  if (audioElement) {
+    audioElement.addEventListener("ended", pauseAll);
+  }
+}
