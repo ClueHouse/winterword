@@ -30,7 +30,7 @@ export function renderAnswerPage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-left-narrow: 0%;
+  --ww-left-narrow: 21.5rem;
   --ww-ink-soft: #d8d4c3;
 }
 
@@ -64,7 +64,7 @@ body {
   width: var(--ww-left-narrow);
   flex: 0 0 var(--ww-left-narrow);
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   background: transparent;
   z-index: 4;
 }
@@ -72,10 +72,9 @@ body {
 .ww-rail-frame {
   position: absolute;
   top: 0;
-  left: 73%;
+  left: 0;
   height: 100%;
   aspect-ratio: 1024 / 1792;
-  transform: translateX(-50%);
   overflow: visible;
 }
 
@@ -283,8 +282,8 @@ body {
 #wwRight {
   flex: 1;
   min-width: 0;
-  margin-left: 0;
-  padding: 2.8vh 3vw 2.8vh 3vw;
+  margin-left: -5.25rem;
+  padding: 2.8vh 3vw 2.8vh 5.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -317,7 +316,7 @@ body {
 
 .ww-answer-stage {
   width: min(64vw, 1240px);
-  max-width: calc(100vw - 4rem);
+  max-width: calc(100vw - var(--ww-left-narrow) - 5rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -407,6 +406,7 @@ body {
 
       <div class="ww-mini-shell">
         <div class="ww-mini-core">
+
           ${
             showRailButton
               ? `
@@ -422,6 +422,7 @@ body {
             <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">Answers</button>
             <button class="ww-mini-textlink" type="button" data-nav="leaderboard">Leader</button>
           </nav>
+
         </div>
       </div>
     </div>
