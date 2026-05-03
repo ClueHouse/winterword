@@ -1,4 +1,4 @@
-export function renderAnswerPage(app, data = {}, navigate) {
+export function renderAnswerPage(app, data = {}, navigate) { 
   const {
     clueId = 1,
     answer = {}
