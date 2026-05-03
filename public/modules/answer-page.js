@@ -30,7 +30,7 @@ export function renderAnswerPage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-left-narrow: 21.5rem;
+  --ww-left-narrow: 24rem;
   --ww-ink-soft: #d8d4c3;
 }
 
@@ -51,7 +51,7 @@ body {
   display: flex;
   height: 100vh;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  overflow: visible;
+  overflow: hidden;
   background:
     radial-gradient(circle at 42% 45%, rgba(82,118,62,0.24) 0%, rgba(38,63,33,0.52) 34%, rgba(7,16,10,0.98) 78%),
     radial-gradient(circle at 12% 50%, rgba(108,145,70,0.14), transparent 36%),
@@ -64,15 +64,15 @@ body {
   width: var(--ww-left-narrow);
   flex: 0 0 var(--ww-left-narrow);
   position: relative;
-  overflow: hidden;
-  background: #000;
+  overflow: visible;
+  background: transparent;
   z-index: 20;
 }
 
 .ww-rail-frame {
   position: absolute;
   top: 0;
-  left: 75%;
+  left: 58%;
   height: 100%;
   aspect-ratio: 1024 / 1792;
   transform: translateX(-50%);
@@ -127,6 +127,22 @@ body {
     0 1.15rem 2.15rem rgba(0,0,0,0.64),
     0 0 1.1rem rgba(239,174,74,0.22);
   overflow: visible;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
+}
+
+.ww-mini-play:hover {
+  transform: translateY(-1px) scale(1.018);
+  filter: brightness(1.05);
+  box-shadow:
+    0 1.3rem 2.4rem rgba(0,0,0,0.7),
+    0 0 1.45rem rgba(239,174,74,0.32);
+}
+
+.ww-mini-play:active {
+  transform: translateY(1px) scale(0.992);
 }
 
 .ww-mini-play::before {
@@ -137,6 +153,35 @@ body {
   background:
     radial-gradient(circle at 38% 28%, rgba(78,112,94,0.34), transparent 33%),
     radial-gradient(circle at 52% 58%, rgba(3,9,8,0.9), rgba(8,25,20,0.98) 68%, #020605 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,242,184,0.2),
+    inset 0 0.45rem 0.75rem rgba(255,255,255,0.06),
+    inset 0 -0.75rem 1.05rem rgba(0,0,0,0.6);
+  pointer-events: none;
+}
+
+.ww-mini-play::after {
+  content: "";
+  position: absolute;
+  top: 0.42rem;
+  right: 0.42rem;
+  width: 1rem;
+  height: 1rem;
+  background:
+    radial-gradient(circle, #ffffff 0%, #fff1b0 24%, rgba(246,186,76,0.72) 42%, rgba(246,186,76,0) 72%);
+  clip-path: polygon(
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
+  );
+  filter:
+    drop-shadow(0 0 0.35rem rgba(255,230,150,0.72))
+    drop-shadow(0 0 0.7rem rgba(240,161,58,0.4));
   pointer-events: none;
 }
 
@@ -149,6 +194,9 @@ body {
   border-bottom: 1rem solid transparent;
   border-left: 1.58rem solid #ffffff;
   margin-left: 0.28rem;
+  filter:
+    drop-shadow(0 0 0.28rem rgba(255,255,255,0.18))
+    drop-shadow(0 0.08rem 0.12rem rgba(0,0,0,0.5));
 }
 
 .ww-mini-play[data-playing="true"] .ww-mini-play-icon {
@@ -157,7 +205,12 @@ body {
   border: 0;
   margin-left: 0;
   background:
-    linear-gradient(90deg, #fff 0 35%, transparent 35% 65%, #fff 65% 100%);
+    linear-gradient(
+      90deg,
+      #fff 0 35%,
+      transparent 35% 65%,
+      #fff 65% 100%
+    );
 }
 
 .ww-mini-textnav {
@@ -173,17 +226,59 @@ body {
   border: 0;
   padding: 0;
   line-height: 1;
+  text-decoration: none;
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 900;
   font-size: 1.12rem;
   letter-spacing: 0.44em;
   text-transform: uppercase;
   color: var(--ww-ink-soft);
+  opacity: 0.96;
   cursor: pointer;
+  text-shadow:
+    0 2px 5px rgba(0,0,0,0.86),
+    0 0 8px rgba(255,255,255,0.05);
+}
+
+.ww-mini-textlink:hover {
+  color: #ffffff;
 }
 
 .ww-mini-textlink[data-active="true"] {
+  position: relative;
   color: #ffffff;
+  text-shadow:
+    0 2px 5px rgba(0,0,0,0.86),
+    0 0 12px rgba(255,255,255,0.2),
+    0 0 18px rgba(240,161,58,0.34);
+}
+
+.ww-mini-textlink[data-active="true"]::before,
+.ww-mini-textlink[data-active="true"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 2.05rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(240,161,58,0.98),
+    rgba(255,226,155,0.9)
+  );
+  box-shadow:
+    0 0 10px rgba(240,161,58,0.55),
+    0 0 14px rgba(255,226,155,0.18);
+}
+
+.ww-mini-textlink[data-active="true"]::before {
+  right: calc(100% + 0.78rem);
+  transform: translateY(-50%);
+}
+
+.ww-mini-textlink[data-active="true"]::after {
+  left: calc(100% + 0.78rem);
+  transform: translateY(-50%) rotate(180deg);
 }
 
 #wwRight {
@@ -199,6 +294,17 @@ body {
   position: relative;
   overflow: hidden;
   z-index: 1;
+}
+
+#wwRight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, rgba(255,215,120,0.03), transparent 60%),
+    repeating-radial-gradient(circle at center, rgba(255,210,120,0.012) 0 2px, transparent 2px 6px);
+  opacity: 0.65;
+  pointer-events: none;
 }
 
 .ww-answer-stage {
@@ -222,13 +328,46 @@ body {
       rgba(164,103,36,0.98) 42%,
       rgba(245,202,112,0.98) 68%,
       rgba(112,64,15,0.98) 100%);
+  box-shadow:
+    0 0 0 1px rgba(255,228,155,0.18),
+    0 1.6rem 3.8rem rgba(0,0,0,0.72),
+    0 0 2.2rem rgba(239,174,74,0.14);
+  position: relative;
+}
+
+.ww-answer-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0.28rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255,232,166,0.26);
+  pointer-events: none;
+}
+
+.ww-answer-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0.62rem;
+  border-radius: 1.08rem;
+  border: 1px solid rgba(82,52,18,0.38);
+  pointer-events: none;
 }
 
 .ww-answer-inner {
   width: 100%;
   border-radius: 1.15rem;
   overflow: hidden;
-  background: #000;
+  background:
+    radial-gradient(circle at center, rgba(30,50,38,0.22), rgba(0,0,0,0.92));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,242,184,0.08);
+}
+
+.ww-answer-media {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ww-answer-media img,
@@ -241,8 +380,39 @@ body {
 }
 
 .ww-answer-empty {
+  width: min(66vw, 900px);
   padding: 3rem;
-  color: white;
+  border-radius: 1.4rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  text-align: center;
+  color: rgba(245,247,251,0.78);
+  font-size: 1.1rem;
+}
+
+@media (max-height: 760px) {
+  .ww-mini-core {
+    top: 47.4%;
+  }
+
+  .ww-mini-play {
+    width: 5.5rem;
+    height: 5.5rem;
+    margin-bottom: 2.35rem;
+  }
+
+  .ww-mini-textnav {
+    gap: 1rem;
+  }
+
+  .ww-mini-textlink {
+    font-size: 1rem;
+  }
+
+  .ww-answer-media img,
+  .ww-answer-media video {
+    max-height: 70vh;
+  }
 }
 </style>
 
@@ -250,8 +420,10 @@ body {
   <aside id="wwLeft" aria-label="Answer Rail">
     <div class="ww-rail-frame">
       <img class="ww-rail-image" src="/assets/winterword/shared/answer-rail.png" alt="" aria-hidden="true">
+
       <div class="ww-mini-shell">
         <div class="ww-mini-core">
+
           ${
             showRailButton
               ? `
@@ -261,11 +433,13 @@ body {
               `
               : ""
           }
+
           <nav class="ww-mini-textnav" aria-label="Answer navigation">
             <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
             <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">Answers</button>
             <button class="ww-mini-textlink" type="button" data-nav="leaderboard">Leader</button>
           </nav>
+
         </div>
       </div>
     </div>
@@ -294,7 +468,9 @@ body {
               </div>
             </div>
           `
-          : `<div class="ww-answer-empty">No answer media found.</div>`
+          : `
+            <div class="ww-answer-empty">No answer media found.</div>
+          `
       }
     </section>
   </main>
@@ -315,11 +491,20 @@ body {
   function setPlayingState(isPlaying) {
     if (!playButton) return;
     playButton.setAttribute("data-playing", isPlaying ? "true" : "false");
+    playButton.setAttribute("aria-label", isPlaying ? "Pause answer media" : "Play answer media");
   }
 
   function pauseAll() {
-    if (videoElement && !videoElement.paused) videoElement.pause();
-    if (audioElement && !audioElement.paused) audioElement.pause();
+    if (videoElement && !videoElement.paused) {
+      videoElement.pause();
+      videoElement.currentTime = 0;
+    }
+
+    if (audioElement && !audioElement.paused) {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+    }
+
     setPlayingState(false);
   }
 
