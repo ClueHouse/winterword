@@ -30,7 +30,7 @@ export function renderAnswerPage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-rail-width: 19.5rem;
+  --ww-left-narrow: 21.5rem;
   --ww-ink-soft: #d8d4c3;
 }
 
@@ -61,13 +61,14 @@ body {
 }
 
 #wwLeft {
-  width: var(--ww-rail-width);
-  flex: 0 0 var(--ww-rail-width);
+  width: var(--ww-left-narrow);
+  flex: 0 0 var(--ww-left-narrow);
   position: relative;
   overflow: hidden;
-  background: transparent;
-  z-index: 4;
+  background: #000;
+  z-index: 20;
 }
+
 .ww-rail-frame {
   position: absolute;
   top: 0;
@@ -76,17 +77,16 @@ body {
   aspect-ratio: 1024 / 1792;
   transform: translateX(-50%);
   overflow: visible;
+  z-index: 30;
 }
 
 .ww-rail-image {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--ww-rail-width);
+  inset: 0;
+  width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
-  object-position: left center;
+  object-fit: fill;
   user-select: none;
   pointer-events: none;
 }
@@ -94,13 +94,13 @@ body {
 .ww-mini-shell {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 40;
 }
 
 .ww-mini-core {
   position: absolute;
   top: 46.8%;
-  left: 50%;
+  left: 44%;
   width: 100%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -127,22 +127,6 @@ body {
     0 1.15rem 2.15rem rgba(0,0,0,0.64),
     0 0 1.1rem rgba(239,174,74,0.22);
   overflow: visible;
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    filter 160ms ease;
-}
-
-.ww-mini-play:hover {
-  transform: translateY(-1px) scale(1.018);
-  filter: brightness(1.05);
-  box-shadow:
-    0 1.3rem 2.4rem rgba(0,0,0,0.7),
-    0 0 1.45rem rgba(239,174,74,0.32);
-}
-
-.ww-mini-play:active {
-  transform: translateY(1px) scale(0.992);
 }
 
 .ww-mini-play::before {
@@ -153,35 +137,6 @@ body {
   background:
     radial-gradient(circle at 38% 28%, rgba(78,112,94,0.34), transparent 33%),
     radial-gradient(circle at 52% 58%, rgba(3,9,8,0.9), rgba(8,25,20,0.98) 68%, #020605 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,242,184,0.2),
-    inset 0 0.45rem 0.75rem rgba(255,255,255,0.06),
-    inset 0 -0.75rem 1.05rem rgba(0,0,0,0.6);
-  pointer-events: none;
-}
-
-.ww-mini-play::after {
-  content: "";
-  position: absolute;
-  top: 0.42rem;
-  right: 0.42rem;
-  width: 1rem;
-  height: 1rem;
-  background:
-    radial-gradient(circle, #ffffff 0%, #fff1b0 24%, rgba(246,186,76,0.72) 42%, rgba(246,186,76,0) 72%);
-  clip-path: polygon(
-    50% 0%,
-    61% 39%,
-    100% 50%,
-    61% 61%,
-    50% 100%,
-    39% 61%,
-    0% 50%,
-    39% 39%
-  );
-  filter:
-    drop-shadow(0 0 0.35rem rgba(255,230,150,0.72))
-    drop-shadow(0 0 0.7rem rgba(240,161,58,0.4));
   pointer-events: none;
 }
 
@@ -194,9 +149,6 @@ body {
   border-bottom: 1rem solid transparent;
   border-left: 1.58rem solid #ffffff;
   margin-left: 0.28rem;
-  filter:
-    drop-shadow(0 0 0.28rem rgba(255,255,255,0.18))
-    drop-shadow(0 0.08rem 0.12rem rgba(0,0,0,0.5));
 }
 
 .ww-mini-play[data-playing="true"] .ww-mini-play-icon {
@@ -205,12 +157,7 @@ body {
   border: 0;
   margin-left: 0;
   background:
-    linear-gradient(
-      90deg,
-      #fff 0 35%,
-      transparent 35% 65%,
-      #fff 65% 100%
-    );
+    linear-gradient(90deg, #fff 0 35%, transparent 35% 65%, #fff 65% 100%);
 }
 
 .ww-mini-textnav {
@@ -226,99 +173,37 @@ body {
   border: 0;
   padding: 0;
   line-height: 1;
-  text-decoration: none;
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 900;
   font-size: 1.12rem;
   letter-spacing: 0.44em;
   text-transform: uppercase;
   color: var(--ww-ink-soft);
-  opacity: 0.96;
   cursor: pointer;
-  text-shadow:
-    0 2px 5px rgba(0,0,0,0.86),
-    0 0 8px rgba(255,255,255,0.05);
-}
-
-.ww-mini-textlink:hover {
-  color: #ffffff;
 }
 
 .ww-mini-textlink[data-active="true"] {
-  position: relative;
   color: #ffffff;
-  text-shadow:
-    0 2px 5px rgba(0,0,0,0.86),
-    0 0 12px rgba(255,255,255,0.2),
-    0 0 18px rgba(240,161,58,0.34);
-}
-
-.ww-mini-textlink[data-active="true"]::before,
-.ww-mini-textlink[data-active="true"]::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 2.05rem;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(240,161,58,0.98),
-    rgba(255,226,155,0.9)
-  );
-  box-shadow:
-    0 0 10px rgba(240,161,58,0.55),
-    0 0 14px rgba(255,226,155,0.18);
-}
-
-.ww-mini-textlink[data-active="true"]::before {
-  right: calc(100% + 0.78rem);
-  transform: translateY(-50%);
-}
-
-.ww-mini-textlink[data-active="true"]::after {
-  left: calc(100% + 0.78rem);
-  transform: translateY(-50%) rotate(180deg);
 }
 
 #wwRight {
   flex: 1;
   min-width: 0;
-  margin-left: 0;
-  padding: 2.8vh 3vw;
+  padding: 3.2vh 3.2vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background:
+    radial-gradient(circle at center, rgba(78,112,94,0.22) 0%, rgba(20,40,28,0.92) 45%, #000 100%),
+    linear-gradient(180deg, #07110d 0%, #020605 100%);
   position: relative;
   overflow: hidden;
   z-index: 1;
 }
 
-#wwRight::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at center, rgba(255,218,130,0.025), transparent 56%),
-    repeating-radial-gradient(circle at 45% 50%, rgba(225,178,80,0.018) 0 1px, transparent 1px 5px);
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-#wwRight::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.16) 100%),
-    radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,0.34) 100%);
-  pointer-events: none;
-}
-
 .ww-answer-stage {
-  width: min(64vw, 1240px);
-  max-width: calc(100vw - var(--ww-rail-width) - 5rem);
+  width: min(68.5vw, 1335px);
+  max-width: calc(100vw - var(--ww-left-narrow) - 8rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -328,56 +213,22 @@ body {
 
 .ww-answer-frame {
   width: 100%;
-  padding: 0.22rem;
-  border-radius: 1.25rem;
+  padding: 0.8rem;
+  border-radius: 1.6rem;
   background:
     linear-gradient(145deg,
-      rgba(255,240,190,0.98) 0%,
-      rgba(212,160,64,0.96) 18%,
-      rgba(82,52,18,0.98) 38%,
-      rgba(245,206,118,0.96) 64%,
-      rgba(70,42,12,0.98) 100%);
-  box-shadow:
-    0 0 0 1px rgba(255,228,155,0.18),
-    0 0.4rem 1rem rgba(0,0,0,0.58),
-    0 1.5rem 4rem rgba(0,0,0,0.72);
-  position: relative;
-}
-
-.ww-answer-frame::before {
-  content: "";
-  position: absolute;
-  inset: 0.22rem;
-  border-radius: 1.05rem;
-  border: 1px solid rgba(255,232,166,0.28);
-  box-shadow:
-    inset 0 0 0 1px rgba(46,28,8,0.82);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.ww-answer-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0.58rem;
-  border-radius: 0.92rem;
-  border: 1px solid rgba(255,224,145,0.12);
-  pointer-events: none;
+      rgba(255,240,184,0.96) 0%,
+      rgba(231,178,78,0.98) 18%,
+      rgba(164,103,36,0.98) 42%,
+      rgba(245,202,112,0.98) 68%,
+      rgba(112,64,15,0.98) 100%);
 }
 
 .ww-answer-inner {
   width: 100%;
-  border-radius: 0.98rem;
+  border-radius: 1.15rem;
   overflow: hidden;
-  background:
-    radial-gradient(circle at center, rgba(30,50,38,0.18), rgba(0,0,0,0.96));
-}
-
-.ww-answer-media {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #000;
 }
 
 .ww-answer-media img,
@@ -390,14 +241,8 @@ body {
 }
 
 .ww-answer-empty {
-  width: min(66vw, 900px);
   padding: 3rem;
-  border-radius: 1.4rem;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
-  text-align: center;
-  color: rgba(245,247,251,0.78);
-  font-size: 1.1rem;
+  color: white;
 }
 </style>
 
@@ -405,10 +250,8 @@ body {
   <aside id="wwLeft" aria-label="Answer Rail">
     <div class="ww-rail-frame">
       <img class="ww-rail-image" src="/assets/winterword/shared/answer-rail.png" alt="" aria-hidden="true">
-
       <div class="ww-mini-shell">
         <div class="ww-mini-core">
-
           ${
             showRailButton
               ? `
@@ -418,13 +261,11 @@ body {
               `
               : ""
           }
-
           <nav class="ww-mini-textnav" aria-label="Answer navigation">
             <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
             <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">Answers</button>
             <button class="ww-mini-textlink" type="button" data-nav="leaderboard">Leader</button>
           </nav>
-
         </div>
       </div>
     </div>
@@ -453,9 +294,7 @@ body {
               </div>
             </div>
           `
-          : `
-            <div class="ww-answer-empty">No answer media found.</div>
-          `
+          : `<div class="ww-answer-empty">No answer media found.</div>`
       }
     </section>
   </main>
@@ -476,7 +315,6 @@ body {
   function setPlayingState(isPlaying) {
     if (!playButton) return;
     playButton.setAttribute("data-playing", isPlaying ? "true" : "false");
-    playButton.setAttribute("aria-label", isPlaying ? "Pause answer media" : "Play answer media");
   }
 
   function pauseAll() {
@@ -508,19 +346,10 @@ body {
   }
 
   if (videoElement) {
-    videoElement.addEventListener("ended", () => {
-      if (audioElement && !audioElement.paused) {
-        audioElement.pause();
-        audioElement.currentTime = 0;
-      }
-      setPlayingState(false);
-    });
+    videoElement.addEventListener("ended", pauseAll);
   }
 
   if (audioElement) {
-    audioElement.addEventListener("ended", () => {
-      if (videoElement && !videoElement.paused) videoElement.pause();
-      setPlayingState(false);
-    });
+    audioElement.addEventListener("ended", pauseAll);
   }
 }
