@@ -30,8 +30,8 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-clue-bg: url("/assets/winterword/shared/fullclues.png");
 
   /* MASTER GROUP POSITION */
-  --ww-hotspot-group-left: 15%;
-  --ww-hotspot-group-top: 50%;
+  --ww-hotspot-group-left: 16%;
+  --ww-hotspot-group-top: 52%;
 
   /* INTERNAL GROUP SPACING */
   --ww-hotspot-gap: 9.1%;
