@@ -184,7 +184,8 @@ body {
   overflow: visible;
   transition:
     transform 140ms ease,
-    background 180ms ease;
+    background 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .ww-hotspot:active {
@@ -249,45 +250,50 @@ body {
 }
 
 .ww-hotspot-life[data-locked="true"]::after {
-  content: "Unavailable";
+  content: "This path remains hidden, for now";
   position: absolute;
   left: 50%;
-  top: -118%;
+  top: -145%;
   transform: translateX(-50%);
-  padding: 0.38rem 0.9rem;
-  font-size: 0.72rem;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,235,235,0.96);
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: rgba(255,240,240,0.98);
   background:
     linear-gradient(
       145deg,
-      rgba(38,8,8,0.96) 0%,
-      rgba(58,12,12,0.98) 50%,
-      rgba(28,4,4,0.96) 100%
+      rgba(32,6,6,0.98) 0%,
+      rgba(62,12,12,0.98) 50%,
+      rgba(22,4,4,0.98) 100%
     );
-  border: 1px solid rgba(160,60,60,0.34);
-  border-radius: 0.4rem;
+  border: 1px solid rgba(170,70,70,0.34);
+  border-radius: 0.55rem;
   box-shadow:
-    0 6px 18px rgba(0,0,0,0.45),
-    inset 0 0 8px rgba(255,255,255,0.03);
+    0 8px 22px rgba(0,0,0,0.52),
+    0 0 14px rgba(120,20,20,0.18),
+    inset 0 0 10px rgba(255,255,255,0.03);
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 180ms ease;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 .ww-hotspot-life[data-locked="true"]:hover::after {
   opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
 }
 
 .ww-hotspot-life[data-locked="true"]:hover {
-  background: rgba(90,18,18,0.22);
+  background: rgba(95,18,18,0.24);
   box-shadow:
-    0 0 0 1px rgba(140,40,40,0.35),
-    0 0 12px rgba(120,20,20,0.22),
-    0 0 26px rgba(90,10,10,0.16);
+    0 0 0 1px rgba(155,45,45,0.32),
+    0 0 16px rgba(150,25,25,0.24),
+    0 0 34px rgba(120,12,12,0.16),
+    inset 0 0 16px rgba(255,60,60,0.04);
 }
 
 @keyframes wwSilverSweep {
