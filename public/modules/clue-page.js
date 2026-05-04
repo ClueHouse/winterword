@@ -34,7 +34,7 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-hotspot-group-top: 51.5%;
 
   /* INTERNAL GROUP SPACING */
-  --ww-hotspot-gap: 9.1%;
+  --ww-hotspot-gap: 9.2%;
 
   /* PLAY BUTTON */
   --ww-hotspot-play-top: 38.5%;
