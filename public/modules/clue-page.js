@@ -253,27 +253,20 @@ body {
   content: "This path remains hidden, for now";
   position: absolute;
   left: 50%;
-  top: -145%;
+  top: 155%;
   transform: translateX(-50%);
-  padding: 0.55rem 1.25rem;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  padding: 0.58rem 1.25rem;
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.035em;
   text-transform: none;
-  color: rgba(255,240,240,0.98);
-  background:
-    linear-gradient(
-      145deg,
-      rgba(32,6,6,0.98) 0%,
-      rgba(62,12,12,0.98) 50%,
-      rgba(22,4,4,0.98) 100%
-    );
-  border: 1px solid rgba(170,70,70,0.34);
+  color: rgba(78,8,8,0.98);
+  background: rgba(255,248,244,0.96);
+  border: 1px solid rgba(120,20,20,0.35);
   border-radius: 0.55rem;
   box-shadow:
-    0 8px 22px rgba(0,0,0,0.52),
-    0 0 14px rgba(120,20,20,0.18),
-    inset 0 0 10px rgba(255,255,255,0.03);
+    0 8px 22px rgba(0,0,0,0.45),
+    0 0 18px rgba(255,235,225,0.18);
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
@@ -284,16 +277,16 @@ body {
 
 .ww-hotspot-life[data-locked="true"]:hover::after {
   opacity: 1;
-  transform: translateX(-50%) translateY(-2px);
+  transform: translateX(-50%) translateY(2px);
 }
 
 .ww-hotspot-life[data-locked="true"]:hover {
-  background: rgba(95,18,18,0.24);
+  background: rgba(120,20,20,0.34);
   box-shadow:
-    0 0 0 1px rgba(155,45,45,0.32),
-    0 0 16px rgba(150,25,25,0.24),
-    0 0 34px rgba(120,12,12,0.16),
-    inset 0 0 16px rgba(255,60,60,0.04);
+    0 0 0 1px rgba(180,50,50,0.45),
+    0 0 22px rgba(180,35,35,0.34),
+    0 0 44px rgba(120,12,12,0.24),
+    inset 0 0 22px rgba(255,80,80,0.08);
 }
 
 @keyframes wwSilverSweep {
