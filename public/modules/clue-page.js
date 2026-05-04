@@ -31,7 +31,7 @@ export function renderCluePage(app, data = {}, navigate) {
 
   /* MASTER GROUP POSITION */
   --ww-hotspot-group-left: 17%;
-  --ww-hotspot-group-top: 50%;
+  --ww-hotspot-group-top: 50.5%;
 
   /* INTERNAL GROUP SPACING */
   --ww-hotspot-gap: 9.3%;
