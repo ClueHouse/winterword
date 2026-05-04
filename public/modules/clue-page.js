@@ -23,23 +23,19 @@ export function renderCluePage(app, data = {}, navigate) {
   }
 
   const hasAudio = variant === "image-audio" && audio;
+  const lifelineUnlocked = Boolean(data?.org?.lifeline);
 
   app.innerHTML = `
 <style>
 :root {
   --ww-clue-bg: url("/assets/winterword/shared/fullclues.png");
 
-  /* MASTER GROUP POSITION */
   --ww-hotspot-group-left: 17%;
   --ww-hotspot-group-top: 50.6%;
-
-  /* INTERNAL GROUP SPACING */
   --ww-hotspot-gap: 9.2%;
 
-  /* PLAY BUTTON */
   --ww-hotspot-play-top: 38.5%;
 
-  /* DIMENSIONS */
   --ww-hotspot-base-width: 11%;
   --ww-hotspot-base-height: 4.8%;
 
@@ -175,7 +171,7 @@ body {
   background: transparent;
   cursor: pointer;
   transform: translate(-50%, -50%);
-  overflow: hidden;
+  overflow: visible;
   transition:
     transform 140ms ease,
     background 180ms ease;
@@ -190,7 +186,12 @@ body {
   outline-offset: 3px;
 }
 
-/* SILVER STREAK FOR ALL 3 */
+.ww-hotspot-base,
+.ww-hotspot-clues,
+.ww-hotspot-life {
+  overflow: hidden;
+}
+
 .ww-hotspot-base::before,
 .ww-hotspot-clues::before,
 .ww-hotspot-life::before {
@@ -226,6 +227,46 @@ body {
   box-shadow: none;
 }
 
+.ww-hotspot-life[data-locked="true"] {
+  cursor: not-allowed;
+}
+
+.ww-hotspot-life[data-locked="true"]::before {
+  display: none;
+}
+
+.ww-hotspot-life[data-locked="true"]::after {
+  content: "Unavailable";
+  position: absolute;
+  left: 50%;
+  top: -115%;
+  transform: translateX(-50%);
+  padding: 0.32rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(220,235,245,0.92);
+  background: rgba(8,12,18,0.92);
+  border: 1px solid rgba(180,210,230,0.22);
+  border-radius: 0.35rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.ww-hotspot-life[data-locked="true"]:hover::after {
+  opacity: 1;
+}
+
+.ww-hotspot-life[data-locked="true"]:hover {
+  background: rgba(185,225,255,0.06);
+  box-shadow:
+    0 0 0 1px rgba(190,235,255,0.14),
+    0 0 10px rgba(185,225,255,0.08);
+}
+
 @keyframes wwSilverSweep {
   0% {
     left: -80%;
@@ -242,7 +283,6 @@ body {
   }
 }
 
-/* BASE */
 .ww-hotspot-base {
   left: var(--ww-hotspot-group-left);
   top: var(--ww-hotspot-group-top);
@@ -250,7 +290,6 @@ body {
   height: var(--ww-hotspot-base-height);
 }
 
-/* CLUES */
 .ww-hotspot-clues {
   left: var(--ww-hotspot-group-left);
   top: calc(var(--ww-hotspot-group-top) + var(--ww-hotspot-gap));
@@ -258,7 +297,6 @@ body {
   height: var(--ww-hotspot-clues-height);
 }
 
-/* LIFE */
 .ww-hotspot-life {
   left: var(--ww-hotspot-group-left);
   top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2));
@@ -266,7 +304,6 @@ body {
   height: var(--ww-hotspot-life-height);
 }
 
-/* PLAY */
 .ww-hotspot-play {
   left: var(--ww-hotspot-group-left);
   top: var(--ww-hotspot-play-top);
@@ -358,9 +395,12 @@ body {
         class="ww-hotspot ww-hotspot-life"
         type="button"
         data-nav="lifeline"
-        aria-label="Go to Lifeline"
+        data-locked="${lifelineUnlocked ? "false" : "true"}"
+        aria-label="${lifelineUnlocked ? "Go to Lifeline" : "Lifeline unavailable"}"
       >
-        <span class="ww-screen-reader-only">Lifeline</span>
+        <span class="ww-screen-reader-only">
+          ${lifelineUnlocked ? "Lifeline" : "Lifeline unavailable"}
+        </span>
       </button>
 
     </section>
@@ -371,6 +411,10 @@ body {
   app.querySelectorAll("[data-nav]").forEach((button) => {
     button.addEventListener("click", () => {
       const target = button.getAttribute("data-nav");
+
+      if (target === "lifeline" && !lifelineUnlocked) {
+        return;
+      }
 
       if (typeof navigate === "function") {
         navigate(target);
