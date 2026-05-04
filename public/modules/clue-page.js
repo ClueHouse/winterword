@@ -30,11 +30,11 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-clue-bg: url("/assets/winterword/shared/fullclues.png");
 
   /* MASTER GROUP POSITION */
-  --ww-hotspot-group-left: 17%;
-  --ww-hotspot-group-top: 50.5%;
+  --ww-hotspot-group-left: 18%;
+  --ww-hotspot-group-top: 46.2%;
 
   /* INTERNAL GROUP SPACING */
-  --ww-hotspot-gap: 9.3%;
+  --ww-hotspot-gap: 9.1%;
 
   /* PLAY BUTTON */
   --ww-hotspot-play-top: 38.5%;
@@ -50,10 +50,6 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-hotspot-life-height: 4.8%;
 
   --ww-hotspot-play-size: 8%;
-
-  /* DEBUG */
-  --ww-debug-border: 2px solid rgba(255, 0, 0, 0.95);
-  --ww-debug-fill: rgba(255, 0, 0, 0.08);
 }
 
 * {
@@ -176,21 +172,22 @@ body {
   display: block;
   padding: 0;
   margin: 0;
-  border: var(--ww-debug-border);
-  background: var(--ww-debug-fill);
+  border: none;
+  background: transparent;
   cursor: pointer;
   transform: translate(-50%, -50%);
   transition:
     transform 140ms ease,
-    box-shadow 140ms ease,
-    background 140ms ease;
+    box-shadow 180ms ease,
+    background 180ms ease;
 }
 
 .ww-hotspot:hover {
-  background: rgba(240, 138, 36, 0.16);
+  background: rgba(185, 225, 255, 0.14);
   box-shadow:
-    0 0 0 1px rgba(240, 138, 36, 0.5),
-    0 0 18px rgba(240, 138, 36, 0.4);
+    0 0 0 1px rgba(190, 235, 255, 0.38),
+    0 0 14px rgba(185, 225, 255, 0.22),
+    0 0 28px rgba(170, 215, 255, 0.16);
 }
 
 .ww-hotspot:active {
@@ -198,11 +195,10 @@ body {
 }
 
 .ww-hotspot:focus-visible {
-  outline: 3px solid rgba(240, 138, 36, 0.95);
-  outline-offset: 4px;
+  outline: 2px solid rgba(200, 235, 255, 0.65);
+  outline-offset: 3px;
 }
 
-/* BASE */
 .ww-hotspot-base {
   left: var(--ww-hotspot-group-left);
   top: var(--ww-hotspot-group-top);
@@ -210,7 +206,6 @@ body {
   height: var(--ww-hotspot-base-height);
 }
 
-/* CLUES */
 .ww-hotspot-clues {
   left: var(--ww-hotspot-group-left);
   top: calc(var(--ww-hotspot-group-top) + var(--ww-hotspot-gap));
@@ -218,7 +213,6 @@ body {
   height: var(--ww-hotspot-clues-height);
 }
 
-/* LIFE */
 .ww-hotspot-life {
   left: var(--ww-hotspot-group-left);
   top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2));
@@ -226,7 +220,6 @@ body {
   height: var(--ww-hotspot-life-height);
 }
 
-/* PLAY */
 .ww-hotspot-play {
   left: var(--ww-hotspot-group-left);
   top: var(--ww-hotspot-play-top);
@@ -235,11 +228,13 @@ body {
   border-radius: 999px;
 }
 
+.ww-hotspot-play:hover,
 .ww-hotspot-play[data-playing="true"] {
-  background: rgba(240, 138, 36, 0.22);
+  background: rgba(185, 225, 255, 0.18);
   box-shadow:
-    0 0 0 1px rgba(240, 138, 36, 0.65),
-    0 0 24px rgba(240, 138, 36, 0.5);
+    0 0 0 1px rgba(200, 240, 255, 0.42),
+    0 0 18px rgba(185, 225, 255, 0.28),
+    0 0 34px rgba(170, 215, 255, 0.18);
 }
 
 .ww-screen-reader-only {
@@ -294,30 +289,15 @@ body {
           : ""
       }
 
-      <button
-        class="ww-hotspot ww-hotspot-base"
-        type="button"
-        data-nav="base-station"
-        aria-label="Go to Base Station"
-      >
+      <button class="ww-hotspot ww-hotspot-base" type="button" data-nav="base-station" aria-label="Go to Base Station">
         <span class="ww-screen-reader-only">Base Station</span>
       </button>
 
-      <button
-        class="ww-hotspot ww-hotspot-clues"
-        type="button"
-        data-nav="clues"
-        aria-label="Go to Clues"
-      >
+      <button class="ww-hotspot ww-hotspot-clues" type="button" data-nav="clues" aria-label="Go to Clues">
         <span class="ww-screen-reader-only">Clues</span>
       </button>
 
-      <button
-        class="ww-hotspot ww-hotspot-life"
-        type="button"
-        data-nav="lifeline"
-        aria-label="Go to Lifeline"
-      >
+      <button class="ww-hotspot ww-hotspot-life" type="button" data-nav="lifeline" aria-label="Go to Lifeline">
         <span class="ww-screen-reader-only">Lifeline</span>
       </button>
 
