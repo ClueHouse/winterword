@@ -30,7 +30,8 @@ export function renderAnswerPage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-rail-width: 24rem;
+  --ww-rail-visible-width: 17.85rem;
+  --ww-rail-frame-centre: 12rem;
   --ww-ink-soft: #d8d4c3;
 }
 
@@ -74,14 +75,13 @@ body {
   z-index: 1;
 }
 
-/* RAIL OVERLAY */
 #wwLeft {
   position: absolute;
   top: 0;
   left: 0;
-  width: var(--ww-rail-width);
+  width: var(--ww-rail-visible-width);
   height: 100%;
-  overflow: visible;
+  overflow: hidden;
   z-index: 50;
   pointer-events: none;
 }
@@ -89,7 +89,7 @@ body {
 .ww-rail-frame {
   position: absolute;
   top: 0;
-  left: 50%;
+  left: var(--ww-rail-frame-centre);
   height: 100%;
   aspect-ratio: 1024 / 1792;
   transform: translateX(-50%);
@@ -151,11 +151,22 @@ body {
     0 1.15rem 2.15rem rgba(0,0,0,0.64),
     0 0 1.1rem rgba(239,174,74,0.22);
   overflow: visible;
-  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
 }
 
 .ww-mini-play:hover {
   transform: translateY(-1px) scale(1.018);
+  filter: brightness(1.05);
+  box-shadow:
+    0 1.3rem 2.4rem rgba(0,0,0,0.7),
+    0 0 1.45rem rgba(239,174,74,0.32);
+}
+
+.ww-mini-play:active {
+  transform: translateY(1px) scale(0.992);
 }
 
 .ww-mini-play::before {
@@ -170,6 +181,7 @@ body {
     inset 0 0 0 1px rgba(255,242,184,0.2),
     inset 0 0.45rem 0.75rem rgba(255,255,255,0.06),
     inset 0 -0.75rem 1.05rem rgba(0,0,0,0.6);
+  pointer-events: none;
 }
 
 .ww-mini-play::after {
@@ -182,9 +194,19 @@ body {
   background:
     radial-gradient(circle, #ffffff 0%, #fff1b0 24%, rgba(246,186,76,0.72) 42%, rgba(246,186,76,0) 72%);
   clip-path: polygon(
-    50% 0%, 61% 39%, 100% 50%, 61% 61%,
-    50% 100%, 39% 61%, 0% 50%, 39% 39%
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
   );
+  filter:
+    drop-shadow(0 0 0.35rem rgba(255,230,150,0.72))
+    drop-shadow(0 0 0.7rem rgba(240,161,58,0.4));
+  pointer-events: none;
 }
 
 .ww-mini-play-icon {
@@ -196,6 +218,9 @@ body {
   border-bottom: 1rem solid transparent;
   border-left: 1.58rem solid #ffffff;
   margin-left: 0.28rem;
+  filter:
+    drop-shadow(0 0 0.28rem rgba(255,255,255,0.18))
+    drop-shadow(0 0.08rem 0.12rem rgba(0,0,0,0.5));
 }
 
 .ww-mini-play[data-playing="true"] .ww-mini-play-icon {
@@ -204,10 +229,12 @@ body {
   border: 0;
   margin-left: 0;
   background:
-    linear-gradient(90deg,
+    linear-gradient(
+      90deg,
       #fff 0 35%,
       transparent 35% 65%,
-      #fff 65% 100%);
+      #fff 65% 100%
+    );
 }
 
 .ww-mini-textnav {
@@ -222,12 +249,15 @@ body {
   background: transparent;
   border: 0;
   padding: 0;
+  line-height: 1;
+  text-decoration: none;
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 900;
   font-size: 1.12rem;
   letter-spacing: 0.44em;
   text-transform: uppercase;
   color: var(--ww-ink-soft);
+  opacity: 0.96;
   cursor: pointer;
   text-shadow:
     0 2px 5px rgba(0,0,0,0.86),
@@ -235,12 +265,16 @@ body {
 }
 
 .ww-mini-textlink:hover {
-  color: #fff;
+  color: #ffffff;
 }
 
 .ww-mini-textlink[data-active="true"] {
   position: relative;
-  color: #fff;
+  color: #ffffff;
+  text-shadow:
+    0 2px 5px rgba(0,0,0,0.86),
+    0 0 12px rgba(255,255,255,0.2),
+    0 0 18px rgba(240,161,58,0.34);
 }
 
 .ww-mini-textlink[data-active="true"]::before,
@@ -256,6 +290,9 @@ body {
     rgba(240,161,58,0.98),
     rgba(255,226,155,0.9)
   );
+  box-shadow:
+    0 0 10px rgba(240,161,58,0.55),
+    0 0 14px rgba(255,226,155,0.18);
 }
 
 .ww-mini-textlink[data-active="true"]::before {
@@ -268,14 +305,13 @@ body {
   transform: translateY(-50%) rotate(180deg);
 }
 
-/* ANSWER CONTENT */
 #wwRight {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3vh 3vw 3vh calc(var(--ww-rail-width) + 2rem);
+  padding: 3vh 3vw 3vh calc(var(--ww-rail-visible-width) + 5.5rem);
   z-index: 10;
 }
 
@@ -298,6 +334,7 @@ body {
       rgba(245,202,112,0.98) 68%,
       rgba(112,64,15,0.98) 100%);
   box-shadow:
+    0 0 0 1px rgba(255,228,155,0.18),
     0 1.6rem 3.8rem rgba(0,0,0,0.72),
     0 0 2.2rem rgba(239,174,74,0.14);
   position: relative;
@@ -309,6 +346,7 @@ body {
   inset: 0.28rem;
   border-radius: 1.25rem;
   border: 1px solid rgba(255,232,166,0.26);
+  pointer-events: none;
 }
 
 .ww-answer-frame::after {
@@ -317,6 +355,7 @@ body {
   inset: 0.62rem;
   border-radius: 1.08rem;
   border: 1px solid rgba(82,52,18,0.38);
+  pointer-events: none;
 }
 
 .ww-answer-inner {
@@ -324,9 +363,16 @@ body {
   border-radius: 1.15rem;
   overflow: hidden;
   background:
-    radial-gradient(circle at center,
-      rgba(30,50,38,0.22),
-      rgba(0,0,0,0.92));
+    radial-gradient(circle at center, rgba(30,50,38,0.22), rgba(0,0,0,0.92));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,242,184,0.08);
+}
+
+.ww-answer-media {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ww-answer-media img,
@@ -339,9 +385,39 @@ body {
 }
 
 .ww-answer-empty {
+  width: min(66vw, 900px);
   padding: 3rem;
-  color: rgba(245,247,251,0.78);
+  border-radius: 1.4rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
   text-align: center;
+  color: rgba(245,247,251,0.78);
+  font-size: 1.1rem;
+}
+
+@media (max-height: 760px) {
+  .ww-mini-core {
+    top: 47.4%;
+  }
+
+  .ww-mini-play {
+    width: 5.5rem;
+    height: 5.5rem;
+    margin-bottom: 2.35rem;
+  }
+
+  .ww-mini-textnav {
+    gap: 1rem;
+  }
+
+  .ww-mini-textlink {
+    font-size: 1rem;
+  }
+
+  .ww-answer-media img,
+  .ww-answer-media video {
+    max-height: 70vh;
+  }
 }
 </style>
 
