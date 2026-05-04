@@ -422,7 +422,12 @@
       : Math.max(0, Math.min(Number(orgState.current_clue || 0), totalClues));
 
     const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
-    const lifelineAvailable = orgState.lifeline_live === true;
+
+    const lifelineAvailable =
+      orgState.lifeline_live === true ||
+      orgState.lifeline_live === "true" ||
+      orgState.lifelineLive === true ||
+      orgState.lifelineLive === "true";
 
     const hasLeaderboardEntries =
       orgState.hasLeaderboardEntries === true ||
@@ -431,8 +436,11 @@
 
     const popClueLive =
       orgState.flash_clue_live === true ||
+      orgState.flash_clue_live === "true" ||
       orgState.pop_clue_live === true ||
-      orgState.popClueLive === true;
+      orgState.pop_clue_live === "true" ||
+      orgState.popClueLive === true ||
+      orgState.popClueLive === "true";
 
     function navigate(pageName, options = {}) {
       const page = normalisePageName(pageName);
@@ -546,6 +554,9 @@
               currentClue,
               totalClues,
               lifelineAvailable,
+              lifeline_live: orgState.lifeline_live,
+              lifelineLive: orgState.lifelineLive,
+              org: orgState,
               popClueLive,
               isResolved
             },
@@ -582,7 +593,11 @@
               clue: getClueById(game, currentClue, clueId),
               currentClue,
               isResolved,
-              lifelineAvailable
+
+              lifelineAvailable,
+              lifeline_live: orgState.lifeline_live,
+              lifelineLive: orgState.lifelineLive,
+              org: orgState
             },
             navigate
           );
@@ -637,7 +652,11 @@
               totalClues,
               answer,
               isResolved,
-              lifelineAvailable
+
+              lifelineAvailable,
+              lifeline_live: orgState.lifeline_live,
+              lifelineLive: orgState.lifelineLive,
+              org: orgState
             },
             navigate
           );
@@ -665,7 +684,12 @@
               lifelineTitle: game.lifeline_title || "Need a nudge?",
               lifelineBody: game.lifeline_body || "Your lifeline content goes here.",
               lifelineImage: game.lifeline_image || "",
-              orgName: orgState.org_name || game.org_name || "WinterWord"
+              orgName: orgState.org_name || game.org_name || "WinterWord",
+
+              lifelineAvailable,
+              lifeline_live: orgState.lifeline_live,
+              lifelineLive: orgState.lifelineLive,
+              org: orgState
             },
             navigate
           );
