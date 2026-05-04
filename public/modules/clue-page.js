@@ -7,8 +7,20 @@ export function renderCluePage(app, data = {}, navigate) {
   const {
     title = `Clue ${String(clueId).padStart(2, "0")}`,
     variant = "image-only",
+    image = "",
+    alt = title,
+    body = "",
     audio = ""
   } = clue;
+
+  function esc(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
 
   const hasAudio = variant === "image-audio" && audio;
 
@@ -17,32 +29,24 @@ export function renderCluePage(app, data = {}, navigate) {
 :root {
   --ww-clue-bg: url("/assets/winterword/shared/fullclues.png");
 
-  /*
-    POSITIONING VALUES
-    Adjust these only if the red boxes need moving.
+  --ww-hotspot-base-left: 18%;
+  --ww-hotspot-base-top: 47.5%;
+  --ww-hotspot-base-width: 11%;
+  --ww-hotspot-base-height: 5%;
 
-    left/top = position on the full image
-    width/height = clickable area size
-  */
+  --ww-hotspot-clues-left: 18%;
+  --ww-hotspot-clues-top: 55.2%;
+  --ww-hotspot-clues-width: 17%;
+  --ww-hotspot-clues-height: 5%;
 
-  --ww-hotspot-base-left: 50%;
-  --ww-hotspot-base-top: 71.2%;
-  --ww-hotspot-base-width: 26%;
-  --ww-hotspot-base-height: 5.2%;
+  --ww-hotspot-life-left: 18%;
+  --ww-hotspot-life-top: 63.2%;
+  --ww-hotspot-life-width: 11%;
+  --ww-hotspot-life-height: 5%;
 
-  --ww-hotspot-clues-left: 50%;
-  --ww-hotspot-clues-top: 78.4%;
-  --ww-hotspot-clues-width: 26%;
-  --ww-hotspot-clues-height: 5.2%;
-
-  --ww-hotspot-life-left: 50%;
-  --ww-hotspot-life-top: 85.6%;
-  --ww-hotspot-life-width: 26%;
-  --ww-hotspot-life-height: 5.2%;
-
-  --ww-hotspot-play-left: 50%;
-  --ww-hotspot-play-top: 61.5%;
-  --ww-hotspot-play-size: 10.5%;
+  --ww-hotspot-play-left: 18%;
+  --ww-hotspot-play-top: 39%;
+  --ww-hotspot-play-size: 8%;
 
   --ww-debug-border: 2px solid rgba(255, 0, 0, 0.95);
   --ww-debug-fill: rgba(255, 0, 0, 0.08);
@@ -74,31 +78,56 @@ body {
 .ww-clue-stage {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
   overflow: hidden;
   background: #000;
 }
 
 .ww-clue-map {
-  position: relative;
-  height: 100vh;
-  width: auto;
-  aspect-ratio: 16 / 9;
-  max-width: 100vw;
-  max-height: 100vh;
+  position: absolute;
+  inset: 0;
   background-image: var(--ww-clue-bg);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   overflow: hidden;
 }
 
-@media (max-aspect-ratio: 16 / 9) {
-  .ww-clue-map {
-    width: 100vw;
-    height: auto;
-  }
+.ww-main-clue {
+  position: absolute;
+  right: 5.5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(64vw, 1280px);
+  max-height: 88vh;
+  object-fit: contain;
+  display: block;
+  z-index: 2;
+}
+
+.ww-clue-fallback {
+  position: absolute;
+  right: 5.5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(64vw, 760px);
+  padding: 2rem;
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  text-align: center;
+  z-index: 2;
+}
+
+.ww-clue-fallback h1 {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+}
+
+.ww-clue-fallback p {
+  margin: 0;
+  color: rgba(255,255,255,0.76);
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
 
 .ww-hotspot {
@@ -184,8 +213,27 @@ body {
 </style>
 
 <div id="wwPortal">
-  <main class="ww-clue-stage" aria-label="${title}">
-    <section class="ww-clue-map" aria-label="WinterWord clue navigation">
+  <main class="ww-clue-stage" aria-label="${esc(title)}">
+    <section class="ww-clue-map" aria-label="WinterWord clue page">
+
+      ${
+        image
+          ? `
+            <img
+              class="ww-main-clue"
+              src="${esc(image)}"
+              alt="${esc(alt)}"
+              loading="lazy"
+              decoding="async"
+            >
+          `
+          : `
+            <section class="ww-clue-fallback">
+              <h1>${esc(title)}</h1>
+              <p>${body ? esc(body) : "No clue image has been supplied yet."}</p>
+            </section>
+          `
+      }
 
       ${
         hasAudio
@@ -203,30 +251,15 @@ body {
           : ""
       }
 
-      <button
-        class="ww-hotspot ww-hotspot-base"
-        type="button"
-        data-nav="base-station"
-        aria-label="Go to Base Station"
-      >
+      <button class="ww-hotspot ww-hotspot-base" type="button" data-nav="base-station" aria-label="Go to Base Station">
         <span class="ww-screen-reader-only">Base Station</span>
       </button>
 
-      <button
-        class="ww-hotspot ww-hotspot-clues"
-        type="button"
-        data-nav="clues"
-        aria-label="Go to Clues"
-      >
+      <button class="ww-hotspot ww-hotspot-clues" type="button" data-nav="clues" aria-label="Go to Clues">
         <span class="ww-screen-reader-only">Clues</span>
       </button>
 
-      <button
-        class="ww-hotspot ww-hotspot-life"
-        type="button"
-        data-nav="lifeline"
-        aria-label="Go to Lifeline"
-      >
+      <button class="ww-hotspot ww-hotspot-life" type="button" data-nav="lifeline" aria-label="Go to Lifeline">
         <span class="ww-screen-reader-only">Lifeline</span>
       </button>
 
