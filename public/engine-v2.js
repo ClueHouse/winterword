@@ -9,6 +9,7 @@
     baseStationResolved: "/modules/base-station-resolved.js",
     clueList: "/modules/clue-list.js",
     cluePage: "/modules/clue-page.js",
+    cluePagePlay: "/modules/clue-page-play.js",
     answerList: "/modules/answer-list.js",
     answerPage: "/modules/answer-page.js",
     lifeline: "/modules/lifeline.js",
@@ -578,7 +579,12 @@
             return;
           }
 
-          const renderCluePage = modules.cluePage.renderCluePage;
+          const clueData = getClueById(game, currentClue, clueId);
+
+          const renderCluePage =
+            clueData.variant === "image-audio"
+              ? modules.cluePagePlay.renderCluePage
+              : modules.cluePage.renderCluePage;
 
           if (typeof renderCluePage !== "function") {
             renderError("Clue Page module error", "renderCluePage was not found.");
@@ -590,7 +596,7 @@
             {
               clueId,
               totalClues,
-              clue: getClueById(game, currentClue, clueId),
+              clue: clueData,
               currentClue,
               isResolved,
 
