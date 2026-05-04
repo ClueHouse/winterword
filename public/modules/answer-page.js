@@ -25,7 +25,6 @@ export function renderAnswerPage(app, data = {}, navigate) {
   const hasAudio = Boolean(audio);
   const isVideo = variant === "video" || variant === "video-audio";
   const hasPlayableMedia = isVideo || hasAudio;
-  const showRailButton = true;
 
   app.innerHTML = `
 <style>
@@ -243,40 +242,6 @@ body {
     0 0 0.75rem rgba(246,186,76,0.36);
 }
 
-.ww-mini-textlabel {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-  padding: 0.08rem 0.04rem;
-}
-
-.ww-mini-textlabel::after {
-  content: "";
-  position: absolute;
-  top: -28%;
-  left: -55%;
-  width: 42%;
-  height: 170%;
-  background: linear-gradient(
-    115deg,
-    transparent 0%,
-    transparent 35%,
-    rgba(238,171,67,0) 43%,
-    rgba(255,239,177,0.98) 49%,
-    rgba(238,171,67,0.96) 53%,
-    rgba(238,171,67,0) 60%,
-    transparent 72%,
-    transparent 100%
-  );
-  transform: translateX(-180%) skewX(-25deg);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.ww-mini-textlink:hover .ww-mini-textlabel::after {
-  animation: wwGoldSweep 700ms ease forwards;
-}
-
 .ww-mini-textlink[data-active="true"] {
   color: #ffffff;
 }
@@ -328,12 +293,14 @@ body {
   padding: 0.42rem;
   border-radius: 1.2rem;
   background:
-    linear-gradient(145deg,
+    linear-gradient(
+      145deg,
       rgba(255,240,184,0.96) 0%,
       rgba(231,178,78,0.98) 18%,
       rgba(164,103,36,0.98) 42%,
       rgba(245,202,112,0.98) 68%,
-      rgba(112,64,15,0.98) 100%);
+      rgba(112,64,15,0.98) 100%
+    );
   box-shadow:
     0 0 0 1px rgba(255,228,155,0.16),
     0 1.4rem 3rem rgba(0,0,0,0.72),
@@ -404,22 +371,6 @@ body {
   }
 }
 
-@keyframes wwGoldSweep {
-  0% {
-    opacity: 0;
-    transform: translateX(-180%) skewX(-25deg);
-  }
-
-  15% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(430%) skewX(-25deg);
-  }
-}
-
 @media (max-width: 900px) {
   :root {
     --ww-left-zone: 16.5rem;
@@ -452,27 +403,15 @@ body {
 <div id="wwPortal">
   <div class="ww-mini-shell" aria-label="Answer Rail">
     <div class="ww-mini-core">
-      ${
-        showRailButton
-          ? `
-            <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="${hasPlayableMedia ? "Play answer media" : "Play"}" data-playing="false">
-              <span class="ww-mini-play-glow" aria-hidden="true"></span>
-              <span class="ww-mini-play-icon" aria-hidden="true"></span>
-            </button>
-          `
-          : ""
-      }
+      <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="${hasPlayableMedia ? "Play answer media" : "Play"}" data-playing="false">
+        <span class="ww-mini-play-glow" aria-hidden="true"></span>
+        <span class="ww-mini-play-icon" aria-hidden="true"></span>
+      </button>
 
       <nav class="ww-mini-textnav" aria-label="Answer navigation">
-        <button class="ww-mini-textlink" type="button" data-nav="base-station">
-          <span class="ww-mini-textlabel">Base</span>
-        </button>
-        <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">
-          <span class="ww-mini-textlabel">Answers</span>
-        </button>
-        <button class="ww-mini-textlink" type="button" data-nav="leaderboard">
-          <span class="ww-mini-textlabel">Leader</span>
-        </button>
+        <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
+        <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">Answers</button>
+        <button class="ww-mini-textlink" type="button" data-nav="leaderboard">Leader</button>
       </nav>
     </div>
   </div>
