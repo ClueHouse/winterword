@@ -7,32 +7,45 @@ export function renderCluePage(app, data = {}, navigate) {
   const {
     title = `Clue ${String(clueId).padStart(2, "0")}`,
     variant = "image-only",
-    image = "",
-    alt = title,
-    body = "",
     audio = ""
   } = clue;
-
-  function esc(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#39;");
-  }
 
   const hasAudio = variant === "image-audio" && audio;
 
   app.innerHTML = `
 <style>
 :root {
-  --ww-ink: #d8dde3;
-  --ww-left-narrow: 10.12rem;
-  --ww-ink-blue: #f2f5f8;
-  --ww-ink-blue-hover: #ffffff;
-  --ww-orange: #f08a24;
-  --ww-rail-gap: 2.35rem;
+  --ww-clue-bg: url("/assets/winterword/shared/fullclues.png");
+
+  /*
+    POSITIONING VALUES
+    Adjust these only if the red boxes need moving.
+
+    left/top = position on the full image
+    width/height = clickable area size
+  */
+
+  --ww-hotspot-base-left: 50%;
+  --ww-hotspot-base-top: 71.2%;
+  --ww-hotspot-base-width: 26%;
+  --ww-hotspot-base-height: 5.2%;
+
+  --ww-hotspot-clues-left: 50%;
+  --ww-hotspot-clues-top: 78.4%;
+  --ww-hotspot-clues-width: 26%;
+  --ww-hotspot-clues-height: 5.2%;
+
+  --ww-hotspot-life-left: 50%;
+  --ww-hotspot-life-top: 85.6%;
+  --ww-hotspot-life-width: 26%;
+  --ww-hotspot-life-height: 5.2%;
+
+  --ww-hotspot-play-left: 50%;
+  --ww-hotspot-play-top: 61.5%;
+  --ww-hotspot-play-size: 10.5%;
+
+  --ww-debug-border: 2px solid rgba(255, 0, 0, 0.95);
+  --ww-debug-fill: rgba(255, 0, 0, 0.08);
 }
 
 * {
@@ -49,333 +62,176 @@ body {
 }
 
 #wwPortal {
-  display: flex;
+  width: 100vw;
   height: 100vh;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  min-height: 100vh;
   overflow: hidden;
   background: #000;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   position: relative;
-  z-index: 1;
 }
 
-#wwLeft {
-  width: var(--ww-left-narrow);
-  flex: 0 0 var(--ww-left-narrow);
-  position: relative;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(0,0,0,0.96) 0%,
-      rgba(10,12,14,0.94) 45%,
-      rgba(18,22,26,0.88) 75%,
-      rgba(28,34,40,0.65) 100%
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.015) 0px,
-      rgba(255,255,255,0.015) 1px,
-      transparent 1px,
-      transparent 3px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.01) 0px,
-      rgba(255,255,255,0.01) 1px,
-      transparent 1px,
-      transparent 4px
-    );
-  box-shadow:
-    inset -1px 0 0 rgba(255,255,255,0.05),
-    inset -24px 0 36px rgba(255,255,255,0.015),
-    6px 0 24px rgba(0,0,0,0.45);
-  overflow: hidden;
-}
-
-#wwLeft::before {
-  content: "";
+.ww-clue-stage {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 45%),
-    radial-gradient(circle at bottom left, rgba(240,138,36,0.03), transparent 35%);
-  pointer-events: none;
-}
-
-.ww-mini-shell {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.ww-mini-logo {
-  display: flex;
-  margin-bottom: var(--ww-rail-gap);
-  filter:
-    drop-shadow(0 0 10px rgba(255,255,255,0.08))
-    drop-shadow(0 0 18px rgba(240,138,36,0.05));
-}
-
-.ww-mini-logo img {
-  width: 8.28rem;
-  height: auto;
-  display: block;
-  opacity: 0.98;
-}
-
-.ww-mini-play {
-  appearance: none;
-  width: 4.83rem;
-  height: 4.83rem;
-  border-radius: 999px;
-  border: 2px solid rgba(240,138,36,0.88);
-  background: linear-gradient(180deg, #243242 0%, #192532 100%);
-  color: #fff;
-  cursor: pointer;
-  box-shadow:
-    0 14px 28px rgba(0,0,0,0.28),
-    0 0 22px rgba(240,138,36,0.28);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: var(--ww-rail-gap);
-  position: relative;
+  display: grid;
+  place-items: center;
   overflow: hidden;
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease;
-}
-
-.ww-mini-play::before {
-  content: "";
-  position: absolute;
-  top: -30%;
-  left: -85%;
-  width: 55%;
-  height: 160%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255,255,255,0.16) 42%,
-    rgba(255,255,255,0.42) 50%,
-    rgba(255,255,255,0.16) 58%,
-    transparent 100%
-  );
-  transform: rotate(24deg);
-  animation: wwPlayShine 3.8s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes wwPlayShine {
-  0% {
-    left: -85%;
-    opacity: 0;
-  }
-
-  18% {
-    opacity: 0;
-  }
-
-  32% {
-    opacity: 1;
-  }
-
-  52% {
-    left: 130%;
-    opacity: 0.9;
-  }
-
-  70% {
-    opacity: 0;
-  }
-
-  100% {
-    left: 130%;
-    opacity: 0;
-  }
-}
-
-.ww-mini-play:hover {
-  transform: translateY(-1px) scale(1.04);
-  box-shadow:
-    0 18px 34px rgba(0,0,0,0.34),
-    0 0 30px rgba(240,138,36,0.4);
-}
-
-.ww-mini-play-icon {
-  position: relative;
-  z-index: 2;
-  width: 0;
-  height: 0;
-  border-top: 0.78rem solid transparent;
-  border-bottom: 0.78rem solid transparent;
-  border-left: 1.21rem solid #fff;
-  margin-left: 0.22rem;
-}
-
-.ww-mini-play[data-playing="true"] .ww-mini-play-icon {
-  width: 1.15rem;
-  height: 1.42rem;
-  border: 0;
-  margin-left: 0;
-  background:
-    linear-gradient(
-      90deg,
-      #fff 0 35%,
-      transparent 35% 65%,
-      #fff 65% 100%
-    );
-}
-
-.ww-mini-textnav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.98rem;
-  margin-top: 2rem;
-}
-
-.ww-mini-textlink {
-  appearance: none;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  line-height: 1;
-  text-decoration: none;
-  font-weight: 900;
-  font-size: 0.9rem;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--ww-ink-blue);
-  opacity: 0.9;
-  cursor: pointer;
-  text-shadow: 0 0 8px rgba(255,255,255,0.04);
-  transition:
-    color 180ms ease,
-    opacity 180ms ease,
-    transform 180ms ease,
-    text-shadow 180ms ease;
-}
-
-.ww-mini-textlink:hover {
-  color: var(--ww-ink-blue-hover);
-  opacity: 1;
-  transform: scale(1.06);
-  text-shadow:
-    0 0 10px rgba(255,255,255,0.08),
-    0 0 18px rgba(240,138,36,0.12);
-}
-
-.ww-mini-textlink[data-active="true"] {
-  color: #ffffff;
-  opacity: 1;
-  text-shadow:
-    0 0 10px rgba(255,255,255,0.08),
-    0 0 18px rgba(240,138,36,0.18);
-}
-
-#wwRight {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: #000;
-  padding: 3.2vh 3.2vw;
-  min-width: 0;
 }
 
-#clueImage {
-  width: min(90vw, 1400px);
-  max-height: 90vh;
-  object-fit: contain;
+.ww-clue-map {
+  position: relative;
+  height: 100vh;
+  width: auto;
+  aspect-ratio: 16 / 9;
+  max-width: 100vw;
+  max-height: 100vh;
+  background-image: var(--ww-clue-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  overflow: hidden;
+}
+
+@media (max-aspect-ratio: 16 / 9) {
+  .ww-clue-map {
+    width: 100vw;
+    height: auto;
+  }
+}
+
+.ww-hotspot {
+  appearance: none;
+  position: absolute;
+  z-index: 5;
   display: block;
-}
-
-.ww-clue-fallback {
-  max-width: 760px;
-  padding: 2rem;
-  border-radius: 1rem;
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  text-align: center;
-}
-
-.ww-clue-fallback h1 {
-  margin: 0 0 1rem;
-  font-size: 2rem;
-}
-
-.ww-clue-fallback p {
+  padding: 0;
   margin: 0;
-  color: rgba(255,255,255,0.76);
-  line-height: 1.6;
-  white-space: pre-wrap;
+  border: var(--ww-debug-border);
+  background: var(--ww-debug-fill);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    background 140ms ease;
 }
 
-@media (max-width: 820px) {
-  :root {
-    --ww-left-narrow: 9.4rem;
-    --ww-rail-gap: 2rem;
-  }
+.ww-hotspot:hover {
+  background: rgba(240, 138, 36, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(240, 138, 36, 0.5),
+    0 0 18px rgba(240, 138, 36, 0.4);
+}
 
-  .ww-mini-logo img {
-    width: 7.4rem;
-  }
+.ww-hotspot:active {
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
+.ww-hotspot:focus-visible {
+  outline: 3px solid rgba(240, 138, 36, 0.95);
+  outline-offset: 4px;
+}
+
+.ww-hotspot-base {
+  left: var(--ww-hotspot-base-left);
+  top: var(--ww-hotspot-base-top);
+  width: var(--ww-hotspot-base-width);
+  height: var(--ww-hotspot-base-height);
+}
+
+.ww-hotspot-clues {
+  left: var(--ww-hotspot-clues-left);
+  top: var(--ww-hotspot-clues-top);
+  width: var(--ww-hotspot-clues-width);
+  height: var(--ww-hotspot-clues-height);
+}
+
+.ww-hotspot-life {
+  left: var(--ww-hotspot-life-left);
+  top: var(--ww-hotspot-life-top);
+  width: var(--ww-hotspot-life-width);
+  height: var(--ww-hotspot-life-height);
+}
+
+.ww-hotspot-play {
+  left: var(--ww-hotspot-play-left);
+  top: var(--ww-hotspot-play-top);
+  width: var(--ww-hotspot-play-size);
+  height: var(--ww-hotspot-play-size);
+  border-radius: 999px;
+}
+
+.ww-hotspot-play[data-playing="true"] {
+  background: rgba(240, 138, 36, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(240, 138, 36, 0.65),
+    0 0 24px rgba(240, 138, 36, 0.5);
+}
+
+.ww-screen-reader-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>
 
 <div id="wwPortal">
-
-  <aside id="wwLeft" aria-label="Mini Rail">
-    <div class="ww-mini-shell">
-
-      <div class="ww-mini-logo" aria-label="WinterWord">
-        <img src="/assets/winterword/shared/logo.png" alt="WinterWord">
-      </div>
+  <main class="ww-clue-stage" aria-label="${title}">
+    <section class="ww-clue-map" aria-label="WinterWord clue navigation">
 
       ${
         hasAudio
           ? `
-            <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="Play clue audio" data-playing="false">
-              <span class="ww-mini-play-icon" aria-hidden="true"></span>
+            <button
+              class="ww-hotspot ww-hotspot-play"
+              id="wwPlayButton"
+              type="button"
+              aria-label="Play clue audio"
+              data-playing="false"
+            >
+              <span class="ww-screen-reader-only">Play clue audio</span>
             </button>
           `
           : ""
       }
 
-      <nav class="ww-mini-textnav" aria-label="Mini navigation">
-        <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
-        <button class="ww-mini-textlink" type="button" data-nav="clues" data-active="true">Clues</button>
-        <button class="ww-mini-textlink" type="button" data-nav="lifeline">Life</button>
-      </nav>
+      <button
+        class="ww-hotspot ww-hotspot-base"
+        type="button"
+        data-nav="base-station"
+        aria-label="Go to Base Station"
+      >
+        <span class="ww-screen-reader-only">Base Station</span>
+      </button>
 
-    </div>
-  </aside>
+      <button
+        class="ww-hotspot ww-hotspot-clues"
+        type="button"
+        data-nav="clues"
+        aria-label="Go to Clues"
+      >
+        <span class="ww-screen-reader-only">Clues</span>
+      </button>
 
-  <main id="wwRight">
-    ${
-      image
-        ? `
-          <img
-            id="clueImage"
-            src="${esc(image)}"
-            alt="${esc(alt)}"
-            loading="lazy"
-            decoding="async"
-          >
-        `
-        : `
-          <section class="ww-clue-fallback">
-            <h1>${esc(title)}</h1>
-            <p>${body ? esc(body) : "No clue image has been supplied yet."}</p>
-          </section>
-        `
-    }
+      <button
+        class="ww-hotspot ww-hotspot-life"
+        type="button"
+        data-nav="lifeline"
+        aria-label="Go to Lifeline"
+      >
+        <span class="ww-screen-reader-only">Lifeline</span>
+      </button>
+
+    </section>
   </main>
-
 </div>
 `;
 
