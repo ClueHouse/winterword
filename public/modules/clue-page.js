@@ -29,25 +29,28 @@ export function renderCluePage(app, data = {}, navigate) {
 :root {
   --ww-clue-bg: url("/assets/winterword/shared/fullclues.png");
 
-  --ww-hotspot-base-left: 18%;
+  /* MASTER HOTSPOT HORIZONTAL POSITION */
+  --ww-hotspot-left: 18%;
+
+  /* INDIVIDUAL VERTICAL POSITIONS */
   --ww-hotspot-base-top: 46.2%;
+  --ww-hotspot-clues-top: 55.3%;
+  --ww-hotspot-life-top: 64.8%;
+  --ww-hotspot-play-top: 38.5%;
+
+  /* DIMENSIONS */
   --ww-hotspot-base-width: 11%;
   --ww-hotspot-base-height: 4.8%;
 
-  --ww-hotspot-clues-left: 18%;
-  --ww-hotspot-clues-top: 55.3%;
   --ww-hotspot-clues-width: 17%;
   --ww-hotspot-clues-height: 4.8%;
 
-  --ww-hotspot-life-left: 18%;
-  --ww-hotspot-life-top: 64.8%;
   --ww-hotspot-life-width: 11%;
   --ww-hotspot-life-height: 4.8%;
 
-  --ww-hotspot-play-left: 18%;
-  --ww-hotspot-play-top: 38.5%;
   --ww-hotspot-play-size: 8%;
 
+  /* DEBUG */
   --ww-debug-border: 2px solid rgba(255, 0, 0, 0.95);
   --ww-debug-fill: rgba(255, 0, 0, 0.08);
 }
@@ -104,22 +107,39 @@ body {
   z-index: 2;
 
   padding: 0.9rem;
+
   background:
-    linear-gradient(145deg,
-      rgba(115,115,115,0.95) 0%,
-      rgba(58,58,58,0.98) 18%,
-      rgba(138,138,138,0.92) 38%,
-      rgba(44,44,44,0.98) 58%,
-      rgba(95,95,95,0.94) 78%,
-      rgba(28,28,28,1) 100%);
-  border:
-    2px solid rgba(170,170,170,0.35);
+    linear-gradient(
+      145deg,
+      rgba(24,24,24,0.98) 0%,
+      rgba(10,10,10,1) 18%,
+      rgba(38,38,38,0.96) 36%,
+      rgba(6,6,6,1) 58%,
+      rgba(28,28,28,0.96) 78%,
+      rgba(0,0,0,1) 100%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.018) 0px,
+      rgba(255,255,255,0.018) 2px,
+      transparent 2px,
+      transparent 6px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255,255,255,0.012) 0px,
+      rgba(255,255,255,0.012) 2px,
+      transparent 2px,
+      transparent 6px
+    );
+
+  border: 2px solid rgba(70,70,70,0.35);
 
   box-shadow:
-    0 0 0 2px rgba(25,25,25,0.85),
-    0 10px 28px rgba(0,0,0,0.55),
-    inset 0 0 12px rgba(255,255,255,0.08),
-    inset 0 0 22px rgba(0,0,0,0.35);
+    0 0 0 2px rgba(0,0,0,0.92),
+    0 12px 32px rgba(0,0,0,0.72),
+    inset 0 0 10px rgba(255,255,255,0.03),
+    inset 0 0 24px rgba(0,0,0,0.55);
 }
 
 .ww-clue-fallback {
@@ -182,28 +202,28 @@ body {
 }
 
 .ww-hotspot-base {
-  left: var(--ww-hotspot-base-left);
+  left: var(--ww-hotspot-left);
   top: var(--ww-hotspot-base-top);
   width: var(--ww-hotspot-base-width);
   height: var(--ww-hotspot-base-height);
 }
 
 .ww-hotspot-clues {
-  left: var(--ww-hotspot-clues-left);
+  left: var(--ww-hotspot-left);
   top: var(--ww-hotspot-clues-top);
   width: var(--ww-hotspot-clues-width);
   height: var(--ww-hotspot-clues-height);
 }
 
 .ww-hotspot-life {
-  left: var(--ww-hotspot-life-left);
+  left: var(--ww-hotspot-left);
   top: var(--ww-hotspot-life-top);
   width: var(--ww-hotspot-life-width);
   height: var(--ww-hotspot-life-height);
 }
 
 .ww-hotspot-play {
-  left: var(--ww-hotspot-play-left);
+  left: var(--ww-hotspot-left);
   top: var(--ww-hotspot-play-top);
   width: var(--ww-hotspot-play-size);
   height: var(--ww-hotspot-play-size);
@@ -269,15 +289,30 @@ body {
           : ""
       }
 
-      <button class="ww-hotspot ww-hotspot-base" type="button" data-nav="base-station" aria-label="Go to Base Station">
+      <button
+        class="ww-hotspot ww-hotspot-base"
+        type="button"
+        data-nav="base-station"
+        aria-label="Go to Base Station"
+      >
         <span class="ww-screen-reader-only">Base Station</span>
       </button>
 
-      <button class="ww-hotspot ww-hotspot-clues" type="button" data-nav="clues" aria-label="Go to Clues">
+      <button
+        class="ww-hotspot ww-hotspot-clues"
+        type="button"
+        data-nav="clues"
+        aria-label="Go to Clues"
+      >
         <span class="ww-screen-reader-only">Clues</span>
       </button>
 
-      <button class="ww-hotspot ww-hotspot-life" type="button" data-nav="lifeline" aria-label="Go to Lifeline">
+      <button
+        class="ww-hotspot ww-hotspot-life"
+        type="button"
+        data-nav="lifeline"
+        aria-label="Go to Lifeline"
+      >
         <span class="ww-screen-reader-only">Lifeline</span>
       </button>
 
