@@ -25,14 +25,12 @@ export function renderCluePage(app, data = {}, navigate) {
 
   const hasAudio = variant === "image-audio" && audio;
 
-  /* AIRTABLE LIFELINE FIELD SUPPORT */
+  /* CORRECT AIRTABLE LIFELINE FIELD */
   const lifelineUnlocked =
-    org?.lifeline === true ||
-    org?.lifeline === "true" ||
-    org?.life === true ||
-    org?.life === "true" ||
-    org?.lifeline_enabled === true ||
-    org?.lifeline_enabled === "true";
+    org?.lifeline_live === true ||
+    org?.lifeline_live === "true" ||
+    org?.lifelineLive === true ||
+    org?.lifelineLive === "true";
 
   app.innerHTML = `
 <style>
