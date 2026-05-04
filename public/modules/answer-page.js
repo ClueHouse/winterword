@@ -30,8 +30,8 @@ export function renderAnswerPage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-rail-visible-width: 24rem;
-  --ww-rail-frame-centre: 12.5rem;
+  --ww-rail-visible-width: 19.75rem;
+  --ww-rail-frame-centre: 9.875rem;
   --ww-ink-soft: #d8d4c3;
 }
 
@@ -260,7 +260,7 @@ body {
 }
 
 .ww-answer-stage {
-  width: min(66vw, 1280px);
+  width: min(68vw, 1320px);
   display: flex;
   align-items: center;
   justify-content: center;
