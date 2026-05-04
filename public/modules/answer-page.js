@@ -72,8 +72,8 @@ body {
 
 .ww-mini-core {
   position: absolute;
-  top: 50%;
-  left: 60%;
+  top: 46%;
+  left: 58%;
   width: 100%;
   transform: translate(-50%, -50%);
   display: flex;
