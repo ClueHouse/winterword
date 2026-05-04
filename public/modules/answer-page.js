@@ -106,7 +106,28 @@ body {
   box-shadow:
     0 1rem 2rem rgba(0,0,0,0.64),
     0 0 1rem rgba(239,174,74,0.22);
-  overflow: visible;
+  overflow: hidden;
+  transform: translateY(0) scale(1);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
+}
+
+.ww-mini-play:hover {
+  transform: translateY(-0.08rem) scale(1.035);
+  filter: brightness(1.08);
+  box-shadow:
+    0 1.15rem 2.35rem rgba(0,0,0,0.72),
+    0 0 1.4rem rgba(239,174,74,0.42);
+}
+
+.ww-mini-play:active {
+  transform: translateY(0.16rem) scale(0.94);
+  filter: brightness(0.88);
+  box-shadow:
+    0 0.45rem 0.95rem rgba(0,0,0,0.78),
+    0 0 0.55rem rgba(239,174,74,0.2);
 }
 
 .ww-mini-play::before {
@@ -135,6 +156,27 @@ body {
   clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
 }
 
+.ww-mini-play-glow {
+  position: absolute;
+  inset: -40%;
+  z-index: 1;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255,242,184,0.34) 46%,
+    rgba(255,255,255,0.58) 50%,
+    rgba(255,242,184,0.24) 54%,
+    transparent 65%
+  );
+  transform: translateX(-85%) rotate(8deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ww-mini-play:hover .ww-mini-play-glow {
+  animation: wwButtonGleam 1.25s ease forwards;
+}
+
 .ww-mini-play-icon {
   position: relative;
   z-index: 2;
@@ -144,6 +186,11 @@ body {
   border-bottom: 0.9rem solid transparent;
   border-left: 1.4rem solid #ffffff;
   margin-left: 0.24rem;
+  transition: transform 160ms ease;
+}
+
+.ww-mini-play:active .ww-mini-play-icon {
+  transform: scale(0.88);
 }
 
 .ww-mini-play[data-playing="true"] .ww-mini-play-icon {
@@ -180,31 +227,79 @@ body {
   text-shadow:
     0 2px 5px rgba(0,0,0,0.86),
     0 0 8px rgba(255,255,255,0.05);
+  position: relative;
+  transition:
+    color 180ms ease,
+    text-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.ww-mini-textlink:hover {
+  color: #fff6d7;
+  transform: translateX(0.08rem);
+  text-shadow:
+    0 2px 5px rgba(0,0,0,0.9),
+    0 0 0.75rem rgba(246,186,76,0.36);
+}
+
+.ww-mini-textlink::after {
+  content: "";
+  position: absolute;
+  left: -0.15rem;
+  right: 0.15rem;
+  top: 50%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(111,63,16,0.2) 8%,
+    rgba(238,171,67,0.95) 28%,
+    rgba(255,239,177,1) 50%,
+    rgba(238,171,67,0.95) 72%,
+    rgba(111,63,16,0.2) 92%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 0.4rem rgba(239,174,74,0.45),
+    0 1px 2px rgba(0,0,0,0.65);
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ww-mini-textlink:hover::after {
+  animation: wwGoldStrike 520ms ease forwards;
 }
 
 .ww-mini-textlink[data-active="true"] {
-  position: relative;
   color: #ffffff;
 }
 
-.ww-mini-textlink[data-active="true"]::before,
-.ww-mini-textlink[data-active="true"]::after {
+.ww-mini-textlink[data-active="true"]::before {
   content: "";
   position: absolute;
   top: 50%;
   width: 1.7rem;
   height: 1px;
+  right: calc(100% + 0.55rem);
+  transform: translateY(-50%);
   background: linear-gradient(90deg, transparent, rgba(240,161,58,0.98), rgba(255,226,155,0.9));
 }
 
-.ww-mini-textlink[data-active="true"]::before {
-  right: calc(100% + 0.55rem);
-  transform: translateY(-50%);
+.ww-mini-textlink[data-active="true"] .ww-active-slash {
+  display: none;
 }
 
 .ww-mini-textlink[data-active="true"]::after {
   left: calc(100% + 0.55rem);
-  transform: translateY(-50%) rotate(180deg);
+  right: auto;
+  width: 1.7rem;
+  height: 1px;
+  opacity: 1;
+  transform: translateY(-50%) rotate(180deg) scaleX(1);
+  animation: none;
 }
 
 #wwRight {
@@ -289,6 +384,38 @@ body {
   text-align: center;
 }
 
+@keyframes wwButtonGleam {
+  0% {
+    opacity: 0;
+    transform: translateX(-85%) rotate(8deg);
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(85%) rotate(8deg);
+  }
+}
+
+@keyframes wwGoldStrike {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scaleX(0);
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) scaleX(1);
+  }
+}
+
 @media (max-width: 900px) {
   :root {
     --ww-left-zone: 16.5rem;
@@ -325,6 +452,7 @@ body {
         showRailButton
           ? `
             <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="${hasPlayableMedia ? "Play answer media" : "Play"}" data-playing="false">
+              <span class="ww-mini-play-glow" aria-hidden="true"></span>
               <span class="ww-mini-play-icon" aria-hidden="true"></span>
             </button>
           `
