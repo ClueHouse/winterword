@@ -58,9 +58,9 @@ body {
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   color: #f5f7fb;
   background:
-    radial-gradient(circle at 68% 45%, rgba(108,145,70,0.26) 0%, rgba(58,92,48,0.48) 32%, rgba(7,16,10,0.96) 76%),
-    radial-gradient(circle at 88% 50%, rgba(140,180,90,0.18), transparent 34%),
-    linear-gradient(90deg, #030604 0%, #08120d 28%, #0d1b11 62%, #16311d 100%);
+    radial-gradient(circle at 74% 45%, rgba(108,145,70,0.26) 0%, rgba(58,92,48,0.46) 32%, rgba(7,16,10,0.96) 76%),
+    radial-gradient(circle at 92% 50%, rgba(140,180,90,0.16), transparent 34%),
+    linear-gradient(90deg, #020403 0%, #030604 18%, #07110b 36%, #0d1b11 68%, #16311d 100%);
 }
 
 #wwPortal::before {
