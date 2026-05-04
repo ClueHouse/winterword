@@ -29,13 +29,14 @@ export function renderCluePage(app, data = {}, navigate) {
 :root {
   --ww-clue-bg: url("/assets/winterword/shared/fullclues.png");
 
-  /* MASTER HOTSPOT HORIZONTAL POSITION */
-  --ww-hotspot-left: 18%;
+  /* MASTER GROUP POSITION */
+  --ww-hotspot-group-left: 18%;
+  --ww-hotspot-group-top: 46.2%;
 
-  /* INDIVIDUAL VERTICAL POSITIONS */
-  --ww-hotspot-base-top: 46.2%;
-  --ww-hotspot-clues-top: 55.3%;
-  --ww-hotspot-life-top: 64.8%;
+  /* INTERNAL GROUP SPACING */
+  --ww-hotspot-gap: 9.1%;
+
+  /* PLAY BUTTON */
   --ww-hotspot-play-top: 38.5%;
 
   /* DIMENSIONS */
@@ -201,29 +202,33 @@ body {
   outline-offset: 4px;
 }
 
+/* BASE */
 .ww-hotspot-base {
-  left: var(--ww-hotspot-left);
-  top: var(--ww-hotspot-base-top);
+  left: var(--ww-hotspot-group-left);
+  top: var(--ww-hotspot-group-top);
   width: var(--ww-hotspot-base-width);
   height: var(--ww-hotspot-base-height);
 }
 
+/* CLUES */
 .ww-hotspot-clues {
-  left: var(--ww-hotspot-left);
-  top: var(--ww-hotspot-clues-top);
+  left: var(--ww-hotspot-group-left);
+  top: calc(var(--ww-hotspot-group-top) + var(--ww-hotspot-gap));
   width: var(--ww-hotspot-clues-width);
   height: var(--ww-hotspot-clues-height);
 }
 
+/* LIFE */
 .ww-hotspot-life {
-  left: var(--ww-hotspot-left);
-  top: var(--ww-hotspot-life-top);
+  left: var(--ww-hotspot-group-left);
+  top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2));
   width: var(--ww-hotspot-life-width);
   height: var(--ww-hotspot-life-height);
 }
 
+/* PLAY */
 .ww-hotspot-play {
-  left: var(--ww-hotspot-left);
+  left: var(--ww-hotspot-group-left);
   top: var(--ww-hotspot-play-top);
   width: var(--ww-hotspot-play-size);
   height: var(--ww-hotspot-play-size);
