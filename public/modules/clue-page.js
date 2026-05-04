@@ -1,7 +1,8 @@
 export function renderCluePage(app, data = {}, navigate) {
   const {
     clueId = 1,
-    clue = {}
+    clue = {},
+    org = {}
   } = data;
 
   const {
@@ -23,19 +24,32 @@ export function renderCluePage(app, data = {}, navigate) {
   }
 
   const hasAudio = variant === "image-audio" && audio;
-  const lifelineUnlocked = Boolean(data?.org?.lifeline);
+
+  /* AIRTABLE LIFELINE FIELD SUPPORT */
+  const lifelineUnlocked =
+    org?.lifeline === true ||
+    org?.lifeline === "true" ||
+    org?.life === true ||
+    org?.life === "true" ||
+    org?.lifeline_enabled === true ||
+    org?.lifeline_enabled === "true";
 
   app.innerHTML = `
 <style>
 :root {
   --ww-clue-bg: url("/assets/winterword/shared/fullclues.png");
 
+  /* MASTER GROUP POSITION */
   --ww-hotspot-group-left: 17%;
   --ww-hotspot-group-top: 50.6%;
+
+  /* INTERNAL GROUP SPACING */
   --ww-hotspot-gap: 9.2%;
 
+  /* PLAY BUTTON */
   --ww-hotspot-play-top: 38.5%;
 
+  /* DIMENSIONS */
   --ww-hotspot-base-width: 11%;
   --ww-hotspot-base-height: 4.8%;
 
@@ -192,6 +206,7 @@ body {
   overflow: hidden;
 }
 
+/* SILVER STREAK */
 .ww-hotspot-base::before,
 .ww-hotspot-clues::before,
 .ww-hotspot-life::before {
@@ -216,17 +231,18 @@ body {
 
 .ww-hotspot-base:hover::before,
 .ww-hotspot-clues:hover::before,
-.ww-hotspot-life:hover::before {
+.ww-hotspot-life[data-locked="false"]:hover::before {
   animation: wwSilverSweep 900ms ease-out forwards;
 }
 
 .ww-hotspot-base:hover,
 .ww-hotspot-clues:hover,
-.ww-hotspot-life:hover {
+.ww-hotspot-life[data-locked="false"]:hover {
   background: transparent;
   box-shadow: none;
 }
 
+/* LOCKED LIFELINE */
 .ww-hotspot-life[data-locked="true"] {
   cursor: not-allowed;
 }
@@ -239,17 +255,26 @@ body {
   content: "Unavailable";
   position: absolute;
   left: 50%;
-  top: -115%;
+  top: -118%;
   transform: translateX(-50%);
-  padding: 0.32rem 0.7rem;
+  padding: 0.38rem 0.9rem;
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(220,235,245,0.92);
-  background: rgba(8,12,18,0.92);
-  border: 1px solid rgba(180,210,230,0.22);
-  border-radius: 0.35rem;
+  color: rgba(255,235,235,0.96);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(38,8,8,0.96) 0%,
+      rgba(58,12,12,0.98) 50%,
+      rgba(28,4,4,0.96) 100%
+    );
+  border: 1px solid rgba(160,60,60,0.34);
+  border-radius: 0.4rem;
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.45),
+    inset 0 0 8px rgba(255,255,255,0.03);
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
@@ -261,10 +286,10 @@ body {
 }
 
 .ww-hotspot-life[data-locked="true"]:hover {
-  background: rgba(185,225,255,0.06);
+  background: rgba(90,18,18,0.16);
   box-shadow:
-    0 0 0 1px rgba(190,235,255,0.14),
-    0 0 10px rgba(185,225,255,0.08);
+    0 0 0 1px rgba(140,40,40,0.22),
+    0 0 12px rgba(120,20,20,0.14);
 }
 
 @keyframes wwSilverSweep {
@@ -283,6 +308,7 @@ body {
   }
 }
 
+/* BASE */
 .ww-hotspot-base {
   left: var(--ww-hotspot-group-left);
   top: var(--ww-hotspot-group-top);
@@ -290,6 +316,7 @@ body {
   height: var(--ww-hotspot-base-height);
 }
 
+/* CLUES */
 .ww-hotspot-clues {
   left: var(--ww-hotspot-group-left);
   top: calc(var(--ww-hotspot-group-top) + var(--ww-hotspot-gap));
@@ -297,6 +324,7 @@ body {
   height: var(--ww-hotspot-clues-height);
 }
 
+/* LIFE */
 .ww-hotspot-life {
   left: var(--ww-hotspot-group-left);
   top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2));
@@ -304,6 +332,7 @@ body {
   height: var(--ww-hotspot-life-height);
 }
 
+/* PLAY */
 .ww-hotspot-play {
   left: var(--ww-hotspot-group-left);
   top: var(--ww-hotspot-play-top);
