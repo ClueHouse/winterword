@@ -218,7 +218,7 @@ body {
 }
 
 .ww-answer-stage {
-  width: min(70vw, 1380px);
+  width: min(58vw, 1080px);
   display: flex;
   align-items: center;
   justify-content: center;
