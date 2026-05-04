@@ -30,22 +30,22 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-clue-bg: url("/assets/winterword/shared/fullclues.png");
 
   --ww-hotspot-base-left: 18%;
-  --ww-hotspot-base-top: 47.5%;
+  --ww-hotspot-base-top: 46.2%;
   --ww-hotspot-base-width: 11%;
-  --ww-hotspot-base-height: 5%;
+  --ww-hotspot-base-height: 4.8%;
 
   --ww-hotspot-clues-left: 18%;
-  --ww-hotspot-clues-top: 55.2%;
+  --ww-hotspot-clues-top: 55.3%;
   --ww-hotspot-clues-width: 17%;
-  --ww-hotspot-clues-height: 5%;
+  --ww-hotspot-clues-height: 4.8%;
 
   --ww-hotspot-life-left: 18%;
-  --ww-hotspot-life-top: 63.2%;
+  --ww-hotspot-life-top: 64.8%;
   --ww-hotspot-life-width: 11%;
-  --ww-hotspot-life-height: 5%;
+  --ww-hotspot-life-height: 4.8%;
 
   --ww-hotspot-play-left: 18%;
-  --ww-hotspot-play-top: 39%;
+  --ww-hotspot-play-top: 38.5%;
   --ww-hotspot-play-size: 8%;
 
   --ww-debug-border: 2px solid rgba(255, 0, 0, 0.95);
@@ -94,22 +94,40 @@ body {
 
 .ww-main-clue {
   position: absolute;
-  right: 5.5vw;
+  right: 7vw;
   top: 50%;
   transform: translateY(-50%);
-  width: min(64vw, 1280px);
-  max-height: 88vh;
+  width: min(54vw, 1088px);
+  max-height: 78vh;
   object-fit: contain;
   display: block;
   z-index: 2;
+
+  padding: 0.9rem;
+  background:
+    linear-gradient(145deg,
+      rgba(115,115,115,0.95) 0%,
+      rgba(58,58,58,0.98) 18%,
+      rgba(138,138,138,0.92) 38%,
+      rgba(44,44,44,0.98) 58%,
+      rgba(95,95,95,0.94) 78%,
+      rgba(28,28,28,1) 100%);
+  border:
+    2px solid rgba(170,170,170,0.35);
+
+  box-shadow:
+    0 0 0 2px rgba(25,25,25,0.85),
+    0 10px 28px rgba(0,0,0,0.55),
+    inset 0 0 12px rgba(255,255,255,0.08),
+    inset 0 0 22px rgba(0,0,0,0.35);
 }
 
 .ww-clue-fallback {
   position: absolute;
-  right: 5.5vw;
+  right: 7vw;
   top: 50%;
   transform: translateY(-50%);
-  width: min(64vw, 760px);
+  width: min(54vw, 760px);
   padding: 2rem;
   border-radius: 1rem;
   background: rgba(255,255,255,0.08);
