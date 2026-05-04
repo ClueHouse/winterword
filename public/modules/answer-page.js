@@ -228,7 +228,7 @@ body {
     0 2px 5px rgba(0,0,0,0.86),
     0 0 8px rgba(255,255,255,0.05);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   transition:
     color 180ms ease,
     text-shadow 180ms ease,
@@ -243,31 +243,37 @@ body {
     0 0 0.75rem rgba(246,186,76,0.36);
 }
 
-.ww-mini-textlink::after {
+.ww-mini-textlabel {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.08rem 0.04rem;
+}
+
+.ww-mini-textlabel::after {
   content: "";
   position: absolute;
-  top: -10%;
-  left: -40%;
-  width: 38%;
-  height: 180%;
+  top: -28%;
+  left: -55%;
+  width: 42%;
+  height: 170%;
   background: linear-gradient(
     115deg,
     transparent 0%,
-    transparent 34%,
-    rgba(238,171,67,0) 42%,
+    transparent 35%,
+    rgba(238,171,67,0) 43%,
     rgba(255,239,177,0.98) 49%,
-    rgba(238,171,67,0.98) 52%,
-    rgba(238,171,67,0) 58%,
-    transparent 68%,
+    rgba(238,171,67,0.96) 53%,
+    rgba(238,171,67,0) 60%,
+    transparent 72%,
     transparent 100%
   );
   transform: translateX(-180%) skewX(-25deg);
   opacity: 0;
   pointer-events: none;
-  border-radius: 999px;
 }
 
-.ww-mini-textlink:hover::after {
+.ww-mini-textlink:hover .ww-mini-textlabel::after {
   animation: wwGoldSweep 700ms ease forwards;
 }
 
@@ -410,7 +416,7 @@ body {
 
   100% {
     opacity: 1;
-    transform: translateX(360%) skewX(-25deg);
+    transform: translateX(430%) skewX(-25deg);
   }
 }
 
@@ -458,9 +464,15 @@ body {
       }
 
       <nav class="ww-mini-textnav" aria-label="Answer navigation">
-        <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
-        <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">Answers</button>
-        <button class="ww-mini-textlink" type="button" data-nav="leaderboard">Leader</button>
+        <button class="ww-mini-textlink" type="button" data-nav="base-station">
+          <span class="ww-mini-textlabel">Base</span>
+        </button>
+        <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">
+          <span class="ww-mini-textlabel">Answers</span>
+        </button>
+        <button class="ww-mini-textlink" type="button" data-nav="leaderboard">
+          <span class="ww-mini-textlabel">Leader</span>
+        </button>
       </nav>
     </div>
   </div>
