@@ -31,7 +31,7 @@ export function renderCluePage(app, data = {}, navigate) {
 
   /* MASTER GROUP POSITION */
   --ww-hotspot-group-left: 17%;
-  --ww-hotspot-group-top: 50.5%;
+  --ww-hotspot-group-top: 50.6%;
 
   /* INTERNAL GROUP SPACING */
   --ww-hotspot-gap: 9.2%;
@@ -102,9 +102,7 @@ body {
   object-fit: contain;
   display: block;
   z-index: 2;
-
   padding: 0.9rem;
-
   background:
     linear-gradient(
       145deg,
@@ -129,9 +127,7 @@ body {
       transparent 2px,
       transparent 6px
     );
-
   border: 2px solid rgba(70,70,70,0.35);
-
   box-shadow:
     0 0 0 2px rgba(0,0,0,0.92),
     0 12px 32px rgba(0,0,0,0.72),
@@ -176,18 +172,11 @@ body {
   background: transparent;
   cursor: pointer;
   transform: translate(-50%, -50%);
+  overflow: hidden;
   transition:
     transform 140ms ease,
     box-shadow 180ms ease,
     background 180ms ease;
-}
-
-.ww-hotspot:hover {
-  background: rgba(185, 225, 255, 0.14);
-  box-shadow:
-    0 0 0 1px rgba(190, 235, 255, 0.38),
-    0 0 14px rgba(185, 225, 255, 0.22),
-    0 0 28px rgba(170, 215, 255, 0.16);
 }
 
 .ww-hotspot:active {
@@ -197,6 +186,92 @@ body {
 .ww-hotspot:focus-visible {
   outline: 2px solid rgba(200, 235, 255, 0.65);
   outline-offset: 3px;
+}
+
+/* EFFECT 1: BASE = FROST GLOW */
+.ww-hotspot-base:hover {
+  background: rgba(185, 225, 255, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(190, 235, 255, 0.38),
+    0 0 14px rgba(185, 225, 255, 0.22),
+    0 0 28px rgba(170, 215, 255, 0.16);
+}
+
+/* EFFECT 2: CLUES = SILVER SWEEP */
+.ww-hotspot-clues::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -80%;
+  width: 42%;
+  height: 180%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.10) 35%,
+    rgba(230,245,255,0.42) 50%,
+    rgba(255,255,255,0.10) 65%,
+    transparent 100%
+  );
+  transform: rotate(22deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ww-hotspot-clues:hover::before {
+  animation: wwSilverSweep 900ms ease-out forwards;
+}
+
+.ww-hotspot-clues:hover {
+  background: rgba(220, 235, 245, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(230, 245, 255, 0.24),
+    0 0 18px rgba(210, 230, 245, 0.16);
+}
+
+@keyframes wwSilverSweep {
+  0% {
+    left: -80%;
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 135%;
+    opacity: 0;
+  }
+}
+
+/* EFFECT 3: LIFE = FROST PULSE */
+.ww-hotspot-life:hover {
+  animation: wwFrostPulse 1.45s ease-in-out infinite;
+  background: rgba(185, 225, 255, 0.08);
+}
+
+@keyframes wwFrostPulse {
+  0% {
+    box-shadow:
+      0 0 0 1px rgba(190, 235, 255, 0.22),
+      0 0 10px rgba(185, 225, 255, 0.12),
+      0 0 22px rgba(170, 215, 255, 0.08);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(210, 245, 255, 0.44),
+      0 0 18px rgba(185, 225, 255, 0.30),
+      0 0 36px rgba(170, 215, 255, 0.20);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(190, 235, 255, 0.22),
+      0 0 10px rgba(185, 225, 255, 0.12),
+      0 0 22px rgba(170, 215, 255, 0.08);
+  }
 }
 
 .ww-hotspot-base {
