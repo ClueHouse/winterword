@@ -30,8 +30,7 @@ export function renderAnswerPage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-rail-visible-width: 19.75rem;
-  --ww-rail-frame-centre: 9.875rem;
+  --ww-left-zone: 19.75rem;
   --ww-ink-soft: #d8d4c3;
 }
 
@@ -58,66 +57,22 @@ body {
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   color: #f5f7fb;
   background:
-    radial-gradient(circle at 42% 45%, rgba(82,118,62,0.24) 0%, rgba(38,63,33,0.52) 34%, rgba(7,16,10,0.98) 78%),
-    radial-gradient(circle at 12% 50%, rgba(108,145,70,0.14), transparent 36%),
-    linear-gradient(90deg, #07110b 0%, #0d1b11 38%, #08120d 72%, #030604 100%);
-}
-
-#wwPortal::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at center, rgba(255,215,120,0.025), transparent 60%),
-    repeating-radial-gradient(circle at center, rgba(255,210,120,0.012) 0 2px, transparent 2px 6px);
-  opacity: 0.55;
-  pointer-events: none;
-  z-index: 1;
-}
-
-#wwLeft {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--ww-rail-visible-width);
-  height: 100%;
-  overflow: hidden;
-  z-index: 50;
-  pointer-events: none;
-}
-
-.ww-rail-frame {
-  position: absolute;
-  top: 0;
-  left: var(--ww-rail-frame-centre);
-  height: 100%;
-  aspect-ratio: 1024 / 1792;
-  transform: translateX(-50%);
-  overflow: visible;
-  pointer-events: none;
-}
-
-.ww-rail-image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: fill;
-  user-select: none;
-  pointer-events: none;
+    url("/assets/winterword/shared/fullanswer.png") center center / cover no-repeat;
 }
 
 .ww-mini-shell {
   position: absolute;
-  inset: 0;
-  z-index: 3;
+  top: 0;
+  left: 0;
+  width: var(--ww-left-zone);
+  height: 100%;
+  z-index: 30;
   pointer-events: none;
 }
 
 .ww-mini-core {
   position: absolute;
-  top: 46.8%;
+  top: 47%;
   left: 50%;
   width: 100%;
   transform: translate(-50%, -50%);
@@ -255,7 +210,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3vh 3vw 3vh calc(var(--ww-rail-visible-width) + 3.5rem);
+  padding: 3vh 3vw 3vh calc(var(--ww-left-zone) + 3.5rem);
   z-index: 10;
 }
 
@@ -330,34 +285,53 @@ body {
   color: rgba(245,247,251,0.78);
   text-align: center;
 }
+
+@media (max-width: 900px) {
+  :root {
+    --ww-left-zone: 16.5rem;
+  }
+
+  .ww-mini-play {
+    width: 5.1rem;
+    height: 5.1rem;
+    margin-bottom: 2.45rem;
+  }
+
+  .ww-mini-textlink {
+    font-size: 0.92rem;
+    letter-spacing: 0.34em;
+  }
+
+  #wwRight {
+    padding-left: calc(var(--ww-left-zone) + 1.5rem);
+  }
+
+  .ww-answer-stage {
+    width: min(64vw, 980px);
+  }
+}
 </style>
 
 <div id="wwPortal">
-  <aside id="wwLeft" aria-label="Answer Rail">
-    <div class="ww-rail-frame">
-      <img class="ww-rail-image" src="/assets/winterword/shared/answer-rail.png" alt="" aria-hidden="true">
+  <div class="ww-mini-shell" aria-label="Answer Rail">
+    <div class="ww-mini-core">
+      ${
+        showRailButton
+          ? `
+            <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="${hasPlayableMedia ? "Play answer media" : "Play"}" data-playing="false">
+              <span class="ww-mini-play-icon" aria-hidden="true"></span>
+            </button>
+          `
+          : ""
+      }
 
-      <div class="ww-mini-shell">
-        <div class="ww-mini-core">
-          ${
-            showRailButton
-              ? `
-                <button class="ww-mini-play" id="wwPlayButton" type="button" aria-label="${hasPlayableMedia ? "Play answer media" : "Play"}" data-playing="false">
-                  <span class="ww-mini-play-icon" aria-hidden="true"></span>
-                </button>
-              `
-              : ""
-          }
-
-          <nav class="ww-mini-textnav" aria-label="Answer navigation">
-            <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
-            <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">Answers</button>
-            <button class="ww-mini-textlink" type="button" data-nav="leaderboard">Leader</button>
-          </nav>
-        </div>
-      </div>
+      <nav class="ww-mini-textnav" aria-label="Answer navigation">
+        <button class="ww-mini-textlink" type="button" data-nav="base-station">Base</button>
+        <button class="ww-mini-textlink" type="button" data-nav="answers" data-active="true">Answers</button>
+        <button class="ww-mini-textlink" type="button" data-nav="leaderboard">Leader</button>
+      </nav>
     </div>
-  </aside>
+  </div>
 
   <main id="wwRight">
     <section class="ww-answer-stage" aria-label="${esc(title)}">
