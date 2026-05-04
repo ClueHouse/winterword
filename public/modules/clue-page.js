@@ -25,8 +25,11 @@ export function renderCluePage(app, data = {}, navigate) {
 
   const hasAudio = variant === "image-audio" && audio;
 
-  /* CORRECT AIRTABLE LIFELINE FIELD */
   const lifelineUnlocked =
+    data?.lifeline_live === true ||
+    data?.lifeline_live === "true" ||
+    data?.lifelineLive === true ||
+    data?.lifelineLive === "true" ||
     org?.lifeline_live === true ||
     org?.lifeline_live === "true" ||
     org?.lifelineLive === true ||
@@ -37,17 +40,12 @@ export function renderCluePage(app, data = {}, navigate) {
 :root {
   --ww-clue-bg: url("/assets/winterword/shared/fullclues.png");
 
-  /* MASTER GROUP POSITION */
   --ww-hotspot-group-left: 17%;
   --ww-hotspot-group-top: 50.6%;
-
-  /* INTERNAL GROUP SPACING */
   --ww-hotspot-gap: 9.2%;
 
-  /* PLAY BUTTON */
   --ww-hotspot-play-top: 38.5%;
 
-  /* DIMENSIONS */
   --ww-hotspot-base-width: 11%;
   --ww-hotspot-base-height: 4.8%;
 
@@ -199,12 +197,14 @@ body {
 }
 
 .ww-hotspot-base,
-.ww-hotspot-clues,
-.ww-hotspot-life {
+.ww-hotspot-clues {
   overflow: hidden;
 }
 
-/* SILVER STREAK */
+.ww-hotspot-life {
+  overflow: visible;
+}
+
 .ww-hotspot-base::before,
 .ww-hotspot-clues::before,
 .ww-hotspot-life::before {
@@ -240,9 +240,8 @@ body {
   box-shadow: none;
 }
 
-/* LOCKED LIFELINE */
 .ww-hotspot-life[data-locked="true"] {
-  cursor: not-allowed;
+  cursor: pointer;
 }
 
 .ww-hotspot-life[data-locked="true"]::before {
@@ -284,10 +283,11 @@ body {
 }
 
 .ww-hotspot-life[data-locked="true"]:hover {
-  background: rgba(90,18,18,0.16);
+  background: rgba(90,18,18,0.22);
   box-shadow:
-    0 0 0 1px rgba(140,40,40,0.22),
-    0 0 12px rgba(120,20,20,0.14);
+    0 0 0 1px rgba(140,40,40,0.35),
+    0 0 12px rgba(120,20,20,0.22),
+    0 0 26px rgba(90,10,10,0.16);
 }
 
 @keyframes wwSilverSweep {
@@ -306,7 +306,6 @@ body {
   }
 }
 
-/* BASE */
 .ww-hotspot-base {
   left: var(--ww-hotspot-group-left);
   top: var(--ww-hotspot-group-top);
@@ -314,7 +313,6 @@ body {
   height: var(--ww-hotspot-base-height);
 }
 
-/* CLUES */
 .ww-hotspot-clues {
   left: var(--ww-hotspot-group-left);
   top: calc(var(--ww-hotspot-group-top) + var(--ww-hotspot-gap));
@@ -322,7 +320,6 @@ body {
   height: var(--ww-hotspot-clues-height);
 }
 
-/* LIFE */
 .ww-hotspot-life {
   left: var(--ww-hotspot-group-left);
   top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2));
@@ -330,7 +327,6 @@ body {
   height: var(--ww-hotspot-life-height);
 }
 
-/* PLAY */
 .ww-hotspot-play {
   left: var(--ww-hotspot-group-left);
   top: var(--ww-hotspot-play-top);
