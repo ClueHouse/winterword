@@ -44,7 +44,7 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-hotspot-group-top: 50.0%;
   --ww-hotspot-gap: 9.2%;
 
-  --ww-hotspot-play-top: 77%;
+  --ww-hotspot-play-top: 80%;
 
   --ww-hotspot-base-width: 11%;
   --ww-hotspot-base-height: 4.8%;
