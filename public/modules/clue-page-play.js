@@ -55,7 +55,7 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-hotspot-life-width: 11%;
   --ww-hotspot-life-height: 4.8%;
 
-  --ww-hotspot-play-size: 8%;
+  --ww-hotspot-play-diameter: min(8vw, 8vh);
 }
 
 * {
@@ -331,18 +331,162 @@ body {
 .ww-hotspot-play {
   left: var(--ww-hotspot-group-left);
   top: var(--ww-hotspot-play-top);
-  width: var(--ww-hotspot-play-size);
-  height: var(--ww-hotspot-play-size);
+  width: var(--ww-hotspot-play-diameter);
+  height: var(--ww-hotspot-play-diameter);
   border-radius: 999px;
+  overflow: visible;
+  animation: wwPlayIdleGlow 3.4s ease-in-out infinite;
 }
 
-.ww-hotspot-play:hover,
+.ww-hotspot-play::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      circle,
+      rgba(245,248,255,0.26) 0%,
+      rgba(220,232,245,0.18) 34%,
+      transparent 68%
+    );
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.88);
+}
+
+.ww-hotspot-play::after {
+  content: "";
+  position: absolute;
+  inset: 7%;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(255,255,255,0.42) 48%,
+      rgba(255,255,255,0.18) 54%,
+      transparent 68%,
+      transparent 100%
+    );
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-38%) rotate(8deg);
+}
+
+.ww-hotspot-play:hover {
+  animation: wwPlayHoverPulse 950ms ease-in-out infinite;
+  background: rgba(225, 238, 255, 0.12);
+}
+
+.ww-hotspot-play:hover::before {
+  animation: wwPlaySoftBloom 950ms ease-out infinite;
+}
+
+.ww-hotspot-play:hover::after {
+  animation: wwPlayShineSweep 1050ms ease-out infinite;
+}
+
 .ww-hotspot-play[data-playing="true"] {
-  background: rgba(255, 0, 0, 0.16);
-  box-shadow:
-    0 0 0 1px rgba(255, 0, 0, 0.6),
-    0 0 18px rgba(255, 0, 0, 0.3),
-    0 0 34px rgba(255, 0, 0, 0.2);
+  animation: wwPlayActiveSignal 1.8s ease-in-out infinite;
+  background: rgba(220, 240, 255, 0.13);
+}
+
+.ww-hotspot-play[data-playing="true"]::before {
+  opacity: 1;
+  transform: scale(1.06);
+  background:
+    radial-gradient(
+      circle,
+      rgba(245,248,255,0.34) 0%,
+      rgba(210,232,255,0.22) 38%,
+      transparent 72%
+    );
+}
+
+.ww-hotspot-play[data-playing="true"]::after {
+  display: none;
+}
+
+@keyframes wwPlayIdleGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(230,240,255,0.18),
+      0 0 10px rgba(210,230,255,0.10),
+      0 0 24px rgba(180,210,245,0.06);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(240,248,255,0.32),
+      0 0 18px rgba(220,235,255,0.22),
+      0 0 38px rgba(185,215,250,0.12);
+  }
+}
+
+@keyframes wwPlayHoverPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow:
+      0 0 0 1px rgba(240,248,255,0.44),
+      0 0 18px rgba(220,235,255,0.30),
+      0 0 34px rgba(190,220,255,0.18);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.035);
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,0.68),
+      0 0 26px rgba(235,245,255,0.46),
+      0 0 52px rgba(210,230,255,0.28);
+  }
+}
+
+@keyframes wwPlaySoftBloom {
+  0%, 100% {
+    opacity: 0.16;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 0.48;
+    transform: scale(1.13);
+  }
+}
+
+@keyframes wwPlayShineSweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-58%) rotate(8deg);
+  }
+
+  24% {
+    opacity: 0.82;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(58%) rotate(8deg);
+  }
+}
+
+@keyframes wwPlayActiveSignal {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(235,248,255,0.58),
+      0 0 18px rgba(220,240,255,0.34),
+      0 0 42px rgba(190,225,255,0.20),
+      0 0 72px rgba(165,205,245,0.12);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,0.72),
+      0 0 26px rgba(230,245,255,0.48),
+      0 0 58px rgba(200,230,255,0.30),
+      0 0 92px rgba(170,215,255,0.18);
+  }
 }
 
 .ww-screen-reader-only {
