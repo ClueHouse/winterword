@@ -177,11 +177,8 @@ body {
   display: block;
   padding: 0;
   margin: 0;
-
-  /* TEMPORARY POSITIONING GUIDE */
-  border: 2px solid rgba(255, 0, 0, 0.9);
-  background: rgba(255, 0, 0, 0.08);
-
+  border: none;
+  background: transparent;
   cursor: pointer;
   transform: translate(-50%, -50%);
   overflow: visible;
