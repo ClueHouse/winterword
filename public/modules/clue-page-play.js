@@ -258,7 +258,6 @@ body {
   font-size: 0.86rem;
   font-weight: 800;
   letter-spacing: 0.035em;
-  text-transform: none;
   color: rgba(78,8,8,0.98);
   background: rgba(255,248,244,0.96);
   border: 1px solid rgba(120,20,20,0.35);
@@ -337,14 +336,14 @@ body {
 .ww-hotspot-play::before {
   content: "";
   position: absolute;
-  inset: -16%;
+  inset: -34%;
   border-radius: 999px;
   background:
     radial-gradient(
       circle,
-      rgba(245,248,255,0.24) 0%,
-      rgba(220,232,245,0.16) 38%,
-      transparent 74%
+      rgba(245,248,255,0.26) 0%,
+      rgba(220,232,245,0.18) 40%,
+      transparent 78%
     );
   pointer-events: none;
   opacity: 0;
@@ -370,42 +369,28 @@ body {
 
 .ww-hotspot-play:hover::before {
   animation: none;
-  opacity: 0.58;
-  transform: scale(1.08);
+  opacity: 0.62;
+  transform: scale(1.18);
 }
 
 .ww-hotspot-play[data-flash="true"]::after {
   animation: wwPlayClickFlash 420ms ease-out forwards;
 }
 
-.ww-hotspot-play[data-playing="true"] {
-  background: rgba(220,240,255,0.10);
-  box-shadow:
-    0 0 0 1px rgba(235,248,255,0.52),
-    0 0 22px rgba(220,240,255,0.32),
-    0 0 48px rgba(190,225,255,0.20);
-}
-
-.ww-hotspot-play[data-playing="true"]::before {
-  animation: none;
-  opacity: 0.52;
-  transform: scale(1.06);
-}
-
 @keyframes wwPlayIdlePulse {
-  0%, 82%, 100% {
+  0%, 64%, 100% {
     opacity: 0;
     transform: scale(0.88);
   }
 
-  10% {
-    opacity: 0.52;
-    transform: scale(1.12);
+  18% {
+    opacity: 0.58;
+    transform: scale(1.36);
   }
 
-  22% {
+  46% {
     opacity: 0;
-    transform: scale(1.28);
+    transform: scale(1.84);
   }
 }
 
