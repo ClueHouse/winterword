@@ -41,10 +41,10 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-clue-bg: url("/assets/winterword/shared/fullcluesplay.png");
 
   --ww-hotspot-group-left: 17%;
-  --ww-hotspot-group-top: 50.6%;
+  --ww-hotspot-group-top: 50.0%;
   --ww-hotspot-gap: 9.2%;
 
-  --ww-hotspot-play-top: 38.5%;
+  --ww-hotspot-play-top: 77%;
 
   --ww-hotspot-base-width: 11%;
   --ww-hotspot-base-height: 4.8%;
