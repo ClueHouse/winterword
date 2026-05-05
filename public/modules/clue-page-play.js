@@ -55,7 +55,7 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-hotspot-life-width: 11%;
   --ww-hotspot-life-height: 4.8%;
 
-  --ww-hotspot-play-diameter: min(8vw, 8vh);
+  --ww-hotspot-play-diameter: min(10vw, 10vh);
 }
 
 * {
