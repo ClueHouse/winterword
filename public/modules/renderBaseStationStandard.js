@@ -188,7 +188,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-life-icon{
   left:7%;
-  top:53%;
+  top:53.2%;
   width:6.8%;
 }
 
@@ -201,7 +201,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-leader-icon{
   left:6.8%;
-  top:71%;
+  top:71.2%;
   width:6.8%;
 }
 
