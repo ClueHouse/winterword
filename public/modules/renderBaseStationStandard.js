@@ -105,7 +105,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   position:absolute;
   z-index:18;
   left:21.3%;
-  top:20.2%;
+  top:16%;
   width:30%;
   color:rgba(255,244,224,0.88);
   font-size:clamp(9px,0.82vw,15px);
