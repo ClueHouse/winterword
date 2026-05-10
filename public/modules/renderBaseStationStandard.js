@@ -207,7 +207,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-subscribe-hotspot{
   left:2.6%;
-  bottom:4.35%;
+  bottom:5%;
   width:9.1%;
   height:7%;
 }
