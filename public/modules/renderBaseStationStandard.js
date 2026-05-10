@@ -30,10 +30,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
   const encodedOrgName = encodeURIComponent(mailSafeOrgName);
 
-  const released = Number(currentClue) || 0;
-  const clueTotal = Number(totalClues) || 12;
-  const progressText = `${released} of ${clueTotal} clues released`;
-
   const reportProblemHref =
     `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}` +
     `&body=SET%20THE%20SCENE%3A%0AWhich%20page%20were%20you%20on%3F%0A%0A` +
@@ -79,6 +75,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   align-items:center;
   justify-content:center;
   padding:2.5vh 2.5vw;
+  position:relative;
 }
 
 #wwStage{
@@ -128,8 +125,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   user-select:none;
   pointer-events:none;
   filter:
-    drop-shadow(0 8px 10px rgba(0,0,0,0.42))
-    drop-shadow(0 0 8px rgba(218,162,50,0.14));
+    drop-shadow(0 10px 14px rgba(0,0,0,0.48))
+    drop-shadow(0 0 10px rgba(218,162,50,0.18));
   transition:
     transform 170ms ease,
     filter 170ms ease,
@@ -140,8 +137,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-hotspot:focus-visible + .ww-icon{
   transform:translate(-50%,-50%) scale(1.055);
   filter:
-    drop-shadow(0 10px 14px rgba(0,0,0,0.52))
-    drop-shadow(0 0 18px rgba(234,172,45,0.5));
+    drop-shadow(0 12px 18px rgba(0,0,0,0.58))
+    drop-shadow(0 0 22px rgba(234,172,45,0.55));
 }
 
 .ww-hotspot[data-disabled="true"] + .ww-icon{
@@ -152,42 +149,42 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-clue-hotspot{
-  left:3.7%;
-  top:32.3%;
-  width:6.6%;
-  height:12.5%;
+  left:3.15%;
+  top:31.1%;
+  width:7.6%;
+  height:14.2%;
 }
 
 .ww-clue-icon{
   left:6.8%;
   top:37.6%;
-  width:5.8%;
+  width:8.7%;
 }
 
 .ww-life-hotspot{
-  left:3.7%;
-  top:50.8%;
-  width:6.6%;
-  height:13.4%;
+  left:3.15%;
+  top:49.2%;
+  width:7.6%;
+  height:15.4%;
 }
 
 .ww-life-icon{
   left:6.8%;
   top:57.8%;
-  width:4.75%;
+  width:7.15%;
 }
 
 .ww-leader-hotspot{
-  left:3.7%;
-  top:70.2%;
-  width:6.6%;
-  height:13.4%;
+  left:3.15%;
+  top:68.2%;
+  width:7.6%;
+  height:15.4%;
 }
 
 .ww-leader-icon{
   left:6.8%;
   top:76.7%;
-  width:4.95%;
+  width:7.45%;
 }
 
 .ww-subscribe-hotspot{
@@ -204,22 +201,42 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   height:9.2%;
 }
 
-.ww-org-overlay{
+.ww-solve-glow{
   position:absolute;
-  z-index:15;
-  left:19.55%;
-  top:18.2%;
-  width:24%;
-  font-size:clamp(10px,0.92vw,17px);
-  line-height:1.2;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(255,244,220,0.82);
-  font-weight:800;
-  text-shadow:0 2px 8px rgba(0,0,0,0.78);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  z-index:16;
+  left:54.7%;
+  top:58.4%;
+  width:25.4%;
+  height:9.2%;
+  transform:translate(0,0);
+  pointer-events:none;
+  border-radius:0.75rem;
+  opacity:0;
+  background:
+    linear-gradient(105deg, transparent 0%, rgba(255,220,122,0.0) 35%, rgba(255,220,122,0.45) 50%, rgba(255,220,122,0.0) 65%, transparent 100%);
+  background-size:220% 100%;
+  box-shadow:
+    0 0 22px rgba(242,178,76,0.0),
+    0 0 44px rgba(242,178,76,0.0);
+  transition:opacity 180ms ease, box-shadow 180ms ease;
+}
+
+.ww-solve-hotspot:hover + .ww-solve-glow,
+.ww-solve-hotspot:focus-visible + .ww-solve-glow{
+  opacity:1;
+  animation:wwSolveGleam 1.15s ease-in-out infinite;
+  box-shadow:
+    0 0 22px rgba(242,178,76,0.34),
+    0 0 52px rgba(242,178,76,0.22);
+}
+
+@keyframes wwSolveGleam{
+  0%{
+    background-position:180% 0;
+  }
+  100%{
+    background-position:-80% 0;
+  }
 }
 
 .ww-updates-overlay{
@@ -239,20 +256,21 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   line-height:1.42;
 }
 
-.ww-progress{
-  margin-top:0.9em;
-  font-size:clamp(8px,0.78vw,13px);
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:rgba(255,230,190,0.68);
-  font-weight:900;
+.ww-stage-menu-anchor{
+  position:absolute;
+  z-index:30;
+  top:4.1%;
+  right:3.05%;
+  width:clamp(36px,3.4vw,58px);
+  height:clamp(36px,3.4vw,58px);
+  pointer-events:none;
 }
 
 .ww-menu{
   position:absolute;
-  z-index:50;
-  top:4.1%;
-  right:3.05%;
+  z-index:80;
+  top:4.4vh;
+  right:1.45vw;
 }
 
 .ww-menu-button{
@@ -260,7 +278,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   height:clamp(36px,3.4vw,58px);
   border-radius:0.72rem;
   border:1px solid rgba(224,155,32,0.72);
-  background:rgba(3,8,12,0.42);
+  background:rgba(3,8,12,0.52);
   color:rgba(255,239,206,0.94);
   font-size:clamp(20px,1.85vw,32px);
   line-height:1;
@@ -273,19 +291,22 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-menu-dropdown,
 .ww-legal-submenu{
   position:absolute;
-  min-width:210px;
-  padding:0.45rem;
-  border:1px solid rgba(224,155,32,0.55);
-  border-radius:0.75rem;
-  background:rgba(4,9,14,0.96);
-  box-shadow:0 20px 50px rgba(0,0,0,0.58);
+  min-width:220px;
+  padding:0.55rem;
+  border:1px solid rgba(224,155,32,0.58);
+  border-radius:0.85rem;
+  background:rgba(3,8,13,0.96);
+  box-shadow:
+    0 22px 54px rgba(0,0,0,0.62),
+    inset 0 0 18px rgba(255,180,70,0.035);
   opacity:0;
   pointer-events:none;
   transition:opacity 150ms ease, transform 150ms ease;
+  backdrop-filter:blur(10px);
 }
 
 .ww-menu-dropdown{
-  top:calc(100% + 0.55rem);
+  top:calc(100% + 0.65rem);
   right:0;
   transform:translateY(-4px);
 }
@@ -303,7 +324,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-legal-submenu{
   top:0;
-  right:calc(100% + 0.5rem);
+  right:calc(100% + 0.55rem);
   transform:translateX(4px);
 }
 
@@ -317,13 +338,13 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-menu-dropdown a,
 .ww-legal-submenu a{
   display:block;
-  padding:0.68rem 0.82rem;
-  border-radius:0.52rem;
+  padding:0.72rem 0.86rem;
+  border-radius:0.55rem;
   color:rgba(255,244,224,0.92);
   text-decoration:none;
   font-size:0.78rem;
   line-height:1.2;
-  font-weight:800;
+  font-weight:850;
   letter-spacing:0.12em;
   text-transform:uppercase;
   white-space:nowrap;
@@ -333,7 +354,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-menu-dropdown a:focus-visible,
 .ww-legal-submenu a:hover,
 .ww-legal-submenu a:focus-visible{
-  background:rgba(224,155,32,0.13);
+  background:rgba(224,155,32,0.15);
   color:#f2b24c;
   outline:none;
 }
@@ -398,6 +419,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 </style>
 
 <div id="wwPortal">
+
   <div id="wwStage" aria-label="WinterWord Base Station">
 
     <img
@@ -462,10 +484,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       href="${solveHref}"
       aria-label="Submit final WinterWord answer"
     ></a>
-
-    <div class="ww-org-overlay">
-      ${safeText(orgName)}
-    </div>
+    <div class="ww-solve-glow" aria-hidden="true"></div>
 
     <div class="ww-updates-overlay">
       ${
@@ -473,29 +492,9 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
           ? `<p class="ww-update-text">${safeText(updatesText)}</p>`
           : `<p class="ww-update-text">No new updates yet.</p>`
       }
-      <div class="ww-progress">${safeText(progressText)}</div>
     </div>
 
-    <div class="ww-menu">
-      <button class="ww-menu-button" type="button" aria-label="Open menu">
-        ☰
-      </button>
-
-      <div class="ww-menu-dropdown">
-        <a href="${reportProblemHref}">Report a Problem</a>
-        <a href="${contactHref}">Contact</a>
-
-        <div class="ww-legal-wrap">
-          <a href="#" aria-label="Legal links">Legal ▸</a>
-
-          <div class="ww-legal-submenu">
-            <a href="/legal/privacy-policy.html">Privacy Policy</a>
-            <a href="/legal/terms-of-use.html">Terms of Use</a>
-            <a href="/legal/disclaimer.html">Disclaimer</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="ww-stage-menu-anchor" aria-hidden="true"></div>
 
     <div class="ww-tooltip ww-clue-tooltip">
       <span class="ww-tooltip-title">Clues</span>
@@ -521,6 +520,28 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     </div>
 
   </div>
+
+  <div class="ww-menu">
+    <button class="ww-menu-button" type="button" aria-label="Open menu">
+      ☰
+    </button>
+
+    <div class="ww-menu-dropdown">
+      <a href="${reportProblemHref}">Report a Problem</a>
+      <a href="${contactHref}">Contact</a>
+
+      <div class="ww-legal-wrap">
+        <a href="#" aria-label="Legal links">Legal ▸</a>
+
+        <div class="ww-legal-submenu">
+          <a href="/legal/privacy-policy.html">Privacy Policy</a>
+          <a href="/legal/terms-of-use.html">Terms of Use</a>
+          <a href="/legal/disclaimer.html">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 `;
 
