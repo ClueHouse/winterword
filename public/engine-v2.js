@@ -5,7 +5,7 @@
   "use strict";
 
   const MODULE_PATHS = {
-    baseStation: "/modules/base-station.js",
+    baseStationStandard: "/modules/renderBaseStationStandard.js",
     baseStationResolved: "/modules/base-station-resolved.js",
     clueList: "/modules/clue-list.js",
     cluePage: "/modules/clue-page.js",
@@ -496,14 +496,15 @@
             return;
           }
 
-          const renderBaseStation = modules.baseStation.renderBaseStation;
+          const renderBaseStationStandard =
+            modules.baseStationStandard.renderBaseStationStandard;
 
-          if (typeof renderBaseStation !== "function") {
-            renderError("Base Station module error", "renderBaseStation was not found.");
+          if (typeof renderBaseStationStandard !== "function") {
+            renderError("Base Station module error", "renderBaseStationStandard was not found.");
             return;
           }
 
-          renderBaseStation(
+          renderBaseStationStandard(
             app,
             {
               orgName: orgState.org_name || game.org_name || "WinterWord",
