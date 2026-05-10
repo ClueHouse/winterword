@@ -30,164 +30,262 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
   const encodedOrgName = encodeURIComponent(mailSafeOrgName);
 
-  const paragraphs =
-    Array.isArray(howParagraphs) && howParagraphs.length
-      ? howParagraphs
-      : [
-          "Each clue is answerable with one letter.",
-          "Together, they anagram to reveal the WinterWord.",
-          "You may solve before full release.",
-          "The leaderboard loves fearless players."
-        ];
-
   const released = Number(currentClue) || 0;
   const clueTotal = Number(totalClues) || 12;
   const progressText = `${released} of ${clueTotal} clues released`;
 
   const reportProblemHref =
-    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}`;
+    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}` +
+    `&body=SET%20THE%20SCENE%3A%0AWhich%20page%20were%20you%20on%3F%0A%0A` +
+    `PLOT%20TWIST%3A%0AWhat%20went%20wrong%3F%0A%0A` +
+    `ALTERNATE%20ENDING%3A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0A` +
+    `YOUR%20TRAVELLER%E2%80%99S%20GEAR%3A%0AWhich%20device%20%2B%20browser%20you%20brought%20on%20this%20journey.%0A%0A` +
+    `Thanks%20for%20sharing%20%E2%80%94%20we%E2%80%99ll%20follow%20the%20trail%20and%20set%20things%20right.`;
 
   const subscribeHref =
-    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}`;
+    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}` +
+    `&body=Sign%20me%20up.%20The%20winter%20hush%20is%20starting%20to%20feel%20personal.`;
 
   const solveHref =
-    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026`;
+    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026` +
+    `&body=You%20feel%20the%20pieces%20have%20settled.%0A%0A` +
+    `Clues%20gathered.%20Letters%20found.%0A` +
+    `A%20pattern%2C%20perhaps%2C%20now%20clear%20beneath%20the%20frost.%0A%0A` +
+    `If%20you%20believe%20you%20can%20name%20the%20WinterWord%2C%0A` +
+    `set%20it%20down%20below.%0A%0A` +
+    `Your%20answer%3A%0A%0A%5BTYPE%20YOUR%20FINAL%20WORD%20HERE%5D%0A%0A%0A` +
+    `(Only%20one%20submission%20is%20counted.%0AChoose%20your%20moment%20%E2%80%94%20winter%20does%20not%20answer%20twice.)`;
 
   const contactHref =
     `mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry`;
 
   app.innerHTML = `
 <style>
-:root{
-  --ww-orange:#d8a24f;
-  --ww-cream:#f3eee4;
-  --ww-dark:#09111a;
-  --ww-blue:#102030;
-  --ww-muted:rgba(243,238,228,0.72);
-  --ww-panel:rgba(9,17,26,0.74);
-  --ww-border:rgba(216,162,79,0.34);
+*{
+  box-sizing:border-box;
 }
-
-*{box-sizing:border-box;}
 
 #wwPortal{
-  display:flex;
-  min-height:100vh;
-  background:
-    linear-gradient(180deg, rgba(7,14,22,0.88), rgba(7,14,22,0.94)),
-    url('/assets/winterword/shared/BS1.png') center center / cover no-repeat;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  background:#020609;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  color:var(--ww-cream);
+  color:#f5efe3;
 }
 
-#wwLeft{
-  width:220px;
-  min-height:100vh;
+#wwStage{
   position:relative;
-  flex-shrink:0;
+  width:min(100vw,177.7778vh);
+  height:min(56.25vw,100vh);
+  margin:auto;
+  top:50%;
+  transform:translateY(-50%);
+  overflow:hidden;
+  background:#020609;
 }
 
-.ww-left-shell{
+.ww-shell{
   position:absolute;
   inset:0;
-  background:url('/assets/winterword/shared/BS1.png') left center / contain no-repeat;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  user-select:none;
   pointer-events:none;
 }
 
-.ww-left-hotspot{
+.ww-hotspot{
   position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  width:90px;
-  height:90px;
-  cursor:pointer;
-  border:none;
-  background:none;
-  padding:0;
-}
-
-.ww-left-hotspot img{
-  width:100%;
-  height:auto;
+  z-index:20;
   display:block;
-  transition:transform 180ms ease, filter 180ms ease;
-}
-
-.ww-left-hotspot:hover img{
-  transform:scale(1.06);
-  filter:drop-shadow(0 0 14px rgba(216,162,79,0.35));
-}
-
-.ww-clue{ top:275px; }
-.ww-life{ top:415px; }
-.ww-leader{ top:555px; }
-
-.ww-subscribe{
-  position:absolute;
-  bottom:48px;
-  left:50%;
-  transform:translateX(-50%);
-  color:rgba(243,238,228,0.78);
-  font-size:0.78rem;
-  font-weight:700;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
+  border:0;
+  padding:0;
+  margin:0;
+  background:transparent;
+  cursor:pointer;
   text-decoration:none;
 }
 
-.ww-subscribe:hover{
-  color:var(--ww-orange);
+.ww-hotspot[data-disabled="true"]{
+  cursor:default;
 }
 
-#wwRight{
-  flex:1;
-  padding:3.5rem 4rem;
-  position:relative;
-}
-
-.ww-topbar{
+.ww-icon{
   position:absolute;
-  top:2rem;
-  right:2.5rem;
-  z-index:50;
+  z-index:22;
+  display:block;
+  transform:translate(-50%,-50%);
+  user-select:none;
+  pointer-events:none;
+  filter:
+    drop-shadow(0 8px 10px rgba(0,0,0,0.42))
+    drop-shadow(0 0 8px rgba(218,162,50,0.14));
+  transition:
+    transform 170ms ease,
+    filter 170ms ease,
+    opacity 170ms ease;
+}
+
+.ww-hotspot:hover + .ww-icon,
+.ww-hotspot:focus-visible + .ww-icon{
+  transform:translate(-50%,-50%) scale(1.055);
+  filter:
+    drop-shadow(0 10px 14px rgba(0,0,0,0.52))
+    drop-shadow(0 0 18px rgba(234,172,45,0.5));
+}
+
+.ww-hotspot[data-disabled="true"] + .ww-icon{
+  opacity:0.45;
+  filter:
+    grayscale(0.72)
+    drop-shadow(0 8px 10px rgba(0,0,0,0.36));
+}
+
+.ww-clue-hotspot{
+  left:3.7%;
+  top:32.3%;
+  width:6.6%;
+  height:12.5%;
+}
+
+.ww-clue-icon{
+  left:6.8%;
+  top:37.6%;
+  width:5.8%;
+}
+
+.ww-life-hotspot{
+  left:3.7%;
+  top:50.8%;
+  width:6.6%;
+  height:13.4%;
+}
+
+.ww-life-icon{
+  left:6.8%;
+  top:57.8%;
+  width:4.75%;
+}
+
+.ww-leader-hotspot{
+  left:3.7%;
+  top:70.2%;
+  width:6.6%;
+  height:13.4%;
+}
+
+.ww-leader-icon{
+  left:6.8%;
+  top:76.7%;
+  width:4.95%;
+}
+
+.ww-subscribe-hotspot{
+  left:2.6%;
+  bottom:4.35%;
+  width:9.1%;
+  height:7%;
+}
+
+.ww-solve-hotspot{
+  left:54.7%;
+  top:58.4%;
+  width:25.4%;
+  height:9.2%;
+}
+
+.ww-org-overlay{
+  position:absolute;
+  z-index:15;
+  left:19.55%;
+  top:18.2%;
+  width:24%;
+  font-size:clamp(10px,0.92vw,17px);
+  line-height:1.2;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,244,220,0.82);
+  font-weight:800;
+  text-shadow:0 2px 8px rgba(0,0,0,0.78);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.ww-updates-overlay{
+  position:absolute;
+  z-index:15;
+  left:16.7%;
+  top:79.2%;
+  width:24.6%;
+  min-height:8%;
+  color:rgba(255,244,224,0.9);
+  text-shadow:0 2px 8px rgba(0,0,0,0.82);
+}
+
+.ww-update-text{
+  margin:0;
+  font-size:clamp(10px,1.02vw,18px);
+  line-height:1.42;
+}
+
+.ww-progress{
+  margin-top:0.9em;
+  font-size:clamp(8px,0.78vw,13px);
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:rgba(255,230,190,0.68);
+  font-weight:900;
 }
 
 .ww-menu{
-  position:relative;
+  position:absolute;
+  z-index:50;
+  top:4.1%;
+  right:3.05%;
 }
 
-.ww-menu-btn{
-  background:rgba(9,17,26,0.72);
-  border:1px solid var(--ww-border);
-  color:var(--ww-cream);
-  font-size:1.5rem;
-  padding:0.4rem 0.8rem;
-  border-radius:0.5rem;
+.ww-menu-button{
+  width:clamp(36px,3.4vw,58px);
+  height:clamp(36px,3.4vw,58px);
+  border-radius:0.72rem;
+  border:1px solid rgba(224,155,32,0.72);
+  background:rgba(3,8,12,0.42);
+  color:rgba(255,239,206,0.94);
+  font-size:clamp(20px,1.85vw,32px);
+  line-height:1;
   cursor:pointer;
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.36),
+    inset 0 0 12px rgba(224,155,32,0.08);
 }
 
 .ww-menu-dropdown,
 .ww-legal-submenu{
   position:absolute;
-  background:rgba(9,17,26,0.96);
-  border:1px solid var(--ww-border);
-  border-radius:0.6rem;
-  min-width:200px;
-  padding:0.5rem;
+  min-width:210px;
+  padding:0.45rem;
+  border:1px solid rgba(224,155,32,0.55);
+  border-radius:0.75rem;
+  background:rgba(4,9,14,0.96);
+  box-shadow:0 20px 50px rgba(0,0,0,0.58);
   opacity:0;
   pointer-events:none;
-  transition:opacity 160ms ease;
-}
-
-.ww-menu:hover .ww-menu-dropdown,
-.ww-legal-wrap:hover .ww-legal-submenu{
-  opacity:1;
-  pointer-events:auto;
+  transition:opacity 150ms ease, transform 150ms ease;
 }
 
 .ww-menu-dropdown{
-  top:110%;
+  top:calc(100% + 0.55rem);
   right:0;
+  transform:translateY(-4px);
+}
+
+.ww-menu:hover .ww-menu-dropdown,
+.ww-menu:focus-within .ww-menu-dropdown{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
 }
 
 .ww-legal-wrap{
@@ -196,258 +294,224 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-legal-submenu{
   top:0;
-  left:100%;
+  right:calc(100% + 0.5rem);
+  transform:translateX(4px);
+}
+
+.ww-legal-wrap:hover .ww-legal-submenu,
+.ww-legal-wrap:focus-within .ww-legal-submenu{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateX(0);
 }
 
 .ww-menu-dropdown a,
 .ww-legal-submenu a{
   display:block;
-  padding:0.55rem 0.75rem;
-  color:var(--ww-cream);
+  padding:0.68rem 0.82rem;
+  border-radius:0.52rem;
+  color:rgba(255,244,224,0.92);
   text-decoration:none;
-  font-size:0.82rem;
+  font-size:0.78rem;
+  line-height:1.2;
+  font-weight:800;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  white-space:nowrap;
 }
 
 .ww-menu-dropdown a:hover,
-.ww-legal-submenu a:hover{
-  color:var(--ww-orange);
+.ww-menu-dropdown a:focus-visible,
+.ww-legal-submenu a:hover,
+.ww-legal-submenu a:focus-visible{
+  background:rgba(224,155,32,0.13);
+  color:#f2b24c;
+  outline:none;
 }
 
-.ww-head{
-  max-width:900px;
-  margin-bottom:2.5rem;
+.ww-tooltip{
+  position:absolute;
+  z-index:60;
+  left:13%;
+  width:15.5%;
+  min-width:160px;
+  padding:0.72rem 0.82rem;
+  border:1px solid rgba(224,155,32,0.5);
+  border-radius:0.75rem;
+  background:rgba(4,9,14,0.94);
+  color:rgba(255,244,224,0.9);
+  font-size:clamp(9px,0.72vw,13px);
+  line-height:1.42;
+  box-shadow:0 16px 44px rgba(0,0,0,0.58);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(-50%) translateX(-6px);
+  transition:opacity 150ms ease, transform 150ms ease;
 }
 
-.ww-slug{
-  font-size:0.78rem;
-  letter-spacing:0.3em;
-  text-transform:uppercase;
-  color:var(--ww-muted);
-  font-weight:800;
-}
-
-.ww-title{
-  font-size:3rem;
-  text-transform:uppercase;
-  color:var(--ww-orange);
-  margin:0.5rem 0;
-}
-
-.ww-org-name{
-  font-size:0.9rem;
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  color:rgba(243,238,228,0.76);
-}
-
-.ww-tagline{
-  font-size:1.12rem;
-  line-height:1.75;
-  font-style:italic;
-  color:var(--ww-cream);
-  margin-top:1.5rem;
-}
-
-.ww-base{
-  display:grid;
-  grid-template-columns:1.2fr 0.75fr;
-  gap:2.5rem;
-}
-
-.ww-card{
-  background:var(--ww-panel);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:1rem;
-  padding:2rem;
-  margin-bottom:1.5rem;
-  box-shadow:0 18px 48px rgba(0,0,0,0.42);
-}
-
-.ww-card h3{
-  margin:0 0 1rem;
-  font-size:0.88rem;
+.ww-tooltip-title{
+  display:block;
+  margin-bottom:0.3rem;
+  color:#e4a735;
+  font-size:0.72em;
   letter-spacing:0.16em;
   text-transform:uppercase;
-  color:var(--ww-orange);
-}
-
-.ww-card p{
-  line-height:1.75;
-  color:rgba(243,238,228,0.88);
-}
-
-.ww-progress{
-  margin-top:1rem;
-  font-size:0.76rem;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:var(--ww-muted);
-}
-
-.ww-lastword{
-  background:linear-gradient(180deg, rgba(243,238,228,0.98), rgba(230,220,198,0.98));
-  color:#18222c;
-  border-radius:1rem;
-  padding:2.8rem 2rem;
-  text-align:center;
-  box-shadow:0 28px 72px rgba(0,0,0,0.55);
-}
-
-.ww-lastword h3{
-  margin:0 0 1.2rem;
-  font-size:0.9rem;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-}
-
-.ww-lastword-kicker{
-  font-size:1.08rem;
-  line-height:1.7;
-  margin-bottom:2rem;
-}
-
-.ww-primary{
-  display:inline-block;
-  padding:1rem 1.6rem;
-  border-radius:0.65rem;
-  background:linear-gradient(180deg,#1d2d3d,#111c28);
-  color:#f3eee4;
-  text-decoration:none;
-  font-size:0.8rem;
   font-weight:900;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
 }
 
-.ww-stakes{
-  margin-top:1.8rem;
-  font-size:0.95rem;
-  line-height:1.7;
-  color:rgba(24,34,44,0.72);
+.ww-clue-tooltip{ top:37.6%; }
+.ww-life-tooltip{ top:57.8%; }
+.ww-leader-tooltip{ top:76.7%; }
+
+.ww-clue-hotspot:hover ~ .ww-clue-tooltip,
+.ww-clue-hotspot:focus-visible ~ .ww-clue-tooltip,
+.ww-life-hotspot:hover ~ .ww-life-tooltip,
+.ww-life-hotspot:focus-visible ~ .ww-life-tooltip,
+.ww-leader-hotspot:hover ~ .ww-leader-tooltip,
+.ww-leader-hotspot:focus-visible ~ .ww-leader-tooltip{
+  opacity:1;
+  transform:translateY(-50%) translateX(0);
 }
 
-@media (max-width:1100px){
-  .ww-base{
-    grid-template-columns:1fr;
+@media (max-aspect-ratio: 16 / 9){
+  #wwStage{
+    width:100vw;
+    height:56.25vw;
   }
+}
 
-  #wwLeft{
-    display:none;
-  }
-
-  #wwRight{
-    padding:2rem;
+@media (min-aspect-ratio: 16 / 9){
+  #wwStage{
+    width:177.7778vh;
+    height:100vh;
   }
 }
 </style>
 
 <div id="wwPortal">
+  <div id="wwStage" aria-label="WinterWord Base Station">
 
-  <aside id="wwLeft">
-    <div class="ww-left-shell"></div>
-
-    <button class="ww-left-hotspot ww-clue" data-nav="clues">
-      <img src="/assets/winterword/shared/icon_clue.png" alt="Clues">
-    </button>
+    <img
+      class="ww-shell"
+      src="/assets/winterword/shared/BS1.png"
+      alt="WinterWord Base Station"
+      draggable="false"
+    >
 
     <button
-      class="ww-left-hotspot ww-life"
+      class="ww-hotspot ww-clue-hotspot"
+      type="button"
+      data-nav="clues"
+      aria-label="Open clues"
+    ></button>
+    <img
+      class="ww-icon ww-clue-icon"
+      src="/assets/winterword/shared/icon_clue.png"
+      alt=""
+      aria-hidden="true"
+      draggable="false"
+    >
+
+    <button
+      class="ww-hotspot ww-life-hotspot"
+      type="button"
       data-nav="lifeline"
       data-disabled="${lifelineAvailable ? "false" : "true"}"
+      aria-label="${lifelineAvailable ? "Open lifeline" : `Lifeline opens after clue ${safeText(lifelineUnlockClue)}`}"
+    ></button>
+    <img
+      class="ww-icon ww-life-icon"
+      src="/assets/winterword/shared/icon_life.png"
+      alt=""
+      aria-hidden="true"
+      draggable="false"
     >
-      <img src="/assets/winterword/shared/icon_life.png" alt="Lifeline">
-    </button>
 
     <button
-      class="ww-left-hotspot ww-leader"
+      class="ww-hotspot ww-leader-hotspot"
+      type="button"
       data-nav="leaderboard"
       data-disabled="${leaderboardAvailable ? "false" : "true"}"
+      aria-label="${leaderboardAvailable ? "Open leaderboard" : "Leaderboard unavailable"}"
+    ></button>
+    <img
+      class="ww-icon ww-leader-icon"
+      src="/assets/winterword/shared/icon_leader.png"
+      alt=""
+      aria-hidden="true"
+      draggable="false"
     >
-      <img src="/assets/winterword/shared/icon_leader.png" alt="Leaderboard">
-    </button>
 
-    <a class="ww-subscribe" href="${subscribeHref}">
-      Subscribe
-    </a>
-  </aside>
+    <a
+      class="ww-hotspot ww-subscribe-hotspot"
+      href="${subscribeHref}"
+      aria-label="Subscribe to WinterWord clue alerts"
+    ></a>
 
-  <main id="wwRight">
+    <a
+      class="ww-hotspot ww-solve-hotspot"
+      href="${solveHref}"
+      aria-label="Submit final WinterWord answer"
+    ></a>
 
-    <div class="ww-topbar">
-      <div class="ww-menu">
-        <button class="ww-menu-btn">☰</button>
+    <div class="ww-org-overlay">
+      ${safeText(orgName)}
+    </div>
 
-        <div class="ww-menu-dropdown">
-          <a href="${reportProblemHref}">Report a Problem</a>
-          <a href="${contactHref}">Contact</a>
+    <div class="ww-updates-overlay">
+      ${
+        updatesText && String(updatesText).trim()
+          ? `<p class="ww-update-text">${safeText(updatesText)}</p>`
+          : `<p class="ww-update-text">No new updates yet.</p>`
+      }
+      <div class="ww-progress">${safeText(progressText)}</div>
+    </div>
 
-          <div class="ww-legal-wrap">
-            <a href="#">Legal ▸</a>
+    <div class="ww-menu">
+      <button class="ww-menu-button" type="button" aria-label="Open menu">
+        ☰
+      </button>
 
-            <div class="ww-legal-submenu">
-              <a href="/legal/privacy-policy.html">Privacy Policy</a>
-              <a href="/legal/terms-of-use.html">Terms of Use</a>
-              <a href="/legal/disclaimer.html">Disclaimer</a>
-            </div>
+      <div class="ww-menu-dropdown">
+        <a href="${reportProblemHref}">Report a Problem</a>
+        <a href="${contactHref}">Contact</a>
+
+        <div class="ww-legal-wrap">
+          <a href="#" aria-label="Legal links">Legal ▸</a>
+
+          <div class="ww-legal-submenu">
+            <a href="/legal/privacy-policy.html">Privacy Policy</a>
+            <a href="/legal/terms-of-use.html">Terms of Use</a>
+            <a href="/legal/disclaimer.html">Disclaimer</a>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="ww-head">
-      <div class="ww-slug">${safeText(seasonLabel)}</div>
-      <h1 class="ww-title">Base Station</h1>
-      <div class="ww-org-name">${safeText(orgName)}</div>
-
-      <div class="ww-tagline">
-        ${safeText(introLine1)}<br>
-        ${safeText(introLine2)}
-      </div>
+    <div class="ww-tooltip ww-clue-tooltip">
+      <span class="ww-tooltip-title">Clues</span>
+      Each clue reveals one letter. Gather them carefully.
     </div>
 
-    <div class="ww-base">
-
-      <div>
-        <div class="ww-card">
-          <h3>How this works</h3>
-          ${paragraphs.map((p) => `<p>${safeText(p)}</p>`).join("")}
-        </div>
-
-        <div class="ww-card">
-          <h3>Updates</h3>
-          ${
-            updatesText && String(updatesText).trim()
-              ? `<p>${safeText(updatesText)}</p>`
-              : `<p>No new updates yet.</p>`
-          }
-
-          <div class="ww-progress">${safeText(progressText)}</div>
-        </div>
-      </div>
-
-      <div class="ww-lastword">
-        <h3>The Last Word</h3>
-
-        <div class="ww-lastword-kicker">
-          When the wind quietens,<br>
-          certainty stirs
-        </div>
-
-        <a class="ww-primary" href="${solveHref}">
-          Solve WinterWord
-        </a>
-
-        <div class="ww-stakes">
-          One word.<br>
-          One chance.<br>
-          Guess wrong, and the silence wins.
-        </div>
-      </div>
-
+    <div class="ww-tooltip ww-life-tooltip">
+      <span class="ww-tooltip-title">Lifeline</span>
+      ${
+        lifelineAvailable
+          ? `The Lifeline is open. Step carefully.`
+          : `This passage waits its moment. It opens after clue ${safeText(lifelineUnlockClue)}.`
+      }
     </div>
 
-  </main>
+    <div class="ww-tooltip ww-leader-tooltip">
+      <span class="ww-tooltip-title">Leaderboard</span>
+      ${
+        leaderboardAvailable
+          ? `The Leaderboard remembers those who found the answer.`
+          : `No answers have been received. No correct ones, anyway...`
+      }
+    </div>
 
+  </div>
 </div>
 `;
 
