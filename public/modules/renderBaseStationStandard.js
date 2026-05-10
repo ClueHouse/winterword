@@ -252,8 +252,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-updates-overlay{
   position:absolute;
   z-index:15;
-  left:16.7%;
-  top:79.2%;
+  left:18%;
+  top:82%;
   width:24.6%;
   min-height:8%;
   color:rgba(255,244,224,0.9);
