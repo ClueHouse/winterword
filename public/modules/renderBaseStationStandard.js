@@ -170,7 +170,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-life-icon{
   left:7%;
-  top:50%;
+  top:53%;
   width:7.15%;
 }
 
