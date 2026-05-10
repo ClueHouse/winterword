@@ -207,14 +207,14 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-subscribe-hotspot{
   left:2.6%;
-  bottom:7.5%;
+  bottom:8%;
   width:9.1%;
   height:6%;
 }
 
 .ww-solve-hotspot{
-  left:70%;
-  top:65%;
+  left:77%;
+  top:70%;
   width:25.4%;
   height:9.2%;
 }
