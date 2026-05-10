@@ -101,6 +101,24 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   pointer-events:none;
 }
 
+.ww-title-meta{
+  position:absolute;
+  z-index:18;
+  left:21.3%;
+  top:20.2%;
+  width:30%;
+  color:rgba(255,244,224,0.88);
+  font-size:clamp(9px,0.82vw,15px);
+  line-height:1.2;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  font-weight:900;
+  text-shadow:0 2px 8px rgba(0,0,0,0.82);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
 .ww-hotspot{
   position:absolute;
   z-index:20;
@@ -149,10 +167,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-clue-hotspot{
-  left:3.15%;
-  top:31.1%;
-  width:7.6%;
-  height:14.2%;
+  left:3.1%;
+  top:31.3%;
+  width:7.5%;
+  height:13.2%;
 }
 
 .ww-clue-icon{
@@ -162,10 +180,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-life-hotspot{
-  left:3.15%;
-  top:49.2%;
-  width:7.6%;
-  height:15.4%;
+  left:3.1%;
+  top:46.6%;
+  width:7.8%;
+  height:13.1%;
 }
 
 .ww-life-icon{
@@ -175,10 +193,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-leader-hotspot{
-  left:3.15%;
-  top:68.2%;
-  width:7.6%;
-  height:15.4%;
+  left:3.05%;
+  top:64.4%;
+  width:7.8%;
+  height:13.2%;
 }
 
 .ww-leader-icon{
@@ -208,16 +226,12 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   top:58.4%;
   width:25.4%;
   height:9.2%;
-  transform:translate(0,0);
   pointer-events:none;
   border-radius:0.75rem;
   opacity:0;
   background:
     linear-gradient(105deg, transparent 0%, rgba(255,220,122,0.0) 35%, rgba(255,220,122,0.45) 50%, rgba(255,220,122,0.0) 65%, transparent 100%);
   background-size:220% 100%;
-  box-shadow:
-    0 0 22px rgba(242,178,76,0.0),
-    0 0 44px rgba(242,178,76,0.0);
   transition:opacity 180ms ease, box-shadow 180ms ease;
 }
 
@@ -231,12 +245,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 @keyframes wwSolveGleam{
-  0%{
-    background-position:180% 0;
-  }
-  100%{
-    background-position:-80% 0;
-  }
+  0%{ background-position:180% 0; }
+  100%{ background-position:-80% 0; }
 }
 
 .ww-updates-overlay{
@@ -254,16 +264,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   margin:0;
   font-size:clamp(10px,1.02vw,18px);
   line-height:1.42;
-}
-
-.ww-stage-menu-anchor{
-  position:absolute;
-  z-index:30;
-  top:4.1%;
-  right:3.05%;
-  width:clamp(36px,3.4vw,58px);
-  height:clamp(36px,3.4vw,58px);
-  pointer-events:none;
 }
 
 .ww-menu{
@@ -390,8 +390,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-clue-tooltip{ top:37.6%; }
-.ww-life-tooltip{ top:57.8%; }
-.ww-leader-tooltip{ top:76.7%; }
+.ww-life-tooltip{ top:53%; }
+.ww-leader-tooltip{ top:71%; }
 
 .ww-clue-hotspot:hover ~ .ww-clue-tooltip,
 .ww-clue-hotspot:focus-visible ~ .ww-clue-tooltip,
@@ -428,6 +428,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       alt="WinterWord Base Station"
       draggable="false"
     >
+
+    <div class="ww-title-meta">
+      ${safeText(seasonLabel)} &nbsp;✦&nbsp; ${safeText(orgName)}
+    </div>
 
     <button
       class="ww-hotspot ww-clue-hotspot"
@@ -493,8 +497,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
           : `<p class="ww-update-text">No new updates yet.</p>`
       }
     </div>
-
-    <div class="ww-stage-menu-anchor" aria-hidden="true"></div>
 
     <div class="ww-tooltip ww-clue-tooltip">
       <span class="ww-tooltip-title">Clues</span>
