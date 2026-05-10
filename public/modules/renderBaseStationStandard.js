@@ -104,7 +104,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-title-meta{
   position:absolute;
   z-index:18;
-  left:21.3%;
+  left:15%;
   top:16%;
   width:30%;
   color:rgba(255,244,224,0.88);
