@@ -106,19 +106,19 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   z-index:18;
   left:16%;
   top:16%;
-  width:30%;
-  color:rgba(255,244,224,0.88);
+  max-width:52%;
+  width:auto;
   font-size:clamp(9px,0.82vw,15px);
   line-height:1.2;
   letter-spacing:0.28em;
   text-transform:uppercase;
+  color:rgba(255,244,224,0.88);
   font-weight:900;
   text-shadow:0 2px 8px rgba(0,0,0,0.82);
   white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  overflow:visible;
+  text-overflow:unset;
 }
-
 .ww-hotspot{
   position:absolute;
   z-index:20;
