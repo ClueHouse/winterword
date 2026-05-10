@@ -189,7 +189,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-life-icon{
   left:7%;
   top:53%;
-  width:7.15%;
+  width:7%;
 }
 
 .ww-leader-hotspot{
@@ -202,7 +202,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-leader-icon{
   left:6.8%;
   top:71%;
-  width:7.45%;
+  width:7%;
 }
 
 .ww-subscribe-hotspot{
