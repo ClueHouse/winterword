@@ -183,7 +183,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-leader-icon{
   left:6.8%;
-  top:70%;
+  top:71%;
   width:7.45%;
 }
 
