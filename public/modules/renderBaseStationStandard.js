@@ -70,9 +70,9 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   height:100vh;
   overflow:hidden;
   background:
-    radial-gradient(circle at top right, rgba(218,162,50,0.08), transparent 35%),
-    radial-gradient(circle at bottom left, rgba(32,58,92,0.18), transparent 40%),
-    linear-gradient(180deg,#020609 0%, #07111c 100%);
+    radial-gradient(circle at top right, rgba(218,162,50,0.10), transparent 34%),
+    radial-gradient(circle at bottom left, rgba(70,110,165,0.22), transparent 42%),
+    linear-gradient(180deg,#0b1826 0%, #13283d 100%);
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
   color:#f5efe3;
   display:flex;
