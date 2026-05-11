@@ -232,9 +232,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     radial-gradient(circle at 50% 50%, rgba(255,255,255,0.16), transparent 58%),
     linear-gradient(110deg, transparent 0%, rgba(255,218,128,0.0) 34%, rgba(255,218,128,0.42) 50%, rgba(255,218,128,0.0) 66%, transparent 100%);
   background-size:220% 100%;
-  box-shadow:
-    0 0 0 rgba(242,178,76,0),
-    0 0 0 rgba(242,178,76,0);
   transition:opacity 160ms ease, box-shadow 160ms ease;
 }
 
@@ -252,6 +249,42 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   100%{ background-position:-80% 0; }
 }
 
+.ww-subscribe-tooltip{
+  position:absolute;
+  z-index:62;
+  left:13%;
+  bottom:8.4%;
+  width:17%;
+  min-width:190px;
+  padding:0.85rem 0.92rem;
+  border:1px solid rgba(224,155,32,0.5);
+  border-radius:0.8rem;
+  background:rgba(4,9,14,0.95);
+  color:rgba(255,244,224,0.92);
+  font-size:clamp(9px,0.74vw,13px);
+  line-height:1.42;
+  box-shadow:0 16px 44px rgba(0,0,0,0.58);
+  opacity:0;
+  pointer-events:none;
+  transform:translateX(-6px);
+  transition:opacity 150ms ease, transform 150ms ease;
+}
+
+.ww-subscribe-note{
+  display:block;
+  margin-top:0.55rem;
+  padding-top:0.5rem;
+  border-top:1px solid rgba(224,155,32,0.24);
+  color:rgba(255,244,224,0.72);
+  font-style:italic;
+}
+
+.ww-subscribe-hotspot:hover ~ .ww-subscribe-tooltip,
+.ww-subscribe-hotspot:focus-visible ~ .ww-subscribe-tooltip{
+  opacity:1;
+  transform:translateX(0);
+}
+
 .ww-solve-hotspot{
   left:61.8%;
   top:61.8%;
@@ -260,7 +293,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   border-radius:0.75rem;
 }
 
-.ww-solve-glow{
+.ww-solve-gleam{
   position:absolute;
   z-index:16;
   left:61.8%;
@@ -269,26 +302,72 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   height:9.2%;
   pointer-events:none;
   border-radius:0.75rem;
+  overflow:hidden;
   opacity:0;
+  transition:opacity 180ms ease;
+}
+
+.ww-solve-gleam::before{
+  content:"";
+  position:absolute;
+  top:-120%;
+  left:-40%;
+  width:24%;
+  height:340%;
+  transform:rotate(24deg);
   background:
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.14), transparent 60%),
-    linear-gradient(105deg, transparent 0%, rgba(255,220,122,0.0) 35%, rgba(255,220,122,0.45) 50%, rgba(255,220,122,0.0) 65%, transparent 100%);
-  background-size:220% 100%;
-  transition:opacity 180ms ease, box-shadow 180ms ease;
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255,238,170,0.0) 18%,
+      rgba(255,238,170,0.58) 50%,
+      rgba(255,238,170,0.0) 82%,
+      transparent 100%
+    );
+  filter:blur(1px);
 }
 
-.ww-solve-hotspot:hover + .ww-solve-glow,
-.ww-solve-hotspot:focus-visible + .ww-solve-glow{
+.ww-solve-hotspot:hover + .ww-solve-gleam,
+.ww-solve-hotspot:focus-visible + .ww-solve-gleam{
   opacity:1;
-  animation:wwSolveGleam 1.15s ease-in-out infinite;
-  box-shadow:
-    0 0 22px rgba(242,178,76,0.34),
-    0 0 52px rgba(242,178,76,0.22);
 }
 
-@keyframes wwSolveGleam{
-  0%{ background-position:180% 0; }
-  100%{ background-position:-80% 0; }
+.ww-solve-hotspot:hover + .ww-solve-gleam::before,
+.ww-solve-hotspot:focus-visible + .ww-solve-gleam::before{
+  animation:wwSolveSlowGleam 2.8s ease-in-out infinite;
+}
+
+@keyframes wwSolveSlowGleam{
+  0%{ left:-42%; }
+  58%{ left:118%; }
+  100%{ left:118%; }
+}
+
+.ww-solve-tooltip{
+  position:absolute;
+  z-index:62;
+  left:75%;
+  top:56.5%;
+  padding:0.55rem 0.75rem;
+  border:1px solid rgba(224,155,32,0.48);
+  border-radius:0.68rem;
+  background:rgba(4,9,14,0.92);
+  color:rgba(255,244,224,0.94);
+  font-size:clamp(9px,0.74vw,13px);
+  font-weight:850;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  box-shadow:0 14px 36px rgba(0,0,0,0.5);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(6px);
+  transition:opacity 150ms ease, transform 150ms ease;
+}
+
+.ww-solve-hotspot:hover ~ .ww-solve-tooltip,
+.ww-solve-hotspot:focus-visible ~ .ww-solve-tooltip{
+  opacity:1;
+  transform:translateY(0);
 }
 
 .ww-updates-overlay{
@@ -322,12 +401,59 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   border:1px solid rgba(224,155,32,0.72);
   background:rgba(3,8,12,0.52);
   color:rgba(255,239,206,0.94);
-  font-size:clamp(20px,1.85vw,32px);
-  line-height:1;
   cursor:pointer;
   box-shadow:
     0 10px 26px rgba(0,0,0,0.36),
     inset 0 0 12px rgba(224,155,32,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  padding:0;
+}
+
+.ww-signal-bars{
+  display:flex;
+  align-items:flex-end;
+  gap:4px;
+  height:22px;
+}
+
+.ww-signal-bars span{
+  display:block;
+  width:4px;
+  border-radius:4px;
+  background:rgba(255,239,206,0.68);
+  box-shadow:0 0 0 rgba(242,178,76,0);
+  animation:wwSignalPulse 2.8s ease-in-out infinite;
+}
+
+.ww-signal-bars span:nth-child(1){
+  height:8px;
+  animation-delay:0s;
+}
+
+.ww-signal-bars span:nth-child(2){
+  height:14px;
+  animation-delay:0.18s;
+}
+
+.ww-signal-bars span:nth-child(3){
+  height:20px;
+  animation-delay:0.36s;
+}
+
+@keyframes wwSignalPulse{
+  0%,100%{
+    opacity:0.48;
+    background:rgba(255,239,206,0.55);
+    box-shadow:0 0 0 rgba(242,178,76,0);
+  }
+  45%{
+    opacity:1;
+    background:rgba(255,222,150,0.98);
+    box-shadow:0 0 12px rgba(242,178,76,0.58);
+  }
 }
 
 .ww-menu-dropdown,
@@ -405,9 +531,9 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   position:absolute;
   z-index:60;
   left:13%;
-  width:15.5%;
-  min-width:160px;
-  padding:0.72rem 0.82rem;
+  width:18%;
+  min-width:190px;
+  padding:0.82rem 0.92rem;
   border:1px solid rgba(224,155,32,0.5);
   border-radius:0.75rem;
   background:rgba(4,9,14,0.94);
@@ -507,7 +633,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       type="button"
       data-nav="lifeline"
       data-disabled="${lifelineAvailable ? "false" : "true"}"
-      aria-label="${lifelineAvailable ? "Open lifeline" : `Lifeline opens after clue ${safeText(lifelineUnlockClue)}`}"
+      aria-label="${lifelineAvailable ? "Open lifeline" : "Lifeline unavailable"}"
     ></button>
     <img
       class="ww-icon ww-life-icon"
@@ -543,7 +669,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       href="${solveHref}"
       aria-label="Submit final WinterWord answer"
     ></a>
-    <div class="ww-solve-glow" aria-hidden="true"></div>
+    <div class="ww-solve-gleam" aria-hidden="true"></div>
 
     <div class="ww-updates-overlay">
       ${
@@ -555,32 +681,47 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
     <div class="ww-tooltip ww-clue-tooltip">
       <span class="ww-tooltip-title">Clues</span>
-      Each clue reveals one letter. Gather them carefully.
+      Each of your upcoming clues is designed to reveal just enough
+      to move you forward — and hide the rest where only patience can reach it.
     </div>
 
     <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}">
       <span class="ww-tooltip-title">Lifeline</span>
       ${
         lifelineAvailable
-          ? `The Lifeline is open. Step carefully.`
-          : `This passage waits its moment. It opens after clue ${safeText(lifelineUnlockClue)}.`
+          ? `This passage is open. Step carefully.`
+          : `This passage waits its moment.`
       }
     </div>
 
     <div class="ww-tooltip ww-leader-tooltip ${leaderboardAvailable ? "" : "ww-tooltip--locked"}">
       <span class="ww-tooltip-title">Leaderboard</span>
-      ${
-        leaderboardAvailable
-          ? `The Leaderboard remembers those who found the answer.`
-          : `No answers have been received. No correct ones, anyway...`
-      }
+      The Leaderboard remembers all who enter the game.
+      It reflects those who find the answer,
+      and honours the one who found it first.
+    </div>
+
+    <div class="ww-subscribe-tooltip">
+      <span class="ww-tooltip-title">Clue Alerts</span>
+      Curious minds tend to wander.<br>
+      When each clue falls,<br>
+      subscribers will hear the click.
+      <span class="ww-subscribe-note">Execute ESCAPE ROOM protocol.</span>
+    </div>
+
+    <div class="ww-solve-tooltip">
+      Ready?
     </div>
 
   </div>
 
   <div class="ww-menu">
     <button class="ww-menu-button" type="button" aria-label="Open menu">
-      ☰
+      <span class="ww-signal-bars" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
     </button>
 
     <div class="ww-menu-dropdown">
