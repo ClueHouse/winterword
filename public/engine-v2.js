@@ -6,6 +6,7 @@
 
   const MODULE_PATHS = {
     baseStationStandard: "/modules/renderBaseStationStandard.js",
+    baseStationPop: "/modules/renderBaseStationPop.js",
     baseStationResolved: "/modules/base-station-resolved.js",
     clueList: "/modules/clue-list.js",
     cluePage: "/modules/clue-page.js",
@@ -490,6 +491,38 @@
                 popClueLive,
                 hasLeaderboardEntries,
                 isResolved: true
+              },
+              navigate
+            );
+            return;
+          }
+
+          if (popClueLive) {
+            const renderBaseStationPop =
+              modules.baseStationPop.renderBaseStationPop;
+
+            if (typeof renderBaseStationPop !== "function") {
+              renderError("POP Base Station module error", "renderBaseStationPop was not found.");
+              return;
+            }
+
+            renderBaseStationPop(
+              app,
+              {
+                orgName: orgState.org_name || game.org_name || "WinterWord",
+                seasonLabel: game.season_label || "WINTERWORD • 2026",
+                introLine1: game.base_station_intro_line_1,
+                introLine2: game.base_station_intro_line_2,
+                howParagraphs: game.how_it_works_paragraphs,
+                updatesText: orgState.updates_content || game.updates_text,
+                currentClue,
+                totalClues,
+                seasonState,
+                lifelineAvailable,
+                lifelineUnlockClue,
+                popClueLive,
+                hasLeaderboardEntries,
+                isResolved: false
               },
               navigate
             );
