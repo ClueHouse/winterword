@@ -198,7 +198,7 @@ export function renderBaseStationPop(app, data = {}, navigate) {
 
 .ww-clue-icon{
   left:6.8%;
-  top:44%;
+  top:44.2%;
   width:7%;
 }
 
@@ -212,7 +212,7 @@ export function renderBaseStationPop(app, data = {}, navigate) {
 .ww-life-icon{
   left:7%;
   top:57.6%;
-  width:5.5%;
+  width:5%;
 }
 
 .ww-leader-hotspot{
