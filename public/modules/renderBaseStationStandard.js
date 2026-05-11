@@ -119,6 +119,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   overflow:visible;
   text-overflow:unset;
 }
+
 .ww-hotspot{
   position:absolute;
   z-index:20;
@@ -160,10 +161,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-hotspot[data-disabled="true"] + .ww-icon{
-  opacity:0.45;
+  opacity:1;
   filter:
-    grayscale(0.72)
-    drop-shadow(0 8px 10px rgba(0,0,0,0.36));
+    drop-shadow(0 10px 14px rgba(0,0,0,0.48))
+    drop-shadow(0 0 10px rgba(218,162,50,0.18));
 }
 
 .ww-clue-hotspot{
@@ -210,6 +211,33 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   bottom:8%;
   width:9.1%;
   height:6%;
+  border:2px solid red;
+  border-radius:0.7rem;
+}
+
+.ww-subscribe-hotspot::after{
+  content:"";
+  position:absolute;
+  inset:-10%;
+  border-radius:inherit;
+  opacity:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.16), transparent 58%),
+    linear-gradient(110deg, transparent 0%, rgba(255,218,128,0.0) 34%, rgba(255,218,128,0.42) 50%, rgba(255,218,128,0.0) 66%, transparent 100%);
+  background-size:220% 100%;
+  transition:opacity 160ms ease;
+}
+
+.ww-subscribe-hotspot:hover::after,
+.ww-subscribe-hotspot:focus-visible::after{
+  opacity:1;
+  animation:wwSubscribeGlow 1.2s ease-in-out infinite;
+}
+
+@keyframes wwSubscribeGlow{
+  0%{ background-position:180% 0; }
+  100%{ background-position:-80% 0; }
 }
 
 .ww-solve-hotspot{
@@ -217,6 +245,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   top:70%;
   width:25.4%;
   height:9.2%;
+  border:2px solid red;
+  border-radius:0.75rem;
 }
 
 .ww-solve-glow{
@@ -379,6 +409,15 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   transition:opacity 150ms ease, transform 150ms ease;
 }
 
+.ww-tooltip--locked{
+  border-color:rgba(255,255,255,0.22);
+  background:linear-gradient(180deg, rgba(122,18,24,0.96), rgba(72,8,14,0.98));
+  color:#ffffff;
+  box-shadow:
+    0 16px 44px rgba(0,0,0,0.62),
+    0 0 22px rgba(180,20,30,0.24);
+}
+
 .ww-tooltip-title{
   display:block;
   margin-bottom:0.3rem;
@@ -387,6 +426,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   letter-spacing:0.16em;
   text-transform:uppercase;
   font-weight:900;
+}
+
+.ww-tooltip--locked .ww-tooltip-title{
+  color:#ffffff;
 }
 
 .ww-clue-tooltip{ top:37.6%; }
@@ -503,7 +546,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       Each clue reveals one letter. Gather them carefully.
     </div>
 
-    <div class="ww-tooltip ww-life-tooltip">
+    <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}">
       <span class="ww-tooltip-title">Lifeline</span>
       ${
         lifelineAvailable
@@ -512,7 +555,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       }
     </div>
 
-    <div class="ww-tooltip ww-leader-tooltip">
+    <div class="ww-tooltip ww-leader-tooltip ${leaderboardAvailable ? "" : "ww-tooltip--locked"}">
       <span class="ww-tooltip-title">Leaderboard</span>
       ${
         leaderboardAvailable
