@@ -10,8 +10,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     totalClues = 12,
     lifelineAvailable = false,
     lifelineUnlockClue = 6,
-    hasLeaderboardEntries = false,
-    popClueLive = false
+    hasLeaderboardEntries = false
   } = data;
 
   const leaderboardAvailable = hasLeaderboardEntries === true;
@@ -121,60 +120,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   text-overflow:unset;
 }
 
-.ww-stage-signal{
-  position:absolute;
-  z-index:24;
-  right:12.2%;
-  top:13.2%;
-  display:flex;
-  align-items:center;
-  gap:0.72rem;
-  padding:0.48rem 0.62rem 0.48rem 0.7rem;
-  border:1px solid rgba(224,155,32,0.58);
-  border-radius:0.82rem;
-  background:rgba(4,9,14,0.62);
-  box-shadow:
-    0 14px 34px rgba(0,0,0,0.36),
-    inset 0 0 14px rgba(224,155,32,0.055);
-  backdrop-filter:blur(7px);
-  pointer-events:none;
-}
-
-.ww-stage-signal-label{
-  font-size:clamp(8px,0.64vw,12px);
-  letter-spacing:0.26em;
-  text-transform:uppercase;
-  color:rgba(255,244,224,0.68);
-  font-weight:900;
-}
-
-.ww-signal-bar{
-  display:flex;
-  align-items:flex-end;
-  gap:4px;
-  height:2.05rem;
-}
-
-.ww-signal-bar span{
-  display:block;
-  width:7px;
-  height:30%;
-  background:rgba(214,221,230,0.22);
-  border-radius:4px;
-  animation:wwSignal 6s infinite;
-}
-
-.ww-signal-bar span:nth-child(2){animation-duration:5.4s;}
-.ww-signal-bar span:nth-child(3){animation-duration:6.8s;}
-.ww-signal-bar span:nth-child(4){animation-duration:5.9s;}
-.ww-signal-bar span:nth-child(5){animation-duration:7.2s;}
-
-@keyframes wwSignal{
-  0%{height:28%; background:rgba(214,221,230,0.18);}
-  45%{height:100%; background:rgba(214,221,230,0.52);}
-  100%{height:34%; background:rgba(214,221,230,0.20);}
-}
-
 .ww-hotspot{
   position:absolute;
   z-index:20;
@@ -255,35 +200,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   width:6.8%;
 }
 
-.ww-pop-hotspot{
-  left:3.1%;
-  top:55.1%;
-  width:7.8%;
-  height:10.8%;
-}
-
-.ww-pop-icon{
-  left:6.9%;
-  top:60.4%;
-  width:6.2%;
-  animation:wwPopPulse 1.45s ease-in-out infinite;
-}
-
-@keyframes wwPopPulse{
-  0%,100%{
-    filter:
-      drop-shadow(0 0 6px rgba(240,138,36,0.38))
-      drop-shadow(0 0 12px rgba(240,138,36,0.18));
-    transform:translate(-50%,-50%) scale(1);
-  }
-  50%{
-    filter:
-      drop-shadow(0 0 13px rgba(240,138,36,0.82))
-      drop-shadow(0 0 28px rgba(240,138,36,0.36));
-    transform:translate(-50%,calc(-50% - 2px)) scale(1.045);
-  }
-}
-
 .ww-leader-hotspot{
   left:3.05%;
   top:64.4%;
@@ -341,13 +257,13 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   width:17%;
   min-width:190px;
   padding:0.85rem 0.92rem;
-  border:1px solid rgba(224,155,32,0.24);
+  border:1px solid rgba(230,230,230,0.92);
   border-radius:0.8rem;
-  background:#ffffff;
-  color:#101010;
+  background:rgba(255,255,255,0.96);
+  color:rgba(0,0,0,0.88);
   font-size:clamp(9px,0.74vw,13px);
   line-height:1.42;
-  box-shadow:0 16px 44px rgba(0,0,0,0.58);
+  box-shadow:0 16px 44px rgba(0,0,0,0.38);
   opacity:0;
   pointer-events:none;
   transform:translateX(-6px);
@@ -358,7 +274,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   display:block;
   margin-top:0.55rem;
   padding-top:0.5rem;
-  border-top:1px solid rgba(0,0,0,0.14);
+  border-top:1px solid rgba(0,0,0,0.16);
   color:rgba(0,0,0,0.62);
   font-style:italic;
 }
@@ -381,9 +297,9 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   position:absolute;
   z-index:16;
   left:61.8%;
-  top:60.55%;
+  top:60.9%;
   width:25.4%;
-  height:10.45%;
+  height:10.1%;
   pointer-events:none;
   border-radius:0.75rem;
   overflow:hidden;
@@ -394,10 +310,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-solve-gleam::before{
   content:"";
   position:absolute;
-  top:-118%;
+  top:-135%;
   left:-40%;
   width:24%;
-  height:350%;
+  height:370%;
   transform:rotate(24deg);
   background:
     linear-gradient(
@@ -433,15 +349,15 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   left:75%;
   top:56.5%;
   padding:0.55rem 0.75rem;
-  border:1px solid rgba(224,155,32,0.24);
+  border:1px solid rgba(230,230,230,0.92);
   border-radius:0.68rem;
-  background:#ffffff;
-  color:#101010;
+  background:rgba(255,255,255,0.96);
+  color:rgba(0,0,0,0.9);
   font-size:clamp(9px,0.74vw,13px);
   font-weight:850;
   letter-spacing:0.12em;
   text-transform:uppercase;
-  box-shadow:0 14px 36px rgba(0,0,0,0.5);
+  box-shadow:0 14px 36px rgba(0,0,0,0.35);
   opacity:0;
   pointer-events:none;
   transform:translateY(6px);
@@ -467,12 +383,84 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-update-text{
   margin:0;
-  font-size:clamp(9px,0.82vw,15px);
+  font-size:clamp(10px,0.88vw,16px);
   line-height:1.42;
   letter-spacing:0.28em;
   text-transform:uppercase;
   font-style:italic;
   font-weight:400;
+}
+
+.ww-signal-badge{
+  position:absolute;
+  z-index:24;
+  right:12.8%;
+  top:8.2%;
+  display:flex;
+  align-items:flex-end;
+  gap:0.55rem;
+  padding:0.54rem 0.72rem;
+  border-radius:0.74rem;
+  border:1px solid rgba(224,155,32,0.58);
+  background:rgba(3,8,12,0.48);
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.34),
+    inset 0 0 12px rgba(224,155,32,0.08);
+  pointer-events:none;
+}
+
+.ww-signal-label{
+  font-size:clamp(7px,0.56vw,10px);
+  letter-spacing:0.26em;
+  text-transform:uppercase;
+  color:rgba(255,239,206,0.76);
+  font-weight:900;
+  line-height:1;
+  padding-bottom:0.12rem;
+}
+
+.ww-signal-bars{
+  display:flex;
+  align-items:flex-end;
+  gap:4px;
+  height:24px;
+}
+
+.ww-signal-bars span{
+  display:block;
+  width:4px;
+  border-radius:4px;
+  background:rgba(255,239,206,0.68);
+  box-shadow:0 0 0 rgba(242,178,76,0);
+  animation:wwSignalPulse 2.8s ease-in-out infinite;
+}
+
+.ww-signal-bars span:nth-child(1){
+  height:8px;
+  animation-delay:0s;
+}
+
+.ww-signal-bars span:nth-child(2){
+  height:14px;
+  animation-delay:0.18s;
+}
+
+.ww-signal-bars span:nth-child(3){
+  height:20px;
+  animation-delay:0.36s;
+}
+
+@keyframes wwSignalPulse{
+  0%,100%{
+    opacity:0.48;
+    background:rgba(255,239,206,0.55);
+    box-shadow:0 0 0 rgba(242,178,76,0);
+  }
+  45%{
+    opacity:1;
+    background:rgba(255,222,150,0.98);
+    box-shadow:0 0 12px rgba(242,178,76,0.58);
+  }
 }
 
 .ww-menu{
@@ -500,19 +488,26 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-menu-lines{
+  width:45%;
+  height:34%;
   display:flex;
   flex-direction:column;
-  gap:5px;
-  width:22px;
+  justify-content:space-between;
 }
 
 .ww-menu-lines span{
   display:block;
-  height:2px;
   width:100%;
+  height:2px;
   border-radius:999px;
   background:rgba(255,239,206,0.92);
-  box-shadow:0 0 10px rgba(242,178,76,0.24);
+  box-shadow:0 0 8px rgba(242,178,76,0.18);
+}
+
+.ww-menu-button:hover .ww-menu-lines span,
+.ww-menu-button:focus-visible .ww-menu-lines span{
+  background:rgba(255,222,150,0.98);
+  box-shadow:0 0 12px rgba(242,178,76,0.54);
 }
 
 .ww-menu-dropdown,
@@ -542,3 +537,292 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-menu:focus-within .ww-menu-dropdown{
   opacity:1;
   pointer-events:auto;
+  transform:translateY(0);
+}
+
+.ww-legal-wrap{
+  position:relative;
+}
+
+.ww-legal-submenu{
+  top:0;
+  right:calc(100% + 0.55rem);
+  transform:translateX(4px);
+}
+
+.ww-legal-wrap:hover .ww-legal-submenu,
+.ww-legal-wrap:focus-within .ww-legal-submenu{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateX(0);
+}
+
+.ww-menu-dropdown a,
+.ww-legal-submenu a{
+  display:block;
+  padding:0.72rem 0.86rem;
+  border-radius:0.55rem;
+  color:rgba(255,244,224,0.92);
+  text-decoration:none;
+  font-size:0.78rem;
+  line-height:1.2;
+  font-weight:850;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.ww-menu-dropdown a:hover,
+.ww-menu-dropdown a:focus-visible,
+.ww-legal-submenu a:hover,
+.ww-legal-submenu a:focus-visible{
+  background:rgba(224,155,32,0.15);
+  color:#f2b24c;
+  outline:none;
+}
+
+.ww-tooltip{
+  position:absolute;
+  z-index:60;
+  left:13%;
+  width:18%;
+  min-width:190px;
+  padding:0.82rem 0.92rem;
+  border:1px solid rgba(230,230,230,0.92);
+  border-radius:0.75rem;
+  background:rgba(255,255,255,0.96);
+  color:rgba(0,0,0,0.88);
+  font-size:clamp(9px,0.72vw,13px);
+  line-height:1.42;
+  box-shadow:0 16px 44px rgba(0,0,0,0.38);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(-50%) translateX(-6px);
+  transition:opacity 150ms ease, transform 150ms ease;
+}
+
+.ww-tooltip--locked{
+  border-color:rgba(255,255,255,0.32);
+  background:linear-gradient(180deg, rgba(158,38,45,0.96), rgba(104,18,25,0.98));
+  color:#ffffff;
+  box-shadow:
+    0 16px 44px rgba(0,0,0,0.58),
+    0 0 22px rgba(180,20,30,0.2);
+}
+
+.ww-tooltip-title{
+  display:block;
+  margin-bottom:0.32rem;
+  color:rgba(0,0,0,0.92);
+  font-size:1.08em;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  font-weight:900;
+}
+
+.ww-tooltip--locked .ww-tooltip-title{
+  color:#ffffff;
+}
+
+.ww-subscribe-tooltip .ww-tooltip-title{
+  color:rgba(0,0,0,0.92);
+  font-size:1.08em;
+}
+
+.ww-clue-tooltip{ top:37.6%; }
+.ww-life-tooltip{ top:53%; }
+.ww-leader-tooltip{ top:71%; }
+
+.ww-clue-hotspot:hover ~ .ww-clue-tooltip,
+.ww-clue-hotspot:focus-visible ~ .ww-clue-tooltip,
+.ww-life-hotspot:hover ~ .ww-life-tooltip,
+.ww-life-hotspot:focus-visible ~ .ww-life-tooltip,
+.ww-leader-hotspot:hover ~ .ww-leader-tooltip,
+.ww-leader-hotspot:focus-visible ~ .ww-leader-tooltip{
+  opacity:1;
+  transform:translateY(-50%) translateX(0);
+}
+
+@media (max-aspect-ratio: 16 / 9){
+  #wwStage{
+    width:92vw;
+    height:calc(92vw * 0.5625);
+  }
+}
+
+@media (min-aspect-ratio: 16 / 9){
+  #wwStage{
+    width:calc(92vh * 1.77778);
+    height:92vh;
+  }
+}
+</style>
+
+<div id="wwPortal">
+
+  <div id="wwStage" aria-label="WinterWord Base Station">
+
+    <img
+      class="ww-shell"
+      src="/assets/winterword/shared/BS1.png"
+      alt="WinterWord Base Station"
+      draggable="false"
+    >
+
+    <div class="ww-title-meta">
+      ${safeText(seasonLabel)} &nbsp;✦&nbsp; ${safeText(orgName)}
+    </div>
+
+    <div class="ww-signal-badge" aria-label="Signal">
+      <span class="ww-signal-label">Signal</span>
+      <span class="ww-signal-bars" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </div>
+
+    <button
+      class="ww-hotspot ww-clue-hotspot"
+      type="button"
+      data-nav="clues"
+      aria-label="Open clues"
+    ></button>
+    <img
+      class="ww-icon ww-clue-icon"
+      src="/assets/winterword/shared/icon_clue.png"
+      alt=""
+      aria-hidden="true"
+      draggable="false"
+    >
+
+    <button
+      class="ww-hotspot ww-life-hotspot"
+      type="button"
+      data-nav="lifeline"
+      data-disabled="${lifelineAvailable ? "false" : "true"}"
+      aria-label="${lifelineAvailable ? "Open lifeline" : "Lifeline unavailable"}"
+    ></button>
+    <img
+      class="ww-icon ww-life-icon"
+      src="/assets/winterword/shared/icon_life.png"
+      alt=""
+      aria-hidden="true"
+      draggable="false"
+    >
+
+    <button
+      class="ww-hotspot ww-leader-hotspot"
+      type="button"
+      data-nav="leaderboard"
+      data-disabled="${leaderboardAvailable ? "false" : "true"}"
+      aria-label="${leaderboardAvailable ? "Open leaderboard" : "Leaderboard unavailable"}"
+    ></button>
+    <img
+      class="ww-icon ww-leader-icon"
+      src="/assets/winterword/shared/icon_leader.png"
+      alt=""
+      aria-hidden="true"
+      draggable="false"
+    >
+
+    <a
+      class="ww-hotspot ww-subscribe-hotspot"
+      href="${subscribeHref}"
+      aria-label="Subscribe to WinterWord clue alerts"
+    ></a>
+
+    <a
+      class="ww-hotspot ww-solve-hotspot"
+      href="${solveHref}"
+      aria-label="Submit final WinterWord answer"
+    ></a>
+    <div class="ww-solve-gleam" aria-hidden="true"></div>
+
+    <div class="ww-updates-overlay">
+      ${
+        updatesText && String(updatesText).trim()
+          ? `<p class="ww-update-text">${safeText(updatesText)}</p>`
+          : `<p class="ww-update-text">No new updates yet.</p>`
+      }
+    </div>
+
+    <div class="ww-tooltip ww-clue-tooltip">
+      <span class="ww-tooltip-title">Clues</span>
+      Each of your upcoming clues is designed to reveal just enough
+      to move you forward — and hide the rest where only patience can reach it.
+    </div>
+
+    <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}">
+      <span class="ww-tooltip-title">Lifeline</span>
+      ${
+        lifelineAvailable
+          ? `This passage is open. Step carefully.`
+          : `This passage waits its moment.`
+      }
+    </div>
+
+    <div class="ww-tooltip ww-leader-tooltip ${leaderboardAvailable ? "" : "ww-tooltip--locked"}">
+      <span class="ww-tooltip-title">Leaderboard</span>
+      The Leaderboard remembers all who enter the game.
+      It reflects those who find the answer,
+      and honours the one who found it first.
+    </div>
+
+    <div class="ww-subscribe-tooltip">
+      <span class="ww-tooltip-title">Clue Alerts</span>
+      Curious minds tend to wander.<br>
+      When each clue falls,<br>
+      subscribers will hear the click.
+      <span class="ww-subscribe-note">Execute ESCAPE ROOM protocol.</span>
+    </div>
+
+    <div class="ww-solve-tooltip">
+      Ready?
+    </div>
+
+  </div>
+
+  <div class="ww-menu">
+    <button class="ww-menu-button" type="button" aria-label="Open menu">
+      <span class="ww-menu-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+
+    <div class="ww-menu-dropdown">
+      <a href="${reportProblemHref}">Report a Problem</a>
+      <a href="${contactHref}">Contact</a>
+
+      <div class="ww-legal-wrap">
+        <a href="#" aria-label="Legal links">Legal ▸</a>
+
+        <div class="ww-legal-submenu">
+          <a href="/legal/privacy-policy.html">Privacy Policy</a>
+          <a href="/legal/terms-of-use.html">Terms of Use</a>
+          <a href="/legal/disclaimer.html">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+`;
+
+  const navButtons = app.querySelectorAll("[data-nav]");
+
+  navButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = button.getAttribute("data-nav");
+      const disabled = button.getAttribute("data-disabled") === "true";
+
+      if (disabled) return;
+
+      if (typeof navigate === "function") {
+        navigate(target);
+      }
+    });
+  });
+}
