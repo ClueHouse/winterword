@@ -207,7 +207,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-subscribe-hotspot{
-  left:2.6%;
+  left:2.5%;
   bottom:8%;
   width:9.1%;
   height:6%;
@@ -241,8 +241,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-solve-hotspot{
-  left:77%;
-  top:70%;
+  left:70%;
+  top:65%;
   width:25.4%;
   height:9.2%;
   border:2px solid red;
