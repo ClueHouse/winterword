@@ -144,6 +144,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   user-select:none;
   pointer-events:none;
   filter:
+    brightness(1)
+    saturate(1.04)
     drop-shadow(0 10px 14px rgba(0,0,0,0.48))
     drop-shadow(0 0 10px rgba(218,162,50,0.18));
   transition:
@@ -154,15 +156,20 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-hotspot:hover + .ww-icon,
 .ww-hotspot:focus-visible + .ww-icon{
-  transform:translate(-50%,-50%) scale(1.055);
+  transform:translate(calc(-50% - 4px), calc(-50% - 4px));
   filter:
-    drop-shadow(0 12px 18px rgba(0,0,0,0.58))
-    drop-shadow(0 0 22px rgba(234,172,45,0.55));
+    brightness(1.34)
+    saturate(1.24)
+    contrast(1.08)
+    drop-shadow(0 13px 18px rgba(0,0,0,0.6))
+    drop-shadow(0 0 24px rgba(245,183,52,0.72));
 }
 
 .ww-hotspot[data-disabled="true"] + .ww-icon{
   opacity:1;
   filter:
+    brightness(1)
+    saturate(1.04)
     drop-shadow(0 10px 14px rgba(0,0,0,0.48))
     drop-shadow(0 0 10px rgba(218,162,50,0.18));
 }
@@ -211,7 +218,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   bottom:8%;
   width:9.1%;
   height:6%;
-  border:2px solid red;
   border-radius:0.7rem;
 }
 
@@ -226,13 +232,19 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     radial-gradient(circle at 50% 50%, rgba(255,255,255,0.16), transparent 58%),
     linear-gradient(110deg, transparent 0%, rgba(255,218,128,0.0) 34%, rgba(255,218,128,0.42) 50%, rgba(255,218,128,0.0) 66%, transparent 100%);
   background-size:220% 100%;
-  transition:opacity 160ms ease;
+  box-shadow:
+    0 0 0 rgba(242,178,76,0),
+    0 0 0 rgba(242,178,76,0);
+  transition:opacity 160ms ease, box-shadow 160ms ease;
 }
 
 .ww-subscribe-hotspot:hover::after,
 .ww-subscribe-hotspot:focus-visible::after{
   opacity:1;
   animation:wwSubscribeGlow 1.2s ease-in-out infinite;
+  box-shadow:
+    0 0 18px rgba(242,178,76,0.28),
+    0 0 34px rgba(242,178,76,0.18);
 }
 
 @keyframes wwSubscribeGlow{
@@ -245,21 +257,21 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   top:61.8%;
   width:25.4%;
   height:9.2%;
-  border:2px solid red;
   border-radius:0.75rem;
 }
 
 .ww-solve-glow{
   position:absolute;
   z-index:16;
-  left:54.7%;
-  top:58.4%;
+  left:61.8%;
+  top:61.8%;
   width:25.4%;
   height:9.2%;
   pointer-events:none;
   border-radius:0.75rem;
   opacity:0;
   background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.14), transparent 60%),
     linear-gradient(105deg, transparent 0%, rgba(255,220,122,0.0) 35%, rgba(255,220,122,0.45) 50%, rgba(255,220,122,0.0) 65%, transparent 100%);
   background-size:220% 100%;
   transition:opacity 180ms ease, box-shadow 180ms ease;
