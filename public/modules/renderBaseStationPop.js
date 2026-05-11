@@ -185,8 +185,8 @@ export function renderBaseStationPop(app, data = {}, navigate) {
 
 .ww-pop-icon{
   left:6.85%;
-  top:29.9%;
-  width:6.9%;
+  top:31.5%;
+  width:8%;
 }
 
 .ww-clue-hotspot{
@@ -199,7 +199,7 @@ export function renderBaseStationPop(app, data = {}, navigate) {
 .ww-clue-icon{
   left:6.8%;
   top:44%;
-  width:8.4%;
+  width:7.5%;
 }
 
 .ww-life-hotspot{
@@ -212,7 +212,7 @@ export function renderBaseStationPop(app, data = {}, navigate) {
 .ww-life-icon{
   left:7%;
   top:57.6%;
-  width:6.8%;
+  width:6%;
 }
 
 .ww-leader-hotspot{
@@ -225,7 +225,7 @@ export function renderBaseStationPop(app, data = {}, navigate) {
 .ww-leader-icon{
   left:6.8%;
   top:71.1%;
-  width:6.8%;
+  width:6%;
 }
 
 .ww-subscribe-hotspot{
