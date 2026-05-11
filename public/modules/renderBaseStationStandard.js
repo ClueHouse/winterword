@@ -347,27 +347,57 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   position:absolute;
   z-index:62;
   left:75%;
-  top:56.5%;
-  padding:0.55rem 0.75rem;
-  border:1px solid rgba(230,230,230,0.92);
-  border-radius:0.68rem;
-  background:rgba(255,255,255,0.96);
-  color:rgba(0,0,0,0.9);
-  font-size:clamp(9px,0.74vw,13px);
-  font-weight:850;
-  letter-spacing:0.12em;
+  top:54.6%;
+  min-width:8.6rem;
+  padding:0.82rem 1.15rem 0.88rem;
+  border:1px solid rgba(224,155,32,0.74);
+  border-radius:0.95rem;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255,255,255,0.95), transparent 42%),
+    linear-gradient(180deg, rgba(255,255,255,0.98), rgba(238,230,216,0.98));
+  color:rgba(23,28,34,0.94);
+  font-size:clamp(10px,0.88vw,15px);
+  font-weight:950;
+  letter-spacing:0.16em;
   text-transform:uppercase;
-  box-shadow:0 14px 36px rgba(0,0,0,0.35);
+  text-align:center;
+  box-shadow:
+    0 18px 46px rgba(0,0,0,0.42),
+    0 0 0 1px rgba(255,255,255,0.52) inset,
+    0 12px 22px rgba(224,155,32,0.12) inset;
   opacity:0;
   pointer-events:none;
-  transform:translateY(6px);
+  transform:translateY(8px) scale(0.98);
   transition:opacity 150ms ease, transform 150ms ease;
+}
+
+.ww-solve-tooltip::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-7px;
+  width:15px;
+  height:15px;
+  background:inherit;
+  border-radius:4px;
+  transform:translateX(-50%) rotate(45deg);
+  box-shadow:1px 1px 0 0 rgba(224,155,32,0.58);
+}
+
+.ww-solve-tooltip::after{
+  content:"";
+  position:absolute;
+  left:15%;
+  right:15%;
+  bottom:0.42rem;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(224,155,32,0.62), transparent);
 }
 
 .ww-solve-hotspot:hover ~ .ww-solve-tooltip,
 .ww-solve-hotspot:focus-visible ~ .ww-solve-tooltip{
   opacity:1;
-  transform:translateY(0);
+  transform:translateY(0) scale(1);
 }
 
 .ww-updates-overlay{
@@ -422,44 +452,66 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-signal-bars{
   display:flex;
   align-items:flex-end;
-  gap:4px;
-  height:24px;
+  gap:5px;
+  height:26px;
 }
 
 .ww-signal-bars span{
   display:block;
   width:4px;
+  min-height:7px;
   border-radius:4px;
-  background:rgba(255,239,206,0.68);
-  box-shadow:0 0 0 rgba(242,178,76,0);
-  animation:wwSignalPulse 2.8s ease-in-out infinite;
+  background:rgba(255,222,150,0.98);
+  box-shadow:0 0 10px rgba(242,178,76,0.42);
+  opacity:1;
+  transform-origin:bottom center;
+  animation-name:wwSignalGrow;
+  animation-timing-function:ease-in-out;
+  animation-iteration-count:infinite;
 }
 
 .ww-signal-bars span:nth-child(1){
-  height:8px;
-  animation-delay:0s;
+  height:10px;
+  animation-duration:2.7s;
+  animation-delay:-0.4s;
 }
 
 .ww-signal-bars span:nth-child(2){
-  height:14px;
-  animation-delay:0.18s;
+  height:16px;
+  animation-duration:3.35s;
+  animation-delay:-1.1s;
 }
 
 .ww-signal-bars span:nth-child(3){
-  height:20px;
-  animation-delay:0.36s;
+  height:22px;
+  animation-duration:2.95s;
+  animation-delay:-0.75s;
 }
 
-@keyframes wwSignalPulse{
-  0%,100%{
-    opacity:0.48;
-    background:rgba(255,239,206,0.55);
-    box-shadow:0 0 0 rgba(242,178,76,0);
-  }
-  45%{
-    opacity:1;
+@keyframes wwSignalGrow{
+  0%{
+    height:30%;
     background:rgba(255,222,150,0.98);
-    box-shadow:0 0 12px rgba(242,178,76,0.58);
+  }
+  18%{
+    height:82%;
+    background:rgba(255,236,184,1);
+  }
+  37%{
+    height:46%;
+    background:rgba(255,222,150,0.98);
+  }
+  61%{
+    height:100%;
+    background:rgba(255,240,194,1);
+  }
+  79%{
+    height:38%;
+    background:rgba(255,222,150,0.98);
+  }
+  100%{
+    height:64%;
+    background:rgba(255,232,168,1);
   }
 }
 
@@ -764,9 +816,13 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
     <div class="ww-tooltip ww-leader-tooltip ${leaderboardAvailable ? "" : "ww-tooltip--locked"}">
       <span class="ww-tooltip-title">Leaderboard</span>
-      The Leaderboard remembers all who enter the game.
+      ${
+        leaderboardAvailable
+          ? `The Leaderboard remembers all who enter the game.
       It reflects those who find the answer,
-      and honours the one who found it first.
+      and honours the one who found it first.`
+          : `No answers received yet. No correct ones, anyway...`
+      }
     </div>
 
     <div class="ww-subscribe-tooltip">
