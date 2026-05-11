@@ -241,8 +241,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-solve-hotspot{
-  left:61.25%;
-  top:61.25%;
+  left:61.8%;
+  top:61.8%;
   width:25.4%;
   height:9.2%;
   border:2px solid red;
