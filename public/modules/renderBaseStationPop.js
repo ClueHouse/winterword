@@ -185,8 +185,8 @@ export function renderBaseStationPop(app, data = {}, navigate) {
 
 .ww-pop-icon{
   left:6.85%;
-  top:31.5%;
-  width:8%;
+  top:32%;
+  width:10%;
 }
 
 .ww-clue-hotspot{
@@ -199,7 +199,7 @@ export function renderBaseStationPop(app, data = {}, navigate) {
 .ww-clue-icon{
   left:6.8%;
   top:44%;
-  width:7.5%;
+  width:7%;
 }
 
 .ww-life-hotspot{
@@ -212,7 +212,7 @@ export function renderBaseStationPop(app, data = {}, navigate) {
 .ww-life-icon{
   left:7%;
   top:57.6%;
-  width:6%;
+  width:5.5%;
 }
 
 .ww-leader-hotspot{
