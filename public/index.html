@@ -16,11 +16,142 @@
 
     #app {
       min-height: 100vh;
+      position: relative;
+    }
+
+    .ww-signal-graph {
+      position: absolute;
+      top: 118px;   /* adjust vertical */
+      left: 292px;  /* adjust horizontal */
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .ww-signal-graph span {
+      width: 5px;
+      border-radius: 999px;
+      background: #ffe3a1;
+      box-shadow:
+        0 0 8px rgba(255, 205, 105, 0.9),
+        0 0 18px rgba(255, 155, 45, 0.45);
+      animation: wwSignalRise 1.35s ease-in-out infinite;
+    }
+
+    .ww-signal-graph span:nth-child(1) {
+      height: 15px;
+      animation-delay: 0s;
+    }
+
+    .ww-signal-graph span:nth-child(2) {
+      height: 22px;
+      animation-delay: 0.18s;
+    }
+
+    .ww-signal-graph span:nth-child(3) {
+      height: 12px;
+      animation-delay: 0.36s;
+    }
+
+    @keyframes wwSignalRise {
+      0%,
+      100% {
+        opacity: 0.55;
+        transform: scaleY(0.75);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scaleY(1.15);
+      }
+    }
+
+    .ww-morse-pulse {
+      position: absolute;
+      top: 146px;   /* adjust vertical */
+      left: 256px;  /* adjust horizontal */
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .ww-morse-pulse i,
+    .ww-morse-pulse b {
+      display: block;
+      height: 4px;
+      border-radius: 999px;
+      background: #ffe3a1;
+      box-shadow:
+        0 0 7px rgba(255, 205, 105, 0.9),
+        0 0 15px rgba(255, 155, 45, 0.45);
+      animation: wwMorseBlink 1.8s infinite;
+    }
+
+    .ww-morse-pulse i {
+      width: 5px;
+    }
+
+    .ww-morse-pulse b {
+      width: 18px;
+    }
+
+    .ww-morse-pulse :nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .ww-morse-pulse :nth-child(2) {
+      animation-delay: 0.18s;
+    }
+
+    .ww-morse-pulse :nth-child(3) {
+      animation-delay: 0.36s;
+    }
+
+    .ww-morse-pulse :nth-child(4) {
+      animation-delay: 0.72s;
+    }
+
+    .ww-morse-pulse :nth-child(5) {
+      animation-delay: 0.9s;
+    }
+
+    @keyframes wwMorseBlink {
+      0%,
+      20%,
+      100% {
+        opacity: 0.25;
+      }
+
+      10% {
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="app">Loading...</div>
+  <div id="app">
+    Loading...
+
+    <!-- Signal graph -->
+    <div class="ww-signal-graph" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Morse pulse preview -->
+    <div class="ww-morse-pulse" aria-hidden="true">
+      <i></i>
+      <i></i>
+      <b></b>
+      <i></i>
+      <b></b>
+    </div>
+  </div>
 
   <script type="module" src="/engine-v2.js"></script>
 </body>
