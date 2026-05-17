@@ -421,97 +421,94 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   font-weight:400;
 }
 
-.ww-signal-badge{
+.ww-signal-graph{
   position:absolute;
   z-index:24;
-  right:12.8%;
-  top:8.2%;
-  display:flex;
-  align-items:flex-end;
-  gap:0.55rem;
-  padding:0.54rem 0.72rem;
-  border-radius:0.74rem;
-  border:1px solid rgba(224,155,32,0.58);
-  background:rgba(3,8,12,0.48);
-  box-shadow:
-    0 10px 26px rgba(0,0,0,0.34),
-    inset 0 0 12px rgba(224,155,32,0.08);
-  pointer-events:none;
-}
-
-.ww-signal-label{
-  font-size:clamp(7px,0.56vw,10px);
-  letter-spacing:0.26em;
-  text-transform:uppercase;
-  color:rgba(255,239,206,0.76);
-  font-weight:900;
-  line-height:1;
-  padding-bottom:0.12rem;
-}
-
-.ww-signal-bars{
+  top:14.2%;
+  right:15.8%;
   display:flex;
   align-items:flex-end;
   gap:5px;
-  height:26px;
+  pointer-events:none;
 }
 
-.ww-signal-bars span{
+.ww-signal-graph span{
   display:block;
   width:4px;
-  min-height:7px;
   border-radius:4px;
   background:rgba(255,222,150,0.98);
   box-shadow:0 0 10px rgba(242,178,76,0.42);
-  opacity:1;
   transform-origin:bottom center;
-  animation-name:wwSignalGrow;
-  animation-timing-function:ease-in-out;
-  animation-iteration-count:infinite;
+  animation:wwSignalRise 1.6s ease-in-out infinite;
 }
 
-.ww-signal-bars span:nth-child(1){
+.ww-signal-graph span:nth-child(1){
   height:10px;
-  animation-duration:2.7s;
-  animation-delay:-0.4s;
+  animation-delay:0s;
 }
 
-.ww-signal-bars span:nth-child(2){
-  height:16px;
-  animation-duration:3.35s;
-  animation-delay:-1.1s;
+.ww-signal-graph span:nth-child(2){
+  height:18px;
+  animation-delay:0.2s;
 }
 
-.ww-signal-bars span:nth-child(3){
-  height:22px;
-  animation-duration:2.95s;
-  animation-delay:-0.75s;
+.ww-signal-graph span:nth-child(3){
+  height:24px;
+  animation-delay:0.4s;
 }
 
-@keyframes wwSignalGrow{
-  0%{
-    height:30%;
-    background:rgba(255,222,150,0.98);
+@keyframes wwSignalRise{
+  0%,100%{
+    opacity:0.45;
+    transform:scaleY(0.7);
   }
-  18%{
-    height:82%;
-    background:rgba(255,236,184,1);
+  50%{
+    opacity:1;
+    transform:scaleY(1.15);
   }
-  37%{
-    height:46%;
-    background:rgba(255,222,150,0.98);
+}
+
+.ww-morse-pulse{
+  position:absolute;
+  z-index:24;
+  top:18.1%;
+  right:12.4%;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  pointer-events:none;
+}
+
+.ww-morse-pulse i,
+.ww-morse-pulse b{
+  display:block;
+  height:4px;
+  border-radius:999px;
+  background:rgba(255,222,150,0.98);
+  box-shadow:0 0 8px rgba(242,178,76,0.42);
+  animation:wwMorseBlink 1.8s infinite;
+}
+
+.ww-morse-pulse i{
+  width:5px;
+}
+
+.ww-morse-pulse b{
+  width:16px;
+}
+
+.ww-morse-pulse :nth-child(1){ animation-delay:0s; }
+.ww-morse-pulse :nth-child(2){ animation-delay:0.15s; }
+.ww-morse-pulse :nth-child(3){ animation-delay:0.35s; }
+.ww-morse-pulse :nth-child(4){ animation-delay:0.7s; }
+.ww-morse-pulse :nth-child(5){ animation-delay:0.95s; }
+
+@keyframes wwMorseBlink{
+  0%,20%,100%{
+    opacity:0.2;
   }
-  61%{
-    height:100%;
-    background:rgba(255,240,194,1);
-  }
-  79%{
-    height:38%;
-    background:rgba(255,222,150,0.98);
-  }
-  100%{
-    height:64%;
-    background:rgba(255,232,168,1);
+  10%{
+    opacity:1;
   }
 }
 
@@ -725,13 +722,18 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       ${safeText(seasonLabel)} &nbsp;✦&nbsp; ${safeText(orgName)}
     </div>
 
-    <div class="ww-signal-badge" aria-label="Signal">
-      <span class="ww-signal-label">Signal</span>
-      <span class="ww-signal-bars" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
+    <div class="ww-signal-graph" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="ww-morse-pulse" aria-hidden="true">
+      <i></i>
+      <i></i>
+      <b></b>
+      <i></i>
+      <b></b>
     </div>
 
     <button
