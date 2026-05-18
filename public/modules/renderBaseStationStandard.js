@@ -286,8 +286,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-solve-hotspot{
-  left:21.8%;
-  top:55.8%;
+  left:10%;
+  top:45%;
   width:25.4%;
   height:9.2%;
   border-radius:0.75rem;
@@ -474,8 +474,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-menu{
   position:absolute;
   z-index:80;
-  top:3.9%;
-  right:2.1%;
+  top:3.5%;
+  right:3.5%;
 }
 
 .ww-menu-hotspot{
