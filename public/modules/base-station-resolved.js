@@ -2,19 +2,9 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   const {
     orgName = "",
     seasonLabel = "WINTERWORD • 2026",
-    updatesText = "The trail is quiet now: nothing more will fall.\nEverything you need is already in your hands.\nYou can continue solving, or discover the answers now.",
-    revealLine1 = "The final word and full solution are ready.",
-    revealLine2 = "Reveal the final word when ready.",
-    noteTitle = "Signed, sealed, delivered.",
-    noteLines = [
-      "If you’ve made it here, you already know:",
-      "the ending was never just a word.",
-      "This winter hit differently —",
-      "the warmth was real.",
-      "You watched the clues fall, one by one.",
-      "Every one of them pointed here."
-    ],
-    finalLine = "Game over. No. Game complete."
+    resolvedText = "The trail is quiet now: nothing more will fall. Everything you need is already in your hands. You can continue solving, or discover the answers now.\n\nIf you’ve made it here, you already know: the ending was never just a word.\nThis winter hit differently — the warmth was real. Clues fell, one by one, and every single one led you here.\nThe final word is ready. Reveal it when you are.",
+    finalLead = "Game over? No.",
+    finalEmphasis = "Game complete."
   } = data;
 
   function esc(value) {
@@ -35,10 +25,12 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
   const leftLabel = seasonParts[0] || "WINTERWORD";
   const yearLabel = seasonParts[1] || "2026";
+  const idLine = `${leftLabel} • ${yearLabel} ✧ ${safeOrgName || "BAY OF PLENTY REGIONAL COUNCIL"}`;
 
-  const noteHtml = Array.isArray(noteLines)
-    ? noteLines.map((line) => `<p>${esc(line)}</p>`).join("")
-    : "";
+  const resolvedParagraphs = String(resolvedText || "")
+    .split(/\n\s*\n/)
+    .map((para) => `<p>${esc(para)}</p>`)
+    .join("");
 
   app.innerHTML = `
 <style>
@@ -59,50 +51,13 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   background-repeat: no-repeat;
 }
 
-.ww-resolved-id {
-  position: absolute;
-  top: 5.2%;
-  left: 6.8%;
-  width: 36%;
-  text-align: center;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: clamp(0.48rem, 0.68vw, 0.76rem);
-  font-weight: 800;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: #151515;
-  line-height: 1.8;
-  white-space: normal;
-  opacity: 0.88;
-}
-
-.ww-id-divider {
-  display: block;
-  width: 90px;
-  height: 1px;
-  background: #c69a4a;
-  margin: 1rem auto 0;
-  position: relative;
-}
-
-.ww-id-divider::after {
-  content: "✧";
-  position: absolute;
-  top: -0.72rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.7rem;
-  color: #c69a4a;
-  background: transparent;
-}
-
 .ww-resolved-title {
   position: absolute;
-  top: 25.2%;
-  left: 6.7%;
-  width: 30%;
-  font-size: clamp(2.15rem, 3.9vw, 4.35rem);
-  line-height: 0.92;
+  top: 14.8%;
+  left: 5.9%;
+  width: 32%;
+  font-size: clamp(2.2rem, 4.2vw, 4.65rem);
+  line-height: 0.94;
   font-weight: 400;
   letter-spacing: 0.02em;
   color: #282828;
@@ -111,8 +66,8 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-status {
   position: absolute;
-  top: 36.8%;
-  left: 11.2%;
+  top: 27.5%;
+  left: 11.4%;
   width: 22%;
   display: flex;
   align-items: center;
@@ -137,60 +92,53 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-card {
   position: absolute;
-  top: 43.4%;
-  width: 17.6%;
-  height: 34.8%;
-  padding: 1.7% 1.35%;
+  top: 34.6%;
+  left: 5.1%;
+  width: 34.2%;
+  height: 42.4%;
+  padding: 1.85% 1.7%;
   border: 1px solid rgba(120, 95, 58, 0.22);
   border-radius: 10px;
-  background: rgba(255, 252, 244, 0.22);
+  background: rgba(255, 252, 244, 0.24);
   color: #222;
-}
-
-.ww-card-updates {
-  left: 3.5%;
-}
-
-.ww-card-note {
-  left: 21.9%;
 }
 
 .ww-card-title {
   margin: 0 0 1.05rem;
-  padding-bottom: 1.1rem;
+  padding-bottom: 1.05rem;
   border-bottom: 1px solid rgba(184, 138, 61, 0.8);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: clamp(0.52rem, 0.72vw, 0.78rem);
+  font-size: clamp(0.5rem, 0.68vw, 0.76rem);
   font-weight: 900;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
+  line-height: 1.6;
 }
 
 .ww-card p {
-  margin: 0 0 0.78rem;
+  margin: 0 0 0.82rem;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: clamp(0.52rem, 0.7vw, 0.78rem);
+  font-size: clamp(0.54rem, 0.74vw, 0.82rem);
   line-height: 1.58;
 }
 
-.ww-updates-text {
-  white-space: pre-line;
+.ww-final {
+  margin-top: 1.1rem;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: clamp(0.58rem, 0.78vw, 0.86rem);
+  font-weight: 900;
+  line-height: 1.6;
 }
 
-.ww-note-body p {
+.ww-final em {
   font-style: italic;
-}
-
-.ww-note-body .ww-final {
-  margin-top: 1rem;
-  font-style: normal;
   font-weight: 900;
 }
 
 .ww-buttons {
   position: absolute;
-  left: 3.8%;
-  bottom: 8.9%;
+  left: 5.1%;
+  bottom: 9.1%;
   display: flex;
   gap: 1.05rem;
   align-items: center;
@@ -233,22 +181,15 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
     background-position: center;
   }
 
-  .ww-resolved-id {
-    left: 5%;
-    width: 90%;
-    text-align: center;
-    letter-spacing: 0.18em;
-  }
-
   .ww-resolved-title {
-    top: 18%;
+    top: 10%;
     left: 6%;
     width: 88%;
     font-size: 3rem;
   }
 
   .ww-resolved-status {
-    top: 30%;
+    top: 22%;
     left: 8%;
     width: 60%;
   }
@@ -259,18 +200,9 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
     left: auto;
     width: calc(100% - 2rem);
     height: auto;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin: 17rem 1rem 0;
     padding: 1.2rem;
     background: rgba(255, 252, 244, 0.78);
-  }
-
-  .ww-card-updates {
-    margin-top: 24rem;
-  }
-
-  .ww-card-note {
-    margin-top: 1rem;
   }
 
   .ww-buttons {
@@ -289,29 +221,14 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 </style>
 
 <div class="ww-resolved-page">
-  <div class="ww-resolved-id">
-    ${esc(leftLabel)} • ${esc(yearLabel)}<br>
-    ${safeOrgName ? esc(safeOrgName) : "BAY OF PLENTY REGIONAL COUNCIL"}
-    <span class="ww-id-divider"></span>
-  </div>
-
   <h1 class="ww-resolved-title">BASE STATION</h1>
 
   <div class="ww-resolved-status">Resolved</div>
 
-  <section class="ww-card ww-card-updates">
-    <h2 class="ww-card-title">Updates</h2>
-    <p class="ww-updates-text">${esc(updatesText)}</p>
-    <p>${esc(revealLine1)}</p>
-    <p>${esc(revealLine2)}</p>
-  </section>
-
-  <section class="ww-card ww-card-note">
-    <h2 class="ww-card-title">${esc(noteTitle)}</h2>
-    <div class="ww-note-body">
-      ${noteHtml}
-      <p class="ww-final">${esc(finalLine)}</p>
-    </div>
+  <section class="ww-card">
+    <h2 class="ww-card-title">${esc(idLine)}</h2>
+    ${resolvedParagraphs}
+    <p class="ww-final">${esc(finalLead)} <em>${esc(finalEmphasis)}</em></p>
   </section>
 
   <div class="ww-buttons">
