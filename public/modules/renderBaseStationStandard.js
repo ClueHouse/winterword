@@ -93,7 +93,7 @@ html,body{
   inset:0;
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
   user-select:none;
   pointer-events:none;
 }
