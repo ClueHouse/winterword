@@ -421,53 +421,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   font-weight:400;
 }
 
-.ww-signal-graph{
-  position:absolute;
-  z-index:24;
-  top:14.2%;
-  right:15.8%;
-  display:flex;
-  align-items:flex-end;
-  gap:5px;
-  pointer-events:none;
-}
-
-.ww-signal-graph span{
-  display:block;
-  width:4px;
-  border-radius:4px;
-  background:rgba(255,222,150,0.98);
-  box-shadow:0 0 10px rgba(242,178,76,0.42);
-  transform-origin:bottom center;
-  animation:wwSignalRise 1.6s ease-in-out infinite;
-}
-
-.ww-signal-graph span:nth-child(1){
-  height:10px;
-  animation-delay:0s;
-}
-
-.ww-signal-graph span:nth-child(2){
-  height:18px;
-  animation-delay:0.2s;
-}
-
-.ww-signal-graph span:nth-child(3){
-  height:24px;
-  animation-delay:0.4s;
-}
-
-@keyframes wwSignalRise{
-  0%,100%{
-    opacity:0.45;
-    transform:scaleY(0.7);
-  }
-  50%{
-    opacity:1;
-    transform:scaleY(1.15);
-  }
-}
-
 .ww-morse-pulse{
   position:absolute;
   z-index:24;
@@ -720,12 +673,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
     <div class="ww-title-meta">
       ${safeText(seasonLabel)} &nbsp;✦&nbsp; ${safeText(orgName)}
-    </div>
-
-    <div class="ww-signal-graph" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
     </div>
 
     <div class="ww-morse-pulse" aria-hidden="true">
