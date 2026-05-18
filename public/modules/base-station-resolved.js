@@ -61,10 +61,10 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-id {
   position: absolute;
-  top: 4.1%;
+  top: 5.2%;
   left: 6.8%;
   width: 36%;
-  text-align: left;
+  text-align: center;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: clamp(0.48rem, 0.68vw, 0.76rem);
   font-weight: 800;
@@ -76,23 +76,44 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   opacity: 0.88;
 }
 
+.ww-id-divider {
+  display: block;
+  width: 90px;
+  height: 1px;
+  background: #c69a4a;
+  margin: 1rem auto 0;
+  position: relative;
+}
+
+.ww-id-divider::after {
+  content: "✧";
+  position: absolute;
+  top: -0.72rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  color: #c69a4a;
+  background: transparent;
+}
+
 .ww-resolved-title {
   position: absolute;
-  top: 21.4%;
+  top: 25.2%;
   left: 6.7%;
-  width: 28%;
-  font-size: clamp(2rem, 3.55vw, 3.95rem);
-  line-height: 0.9;
+  width: 30%;
+  font-size: clamp(2.15rem, 3.9vw, 4.35rem);
+  line-height: 0.92;
   font-weight: 400;
   letter-spacing: 0.02em;
   color: #282828;
+  text-align: center;
 }
 
 .ww-resolved-status {
   position: absolute;
-  top: 32.3%;
-  left: 14.2%;
-  width: 19.4%;
+  top: 36.8%;
+  left: 11.2%;
+  width: 22%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,9 +137,9 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-card {
   position: absolute;
-  top: 38.8%;
+  top: 43.4%;
   width: 17.6%;
-  height: 39.4%;
+  height: 34.8%;
   padding: 1.7% 1.35%;
   border: 1px solid rgba(120, 95, 58, 0.22);
   border-radius: 10px;
@@ -169,7 +190,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 .ww-buttons {
   position: absolute;
   left: 3.8%;
-  bottom: 7.9%;
+  bottom: 8.9%;
   display: flex;
   gap: 1.05rem;
   align-items: center;
@@ -215,19 +236,19 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   .ww-resolved-id {
     left: 5%;
     width: 90%;
-    text-align: left;
+    text-align: center;
     letter-spacing: 0.18em;
   }
 
   .ww-resolved-title {
-    top: 13%;
+    top: 18%;
     left: 6%;
     width: 88%;
     font-size: 3rem;
   }
 
   .ww-resolved-status {
-    top: 22%;
+    top: 30%;
     left: 8%;
     width: 60%;
   }
@@ -245,7 +266,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   }
 
   .ww-card-updates {
-    margin-top: 18rem;
+    margin-top: 24rem;
   }
 
   .ww-card-note {
@@ -271,6 +292,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   <div class="ww-resolved-id">
     ${esc(leftLabel)} • ${esc(yearLabel)}<br>
     ${safeOrgName ? esc(safeOrgName) : "BAY OF PLENTY REGIONAL COUNCIL"}
+    <span class="ww-id-divider"></span>
   </div>
 
   <h1 class="ww-resolved-title">BASE STATION</h1>
