@@ -60,7 +60,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   background-image:
     radial-gradient(ellipse at center, rgba(255,255,255,0.07), rgba(0,0,0,0.10) 44%, rgba(0,0,0,0.30)),
     linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.08)),
-    url("/assets/winterword/shared/bsresolvedbg.png?v=2");
+    url("/assets/winterword/shared/bsresolvebg.png?v=2");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
