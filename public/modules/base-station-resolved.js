@@ -1,4 +1,4 @@
-export function renderBaseStationResolved(app, data = {}, navigate) {
+export function renderBaseStationd(app, data = {}, navigate) {
   const {
     orgName = "",
     seasonLabel = "WINTERWORD • 2026",
@@ -27,7 +27,6 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   }
 
   const safeOrgName = String(orgName || "").trim();
-  const safeSeasonLabel = esc(seasonLabel);
   const safeStatusText = esc(statusText);
   const safeTagline = esc(tagline);
   const safeUpdatesText = esc(updatesText);
@@ -54,21 +53,21 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   box-sizing: border-box;
 }
 
-.ww-resolved-page {
+.ww-d-page {
   min-height: 100vh;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   color: #ffffff;
   background-image:
     radial-gradient(ellipse at center, rgba(255,255,255,0.07), rgba(0,0,0,0.10) 44%, rgba(0,0,0,0.30)),
     linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.08)),
-    url("/assets/winterword/shared/basestationresolvebg.png");
+    url("/assets/winterword/shared/bsresolvedbg.png?v=2");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   padding: 2.4rem 2rem 2.2rem;
 }
 
-.ww-resolve-wrap {
+.ww--wrap {
   max-width: 78rem;
   margin: 0 auto;
 }
@@ -250,14 +249,14 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
     padding: 1.4rem 1.2rem 1.6rem;
   }
 
-  .ww-resolved-page {
+  .ww-d-page {
     padding: 1.2rem 1rem 1.4rem;
   }
 }
 </style>
 
-<div class="ww-resolved-page">
-  <div class="ww-resolve-wrap">
+<div class="ww-d-page">
+  <div class="ww--wrap">
     <section class="ww-hero">
 
       <div class="ww-slug">
