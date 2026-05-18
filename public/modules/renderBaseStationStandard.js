@@ -399,8 +399,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   z-index:80;
   top:3.4%;
   right:2.4%;
-  width:20%;
-  height:7%;
+  width:7%;
+  height:5%;
 }
 
 .ww-menu-hotspot{
