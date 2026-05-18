@@ -197,7 +197,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-life-icon{
   left:17%;
   top:35%;
-  width:4%;
+  width:8%;
 }
 
 .ww-leader-hotspot{
