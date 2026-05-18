@@ -52,9 +52,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     `Your%20answer%3A%0A%0A%5BTYPE%20YOUR%20FINAL%20WORD%20HERE%5D%0A%0A%0A` +
     `(Only%20one%20submission%20is%20counted.%0AChoose%20your%20moment%20%E2%80%94%20winter%20does%20not%20answer%20twice.)`;
 
-  const contactHref =
-    `mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry`;
-
   app.innerHTML = `
 <style>
 *{
@@ -72,10 +69,29 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
   color:#f5efe3;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:2.5vh 2.5vw;
+  padding:2vh 2.5vw;
   position:relative;
+}
+
+.ww-title-meta{
+  position:relative;
+  z-index:30;
+  width:100%;
+  text-align:center;
+  font-size:clamp(12px,1vw,18px);
+  line-height:1.2;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:rgba(255,244,224,0.92);
+  font-weight:900;
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.82),
+    0 0 12px rgba(218,162,50,0.12);
+  margin-bottom:1.6vh;
+  white-space:nowrap;
 }
 
 #wwStage{
@@ -99,25 +115,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   object-fit:cover;
   user-select:none;
   pointer-events:none;
-}
-
-.ww-title-meta{
-  position:absolute;
-  z-index:18;
-  left:16%;
-  top:16%;
-  max-width:52%;
-  width:auto;
-  font-size:clamp(9px,0.82vw,15px);
-  line-height:1.2;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  color:rgba(255,244,224,0.88);
-  font-weight:900;
-  text-shadow:0 2px 8px rgba(0,0,0,0.82);
-  white-space:nowrap;
-  overflow:visible;
-  text-overflow:unset;
 }
 
 .ww-hotspot{
@@ -165,33 +162,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     drop-shadow(0 0 24px rgba(245,183,52,0.72));
 }
 
-.ww-hotspot[data-disabled="true"] + .ww-icon{
-  opacity:1;
-  filter:
-    brightness(1)
-    saturate(1.04)
-    drop-shadow(0 10px 14px rgba(0,0,0,0.48))
-    drop-shadow(0 0 10px rgba(218,162,50,0.18));
-}
-
-.ww-clue-hotspot{
-  left:3.1%;
-  top:31.3%;
-  width:7.5%;
-  height:13.2%;
-}
-
 .ww-clue-icon{
   left:17%;
   top:24%;
   width:6%;
-}
-
-.ww-life-hotspot{
-  left:3.1%;
-  top:46.6%;
-  width:7.8%;
-  height:13.1%;
 }
 
 .ww-life-icon{
@@ -200,17 +174,32 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   width:15%;
 }
 
-.ww-leader-hotspot{
-  left:3.05%;
-  top:64.4%;
-  width:7.8%;
-  height:13.2%;
-}
-
 .ww-leader-icon{
   left:17%;
   top:45%;
   width:6%;
+}
+
+/* HOTSPOTS REALIGNED TO ICONS */
+.ww-clue-hotspot{
+  left:13.8%;
+  top:19.8%;
+  width:6.4%;
+  height:8.6%;
+}
+
+.ww-life-hotspot{
+  left:9.8%;
+  top:29.2%;
+  width:14.2%;
+  height:11.4%;
+}
+
+.ww-leader-hotspot{
+  left:13.8%;
+  top:40.7%;
+  width:6.4%;
+  height:8.6%;
 }
 
 .ww-subscribe-hotspot{
@@ -221,70 +210,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   border-radius:0.7rem;
 }
 
-.ww-subscribe-hotspot::after{
-  content:"";
-  position:absolute;
-  inset:-10%;
-  border-radius:inherit;
-  opacity:0;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.16), transparent 58%),
-    linear-gradient(110deg, transparent 0%, rgba(255,218,128,0.0) 34%, rgba(255,218,128,0.42) 50%, rgba(255,218,128,0.0) 66%, transparent 100%);
-  background-size:220% 100%;
-  transition:opacity 160ms ease, box-shadow 160ms ease;
-}
-
-.ww-subscribe-hotspot:hover::after,
-.ww-subscribe-hotspot:focus-visible::after{
-  opacity:1;
-  animation:wwSubscribeGlow 1.2s ease-in-out infinite;
-  box-shadow:
-    0 0 18px rgba(242,178,76,0.28),
-    0 0 34px rgba(242,178,76,0.18);
-}
-
-@keyframes wwSubscribeGlow{
-  0%{ background-position:180% 0; }
-  100%{ background-position:-80% 0; }
-}
-
-.ww-subscribe-tooltip{
-  position:absolute;
-  z-index:62;
-  left:13%;
-  bottom:8.4%;
-  width:17%;
-  min-width:190px;
-  padding:0.85rem 0.92rem;
-  border:1px solid rgba(230,230,230,0.92);
-  border-radius:0.8rem;
-  background:rgba(255,255,255,0.96);
-  color:rgba(0,0,0,0.88);
-  font-size:clamp(9px,0.74vw,13px);
-  line-height:1.42;
-  box-shadow:0 16px 44px rgba(0,0,0,0.38);
-  opacity:0;
-  pointer-events:none;
-  transform:translateX(-6px);
-  transition:opacity 150ms ease, transform 150ms ease;
-}
-
-.ww-subscribe-note{
-  display:block;
-  margin-top:0.55rem;
-  padding-top:0.5rem;
-  border-top:1px solid rgba(0,0,0,0.16);
-  color:rgba(0,0,0,0.62);
-  font-style:italic;
-}
-
-.ww-subscribe-hotspot:hover ~ .ww-subscribe-tooltip,
-.ww-subscribe-hotspot:focus-visible ~ .ww-subscribe-tooltip{
-  opacity:1;
-  transform:translateX(0);
-}
-
 .ww-solve-hotspot{
   left:61.8%;
   top:61.8%;
@@ -293,111 +218,53 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   border-radius:0.75rem;
 }
 
-.ww-solve-gleam{
+.ww-tooltip{
   position:absolute;
-  z-index:16;
-  left:61.8%;
-  top:60.9%;
-  width:25.4%;
-  height:10.1%;
-  pointer-events:none;
+  z-index:60;
+  left:22%;
+  width:18%;
+  min-width:190px;
+  padding:0.82rem 0.92rem;
+  border:1px solid rgba(230,230,230,0.92);
   border-radius:0.75rem;
-  overflow:hidden;
-  opacity:0;
-  transition:opacity 180ms ease;
-}
-
-.ww-solve-gleam::before{
-  content:"";
-  position:absolute;
-  top:-135%;
-  left:-40%;
-  width:24%;
-  height:370%;
-  transform:rotate(24deg);
-  background:
-    linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255,238,170,0.0) 18%,
-      rgba(255,238,170,0.58) 50%,
-      rgba(255,238,170,0.0) 82%,
-      transparent 100%
-    );
-  filter:blur(1px);
-}
-
-.ww-solve-hotspot:hover + .ww-solve-gleam,
-.ww-solve-hotspot:focus-visible + .ww-solve-gleam{
-  opacity:1;
-}
-
-.ww-solve-hotspot:hover + .ww-solve-gleam::before,
-.ww-solve-hotspot:focus-visible + .ww-solve-gleam::before{
-  animation:wwSolveSlowGleam 2.8s ease-in-out infinite;
-}
-
-@keyframes wwSolveSlowGleam{
-  0%{ left:-42%; }
-  58%{ left:118%; }
-  100%{ left:118%; }
-}
-
-.ww-solve-tooltip{
-  position:absolute;
-  z-index:62;
-  left:75%;
-  top:54.6%;
-  min-width:8.6rem;
-  padding:0.82rem 1.15rem 0.88rem;
-  border:1px solid rgba(224,155,32,0.74);
-  border-radius:0.95rem;
-  background:
-    radial-gradient(circle at 20% 0%, rgba(255,255,255,0.95), transparent 42%),
-    linear-gradient(180deg, rgba(255,255,255,0.98), rgba(238,230,216,0.98));
-  color:rgba(23,28,34,0.94);
-  font-size:clamp(10px,0.88vw,15px);
-  font-weight:950;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  text-align:center;
-  box-shadow:
-    0 18px 46px rgba(0,0,0,0.42),
-    0 0 0 1px rgba(255,255,255,0.52) inset,
-    0 12px 22px rgba(224,155,32,0.12) inset;
+  background:rgba(255,255,255,0.96);
+  color:rgba(0,0,0,0.88);
+  font-size:clamp(9px,0.72vw,13px);
+  line-height:1.42;
+  box-shadow:0 16px 44px rgba(0,0,0,0.38);
   opacity:0;
   pointer-events:none;
-  transform:translateY(8px) scale(0.98);
+  transform:translateY(-50%) translateX(-6px);
   transition:opacity 150ms ease, transform 150ms ease;
 }
 
-.ww-solve-tooltip::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:-7px;
-  width:15px;
-  height:15px;
-  background:inherit;
-  border-radius:4px;
-  transform:translateX(-50%) rotate(45deg);
-  box-shadow:1px 1px 0 0 rgba(224,155,32,0.58);
+.ww-tooltip--locked{
+  border-color:rgba(255,255,255,0.32);
+  background:linear-gradient(180deg, rgba(158,38,45,0.96), rgba(104,18,25,0.98));
+  color:#ffffff;
 }
 
-.ww-solve-tooltip::after{
-  content:"";
-  position:absolute;
-  left:15%;
-  right:15%;
-  bottom:0.42rem;
-  height:1px;
-  background:linear-gradient(90deg, transparent, rgba(224,155,32,0.62), transparent);
+.ww-tooltip-title{
+  display:block;
+  margin-bottom:0.32rem;
+  font-size:1.08em;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  font-weight:900;
 }
 
-.ww-solve-hotspot:hover ~ .ww-solve-tooltip,
-.ww-solve-hotspot:focus-visible ~ .ww-solve-tooltip{
+.ww-clue-tooltip{ top:24%; }
+.ww-life-tooltip{ top:35%; }
+.ww-leader-tooltip{ top:45%; }
+
+.ww-clue-hotspot:hover ~ .ww-clue-tooltip,
+.ww-clue-hotspot:focus-visible ~ .ww-clue-tooltip,
+.ww-life-hotspot:hover ~ .ww-life-tooltip,
+.ww-life-hotspot:focus-visible ~ .ww-life-tooltip,
+.ww-leader-hotspot:hover ~ .ww-leader-tooltip,
+.ww-leader-hotspot:focus-visible ~ .ww-leader-tooltip{
   opacity:1;
-  transform:translateY(0) scale(1);
+  transform:translateY(-50%) translateX(0);
 }
 
 .ww-updates-overlay{
@@ -442,225 +309,20 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   animation:wwMorseBlink 1.8s infinite;
 }
 
-.ww-morse-pulse i{
-  width:5px;
-}
-
-.ww-morse-pulse b{
-  width:16px;
-}
-
-.ww-morse-pulse :nth-child(1){ animation-delay:0s; }
-.ww-morse-pulse :nth-child(2){ animation-delay:0.15s; }
-.ww-morse-pulse :nth-child(3){ animation-delay:0.35s; }
-.ww-morse-pulse :nth-child(4){ animation-delay:0.7s; }
-.ww-morse-pulse :nth-child(5){ animation-delay:0.95s; }
+.ww-morse-pulse i{ width:5px; }
+.ww-morse-pulse b{ width:16px; }
 
 @keyframes wwMorseBlink{
-  0%,20%,100%{
-    opacity:0.2;
-  }
-  10%{
-    opacity:1;
-  }
-}
-
-.ww-menu{
-  position:absolute;
-  z-index:80;
-  top:4.4vh;
-  right:1.45vw;
-}
-
-.ww-menu-button{
-  width:clamp(36px,3.4vw,58px);
-  height:clamp(36px,3.4vw,58px);
-  border-radius:0.72rem;
-  border:1px solid rgba(224,155,32,0.72);
-  background:rgba(3,8,12,0.52);
-  color:rgba(255,239,206,0.94);
-  cursor:pointer;
-  box-shadow:
-    0 10px 26px rgba(0,0,0,0.36),
-    inset 0 0 12px rgba(224,155,32,0.08);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:0;
-}
-
-.ww-menu-lines{
-  width:45%;
-  height:34%;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-}
-
-.ww-menu-lines span{
-  display:block;
-  width:100%;
-  height:2px;
-  border-radius:999px;
-  background:rgba(255,239,206,0.92);
-  box-shadow:0 0 8px rgba(242,178,76,0.18);
-}
-
-.ww-menu-button:hover .ww-menu-lines span,
-.ww-menu-button:focus-visible .ww-menu-lines span{
-  background:rgba(255,222,150,0.98);
-  box-shadow:0 0 12px rgba(242,178,76,0.54);
-}
-
-.ww-menu-dropdown,
-.ww-legal-submenu{
-  position:absolute;
-  min-width:220px;
-  padding:0.55rem;
-  border:1px solid rgba(224,155,32,0.58);
-  border-radius:0.85rem;
-  background:rgba(3,8,13,0.96);
-  box-shadow:
-    0 22px 54px rgba(0,0,0,0.62),
-    inset 0 0 18px rgba(255,180,70,0.035);
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 150ms ease, transform 150ms ease;
-  backdrop-filter:blur(10px);
-}
-
-.ww-menu-dropdown{
-  top:calc(100% + 0.65rem);
-  right:0;
-  transform:translateY(-4px);
-}
-
-.ww-menu:hover .ww-menu-dropdown,
-.ww-menu:focus-within .ww-menu-dropdown{
-  opacity:1;
-  pointer-events:auto;
-  transform:translateY(0);
-}
-
-.ww-legal-wrap{
-  position:relative;
-}
-
-.ww-legal-submenu{
-  top:0;
-  right:calc(100% + 0.55rem);
-  transform:translateX(4px);
-}
-
-.ww-legal-wrap:hover .ww-legal-submenu,
-.ww-legal-wrap:focus-within .ww-legal-submenu{
-  opacity:1;
-  pointer-events:auto;
-  transform:translateX(0);
-}
-
-.ww-menu-dropdown a,
-.ww-legal-submenu a{
-  display:block;
-  padding:0.72rem 0.86rem;
-  border-radius:0.55rem;
-  color:rgba(255,244,224,0.92);
-  text-decoration:none;
-  font-size:0.78rem;
-  line-height:1.2;
-  font-weight:850;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  white-space:nowrap;
-}
-
-.ww-menu-dropdown a:hover,
-.ww-menu-dropdown a:focus-visible,
-.ww-legal-submenu a:hover,
-.ww-legal-submenu a:focus-visible{
-  background:rgba(224,155,32,0.15);
-  color:#f2b24c;
-  outline:none;
-}
-
-.ww-tooltip{
-  position:absolute;
-  z-index:60;
-  left:13%;
-  width:18%;
-  min-width:190px;
-  padding:0.82rem 0.92rem;
-  border:1px solid rgba(230,230,230,0.92);
-  border-radius:0.75rem;
-  background:rgba(255,255,255,0.96);
-  color:rgba(0,0,0,0.88);
-  font-size:clamp(9px,0.72vw,13px);
-  line-height:1.42;
-  box-shadow:0 16px 44px rgba(0,0,0,0.38);
-  opacity:0;
-  pointer-events:none;
-  transform:translateY(-50%) translateX(-6px);
-  transition:opacity 150ms ease, transform 150ms ease;
-}
-
-.ww-tooltip--locked{
-  border-color:rgba(255,255,255,0.32);
-  background:linear-gradient(180deg, rgba(158,38,45,0.96), rgba(104,18,25,0.98));
-  color:#ffffff;
-  box-shadow:
-    0 16px 44px rgba(0,0,0,0.58),
-    0 0 22px rgba(180,20,30,0.2);
-}
-
-.ww-tooltip-title{
-  display:block;
-  margin-bottom:0.32rem;
-  color:rgba(0,0,0,0.92);
-  font-size:1.08em;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  font-weight:900;
-}
-
-.ww-tooltip--locked .ww-tooltip-title{
-  color:#ffffff;
-}
-
-.ww-subscribe-tooltip .ww-tooltip-title{
-  color:rgba(0,0,0,0.92);
-  font-size:1.08em;
-}
-
-.ww-clue-tooltip{ top:37.6%; }
-.ww-life-tooltip{ top:53%; }
-.ww-leader-tooltip{ top:71%; }
-
-.ww-clue-hotspot:hover ~ .ww-clue-tooltip,
-.ww-clue-hotspot:focus-visible ~ .ww-clue-tooltip,
-.ww-life-hotspot:hover ~ .ww-life-tooltip,
-.ww-life-hotspot:focus-visible ~ .ww-life-tooltip,
-.ww-leader-hotspot:hover ~ .ww-leader-tooltip,
-.ww-leader-hotspot:focus-visible ~ .ww-leader-tooltip{
-  opacity:1;
-  transform:translateY(-50%) translateX(0);
-}
-
-@media (max-aspect-ratio: 16 / 9){
-  #wwStage{
-    width:92vw;
-    height:calc(92vw * 0.5625);
-  }
-}
-
-@media (min-aspect-ratio: 16 / 9){
-  #wwStage{
-    width:calc(92vh * 1.77778);
-    height:92vh;
-  }
+  0%,20%,100%{ opacity:0.2; }
+  10%{ opacity:1; }
 }
 </style>
 
 <div id="wwPortal">
+
+  <div class="ww-title-meta">
+    ${safeText(seasonLabel)} &nbsp;✦&nbsp; ${safeText(orgName)}
+  </div>
 
   <div id="wwStage" aria-label="WinterWord Base Station">
 
@@ -671,74 +333,31 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       draggable="false"
     >
 
-    <div class="ww-title-meta">
-      ${safeText(seasonLabel)} &nbsp;✦&nbsp; ${safeText(orgName)}
-    </div>
-
     <div class="ww-morse-pulse" aria-hidden="true">
-      <i></i>
-      <i></i>
-      <b></b>
-      <i></i>
-      <b></b>
+      <i></i><i></i><b></b><i></i><b></b>
     </div>
 
-    <button
-      class="ww-hotspot ww-clue-hotspot"
-      type="button"
-      data-nav="clues"
-      aria-label="Open clues"
-    ></button>
-    <img
-      class="ww-icon ww-clue-icon"
-      src="/assets/winterword/shared/icon_clue.png"
-      alt=""
-      aria-hidden="true"
-      draggable="false"
-    >
+    <button class="ww-hotspot ww-clue-hotspot" type="button" data-nav="clues"></button>
+    <img class="ww-icon ww-clue-icon" src="/assets/winterword/shared/icon_clue.png" alt="" draggable="false">
 
     <button
       class="ww-hotspot ww-life-hotspot"
       type="button"
       data-nav="lifeline"
       data-disabled="${lifelineAvailable ? "false" : "true"}"
-      aria-label="${lifelineAvailable ? "Open lifeline" : "Lifeline unavailable"}"
     ></button>
-    <img
-      class="ww-icon ww-life-icon"
-      src="/assets/winterword/shared/icon_life.png"
-      alt=""
-      aria-hidden="true"
-      draggable="false"
-    >
+    <img class="ww-icon ww-life-icon" src="/assets/winterword/shared/icon_life.png" alt="" draggable="false">
 
     <button
       class="ww-hotspot ww-leader-hotspot"
       type="button"
       data-nav="leaderboard"
       data-disabled="${leaderboardAvailable ? "false" : "true"}"
-      aria-label="${leaderboardAvailable ? "Open leaderboard" : "Leaderboard unavailable"}"
     ></button>
-    <img
-      class="ww-icon ww-leader-icon"
-      src="/assets/winterword/shared/icon_leader.png"
-      alt=""
-      aria-hidden="true"
-      draggable="false"
-    >
+    <img class="ww-icon ww-leader-icon" src="/assets/winterword/shared/icon_leader.png" alt="" draggable="false">
 
-    <a
-      class="ww-hotspot ww-subscribe-hotspot"
-      href="${subscribeHref}"
-      aria-label="Subscribe to WinterWord clue alerts"
-    ></a>
-
-    <a
-      class="ww-hotspot ww-solve-hotspot"
-      href="${solveHref}"
-      aria-label="Submit final WinterWord answer"
-    ></a>
-    <div class="ww-solve-gleam" aria-hidden="true"></div>
+    <a class="ww-hotspot ww-subscribe-hotspot" href="${subscribeHref}"></a>
+    <a class="ww-hotspot ww-solve-hotspot" href="${solveHref}"></a>
 
     <div class="ww-updates-overlay">
       ${
@@ -750,15 +369,14 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
     <div class="ww-tooltip ww-clue-tooltip">
       <span class="ww-tooltip-title">Clues</span>
-      Each of your upcoming clues is designed to reveal just enough
-      to move you forward — and hide the rest where only patience can reach it.
+      Each clue reveals just enough to move you forward.
     </div>
 
     <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}">
       <span class="ww-tooltip-title">Lifeline</span>
       ${
         lifelineAvailable
-          ? `This passage is open. Step carefully.`
+          ? `This passage is open.`
           : `This passage waits its moment.`
       }
     </div>
@@ -767,50 +385,11 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       <span class="ww-tooltip-title">Leaderboard</span>
       ${
         leaderboardAvailable
-          ? `The Leaderboard remembers all who enter the game.
-      It reflects those who find the answer,
-      and honours the one who found it first.`
-          : `No answers received yet. No correct ones, anyway...`
+          ? `The Leaderboard remembers all who enter.`
+          : `No answers received yet.`
       }
     </div>
 
-    <div class="ww-subscribe-tooltip">
-      <span class="ww-tooltip-title">Clue Alerts</span>
-      Curious minds tend to wander.<br>
-      When each clue falls,<br>
-      subscribers will hear the click.
-      <span class="ww-subscribe-note">Execute ESCAPE ROOM protocol.</span>
-    </div>
-
-    <div class="ww-solve-tooltip">
-      Ready?
-    </div>
-
-  </div>
-
-  <div class="ww-menu">
-    <button class="ww-menu-button" type="button" aria-label="Open menu">
-      <span class="ww-menu-lines" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-    </button>
-
-    <div class="ww-menu-dropdown">
-      <a href="${reportProblemHref}">Report a Problem</a>
-      <a href="${contactHref}">Contact</a>
-
-      <div class="ww-legal-wrap">
-        <a href="#" aria-label="Legal links">Legal ▸</a>
-
-        <div class="ww-legal-submenu">
-          <a href="/legal/privacy-policy.html">Privacy Policy</a>
-          <a href="/legal/terms-of-use.html">Terms of Use</a>
-          <a href="/legal/disclaimer.html">Disclaimer</a>
-        </div>
-      </div>
-    </div>
   </div>
 
 </div>
