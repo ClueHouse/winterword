@@ -213,78 +213,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   height:8.6%;
 }
 
-.ww-subscribe-hotspot{
-  left:2.45%;
-  bottom:8%;
-  width:9.1%;
-  height:6%;
-  border-radius:0.7rem;
-}
-
-.ww-subscribe-hotspot::after{
-  content:"";
-  position:absolute;
-  inset:-10%;
-  border-radius:inherit;
-  opacity:0;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.16), transparent 58%),
-    linear-gradient(110deg, transparent 0%, rgba(255,218,128,0.0) 34%, rgba(255,218,128,0.42) 50%, rgba(255,218,128,0.0) 66%, transparent 100%);
-  background-size:220% 100%;
-  transition:opacity 160ms ease, box-shadow 160ms ease;
-}
-
-.ww-subscribe-hotspot:hover::after,
-.ww-subscribe-hotspot:focus-visible::after{
-  opacity:1;
-  animation:wwSubscribeGlow 1.2s ease-in-out infinite;
-  box-shadow:
-    0 0 18px rgba(242,178,76,0.28),
-    0 0 34px rgba(242,178,76,0.18);
-}
-
-@keyframes wwSubscribeGlow{
-  0%{ background-position:180% 0; }
-  100%{ background-position:-80% 0; }
-}
-
-.ww-subscribe-tooltip{
-  position:absolute;
-  z-index:62;
-  left:13%;
-  bottom:8.4%;
-  width:17%;
-  min-width:190px;
-  padding:0.85rem 0.92rem;
-  border:1px solid rgba(230,230,230,0.92);
-  border-radius:0.8rem;
-  background:rgba(255,255,255,0.96);
-  color:rgba(0,0,0,0.88);
-  font-size:clamp(9px,0.74vw,13px);
-  line-height:1.42;
-  box-shadow:0 16px 44px rgba(0,0,0,0.38);
-  opacity:0;
-  pointer-events:none;
-  transform:translateX(-6px);
-  transition:opacity 150ms ease, transform 150ms ease;
-}
-
-.ww-subscribe-note{
-  display:block;
-  margin-top:0.55rem;
-  padding-top:0.5rem;
-  border-top:1px solid rgba(0,0,0,0.16);
-  color:rgba(0,0,0,0.62);
-  font-style:italic;
-}
-
-.ww-subscribe-hotspot:hover ~ .ww-subscribe-tooltip,
-.ww-subscribe-hotspot:focus-visible ~ .ww-subscribe-tooltip{
-  opacity:1;
-  transform:translateX(0);
-}
-
 .ww-solve-hotspot{
   left:8%;
   top:51%;
@@ -297,10 +225,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-solve-gleam{
   position:absolute;
   z-index:16;
-  left:61.%;
-  top:60.9%;
+  left:8%;
+  top:51%;
   width:25.4%;
-  height:10.1%;
+  height:9.2%;
   pointer-events:none;
   border-radius:0.75rem;
   overflow:hidden;
@@ -452,11 +380,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   color:#ffffff;
 }
 
-.ww-subscribe-tooltip .ww-tooltip-title{
-  color:rgba(0,0,0,0.92);
-  font-size:1.08em;
-}
-
 .ww-clue-tooltip{ top:24%; }
 .ww-life-tooltip{ top:35%; }
 .ww-leader-tooltip{ top:45%; }
@@ -475,12 +398,14 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   position:absolute;
   z-index:80;
   top:3.4%;
-  right:3.5%;
+  right:2.4%;
+  width:20%;
+  height:7%;
 }
 
 .ww-menu-hotspot{
-  width:18%;
-  height:6%;
+  width:100%;
+  height:100%;
   min-width:44px;
   min-height:44px;
   position:absolute;
@@ -508,7 +433,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
 .ww-menu-hotspot:active,
 .ww-menu-hotspot.is-clicked{
-  transform:scale(0.92);
+  transform:scale(0.96);
   background:rgba(255,255,255,0.12);
   box-shadow:
     0 0 20px rgba(255,0,0,0.5),
@@ -533,7 +458,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-menu-dropdown{
-  top:calc(100% + 3.4rem);
+  top:calc(100% + 0.7rem);
   right:0;
   transform:translateY(-4px);
 }
@@ -668,12 +593,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     >
 
     <a
-      class="ww-hotspot ww-subscribe-hotspot"
-      href="${subscribeHref}"
-      aria-label="Subscribe to WinterWord clue alerts"
-    ></a>
-
-    <a
       class="ww-hotspot ww-solve-hotspot"
       href="${solveHref}"
       aria-label="Submit final WinterWord answer"
@@ -714,14 +633,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       }
     </div>
 
-    <div class="ww-subscribe-tooltip">
-      <span class="ww-tooltip-title">Clue Alerts</span>
-      Curious minds tend to wander.<br>
-      When each clue falls,<br>
-      subscribers will hear the click.
-      <span class="ww-subscribe-note">Execute ESCAPE ROOM protocol.</span>
-    </div>
-
     <div class="ww-menu">
       <button
         class="ww-menu-hotspot"
@@ -730,6 +641,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       ></button>
 
       <div class="ww-menu-dropdown">
+        <a href="#" data-nav="welcome">Welcome</a>
+        <a href="${subscribeHref}">Subscribe</a>
         <a href="${reportProblemHref}">Report a Problem</a>
         <a href="${contactHref}">Contact</a>
 
@@ -753,11 +666,13 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   const navButtons = app.querySelectorAll("[data-nav]");
 
   navButtons.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
       const target = button.getAttribute("data-nav");
       const disabled = button.getAttribute("data-disabled") === "true";
 
       if (disabled) return;
+
+      event.preventDefault();
 
       if (typeof navigate === "function") {
         navigate(target);
