@@ -61,17 +61,18 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-id {
   position: absolute;
-  top: 3.7%;
-  left: 25.8%;
+  top: 4.2%;
+  left: 6.8%;
   width: 52%;
   text-align: left;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: clamp(0.52rem, 0.82vw, 0.84rem);
+  font-size: clamp(0.5rem, 0.72vw, 0.78rem);
   font-weight: 800;
-  letter-spacing: 0.44em;
+  letter-spacing: 0.38em;
   text-transform: uppercase;
   color: #151515;
   white-space: nowrap;
+  opacity: 0.88;
 }
 
 .ww-resolved-title {
