@@ -424,8 +424,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-morse-pulse{
   position:absolute;
   z-index:24;
-  top:11.1%;
-  right:72.4%;
+  top:5%;
+  right:-70%;
   display:flex;
   align-items:center;
   gap:6px;
