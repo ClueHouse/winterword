@@ -397,9 +397,9 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-menu{
   position:absolute;
   z-index:80;
-  top:3.4%;
+  top:3.3%;
   right:2.4%;
-  width:7%;
+  width:5%;
   height:5%;
 }
 
