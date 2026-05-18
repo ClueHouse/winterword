@@ -1,4 +1,4 @@
-export function renderBaseStationd(app, data = {}, navigate) {
+export function renderBaseStationResolved(app, data = {}, navigate) {
   const {
     orgName = "",
     seasonLabel = "WINTERWORD • 2026",
