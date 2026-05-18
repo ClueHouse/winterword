@@ -53,10 +53,10 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-title {
   position: absolute;
-  top: 19.4%;
-  left: 5.8%;
+  top: 17.6%;
+  left: 5.9%;
   width: 32%;
-  font-size: clamp(2.2rem, 4.2vw, 4.65rem);
+  font-size: clamp(2rem, 3.75vw, 4.15rem);
   line-height: 0.94;
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -66,7 +66,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-status {
   position: absolute;
-  top: 29.4%;
+  top: 27.4%;
   left: 11.4%;
   width: 22%;
   display: flex;
@@ -74,7 +74,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   justify-content: center;
   gap: 1rem;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: clamp(0.72rem, 1vw, 1rem);
+  font-size: clamp(0.68rem, 0.92vw, 0.92rem);
   font-weight: 800;
   letter-spacing: 0.34em;
   text-transform: uppercase;
@@ -92,7 +92,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-card {
   position: absolute;
-  top: 35.1%;
+  top: 35.4%;
   left: 5.2%;
   width: 32%;
   height: 43.5%;
@@ -175,6 +175,64 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   box-shadow: 0 8px 18px rgba(114, 79, 25, 0.18);
 }
 
+.ww-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.ww-tooltip-wrap::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.75rem);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 17rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 252, 244, 0.96);
+  border: 1px solid rgba(198, 154, 74, 0.55);
+  box-shadow: 0 10px 24px rgba(72, 52, 20, 0.16);
+  color: #1f1f1f;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 20;
+}
+
+.ww-tooltip-wrap::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.35rem);
+  transform: translateX(-50%);
+  border: 0.42rem solid transparent;
+  border-top-color: rgba(255, 252, 244, 0.96);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 21;
+}
+
+.ww-tooltip-wrap:hover::after,
+.ww-tooltip-wrap:hover::before,
+.ww-tooltip-wrap:focus-within::after,
+.ww-tooltip-wrap:focus-within::before {
+  opacity: 1;
+}
+
+.ww-tooltip-wrap:hover::after,
+.ww-tooltip-wrap:focus-within::after {
+  transform: translateX(-50%) translateY(-0.15rem);
+}
+
 @media (max-width: 900px) {
   .ww-resolved-page {
     min-height: 100svh;
@@ -214,8 +272,14 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
     align-items: stretch;
   }
 
-  .ww-button {
+  .ww-button,
+  .ww-tooltip-wrap {
     width: 100%;
+  }
+
+  .ww-tooltip-wrap::after {
+    width: calc(100vw - 3rem);
+    max-width: none;
   }
 }
 </style>
@@ -234,7 +298,9 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   <div class="ww-buttons">
     <button class="ww-button ww-button-primary" id="wwAnswersButton" type="button">View Answers</button>
     <button class="ww-button" id="wwLeaderboardButton" type="button">View Leaderboard</button>
-    <a class="ww-button" href="mailto:cluehousehq@gmail.com?subject=WinterWord%20Afterword">Afterword</a>
+    <span class="ww-tooltip-wrap" data-tooltip="Offer your thoughts on the path behind you. Your reflections help shape what comes next.">
+      <a class="ww-button" href="mailto:say@cluehouse.co.nz?subject=WinterWord%20Afterword">Afterword</a>
+    </span>
   </div>
 </div>
 `;
