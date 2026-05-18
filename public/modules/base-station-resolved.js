@@ -53,8 +53,8 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-title {
   position: absolute;
-  top: 14.8%;
-  left: 5.9%;
+  top: 19.4%;
+  left: 5.8%;
   width: 32%;
   font-size: clamp(2.2rem, 4.2vw, 4.65rem);
   line-height: 0.94;
@@ -66,7 +66,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-status {
   position: absolute;
-  top: 27.5%;
+  top: 29.4%;
   left: 11.4%;
   width: 22%;
   display: flex;
@@ -92,10 +92,10 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-card {
   position: absolute;
-  top: 34.6%;
-  left: 5.1%;
-  width: 34.2%;
-  height: 42.4%;
+  top: 35.1%;
+  left: 5.2%;
+  width: 32%;
+  height: 43.5%;
   padding: 1.85% 1.7%;
   border: 1px solid rgba(120, 95, 58, 0.22);
   border-radius: 10px;
@@ -104,11 +104,11 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 }
 
 .ww-card-title {
-  margin: 0 0 1.05rem;
+  margin: 0 0 1.1rem;
   padding-bottom: 1.05rem;
   border-bottom: 1px solid rgba(184, 138, 61, 0.8);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: clamp(0.5rem, 0.68vw, 0.76rem);
+  font-size: clamp(0.54rem, 0.72vw, 0.8rem);
   font-weight: 900;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -116,16 +116,16 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 }
 
 .ww-card p {
-  margin: 0 0 0.82rem;
+  margin: 0 0 1rem;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: clamp(0.54rem, 0.74vw, 0.82rem);
-  line-height: 1.58;
+  font-size: clamp(0.62rem, 0.82vw, 0.9rem);
+  line-height: 1.66;
 }
 
 .ww-final {
-  margin-top: 1.1rem;
+  margin-top: 1.25rem;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: clamp(0.58rem, 0.78vw, 0.86rem);
+  font-size: clamp(0.66rem, 0.86vw, 0.95rem);
   font-weight: 900;
   line-height: 1.6;
 }
@@ -137,8 +137,8 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-buttons {
   position: absolute;
-  left: 5.1%;
-  bottom: 9.1%;
+  left: 5.2%;
+  bottom: 10.8%;
   display: flex;
   gap: 1.05rem;
   align-items: center;
