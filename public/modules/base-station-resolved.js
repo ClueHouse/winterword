@@ -53,7 +53,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-title {
   position: absolute;
-  top: 15.4%;
+  top: 11.8%;
   left: 5.9%;
   width: 32%;
   font-size: clamp(2rem, 3.75vw, 4.15rem);
@@ -66,7 +66,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-status {
   position: absolute;
-  top: 24.8%;
+  top: 21.8%;
   left: 11.4%;
   width: 22%;
   display: flex;
@@ -92,7 +92,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-card {
   position: absolute;
-  top: 31.8%;
+  top: 28.8%;
   left: 5.2%;
   width: 32%;
   height: 43.5%;
@@ -138,7 +138,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 .ww-buttons {
   position: absolute;
   left: 5.2%;
-  bottom: 13.2%;
+  bottom: 16.2%;
   display: flex;
   gap: 1.05rem;
   align-items: center;
@@ -240,14 +240,14 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   }
 
   .ww-resolved-title {
-    top: 10%;
+    top: 8%;
     left: 6%;
     width: 88%;
     font-size: 3rem;
   }
 
   .ww-resolved-status {
-    top: 22%;
+    top: 18%;
     left: 8%;
     width: 60%;
   }
@@ -258,7 +258,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
     left: auto;
     width: calc(100% - 2rem);
     height: auto;
-    margin: 17rem 1rem 0;
+    margin: 15rem 1rem 0;
     padding: 1.2rem;
     background: rgba(255, 252, 244, 0.78);
   }
