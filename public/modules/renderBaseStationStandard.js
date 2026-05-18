@@ -425,7 +425,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   position:absolute;
   z-index:24;
   top:5%;
-  right:-50%;
+  left:88%;
   display:flex;
   align-items:center;
   gap:6px;
