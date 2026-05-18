@@ -182,9 +182,9 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-clue-icon{
-  left:15%;
+  left:20%;
   top:15%;
-  width:8.4%;
+  width:6%;
 }
 
 .ww-life-hotspot{
@@ -195,9 +195,9 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-life-icon{
-  left:15%;
+  left:20%;
   top:30%;
-  width:6.8%;
+  width:6%;
 }
 
 .ww-leader-hotspot{
@@ -208,9 +208,9 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-leader-icon{
-  left:15%;
+  left:20%;
   top:45%;
-  width:6.8%;
+  width:6%;
 }
 
 .ww-subscribe-hotspot{
