@@ -62,13 +62,13 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 .ww-resolved-id {
   position: absolute;
   top: 3.7%;
-  left: 25.7%;
-  width: 50%;
-  text-align: center;
+  left: 25.8%;
+  width: 52%;
+  text-align: left;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: clamp(0.58rem, 0.9vw, 0.92rem);
+  font-size: clamp(0.52rem, 0.82vw, 0.84rem);
   font-weight: 800;
-  letter-spacing: 0.48em;
+  letter-spacing: 0.44em;
   text-transform: uppercase;
   color: #151515;
   white-space: nowrap;
@@ -76,10 +76,10 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-title {
   position: absolute;
-  top: 20.8%;
-  left: 6.9%;
-  width: 29%;
-  font-size: clamp(2.2rem, 4vw, 4.35rem);
+  top: 21.4%;
+  left: 6.7%;
+  width: 28%;
+  font-size: clamp(2rem, 3.55vw, 3.95rem);
   line-height: 0.9;
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -88,9 +88,9 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-status {
   position: absolute;
-  top: 31.8%;
-  left: 10.4%;
-  width: 23.5%;
+  top: 32.3%;
+  left: 14.2%;
+  width: 19.4%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -213,6 +213,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
   .ww-resolved-id {
     left: 5%;
     width: 90%;
+    text-align: left;
     letter-spacing: 0.18em;
   }
 
