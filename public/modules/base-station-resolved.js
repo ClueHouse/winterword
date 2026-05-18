@@ -53,7 +53,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-title {
   position: absolute;
-  top: 17.6%;
+  top: 15.4%;
   left: 5.9%;
   width: 32%;
   font-size: clamp(2rem, 3.75vw, 4.15rem);
@@ -66,7 +66,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-status {
   position: absolute;
-  top: 27.4%;
+  top: 24.8%;
   left: 11.4%;
   width: 22%;
   display: flex;
@@ -92,7 +92,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-card {
   position: absolute;
-  top: 35.4%;
+  top: 31.8%;
   left: 5.2%;
   width: 32%;
   height: 43.5%;
@@ -138,7 +138,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 .ww-buttons {
   position: absolute;
   left: 5.2%;
-  bottom: 10.8%;
+  bottom: 13.2%;
   display: flex;
   gap: 1.05rem;
   align-items: center;
@@ -285,7 +285,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 </style>
 
 <div class="ww-resolved-page">
-  <h1 class="ww-resolved-title">BASE STATION</h1>
+  <h1 class="ww-resolved-title">WINTERWORD</h1>
 
   <div class="ww-resolved-status">Resolved</div>
 
