@@ -425,7 +425,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   position:absolute;
   z-index:24;
   top:5%;
-  right:-70%;
+  right:-50%;
   display:flex;
   align-items:center;
   gap:6px;
@@ -435,7 +435,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-morse-pulse i,
 .ww-morse-pulse b{
   display:block;
-  height:4px;
+  height:7px;
   border-radius:999px;
   background:rgba(255,222,150,0.98);
   box-shadow:0 0 8px rgba(242,178,76,0.42);
