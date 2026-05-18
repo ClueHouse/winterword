@@ -182,8 +182,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-clue-icon{
-  left:6.8%;
-  top:37.6%;
+  left:15%;
+  top:15%;
   width:8.4%;
 }
 
@@ -195,8 +195,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-life-icon{
-  left:7%;
-  top:53.1%;
+  left:15%;
+  top:30%;
   width:6.8%;
 }
 
@@ -208,8 +208,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-leader-icon{
-  left:6.8%;
-  top:71.1%;
+  left:15%;
+  top:45%;
   width:6.8%;
 }
 
