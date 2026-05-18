@@ -2,14 +2,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   const {
     orgName = "WinterWord",
     seasonLabel = "WINTERWORD • 2026",
-    introLine1 = "A letter per week from a wintry scroll,",
-    introLine2 = "Piece them together — reveal the whole.",
-    howParagraphs = [],
-    updatesText = "",
-    currentClue = 0,
-    totalClues = 12,
     lifelineAvailable = false,
-    lifelineUnlockClue = 6,
     hasLeaderboardEntries = false
   } = data;
 
@@ -31,26 +24,13 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   const encodedOrgName = encodeURIComponent(mailSafeOrgName);
 
   const reportProblemHref =
-    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}` +
-    `&body=SET%20THE%20SCENE%3A%0AWhich%20page%20were%20you%20on%3F%0A%0A` +
-    `PLOT%20TWIST%3A%0AWhat%20went%20wrong%3F%0A%0A` +
-    `ALTERNATE%20ENDING%3A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0A` +
-    `YOUR%20TRAVELLER%E2%80%99S%20GEAR%3A%0AWhich%20device%20%2B%20browser%20you%20brought%20on%20this%20journey.%0A%0A` +
-    `Thanks%20for%20sharing%20%E2%80%94%20we%E2%80%99ll%20follow%20the%20trail%20and%20set%20things%20right.`;
+    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}`;
 
   const subscribeHref =
-    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}` +
-    `&body=Sign%20me%20up.%20The%20winter%20hush%20is%20starting%20to%20feel%20personal.`;
+    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}`;
 
   const solveHref =
-    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026` +
-    `&body=You%20feel%20the%20pieces%20have%20settled.%0A%0A` +
-    `Clues%20gathered.%20Letters%20found.%0A` +
-    `A%20pattern%2C%20perhaps%2C%20now%20clear%20beneath%20the%20frost.%0A%0A` +
-    `If%20you%20believe%20you%20can%20name%20the%20WinterWord%2C%0A` +
-    `set%20it%20down%20below.%0A%0A` +
-    `Your%20answer%3A%0A%0A%5BTYPE%20YOUR%20FINAL%20WORD%20HERE%5D%0A%0A%0A` +
-    `(Only%20one%20submission%20is%20counted.%0AChoose%20your%20moment%20%E2%80%94%20winter%20does%20not%20answer%20twice.)`;
+    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026`;
 
   const contactHref =
     `mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry`;
@@ -59,6 +39,13 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 <style>
 *{
   box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
 }
 
 #wwPortal{
@@ -71,18 +58,15 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     linear-gradient(180deg,#0b1826 0%, #13283d 100%);
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
   color:#f5efe3;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:2vh 2.5vw;
   position:relative;
+  padding:0;
 }
 
 .ww-title-meta{
-  position:relative;
+  position:absolute;
   z-index:30;
   width:100%;
+  top:1.8%;
   text-align:center;
   font-size:clamp(12px,1vw,18px);
   line-height:1.2;
@@ -93,21 +77,15 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   text-shadow:
     0 2px 8px rgba(0,0,0,0.82),
     0 0 12px rgba(218,162,50,0.12);
-  margin-bottom:1.6vh;
   white-space:nowrap;
 }
 
 #wwStage{
   position:relative;
-  width:min(92vw,163vh);
-  height:min(51.75vw,92vh);
+  width:100vw;
+  height:100vh;
   overflow:hidden;
   background:#020609;
-  border-radius:2.2rem;
-  box-shadow:
-    0 28px 90px rgba(0,0,0,0.58),
-    0 0 0 1px rgba(218,162,50,0.08),
-    inset 0 0 40px rgba(255,180,50,0.03);
 }
 
 .ww-shell{
@@ -163,15 +141,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     contrast(1.08)
     drop-shadow(0 13px 18px rgba(0,0,0,0.6))
     drop-shadow(0 0 24px rgba(245,183,52,0.72));
-}
-
-.ww-hotspot[data-disabled="true"] + .ww-icon{
-  opacity:1;
-  filter:
-    brightness(1)
-    saturate(1.04)
-    drop-shadow(0 10px 14px rgba(0,0,0,0.48))
-    drop-shadow(0 0 10px rgba(218,162,50,0.18));
 }
 
 .ww-clue-icon{
@@ -267,7 +236,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       rgba(255,238,170,0.0) 82%,
       transparent 100%
     );
-  filter:blur(1px);
 }
 
 .ww-solve-hotspot:hover + .ww-solve-gleam,
@@ -284,27 +252,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   0%{ left:-42%; }
   58%{ left:118%; }
   100%{ left:118%; }
-}
-
-.ww-updates-overlay{
-  position:absolute;
-  z-index:15;
-  left:18%;
-  top:82%;
-  width:24.6%;
-  min-height:8%;
-  color:rgba(255,244,224,0.9);
-  text-shadow:0 2px 8px rgba(0,0,0,0.82);
-}
-
-.ww-update-text{
-  margin:0;
-  font-size:clamp(10px,0.88vw,16px);
-  line-height:1.42;
-  letter-spacing:0.28em;
-  text-transform:uppercase;
-  font-style:italic;
-  font-weight:400;
 }
 
 .ww-morse-pulse{
@@ -328,27 +275,12 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   animation:wwMorseBlink 1.8s infinite;
 }
 
-.ww-morse-pulse i{
-  width:5px;
-}
-
-.ww-morse-pulse b{
-  width:16px;
-}
-
-.ww-morse-pulse :nth-child(1){ animation-delay:0s; }
-.ww-morse-pulse :nth-child(2){ animation-delay:0.15s; }
-.ww-morse-pulse :nth-child(3){ animation-delay:0.35s; }
-.ww-morse-pulse :nth-child(4){ animation-delay:0.7s; }
-.ww-morse-pulse :nth-child(5){ animation-delay:0.95s; }
+.ww-morse-pulse i{ width:5px; }
+.ww-morse-pulse b{ width:16px; }
 
 @keyframes wwMorseBlink{
-  0%,20%,100%{
-    opacity:0.2;
-  }
-  10%{
-    opacity:1;
-  }
+  0%,20%,100%{ opacity:0.2; }
+  10%{ opacity:1; }
 }
 
 .ww-tooltip{
@@ -372,26 +304,17 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 }
 
 .ww-tooltip--locked{
-  border-color:rgba(255,255,255,0.32);
   background:linear-gradient(180deg, rgba(158,38,45,0.96), rgba(104,18,25,0.98));
-  color:#ffffff;
-  box-shadow:
-    0 16px 44px rgba(0,0,0,0.58),
-    0 0 22px rgba(180,20,30,0.2);
+  color:#fff;
 }
 
 .ww-tooltip-title{
   display:block;
   margin-bottom:0.32rem;
-  color:rgba(0,0,0,0.92);
   font-size:1.08em;
   letter-spacing:0.16em;
   text-transform:uppercase;
   font-weight:900;
-}
-
-.ww-tooltip--locked .ww-tooltip-title{
-  color:#ffffff;
 }
 
 .ww-clue-tooltip{ top:24%; }
@@ -445,16 +368,12 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     0 0 16px rgba(242,178,76,0.24),
     0 0 30px rgba(242,178,76,0.12);
   filter:brightness(1.12);
-  outline:none;
 }
 
 .ww-menu-hotspot:active,
 .ww-menu-hotspot.is-clicked{
   transform:scale(0.94);
   background:rgba(255,255,255,0.10);
-  box-shadow:
-    0 0 18px rgba(242,178,76,0.28),
-    inset 0 0 14px rgba(242,178,76,0.18);
 }
 
 .ww-menu-dropdown,
@@ -465,13 +384,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   border:1px solid rgba(224,155,32,0.46);
   border-radius:0.85rem;
   background:rgba(3,8,13,0.94);
-  box-shadow:
-    0 22px 54px rgba(0,0,0,0.62),
-    inset 0 0 18px rgba(255,180,70,0.035);
+  box-shadow:0 22px 54px rgba(0,0,0,0.62);
   opacity:0;
   pointer-events:none;
   transition:opacity 150ms ease, transform 150ms ease;
-  backdrop-filter:blur(10px);
 }
 
 .ww-menu-dropdown{
@@ -493,14 +409,11 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 .ww-legal-submenu{
   top:0;
   right:calc(100% + 0.55rem);
-  transform:translateX(4px);
 }
 
-.ww-legal-wrap:hover .ww-legal-submenu,
-.ww-legal-wrap:focus-within .ww-legal-submenu{
+.ww-legal-wrap:hover .ww-legal-submenu{
   opacity:1;
   pointer-events:auto;
-  transform:translateX(0);
 }
 
 .ww-menu-dropdown a,
@@ -511,34 +424,15 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   color:rgba(255,244,224,0.92);
   text-decoration:none;
   font-size:0.78rem;
-  line-height:1.2;
   font-weight:850;
   letter-spacing:0.12em;
   text-transform:uppercase;
-  white-space:nowrap;
 }
 
 .ww-menu-dropdown a:hover,
-.ww-menu-dropdown a:focus-visible,
-.ww-legal-submenu a:hover,
-.ww-legal-submenu a:focus-visible{
+.ww-legal-submenu a:hover{
   background:rgba(224,155,32,0.15);
   color:#f2b24c;
-  outline:none;
-}
-
-@media (max-aspect-ratio: 16 / 9){
-  #wwStage{
-    width:92vw;
-    height:calc(92vw * 0.5625);
-  }
-}
-
-@media (min-aspect-ratio: 16 / 9){
-  #wwStage{
-    width:calc(92vh * 1.77778);
-    height:92vh;
-  }
 }
 </style>
 
@@ -548,7 +442,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     ${safeText(seasonLabel)} &nbsp;✦&nbsp; ${safeText(orgName)}
   </div>
 
-  <div id="wwStage" aria-label="WinterWord Base Station">
+  <div id="wwStage">
 
     <img
       class="ww-shell"
@@ -557,105 +451,39 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       draggable="false"
     >
 
-    <div class="ww-morse-pulse" aria-hidden="true">
-      <i></i>
-      <i></i>
-      <b></b>
-      <i></i>
-      <b></b>
+    <div class="ww-morse-pulse">
+      <i></i><i></i><b></b><i></i><b></b>
     </div>
 
-    <button
-      class="ww-hotspot ww-clue-hotspot"
-      type="button"
-      data-nav="clues"
-      aria-label="Open clues"
-    ></button>
-    <img
-      class="ww-icon ww-clue-icon"
-      src="/assets/winterword/shared/icon_clue.png"
-      alt=""
-      aria-hidden="true"
-      draggable="false"
-    >
+    <button class="ww-hotspot ww-clue-hotspot" data-nav="clues"></button>
+    <img class="ww-icon ww-clue-icon" src="/assets/winterword/shared/icon_clue.png">
 
-    <button
-      class="ww-hotspot ww-life-hotspot"
-      type="button"
-      data-nav="lifeline"
-      data-disabled="${lifelineAvailable ? "false" : "true"}"
-      aria-label="${lifelineAvailable ? "Open lifeline" : "Lifeline unavailable"}"
-    ></button>
-    <img
-      class="ww-icon ww-life-icon"
-      src="/assets/winterword/shared/icon_life.png"
-      alt=""
-      aria-hidden="true"
-      draggable="false"
-    >
+    <button class="ww-hotspot ww-life-hotspot" data-nav="lifeline" data-disabled="${lifelineAvailable ? "false" : "true"}"></button>
+    <img class="ww-icon ww-life-icon" src="/assets/winterword/shared/icon_life.png">
 
-    <button
-      class="ww-hotspot ww-leader-hotspot"
-      type="button"
-      data-nav="leaderboard"
-      data-disabled="${leaderboardAvailable ? "false" : "true"}"
-      aria-label="${leaderboardAvailable ? "Open leaderboard" : "Leaderboard unavailable"}"
-    ></button>
-    <img
-      class="ww-icon ww-leader-icon"
-      src="/assets/winterword/shared/icon_leader.png"
-      alt=""
-      aria-hidden="true"
-      draggable="false"
-    >
+    <button class="ww-hotspot ww-leader-hotspot" data-nav="leaderboard" data-disabled="${leaderboardAvailable ? "false" : "true"}"></button>
+    <img class="ww-icon ww-leader-icon" src="/assets/winterword/shared/icon_leader.png">
 
-    <a
-      class="ww-hotspot ww-solve-hotspot"
-      href="${solveHref}"
-      aria-label="Submit final WinterWord answer"
-    ></a>
-    <div class="ww-solve-gleam" aria-hidden="true"></div>
-
-    <div class="ww-updates-overlay">
-      ${
-        updatesText && String(updatesText).trim()
-          ? `<p class="ww-update-text">${safeText(updatesText)}</p>`
-          : `<p class="ww-update-text">No new updates yet.</p>`
-      }
-    </div>
+    <a class="ww-hotspot ww-solve-hotspot" href="${solveHref}"></a>
+    <div class="ww-solve-gleam"></div>
 
     <div class="ww-tooltip ww-clue-tooltip">
       <span class="ww-tooltip-title">Clues</span>
-      Each of your upcoming clues is designed to reveal just enough
-      to move you forward — and hide the rest where only patience can reach it.
+      Each clue reveals another piece.
     </div>
 
     <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}">
       <span class="ww-tooltip-title">Lifeline</span>
-      ${
-        lifelineAvailable
-          ? `This passage is open. Step carefully.`
-          : `This passage waits its moment.`
-      }
+      ${lifelineAvailable ? `This passage is open.` : `This passage waits its moment.`}
     </div>
 
     <div class="ww-tooltip ww-leader-tooltip ${leaderboardAvailable ? "" : "ww-tooltip--locked"}">
       <span class="ww-tooltip-title">Leaderboard</span>
-      ${
-        leaderboardAvailable
-          ? `The Leaderboard remembers all who enter the game.
-      It reflects those who find the answer,
-      and honours the one who found it first.`
-          : `No answers received yet. No correct ones, anyway...`
-      }
+      ${leaderboardAvailable ? `The board remembers all.` : `No answers received yet.`}
     </div>
 
     <div class="ww-menu">
-      <button
-        class="ww-menu-hotspot"
-        type="button"
-        aria-label="Open menu"
-      ></button>
+      <button class="ww-menu-hotspot" type="button"></button>
 
       <div class="ww-menu-dropdown">
         <a href="#" data-nav="welcome">Welcome</a>
@@ -664,7 +492,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
         <a href="${contactHref}">Contact</a>
 
         <div class="ww-legal-wrap">
-          <a href="#" aria-label="Legal links">Legal ▸</a>
+          <a href="#">Legal ▸</a>
 
           <div class="ww-legal-submenu">
             <a href="/legal/privacy-policy.html">Privacy Policy</a>
@@ -676,7 +504,6 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     </div>
 
   </div>
-
 </div>
 `;
 
