@@ -53,7 +53,7 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-title {
   position: absolute;
-  top: 11.8%;
+  top: 10%;
   left: 5.9%;
   width: 32%;
   font-size: clamp(2rem, 3.75vw, 4.15rem);
