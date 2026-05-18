@@ -61,17 +61,18 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 .ww-resolved-id {
   position: absolute;
-  top: 4.2%;
+  top: 4.1%;
   left: 6.8%;
-  width: 52%;
+  width: 36%;
   text-align: left;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: clamp(0.5rem, 0.72vw, 0.78rem);
+  font-size: clamp(0.48rem, 0.68vw, 0.76rem);
   font-weight: 800;
-  letter-spacing: 0.38em;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
   color: #151515;
-  white-space: nowrap;
+  line-height: 1.8;
+  white-space: normal;
   opacity: 0.88;
 }
 
@@ -268,7 +269,8 @@ export function renderBaseStationResolved(app, data = {}, navigate) {
 
 <div class="ww-resolved-page">
   <div class="ww-resolved-id">
-    ${esc(leftLabel)} • ${esc(yearLabel)} ✧ ${safeOrgName ? esc(safeOrgName) : "BAY OF PLENTY REGIONAL COUNCIL"}
+    ${esc(leftLabel)} • ${esc(yearLabel)}<br>
+    ${safeOrgName ? esc(safeOrgName) : "BAY OF PLENTY REGIONAL COUNCIL"}
   </div>
 
   <h1 class="ww-resolved-title">BASE STATION</h1>
