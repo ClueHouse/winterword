@@ -1,103 +1,331 @@
-export function renderBaseStationStandard(app, data = {}, navigate) {
-  app.innerHTML = `
+export function renderBaseStationStandard(app) {
+
+app.innerHTML = `
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{background:#000}
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#000;
+  font-family:system-ui,sans-serif;
+}
 
 #wwPortal{
-  width:100vw;
-  height:100vh;
-  overflow:auto;
-  background:#05080b;
-  color:white;
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  min-height:100vh;
+  padding:48px;
+  background:
+    radial-gradient(circle at top right, rgba(214,140,36,.12), transparent 28%),
+    linear-gradient(180deg,#05080c,#010203);
 }
 
 .stage{
-  min-height:100vh;
-  padding:48px;
   display:grid;
-  grid-template-columns:repeat(3,minmax(260px,1fr));
-  gap:42px;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(213,145,45,.16), transparent 28%),
-    linear-gradient(180deg,#070b10,#010203);
+  grid-template-columns:repeat(4,minmax(240px,1fr));
+  gap:34px;
 }
 
 .panel{
-  min-height:420px;
-  padding:38px 32px;
-  border:1px solid rgba(255,220,160,.12);
-  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(0,0,0,.3)),#0b0f12;
-  box-shadow:inset 0 0 40px rgba(0,0,0,.6);
+  min-height:380px;
+  padding:34px 28px;
+  background:#0b0f12;
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:
+    inset 0 0 24px rgba(0,0,0,.55),
+    0 12px 30px rgba(0,0,0,.45);
 }
 
 .label{
   margin-bottom:28px;
-  font-size:12px;
-  letter-spacing:.22em;
+  color:rgba(255,220,170,.45);
+  font-size:11px;
+  letter-spacing:.24em;
   text-transform:uppercase;
-  color:rgba(255,220,160,.5);
 }
 
-.menu{display:flex;flex-direction:column}
-.menu span{display:block}
+.menu{
+  display:flex;
+  flex-direction:column;
+}
 
-.v1{gap:34px;align-items:center}
-.v1 span{font-size:34px;letter-spacing:.45em;font-weight:700;color:rgba(245,245,245,.92)}
+.menu span{
+  display:block;
+}
 
-.v2{gap:32px;align-items:flex-start}
-.v2 span{font-family:Georgia,serif;font-size:38px;letter-spacing:.28em;font-weight:700;color:rgba(255,224,170,.88)}
+/* ========== V1 ========== */
 
-.v3{gap:28px;align-items:flex-start}
-.v3 span{font-size:22px;letter-spacing:.52em;font-weight:800;color:rgba(238,238,238,.82)}
-.v3 .solve{margin-top:18px;color:rgba(255,218,155,.95)}
+.v1{
+  gap:28px;
+}
 
-.v4{gap:30px;align-items:center}
-.v4 span{position:relative;font-size:26px;letter-spacing:.38em;font-weight:800;color:rgba(250,250,250,.88)}
-.v4 span::before,.v4 span::after{content:"";position:absolute;top:50%;width:48px;height:1px;background:rgba(255,220,160,.38)}
-.v4 span::before{right:calc(100% + 20px)}
-.v4 span::after{left:calc(100% + 20px)}
+.v1 span{
+  font-family:"Courier New",monospace;
+  font-size:36px;
+  font-weight:700;
+  letter-spacing:.22em;
+  color:#f3f3f3;
+}
 
-.v5{gap:24px;align-items:flex-start}
-.v5 span{font-size:24px;letter-spacing:.44em;font-weight:800;color:rgba(235,235,235,.74)}
-.v5 .solve{margin-top:36px;font-family:Georgia,serif;font-size:52px;letter-spacing:.24em;color:rgba(255,229,180,.96)}
+.v1 .solve{
+  margin-top:18px;
+  color:#f2b24c;
+}
 
-.v6{gap:26px;align-items:flex-start}
-.v6 span{font-size:18px;letter-spacing:.6em;font-weight:900;color:rgba(255,255,255,.8)}
-.v6 .solve{padding-top:20px;border-top:1px solid rgba(255,220,160,.25);color:rgba(255,222,165,.9)}
+/* ========== V2 ========== */
 
-.v7{gap:34px;align-items:center}
-.v7 span{font-family:Georgia,serif;font-size:31px;letter-spacing:.36em;font-weight:700;color:rgba(255,237,204,.82)}
+.v2{
+  gap:24px;
+}
 
-.v8{gap:22px;align-items:flex-start}
-.v8 span{padding-left:18px;border-left:2px solid rgba(255,198,110,.34);font-size:21px;letter-spacing:.4em;font-weight:850;color:rgba(245,245,245,.78)}
-.v8 .solve{border-left-color:rgba(255,198,110,.8);color:rgba(255,227,180,.95)}
+.v2 span{
+  font-family:"Lucida Console",monospace;
+  font-size:34px;
+  font-weight:700;
+  letter-spacing:.38em;
+  color:#ffffff;
+}
 
-.v9{gap:36px;align-items:flex-start}
-.v9 span{font-size:20px;letter-spacing:.7em;font-weight:700;color:rgba(255,255,255,.66)}
-.v9 .solve{color:rgba(255,221,170,.84);font-size:28px}
+.v2 .solve{
+  margin-top:24px;
+  color:#ffbf66;
+}
 
-.v10{gap:30px;align-items:flex-start}
-.v10 span{font-size:24px;letter-spacing:.46em;font-weight:850;color:rgba(238,238,238,.84)}
-.v10 .solve{margin-top:20px;font-family:Georgia,serif;font-size:40px;letter-spacing:.32em;color:rgba(255,225,175,.94)}
+/* ========== V3 ========== */
+
+.v3{
+  gap:22px;
+}
+
+.v3 span{
+  font-family:"Courier New",monospace;
+  font-size:32px;
+  font-weight:700;
+  letter-spacing:.52em;
+  color:#ededed;
+  text-shadow:
+    0 0 12px rgba(255,255,255,.06);
+}
+
+.v3 .solve{
+  margin-top:34px;
+  color:#f2a93b;
+  text-shadow:
+    0 0 14px rgba(242,169,59,.25);
+}
+
+/* ========== V4 ========== */
+
+.v4{
+  gap:26px;
+}
+
+.v4 span{
+  width:max-content;
+  padding-bottom:10px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  font-family:"Courier New",monospace;
+  font-size:30px;
+  font-weight:700;
+  letter-spacing:.42em;
+  color:#f1f1f1;
+}
+
+.v4 .solve{
+  margin-top:26px;
+  border-bottom-color:rgba(242,178,76,.32);
+  color:#f2b24c;
+}
+
+/* ========== V5 ========== */
+
+.v5{
+  gap:18px;
+}
+
+.v5 span{
+  font-family:"Consolas",monospace;
+  font-size:40px;
+  font-weight:700;
+  letter-spacing:.16em;
+  color:#ffffff;
+}
+
+.v5 .solve{
+  margin-top:30px;
+  font-size:56px;
+  color:#ffbe5e;
+}
+
+/* ========== V6 ========== */
+
+.v6{
+  gap:30px;
+}
+
+.v6 span{
+  position:relative;
+  width:max-content;
+  padding-left:18px;
+  font-family:"Courier New",monospace;
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:.44em;
+  color:#f4f4f4;
+}
+
+.v6 span::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:6px;
+  height:1px;
+  background:rgba(255,255,255,.25);
+}
+
+.v6 .solve{
+  margin-top:26px;
+  color:#f2b24c;
+}
+
+.v6 .solve::before{
+  background:rgba(242,178,76,.55);
+}
+
+/* ========== V7 ========== */
+
+.v7{
+  gap:24px;
+  align-items:center;
+}
+
+.v7 span{
+  font-family:"Courier New",monospace;
+  font-size:30px;
+  font-weight:700;
+  letter-spacing:.58em;
+  color:#f7f7f7;
+}
+
+.v7 .solve{
+  margin-top:34px;
+  font-size:42px;
+  color:#ffc56f;
+  text-shadow:
+    0 0 18px rgba(255,185,80,.18);
+}
+
+/* ========== V8 ========== */
+
+.v8{
+  gap:20px;
+}
+
+.v8 span{
+  width:100%;
+  font-family:"Consolas",monospace;
+  font-size:34px;
+  font-weight:700;
+  letter-spacing:.24em;
+  color:#f4f4f4;
+  display:flex;
+  justify-content:space-between;
+}
+
+.v8 .solve{
+  margin-top:32px;
+  color:#f2b24c;
+}
 </style>
 
 <div id="wwPortal">
+
   <main class="stage">
-    ${[1,2,3,4,5,6,7,8,9,10].map(n => `
-      <section class="panel">
-        <div class="label">Variation ${n}</div>
-        <div class="menu v${n}">
-          <span>CLUES</span>
-          <span>LIFE</span>
-          <span>LEAD</span>
-          <span class="solve">SOLVE</span>
-        </div>
-      </section>
-    `).join("")}
+
+    <section class="panel">
+      <div class="label">Variation 1</div>
+      <div class="menu v1">
+        <span>CLUE</span>
+        <span>LIFE</span>
+        <span>LEAD</span>
+        <span class="solve">SOLVE</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="label">Variation 2</div>
+      <div class="menu v2">
+        <span>CLUE</span>
+        <span>LIFE</span>
+        <span>LEAD</span>
+        <span class="solve">SOLVE</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="label">Variation 3</div>
+      <div class="menu v3">
+        <span>CLUE</span>
+        <span>LIFE</span>
+        <span>LEAD</span>
+        <span class="solve">SOLVE</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="label">Variation 4</div>
+      <div class="menu v4">
+        <span>CLUE</span>
+        <span>LIFE</span>
+        <span>LEAD</span>
+        <span class="solve">SOLVE</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="label">Variation 5</div>
+      <div class="menu v5">
+        <span>CLUE</span>
+        <span>LIFE</span>
+        <span>LEAD</span>
+        <span class="solve">SOLVE</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="label">Variation 6</div>
+      <div class="menu v6">
+        <span>CLUE</span>
+        <span>LIFE</span>
+        <span>LEAD</span>
+        <span class="solve">SOLVE</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="label">Variation 7</div>
+      <div class="menu v7">
+        <span>CLUE</span>
+        <span>LIFE</span>
+        <span>LEAD</span>
+        <span class="solve">SOLVE</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="label">Variation 8</div>
+      <div class="menu v8">
+        <span><b>C</b><b>L</b><b>U</b><b>E</b></span>
+        <span><b>L</b><b>I</b><b>F</b><b>E</b></span>
+        <span><b>L</b><b>E</b><b>A</b><b>D</b></span>
+        <span class="solve">SOLVE</span>
+      </div>
+    </section>
+
   </main>
+
 </div>
 `;
 }
