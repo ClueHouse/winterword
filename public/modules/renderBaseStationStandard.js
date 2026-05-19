@@ -342,9 +342,14 @@ html,body{
   margin-top:.5rem;
   padding:2rem 2.2rem 2.1rem;
   border-radius:1.8rem;
-  background:linear-gradient(180deg, rgba(255,255,255,.032), rgba(255,255,255,.018));
+  background:
+    radial-gradient(ellipse at top, rgba(255,181,80,.075), rgba(255,181,80,0) 48%),
+    linear-gradient(180deg, rgba(18,22,30,.78), rgba(7,10,16,.9));
   border:2px solid rgba(120,78,36,.68);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.018), 0 0 28px rgba(0,0,0,.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.035),
+    inset 0 -24px 48px rgba(0,0,0,.18),
+    0 0 28px rgba(0,0,0,.32);
   backdrop-filter:blur(2px);
 }
 
