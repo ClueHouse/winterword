@@ -63,8 +63,6 @@ export async function onRequestGet(context) {
 
     const record = data.records[0].fields;
 
-    // ---------- LEADERBOARD CHECK ----------
-
     async function getLeaderboardCount() {
       try {
         const leaderboardEndpoint =
@@ -99,8 +97,6 @@ export async function onRequestGet(context) {
 
     const leaderboard_count = await getLeaderboardCount();
     const has_leaderboard_entries = leaderboard_count > 0;
-
-    // ---------- CALCULATION ----------
 
     const totalClues = Number(record.total_clues || 12);
 
@@ -214,8 +210,6 @@ export async function onRequestGet(context) {
     const season_state = getSeasonState();
     const is_complete = season_state === "complete";
 
-    // ---------- RESOLVED LOGIC ----------
-
     function calculateIsResolved() {
       const override = record.base_station_resolved_override;
 
@@ -269,8 +263,6 @@ export async function onRequestGet(context) {
 
     const is_resolved = calculateIsResolved();
 
-    // ---------- RESPONSE ----------
-
     return Response.json({
       ok: true,
 
@@ -289,6 +281,9 @@ export async function onRequestGet(context) {
 
       updates_content: record.updates_content || "",
       updatesText: record.updates_content || "",
+
+      guidepost: record.guidepost || "",
+      guidepostText: record.guidepost || "",
 
       total_clues: totalClues,
       totalClues: totalClues,
@@ -316,14 +311,12 @@ export async function onRequestGet(context) {
       is_resolved: is_resolved,
       isResolved: is_resolved,
 
-      // ✅ LIVE FEATURE FLAGS
       lifeline_live: record.lifeline_live === true,
       lifelineLive: record.lifeline_live === true,
 
       flash_clue_live: record.flash_clue_live === true,
       flashClueLive: record.flash_clue_live === true,
 
-      // ✅ LEADERBOARD STATE
       has_leaderboard_entries: has_leaderboard_entries,
       leaderboard_count: leaderboard_count,
 
