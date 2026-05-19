@@ -122,6 +122,27 @@ html,body{
     0 0 12px rgba(218,162,50,.16);
 }
 
+.ww-title-sub{
+
+  margin-top:.5rem;
+
+  max-width:92%;
+
+  font-family:Georgia,serif;
+
+  font-size:clamp(12px,.82vw,16px);
+  line-height:1.45;
+
+  font-style:italic;
+
+  letter-spacing:.03em;
+
+  color:rgba(255,238,214,.78);
+
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.88);
+}
+
 /* ========================= */
 /* WORD NAVIGATION */
 /* ========================= */
@@ -272,6 +293,36 @@ html,body{
     0 4px 16px rgba(0,0,0,.96),
     0 0 22px rgba(255,185,80,.28),
     0 0 42px rgba(255,185,80,.18);
+}
+
+.ww-guidepost{
+
+  margin-top:4.4vh;
+
+  width:100%;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  text-align:center;
+}
+
+.ww-guidepost-title{
+
+  font-size:clamp(14px,.9vw,18px);
+  line-height:1;
+
+  letter-spacing:.28em;
+  text-transform:uppercase;
+
+  font-weight:900;
+
+  color:rgba(255,232,188,.88);
+
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.88),
+    0 0 18px rgba(242,178,76,.08);
 }
 
 @keyframes wwWordSweep{
@@ -577,6 +628,11 @@ html,body{
       ${safeText(orgName)}
     </div>
 
+    <div class="ww-title-sub">
+      A letter per week from a wintry scroll.<br>
+      Piece them together — reveal the whole.
+    </div>
+
   </div>
 
   <div id="wwStage">
@@ -626,6 +682,14 @@ html,body{
       >
         SOLVE
       </a>
+
+      <div class="ww-guidepost">
+
+        <div class="ww-guidepost-title">
+          The Guidepost
+        </div>
+
+      </div>
 
     </nav>
 
