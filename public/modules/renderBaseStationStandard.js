@@ -79,17 +79,28 @@ html,body{
 }
 
 /* ========================= */
-/* TOP META */
+/* LEFT PANEL */
 /* ========================= */
 
-.ww-title-meta{
+.ww-left-panel{
   position:absolute;
-  z-index:30;
+  z-index:24;
 
-  left:7.9%;
-  top:2.7%;
+  left:6.6%;
+  top:3.1%;
 
-  width:24%;
+  width:24.4%;
+  height:74%;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  pointer-events:none;
+}
+
+.ww-title-meta{
+  width:100%;
 
   display:flex;
   flex-direction:column;
@@ -104,7 +115,6 @@ html,body{
 }
 
 .ww-title-line{
-
   font-size:clamp(11px,.74vw,15px);
   line-height:1;
 
@@ -123,10 +133,9 @@ html,body{
 }
 
 .ww-title-sub{
+  margin-top:.72rem;
 
-  margin-top:.5rem;
-
-  max-width:92%;
+  max-width:90%;
 
   font-family:Georgia,serif;
 
@@ -137,10 +146,48 @@ html,body{
 
   letter-spacing:.03em;
 
-  color:rgba(255,238,214,.78);
+  color:rgba(255,238,214,.82);
 
   text-shadow:
     0 2px 10px rgba(0,0,0,.88);
+}
+
+.ww-rule{
+  width:88%;
+  height:1px;
+
+  margin:3.9vh 0 3.1vh;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,190,95,.22),
+    rgba(255,218,154,.52),
+    rgba(255,190,95,.22),
+    transparent
+  );
+
+  position:relative;
+}
+
+.ww-rule::after{
+  content:"";
+
+  position:absolute;
+  left:50%;
+  top:50%;
+
+  width:8px;
+  height:8px;
+
+  border:1px solid rgba(255,198,107,.62);
+
+  transform:translate(-50%,-50%) rotate(45deg);
+
+  background:rgba(5,9,13,.92);
+
+  box-shadow:
+    0 0 10px rgba(255,180,75,.18);
 }
 
 /* ========================= */
@@ -148,19 +195,15 @@ html,body{
 /* ========================= */
 
 .ww-word-nav{
-  position:absolute;
-  z-index:24;
-
-  left:8.2%;
-  top:24.2%;
-
-  width:18%;
+  width:100%;
 
   display:flex;
   flex-direction:column;
-  align-items:flex-start;
+  align-items:center;
 
   gap:2.6vh;
+
+  pointer-events:auto;
 }
 
 .ww-word-link{
@@ -230,7 +273,6 @@ html,body{
 
 .ww-word-link:hover,
 .ww-word-link:focus-visible{
-
   transform:translateY(-2px);
 
   color:#ffffff;
@@ -256,7 +298,6 @@ html,body{
 
 .ww-word-link[data-disabled="true"]:hover,
 .ww-word-link[data-disabled="true"]:focus-visible{
-
   color:rgba(255,210,195,.95);
 
   text-shadow:
@@ -270,12 +311,26 @@ html,body{
 }
 
 .ww-word-solve{
+  margin-top:.2vh;
 
-  margin-top:4.4vh;
+  padding:.78rem 1.22rem .78rem 1.48rem;
 
-  font-size:clamp(44px,3vw,64px);
+  border:1px solid rgba(255,197,111,.46);
+  border-radius:.9rem;
 
-  letter-spacing:.34em;
+  background:linear-gradient(
+    180deg,
+    rgba(255,197,111,.10),
+    rgba(255,197,111,.035)
+  );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    0 0 18px rgba(255,185,80,.06);
+
+  font-size:clamp(25px,1.9vw,40px);
+
+  letter-spacing:.36em;
 
   color:#ffc56f;
 
@@ -286,8 +341,19 @@ html,body{
 
 .ww-word-solve:hover,
 .ww-word-solve:focus-visible{
-
   color:#ffd08b;
+
+  border-color:rgba(255,208,139,.7);
+
+  background:linear-gradient(
+    180deg,
+    rgba(255,197,111,.16),
+    rgba(255,197,111,.055)
+  );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.055),
+    0 0 24px rgba(255,185,80,.16);
 
   text-shadow:
     0 4px 16px rgba(0,0,0,.96),
@@ -296,21 +362,26 @@ html,body{
 }
 
 .ww-guidepost{
-
-  margin-top:4.4vh;
-
   width:100%;
 
   display:flex;
-  flex-direction:column;
   align-items:center;
+  justify-content:center;
 
   text-align:center;
 }
 
 .ww-guidepost-title{
+  position:relative;
 
-  font-size:clamp(14px,.9vw,18px);
+  width:88%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1.1rem;
+
+  font-size:clamp(13px,.82vw,17px);
   line-height:1;
 
   letter-spacing:.28em;
@@ -325,8 +396,28 @@ html,body{
     0 0 18px rgba(242,178,76,.08);
 }
 
-@keyframes wwWordSweep{
+.ww-guidepost-title::before,
+.ww-guidepost-title::after{
+  content:"";
+  height:1px;
+  flex:1;
 
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,190,95,.32)
+  );
+}
+
+.ww-guidepost-title::after{
+  background:linear-gradient(
+    90deg,
+    rgba(255,190,95,.32),
+    transparent
+  );
+}
+
+@keyframes wwWordSweep{
   0%{
     left:-70%;
     opacity:0;
@@ -383,7 +474,6 @@ html,body{
 }
 
 @keyframes wwMorseBlink{
-
   0%,20%,100%{
     opacity:.2;
   }
@@ -401,7 +491,7 @@ html,body{
   position:absolute;
   z-index:60;
 
-  left:26%;
+  left:29.5%;
 
   width:18%;
   min-width:190px;
@@ -454,19 +544,19 @@ html,body{
 }
 
 .ww-clue-tooltip{
-  top:24%;
+  top:29.5%;
 }
 
 .ww-life-tooltip{
-  top:34%;
+  top:39.8%;
 }
 
 .ww-leader-tooltip{
-  top:44%;
+  top:49.8%;
 }
 
 .ww-solve-tooltip{
-  top:58%;
+  top:63.5%;
 }
 
 .ww-clue-trigger:hover ~ .ww-clue-tooltip,
@@ -489,33 +579,34 @@ html,body{
   position:absolute;
   z-index:80;
 
-  top:3.3%;
-  right:2.4%;
+  top:3.2%;
+  right:3.3%;
 
-  width:5%;
-  height:5%;
+  width:56px;
+  height:56px;
 }
 
 .ww-menu-hotspot{
-  width:100%;
-  height:100%;
-
-  min-width:44px;
-  min-height:44px;
+  width:56px;
+  height:56px;
 
   position:absolute;
 
   top:0;
   right:0;
 
-  border:0;
-  border-radius:.72rem;
+  border:1px solid rgba(255,197,111,.56);
+  border-radius:.8rem;
 
-  background:transparent;
+  background:rgba(5,9,13,.42);
 
   cursor:pointer;
 
   z-index:82;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    0 0 18px rgba(242,178,76,.14);
 
   transition:
     transform 160ms ease,
@@ -524,18 +615,53 @@ html,body{
     filter 160ms ease;
 }
 
-.ww-menu-hotspot:hover,
-.ww-menu-hotspot:focus-visible{
+.ww-menu-hotspot span,
+.ww-menu-hotspot::before,
+.ww-menu-hotspot::after{
+  content:"";
 
-  transform:scale(1.08);
+  position:absolute;
+  left:50%;
 
-  background:rgba(255,255,255,.04);
+  width:27px;
+  height:2px;
+
+  border-radius:999px;
+
+  background:rgba(255,220,159,.96);
+
+  transform:translateX(-50%);
 
   box-shadow:
-    0 0 16px rgba(242,178,76,.24),
-    0 0 30px rgba(242,178,76,.12);
+    0 0 8px rgba(242,178,76,.28);
+}
+
+.ww-menu-hotspot::before{
+  top:18px;
+}
+
+.ww-menu-hotspot span{
+  top:27px;
+}
+
+.ww-menu-hotspot::after{
+  top:36px;
+}
+
+.ww-menu-hotspot:hover,
+.ww-menu-hotspot:focus-visible{
+  transform:scale(1.06);
+
+  background:rgba(255,197,111,.08);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    0 0 18px rgba(242,178,76,.28),
+    0 0 34px rgba(242,178,76,.14);
 
   filter:brightness(1.12);
+
+  outline:none;
 }
 
 .ww-menu-dropdown,
@@ -618,23 +744,6 @@ html,body{
 
 <div id="wwPortal">
 
-  <div class="ww-title-meta">
-
-    <div class="ww-title-line">
-      ${safeText(seasonLabel)}
-    </div>
-
-    <div class="ww-title-line">
-      ${safeText(orgName)}
-    </div>
-
-    <div class="ww-title-sub">
-      A letter per week from a wintry scroll.<br>
-      Piece them together — reveal the whole.
-    </div>
-
-  </div>
-
   <div id="wwStage">
 
     <img
@@ -644,54 +753,81 @@ html,body{
       draggable="false"
     >
 
-    <div class="ww-morse-pulse">
-      <i></i><i></i><b></b><i></i><b></b>
-    </div>
+    <div class="ww-left-panel">
 
-    <nav class="ww-word-nav">
+      <div class="ww-title-meta">
 
-      <button
-        class="ww-word-link ww-clue-trigger"
-        type="button"
-        data-nav="clues"
-      >
-        CLUE
-      </button>
+        <div class="ww-title-line">
+          ${safeText(seasonLabel)}
+        </div>
 
-      <button
-        class="ww-word-link ww-life-trigger"
-        type="button"
-        data-nav="lifeline"
-        data-disabled="${lifelineAvailable ? "false" : "true"}"
-      >
-        LIFE
-      </button>
+        <div class="ww-title-line">
+          ${safeText(orgName)}
+        </div>
 
-      <button
-        class="ww-word-link ww-leader-trigger"
-        type="button"
-        data-nav="leaderboard"
-        data-disabled="${leaderboardAvailable ? "false" : "true"}"
-      >
-        LEAD
-      </button>
-
-      <a
-        class="ww-word-link ww-word-solve ww-solve-trigger"
-        href="${solveHref}"
-      >
-        SOLVE
-      </a>
-
-      <div class="ww-guidepost">
-
-        <div class="ww-guidepost-title">
-          The Guidepost
+        <div class="ww-title-sub">
+          A letter per week from a wintry scroll.<br>
+          Piece them together — reveal the whole.
         </div>
 
       </div>
 
-    </nav>
+      <div class="ww-rule"></div>
+
+      <nav class="ww-word-nav">
+
+        <button
+          class="ww-word-link ww-clue-trigger"
+          type="button"
+          data-nav="clues"
+        >
+          CLUE
+        </button>
+
+        <button
+          class="ww-word-link ww-life-trigger"
+          type="button"
+          data-nav="lifeline"
+          data-disabled="${lifelineAvailable ? "false" : "true"}"
+        >
+          LIFE
+        </button>
+
+        <button
+          class="ww-word-link ww-leader-trigger"
+          type="button"
+          data-nav="leaderboard"
+          data-disabled="${leaderboardAvailable ? "false" : "true"}"
+        >
+          LEAD
+        </button>
+
+        <div class="ww-rule"></div>
+
+        <a
+          class="ww-word-link ww-word-solve ww-solve-trigger"
+          href="${solveHref}"
+        >
+          SOLVE
+        </a>
+
+        <div class="ww-rule"></div>
+
+        <div class="ww-guidepost">
+
+          <div class="ww-guidepost-title">
+            The Guidepost
+          </div>
+
+        </div>
+
+      </nav>
+
+    </div>
+
+    <div class="ww-morse-pulse">
+      <i></i><i></i><b></b><i></i><b></b>
+    </div>
 
     <div class="ww-tooltip ww-clue-tooltip">
       <span class="ww-tooltip-title">Clues</span>
@@ -718,7 +854,10 @@ html,body{
       <button
         class="ww-menu-hotspot"
         type="button"
-      ></button>
+        aria-label="Open menu"
+      >
+        <span></span>
+      </button>
 
       <div class="ww-menu-dropdown">
 
