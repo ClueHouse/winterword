@@ -342,15 +342,30 @@ html,body{
   margin-top:.5rem;
   padding:2rem 2.2rem 2.1rem;
   border-radius:1.8rem;
+
   background:
-    radial-gradient(ellipse at top, rgba(255,181,80,.075), rgba(255,181,80,0) 48%),
-    linear-gradient(180deg, rgba(18,22,30,.78), rgba(7,10,16,.9));
+
+    radial-gradient(
+      ellipse at top,
+      rgba(255,181,80,.07),
+      rgba(255,181,80,0) 46%
+    ),
+
+    linear-gradient(
+      180deg,
+      rgba(22,28,38,.56) 0%,
+      rgba(12,16,24,.68) 48%,
+      rgba(5,8,14,.86) 100%
+    );
+
   border:2px solid rgba(120,78,36,.68);
+
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.035),
-    inset 0 -24px 48px rgba(0,0,0,.18),
-    0 0 28px rgba(0,0,0,.32);
-  backdrop-filter:blur(2px);
+    inset 0 -24px 48px rgba(0,0,0,.22),
+    0 0 28px rgba(0,0,0,.28);
+
+  backdrop-filter:blur(4px);
 }
 
 .ww-guidepost-title{
@@ -401,18 +416,27 @@ html,body{
   inset:0;
   border-radius:1.25rem;
   border:1.5px solid rgba(181,124,54,.72);
+
   background:
     linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.015)),
     linear-gradient(135deg, rgba(56,34,16,.58), rgba(9,12,18,.82));
+
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.08),
     inset 0 0 0 1px rgba(255,210,140,.05),
     0 0 0 1px rgba(0,0,0,.55),
     0 10px 28px rgba(0,0,0,.42),
     0 0 18px rgba(191,128,48,.12);
+
   backdrop-filter:blur(6px);
+
   cursor:pointer;
-  transition:transform .22s ease, border-color .22s ease, box-shadow .22s ease, background .22s ease;
+
+  transition:
+    transform .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease,
+    background .22s ease;
 }
 
 .ww-menu-hotspot::before{
@@ -427,13 +451,16 @@ html,body{
 .ww-menu-hotspot:hover,
 .ww-menu-hotspot:focus-visible{
   transform:translateY(-1px) scale(1.03);
+
   border-color:rgba(236,177,94,.92);
+
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.11),
     inset 0 0 0 1px rgba(255,210,140,.08),
     0 0 0 1px rgba(0,0,0,.62),
     0 14px 34px rgba(0,0,0,.5),
     0 0 24px rgba(255,182,72,.22);
+
   outline:none;
 }
 
@@ -446,8 +473,16 @@ html,body{
   width:26px;
   height:2px;
   border-radius:999px;
-  background:linear-gradient(90deg, rgba(255,224,173,.88), rgba(255,197,111,1), rgba(255,224,173,.88));
+
+  background:linear-gradient(
+    90deg,
+    rgba(255,224,173,.88),
+    rgba(255,197,111,1),
+    rgba(255,224,173,.88)
+  );
+
   transform:translateX(-50%);
+
   box-shadow:0 0 10px rgba(255,182,72,.24);
 }
 
@@ -489,7 +524,9 @@ html,body{
   transform:translateY(0);
 }
 
-.ww-legal-wrap{ position:relative; }
+.ww-legal-wrap{
+  position:relative;
+}
 
 .ww-legal-submenu{
   top:0;
@@ -578,6 +615,7 @@ html,body{
       <div class="ww-title-org">${safeText(seasonLabel)} ✧ ${safeText(orgName)}</div>
       <div class="ww-title-main">WINTERWORD</div>
       <div class="ww-title-status">LIVE</div>
+
       <div class="ww-title-sub">
         A letter per week from a wintry scroll.<br>
         Piece them together — reveal the whole.
@@ -585,26 +623,41 @@ html,body{
     </div>
 
     <div class="ww-left-panel">
+
       <nav class="ww-word-nav">
 
-        <button class="ww-word-link" type="button" data-nav="clues" data-tooltip="clue">CLUE</button>
+        <button class="ww-word-link" type="button" data-nav="clues" data-tooltip="clue">
+          CLUE
+        </button>
 
-        <button class="ww-word-link" type="button" data-nav="lifeline" data-tooltip="life" data-disabled="${lifelineAvailable ? "false" : "true"}">LIFE</button>
+        <button class="ww-word-link" type="button" data-nav="lifeline" data-tooltip="life" data-disabled="${lifelineAvailable ? "false" : "true"}">
+          LIFE
+        </button>
 
-        <button class="ww-word-link" type="button" data-nav="leaderboard" data-tooltip="leader" data-disabled="${leaderboardAvailable ? "false" : "true"}">LEAD</button>
+        <button class="ww-word-link" type="button" data-nav="leaderboard" data-tooltip="leader" data-disabled="${leaderboardAvailable ? "false" : "true"}">
+          LEAD
+        </button>
 
         <div class="ww-rule"></div>
 
-        <a class="ww-word-link ww-word-solve" href="${solveHref}" data-tooltip="solve">SOLVE</a>
+        <a class="ww-word-link ww-word-solve" href="${solveHref}" data-tooltip="solve">
+          SOLVE
+        </a>
 
         <div class="ww-rule"></div>
 
         <div class="ww-guidepost">
-          <div class="ww-guidepost-title">The Guidepost</div>
-          <div class="ww-guidepost-copy">${guidepostLines}</div>
+          <div class="ww-guidepost-title">
+            The Guidepost
+          </div>
+
+          <div class="ww-guidepost-copy">
+            ${guidepostLines}
+          </div>
         </div>
 
       </nav>
+
     </div>
 
     <div class="ww-tooltip ww-clue-tooltip" data-tooltip-card="clue">
@@ -628,25 +681,55 @@ html,body{
     </div>
 
     <div class="ww-menu">
+
       <button class="ww-menu-hotspot" type="button" aria-label="Open menu">
         <span class="ww-menu-lines"></span>
       </button>
 
       <div class="ww-menu-dropdown">
-        <a href="#" data-nav="welcome">Welcome</a>
-        <a href="${subscribeHref}">Subscribe</a>
-        <a href="${reportProblemHref}">Report a Problem</a>
-        <a href="${contactHref}">Contact</a>
+
+        <a href="#" data-nav="welcome">
+          Welcome
+        </a>
+
+        <a href="${subscribeHref}">
+          Subscribe
+        </a>
+
+        <a href="${reportProblemHref}">
+          Report a Problem
+        </a>
+
+        <a href="${contactHref}">
+          Contact
+        </a>
 
         <div class="ww-legal-wrap">
-          <a href="#">Legal ▸</a>
+
+          <a href="#">
+            Legal ▸
+          </a>
+
           <div class="ww-legal-submenu">
-            <a href="/legal/privacy-policy.html">Privacy Policy</a>
-            <a href="/legal/terms-of-use.html">Terms of Use</a>
-            <a href="/legal/disclaimer.html">Disclaimer</a>
+
+            <a href="/legal/privacy-policy.html">
+              Privacy Policy
+            </a>
+
+            <a href="/legal/terms-of-use.html">
+              Terms of Use
+            </a>
+
+            <a href="/legal/disclaimer.html">
+              Disclaimer
+            </a>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
 
   </div>
@@ -657,8 +740,11 @@ html,body{
 
   navButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
+
       const target = button.getAttribute("data-nav");
-      const disabled = button.getAttribute("data-disabled") === "true";
+
+      const disabled =
+        button.getAttribute("data-disabled") === "true";
 
       if (disabled) return;
 
@@ -667,68 +753,133 @@ html,body{
       if (typeof navigate === "function") {
         navigate(target);
       }
+
     });
   });
 
-  const tooltipTriggers = app.querySelectorAll("[data-tooltip]");
-  const tooltipCards = app.querySelectorAll("[data-tooltip-card]");
+  const tooltipTriggers =
+    app.querySelectorAll("[data-tooltip]");
+
+  const tooltipCards =
+    app.querySelectorAll("[data-tooltip-card]");
 
   const hideTooltips = () => {
-    tooltipCards.forEach((card) => card.classList.remove("is-visible"));
+    tooltipCards.forEach((card) =>
+      card.classList.remove("is-visible")
+    );
   };
 
   tooltipTriggers.forEach((trigger) => {
-    const key = trigger.getAttribute("data-tooltip");
-    const card = app.querySelector(`[data-tooltip-card="${key}"]`);
+
+    const key =
+      trigger.getAttribute("data-tooltip");
+
+    const card =
+      app.querySelector(
+        '[data-tooltip-card="' + key + '"]'
+      );
 
     trigger.addEventListener("mouseenter", () => {
+
       hideTooltips();
-      if (card) card.classList.add("is-visible");
+
+      if (card) {
+        card.classList.add("is-visible");
+      }
+
     });
 
     trigger.addEventListener("focus", () => {
+
       hideTooltips();
-      if (card) card.classList.add("is-visible");
+
+      if (card) {
+        card.classList.add("is-visible");
+      }
+
     });
 
-    trigger.addEventListener("mouseleave", hideTooltips);
-    trigger.addEventListener("blur", hideTooltips);
+    trigger.addEventListener(
+      "mouseleave",
+      hideTooltips
+    );
+
+    trigger.addEventListener(
+      "blur",
+      hideTooltips
+    );
+
   });
 
-  const menu = app.querySelector(".ww-menu");
-  const menuHotspot = app.querySelector(".ww-menu-hotspot");
+  const menu =
+    app.querySelector(".ww-menu");
+
+  const menuHotspot =
+    app.querySelector(".ww-menu-hotspot");
 
   if (menu && menuHotspot) {
+
     menuHotspot.addEventListener("click", (event) => {
+
       event.preventDefault();
       event.stopPropagation();
+
       menu.classList.toggle("is-open");
+
     });
 
     document.addEventListener("click", (event) => {
+
       if (!menu.contains(event.target)) {
         menu.classList.remove("is-open");
       }
+
     });
+
   }
 
-  const stage = app.querySelector("#wwStage");
+  const stage =
+    app.querySelector("#wwStage");
 
   if (stage) {
+
     stage.addEventListener("pointermove", (event) => {
-      const rect = stage.getBoundingClientRect();
 
-      const x = ((event.clientX - rect.left) / rect.width - .5) * 10;
-      const y = ((event.clientY - rect.top) / rect.height - .5) * 10;
+      const rect =
+        stage.getBoundingClientRect();
 
-      stage.style.setProperty("--ww-drift-x", `${x}px`);
-      stage.style.setProperty("--ww-drift-y", `${y}px`);
+      const x =
+        ((event.clientX - rect.left) / rect.width - .5) * 10;
+
+      const y =
+        ((event.clientY - rect.top) / rect.height - .5) * 10;
+
+      stage.style.setProperty(
+        "--ww-drift-x",
+        x + "px"
+      );
+
+      stage.style.setProperty(
+        "--ww-drift-y",
+        y + "px"
+      );
+
     });
 
     stage.addEventListener("pointerleave", () => {
-      stage.style.setProperty("--ww-drift-x", "0px");
-      stage.style.setProperty("--ww-drift-y", "0px");
+
+      stage.style.setProperty(
+        "--ww-drift-x",
+        "0px"
+      );
+
+      stage.style.setProperty(
+        "--ww-drift-y",
+        "0px"
+      );
+
     });
+
   }
 
 }
