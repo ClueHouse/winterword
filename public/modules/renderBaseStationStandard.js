@@ -52,10 +52,7 @@ html,body{
   width:100vw;
   height:100vh;
   overflow:hidden;
-  background:
-    radial-gradient(circle at top right, rgba(218,162,50,0.10), transparent 34%),
-    radial-gradient(circle at bottom left, rgba(70,110,165,0.22), transparent 42%),
-    linear-gradient(180deg,#0b1826 0%, #13283d 100%);
+  background:#020609;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
   color:#f5efe3;
   position:relative;
@@ -76,7 +73,7 @@ html,body{
   font-weight:900;
   text-shadow:
     0 2px 8px rgba(0,0,0,0.82),
-    0 0 12px rgba(218,162,50,0.12);
+    0 0 12px rgba(218,162,50,0.16);
   white-space:nowrap;
 }
 
@@ -98,160 +95,128 @@ html,body{
   pointer-events:none;
 }
 
-.ww-hotspot{
+.ww-word-nav{
   position:absolute;
-  z-index:20;
+  z-index:24;
+  left:8.4%;
+  top:21.5%;
+  width:24%;
+  display:flex;
+  flex-direction:column;
+  gap:3.25vh;
+}
+
+.ww-word-link{
+  appearance:none;
+  position:relative;
   display:block;
-  border:0;
-  padding:0;
+  width:max-content;
+  max-width:100%;
+  padding:0.2rem 0.15rem;
   margin:0;
-  background:transparent;
-  cursor:pointer;
-  text-decoration:none;
-}
-
-.ww-hotspot[data-disabled="true"]{
-  cursor:default;
-}
-
-.ww-icon{
-  position:absolute;
-  z-index:22;
-  display:block;
-  transform:translate(-50%,-50%);
-  user-select:none;
-  pointer-events:none;
-  filter:
-    brightness(1)
-    saturate(1.04)
-    drop-shadow(0 10px 14px rgba(0,0,0,0.48))
-    drop-shadow(0 0 10px rgba(218,162,50,0.18));
-  transition:
-    transform 170ms ease,
-    filter 170ms ease,
-    opacity 170ms ease;
-}
-
-.ww-hotspot:hover + .ww-icon,
-.ww-hotspot:focus-visible + .ww-icon{
-  transform:translate(calc(-50% - 4px), calc(-50% - 4px));
-  filter:
-    brightness(1.34)
-    saturate(1.24)
-    contrast(1.08)
-    drop-shadow(0 13px 18px rgba(0,0,0,0.6))
-    drop-shadow(0 0 24px rgba(245,183,52,0.72));
-}
-
-.ww-clue-icon{
-  left:17%;
-  top:24%;
-  width:6%;
-}
-
-.ww-life-icon{
-  left:17%;
-  top:35%;
-  width:15%;
-}
-
-.ww-leader-icon{
-  left:17%;
-  top:45%;
-  width:6%;
-}
-
-.ww-clue-hotspot{
-  left:13.8%;
-  top:19.8%;
-  width:6.4%;
-  height:8.6%;
-}
-
-.ww-life-hotspot{
-  left:9.8%;
-  top:29.2%;
-  width:14.2%;
-  height:11.4%;
-}
-
-.ww-leader-hotspot{
-  left:13.8%;
-  top:40.7%;
-  width:6.4%;
-  height:8.6%;
-}
-
-.ww-solve-hotspot{
-  left:8%;
-  top:51%;
-  width:25.4%;
-  height:9.2%;
-  border-radius:0.75rem;
   border:0;
+  background:transparent;
+  color:rgba(255,239,205,0.86);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(24px,3vw,62px);
+  font-weight:700;
+  line-height:0.9;
+  letter-spacing:0.13em;
+  text-transform:uppercase;
+  text-decoration:none;
+  cursor:pointer;
+  text-shadow:
+    0 3px 10px rgba(0,0,0,0.86),
+    0 0 18px rgba(218,162,50,0.20);
   transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    filter 180ms ease;
+    color 170ms ease,
+    text-shadow 170ms ease,
+    transform 170ms ease,
+    filter 170ms ease;
 }
 
-.ww-solve-hotspot:hover,
-.ww-solve-hotspot:focus-visible{
-  transform:scale(1.015);
-  box-shadow:
-    0 0 18px rgba(242,178,76,0.22),
-    0 0 36px rgba(242,178,76,0.10);
+.ww-word-link::before{
+  content:"";
+  position:absolute;
+  top:-38%;
+  left:-70%;
+  width:34%;
+  height:180%;
+  background:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.06) 28%,
+    rgba(255,231,170,0.44) 50%,
+    rgba(255,255,255,0.06) 72%,
+    transparent 100%
+  );
+  transform:rotate(22deg);
+  opacity:0;
+  pointer-events:none;
+}
+
+.ww-word-link:hover,
+.ww-word-link:focus-visible{
+  color:rgba(255,228,166,0.98);
+  transform:translateX(5px);
   filter:brightness(1.08);
+  text-shadow:
+    0 3px 12px rgba(0,0,0,0.92),
+    0 0 16px rgba(242,178,76,0.42),
+    0 0 34px rgba(242,178,76,0.26);
   outline:none;
 }
 
-.ww-solve-gleam{
-  position:absolute;
-  z-index:16;
-  left:8%;
-  top:51%;
-  width:25.4%;
-  height:9.2%;
-  pointer-events:none;
-  border-radius:0.75rem;
-  overflow:hidden;
-  opacity:0;
-  transition:opacity 180ms ease;
+.ww-word-link:hover::before,
+.ww-word-link:focus-visible::before{
+  animation:wwWordSweep 940ms ease-out forwards;
 }
 
-.ww-solve-gleam::before{
-  content:"";
-  position:absolute;
-  top:-135%;
-  left:-40%;
-  width:24%;
-  height:370%;
-  transform:rotate(24deg);
-  background:
-    linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255,238,170,0.0) 18%,
-      rgba(255,238,170,0.58) 50%,
-      rgba(255,238,170,0.0) 82%,
-      transparent 100%
-    );
+.ww-word-link[data-disabled="true"]{
+  cursor:pointer;
 }
 
-.ww-solve-hotspot:hover + .ww-solve-gleam,
-.ww-solve-hotspot:focus-visible + .ww-solve-gleam{
-  opacity:1;
+.ww-word-link[data-disabled="true"]:hover,
+.ww-word-link[data-disabled="true"]:focus-visible{
+  color:rgba(255,210,195,0.96);
+  text-shadow:
+    0 3px 12px rgba(0,0,0,0.92),
+    0 0 16px rgba(190,42,42,0.36),
+    0 0 34px rgba(120,12,12,0.24);
 }
 
-.ww-solve-hotspot:hover + .ww-solve-gleam::before,
-.ww-solve-hotspot:focus-visible + .ww-solve-gleam::before{
-  animation:wwSolveSlowGleam 2.8s ease-in-out infinite;
+.ww-word-link[data-disabled="true"]::before{
+  display:none;
 }
 
-@keyframes wwSolveSlowGleam{
-  0%{ left:-42%; }
-  58%{ left:118%; }
-  100%{ left:118%; }
+.ww-word-solve{
+  margin-top:1.1vh;
+  font-size:clamp(30px,3.9vw,78px);
+  letter-spacing:0.11em;
+  color:rgba(255,235,188,0.95);
+}
+
+.ww-word-solve:hover,
+.ww-word-solve:focus-visible{
+  color:rgba(255,239,204,1);
+  text-shadow:
+    0 4px 14px rgba(0,0,0,0.94),
+    0 0 22px rgba(242,178,76,0.52),
+    0 0 48px rgba(242,178,76,0.32);
+}
+
+@keyframes wwWordSweep{
+  0%{
+    left:-70%;
+    opacity:0;
+  }
+  18%{
+    opacity:1;
+  }
+  100%{
+    left:128%;
+    opacity:0;
+  }
 }
 
 .ww-morse-pulse{
@@ -286,7 +251,7 @@ html,body{
 .ww-tooltip{
   position:absolute;
   z-index:60;
-  left:22%;
+  left:26%;
   width:18%;
   min-width:190px;
   padding:0.82rem 0.92rem;
@@ -318,15 +283,18 @@ html,body{
 }
 
 .ww-clue-tooltip{ top:24%; }
-.ww-life-tooltip{ top:35%; }
-.ww-leader-tooltip{ top:45%; }
+.ww-life-tooltip{ top:34%; }
+.ww-leader-tooltip{ top:44%; }
+.ww-solve-tooltip{ top:57%; }
 
-.ww-clue-hotspot:hover ~ .ww-clue-tooltip,
-.ww-clue-hotspot:focus-visible ~ .ww-clue-tooltip,
-.ww-life-hotspot:hover ~ .ww-life-tooltip,
-.ww-life-hotspot:focus-visible ~ .ww-life-tooltip,
-.ww-leader-hotspot:hover ~ .ww-leader-tooltip,
-.ww-leader-hotspot:focus-visible ~ .ww-leader-tooltip{
+.ww-clue-trigger:hover ~ .ww-clue-tooltip,
+.ww-clue-trigger:focus-visible ~ .ww-clue-tooltip,
+.ww-life-trigger:hover ~ .ww-life-tooltip,
+.ww-life-trigger:focus-visible ~ .ww-life-tooltip,
+.ww-leader-trigger:hover ~ .ww-leader-tooltip,
+.ww-leader-trigger:focus-visible ~ .ww-leader-tooltip,
+.ww-solve-trigger:hover ~ .ww-solve-tooltip,
+.ww-solve-trigger:focus-visible ~ .ww-solve-tooltip{
   opacity:1;
   transform:translateY(-50%) translateX(0);
 }
@@ -434,6 +402,18 @@ html,body{
   background:rgba(224,155,32,0.15);
   color:#f2b24c;
 }
+
+.ww-screen-reader-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0 0 0 0);
+  white-space:nowrap;
+  border:0;
+}
 </style>
 
 <div id="wwPortal">
@@ -455,17 +435,33 @@ html,body{
       <i></i><i></i><b></b><i></i><b></b>
     </div>
 
-    <button class="ww-hotspot ww-clue-hotspot" data-nav="clues"></button>
-    <img class="ww-icon ww-clue-icon" src="/assets/winterword/shared/icon_clue.png">
+    <nav class="ww-word-nav" aria-label="WinterWord Base Station navigation">
+      <button class="ww-word-link ww-clue-trigger" type="button" data-nav="clues">
+        Clues
+      </button>
 
-    <button class="ww-hotspot ww-life-hotspot" data-nav="lifeline" data-disabled="${lifelineAvailable ? "false" : "true"}"></button>
-    <img class="ww-icon ww-life-icon" src="/assets/winterword/shared/icon_life.png">
+      <button
+        class="ww-word-link ww-life-trigger"
+        type="button"
+        data-nav="lifeline"
+        data-disabled="${lifelineAvailable ? "false" : "true"}"
+      >
+        Life
+      </button>
 
-    <button class="ww-hotspot ww-leader-hotspot" data-nav="leaderboard" data-disabled="${leaderboardAvailable ? "false" : "true"}"></button>
-    <img class="ww-icon ww-leader-icon" src="/assets/winterword/shared/icon_leader.png">
+      <button
+        class="ww-word-link ww-leader-trigger"
+        type="button"
+        data-nav="leaderboard"
+        data-disabled="${leaderboardAvailable ? "false" : "true"}"
+      >
+        Lead
+      </button>
 
-    <a class="ww-hotspot ww-solve-hotspot" href="${solveHref}"></a>
-    <div class="ww-solve-gleam"></div>
+      <a class="ww-word-link ww-word-solve ww-solve-trigger" href="${solveHref}">
+        Solve
+      </a>
+    </nav>
 
     <div class="ww-tooltip ww-clue-tooltip">
       <span class="ww-tooltip-title">Clues</span>
@@ -482,8 +478,13 @@ html,body{
       ${leaderboardAvailable ? `The board remembers all.` : `No answers received yet.`}
     </div>
 
+    <div class="ww-tooltip ww-solve-tooltip">
+      <span class="ww-tooltip-title">Solve</span>
+      Submit the WinterWord when the answer is clear.
+    </div>
+
     <div class="ww-menu">
-      <button class="ww-menu-hotspot" type="button"></button>
+      <button class="ww-menu-hotspot" type="button" aria-label="Open menu"></button>
 
       <div class="ww-menu-dropdown">
         <a href="#" data-nav="welcome">Welcome</a>
