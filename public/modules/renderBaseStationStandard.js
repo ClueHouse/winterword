@@ -156,7 +156,7 @@ html,body{
 .ww-rule{
   width:88%;
   height:1px;
-  margin:3.55vh 0 2.7vh;
+  margin:2.55vh 0 2.05vh;
   background:linear-gradient(90deg, transparent, rgba(255,190,95,.16), rgba(255,218,154,.42), rgba(255,190,95,.16), transparent);
   position:relative;
 }
@@ -179,7 +179,7 @@ html,body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:2.35vh;
+  gap:1.82vh;
   pointer-events:auto;
 }
 
@@ -279,13 +279,14 @@ html,body{
 .ww-guidepost-title::before,
 .ww-guidepost-title::after{
   content:"";
-  height:1px;
+  height:2px;
   flex:1;
-  background:linear-gradient(90deg, transparent, rgba(255,190,95,.30));
+  background:linear-gradient(90deg, transparent, rgba(255,206,140,.58));
+  box-shadow:0 0 8px rgba(255,190,95,.16);
 }
 
 .ww-guidepost-title::after{
-  background:linear-gradient(90deg, rgba(255,190,95,.30), transparent);
+  background:linear-gradient(90deg, rgba(255,206,140,.58), transparent);
 }
 
 /* SIGNAL BOX */
@@ -299,17 +300,21 @@ html,body{
   height:56px;
   border:1px solid rgba(255,197,111,.56);
   border-radius:.8rem;
-  background:rgba(5,9,13,.42);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.035), 0 0 18px rgba(242,178,76,.14);
+  background:linear-gradient(180deg, rgba(6,10,15,.72), rgba(4,7,11,.92));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    0 0 18px rgba(242,178,76,.14),
+    0 0 30px rgba(0,0,0,.35);
   display:flex;
   align-items:center;
   justify-content:center;
+  overflow:hidden;
   pointer-events:none;
 }
 
 .ww-signal-graph{
-  width:31px;
-  height:31px;
+  width:33px;
+  height:32px;
   display:flex;
   align-items:flex-end;
   justify-content:center;
@@ -321,8 +326,10 @@ html,body{
   width:5px;
   height:var(--bar-height, 12px);
   border-radius:2px 2px 0 0;
-  background:rgba(255,220,159,.96);
-  box-shadow:0 0 8px rgba(242,178,76,.32);
+  background:linear-gradient(180deg, rgba(255,236,194,.98), rgba(242,178,76,.88));
+  box-shadow:
+    0 0 8px rgba(242,178,76,.36),
+    0 0 14px rgba(255,220,159,.10);
   transition:height 360ms ease, opacity 260ms ease, filter 260ms ease;
   opacity:var(--bar-opacity, .65);
   filter:brightness(var(--bar-brightness, 1));
@@ -476,10 +483,10 @@ html,body{
   font-weight:900;
 }
 
-.ww-clue-tooltip{ top:29.5%; }
-.ww-life-tooltip{ top:39.8%; }
-.ww-leader-tooltip{ top:49.8%; }
-.ww-solve-tooltip{ top:63.5%; }
+.ww-clue-tooltip{ top:27.9%; }
+.ww-life-tooltip{ top:37.9%; }
+.ww-leader-tooltip{ top:47.9%; }
+.ww-solve-tooltip{ top:61.6%; }
 
 </style>
 
