@@ -77,7 +77,8 @@ html,body{
   inset:0;
   width:100%;
   height:100%;
-  object-fit:contain;
+  object-fit:cover;
+  object-position:center center;
   user-select:none;
   pointer-events:none;
   transform:translate(calc(var(--ww-drift-x) * .18), calc(var(--ww-drift-y) * .18)) scale(1.003);
@@ -173,19 +174,6 @@ html,body{
   background:#f0d7a7;
   opacity:.9;
   box-shadow:0 0 8px rgba(255,190,95,.18);
-}
-
-.ww-title-sub{
-  margin-top:1rem;
-  max-width:88%;
-  font-family:Georgia,serif;
-  font-size:clamp(13px,.88vw,17px);
-  line-height:1.48;
-  font-style:italic;
-  font-weight:500;
-  letter-spacing:.012em;
-  color:rgba(255,218,166,.88);
-  text-shadow:0 2px 10px rgba(0,0,0,.9), 0 0 16px rgba(255,181,75,.08);
 }
 
 .ww-left-panel{
@@ -351,8 +339,6 @@ html,body{
   text-shadow:0 2px 10px rgba(0,0,0,.9);
 }
 
-/* MENU */
-
 .ww-menu{
   position:absolute;
   z-index:80;
@@ -457,8 +443,6 @@ html,body{
   background:rgba(224,155,32,.15);
   color:#f2b24c;
 }
-
-/* LINKED TOOLTIPS */
 
 .ww-tooltip{
   position:absolute;
