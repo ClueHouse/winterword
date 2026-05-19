@@ -649,7 +649,7 @@ html,body{
 
 .ww-clue-tooltip{ top:33%; }
 .ww-life-tooltip{ top:38%; }
-.ww-leader-tooltip{ top:43%; }
+.ww-leader-tooltip{ top:44%; }
 .ww-solve-tooltip{ top:55%; }
 
 </style>
