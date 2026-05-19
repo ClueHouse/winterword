@@ -19,10 +19,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       .replaceAll("'", "&#39;");
 
   const guidepostContent =
-    safeText(
-      guidepost ||
-      "Updates from the trail will appear here."
-    ).replace(/\n/g, "<br>");
+    safeText(guidepost || "").replace(/\n/g, "<br>");
 
   const mailSafeOrgName =
     orgName && String(orgName).trim()
@@ -521,10 +518,6 @@ html,body{
       <div class="ww-title-org">${safeText(seasonLabel)} ✧ ${safeText(orgName)}</div>
       <div class="ww-title-main">WINTERWORD</div>
       <div class="ww-title-status">LIVE</div>
-      <div class="ww-title-sub">
-        A letter per week from a wintry scroll.<br>
-        Piece them together — reveal the whole.
-      </div>
     </div>
 
     <div class="ww-left-panel">
