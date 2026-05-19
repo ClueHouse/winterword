@@ -103,29 +103,33 @@ html,body{
   background:linear-gradient(90deg, rgba(2,6,9,.22), rgba(2,6,9,.08) 58%, rgba(2,6,9,0));
 }
 
-.ww-left-panel{
+.ww-title-meta{
   position:absolute;
   z-index:24;
-  left:5.2%;
-  top:7.5%;
+  left:5.9%;
+  top:4.4%;
   width:32%;
-  height:74%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  pointer-events:none;
-  transform:translate(calc(var(--ww-drift-x) * -.12), calc(var(--ww-drift-y) * -.12));
-  transition:transform 180ms ease-out;
-}
-
-.ww-title-meta{
-  width:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
   pointer-events:none;
+  transform:translate(calc(var(--ww-drift-x) * -.12), calc(var(--ww-drift-y) * -.12));
+  transition:transform 180ms ease-out;
+}
+
+.ww-title-org{
+  max-width:100%;
+  margin-bottom:2.55rem;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:clamp(10px,.7vw,14px);
+  line-height:1.35;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.82);
+  font-weight:800;
+  text-shadow:0 2px 8px rgba(0,0,0,.82), 0 0 12px rgba(255,255,255,.08);
 }
 
 .ww-title-main{
@@ -167,19 +171,6 @@ html,body{
   box-shadow:0 0 8px rgba(255,190,95,.18);
 }
 
-.ww-title-org{
-  margin-top:.9rem;
-  max-width:88%;
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:clamp(10px,.7vw,14px);
-  line-height:1.35;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.82);
-  font-weight:800;
-  text-shadow:0 2px 8px rgba(0,0,0,.82), 0 0 12px rgba(255,255,255,.08);
-}
-
 .ww-title-sub{
   margin-top:1rem;
   max-width:88%;
@@ -191,6 +182,21 @@ html,body{
   letter-spacing:.012em;
   color:rgba(255,218,166,.88);
   text-shadow:0 2px 10px rgba(0,0,0,.9), 0 0 16px rgba(255,181,75,.08);
+}
+
+.ww-left-panel{
+  position:absolute;
+  z-index:24;
+  left:5.2%;
+  top:35.5%;
+  width:32%;
+  height:46%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  pointer-events:none;
+  transform:translate(calc(var(--ww-drift-x) * -.12), calc(var(--ww-drift-y) * -.12));
+  transition:transform 180ms ease-out;
 }
 
 .ww-rule{
@@ -333,76 +339,12 @@ html,body{
   background:linear-gradient(90deg, rgba(255,206,140,.62), transparent);
 }
 
-/* SIGNAL BOX */
-
-.ww-signal-box{
-  position:absolute;
-  z-index:160;
-  top:3.2%;
-  right:3.3%;
-  width:72px;
-  height:72px;
-  border:1px solid rgba(255,197,111,.9);
-  border-radius:.9rem;
-  background:rgba(3,7,11,.97);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.11),
-    inset 0 0 24px rgba(255,197,111,.11),
-    0 0 24px rgba(242,178,76,.32),
-    0 0 40px rgba(0,0,0,.55);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  pointer-events:none;
-}
-
-.ww-signal-box::before{
-  content:"";
-  position:absolute;
-  inset:8px;
-  border-radius:.62rem;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,0)),
-    radial-gradient(circle at 50% 100%, rgba(255,197,111,.16), transparent 62%);
-  pointer-events:none;
-}
-
-.ww-signal-graph{
-  position:relative;
-  z-index:162;
-  width:50px;
-  height:46px;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  gap:6px;
-}
-
-.ww-signal-graph span{
-  position:relative;
-  z-index:163;
-  display:block;
-  width:7px;
-  height:var(--bar-height, 24px);
-  min-height:12px;
-  border-radius:3px 3px 0 0;
-  background:linear-gradient(180deg, rgba(255,255,255,1), rgba(255,198,96,1));
-  box-shadow:
-    0 0 10px rgba(255,255,255,.95),
-    0 0 18px rgba(255,218,154,.8),
-    0 0 32px rgba(242,178,76,.48);
-  transition:height 360ms ease, opacity 260ms ease, filter 260ms ease;
-  opacity:var(--bar-opacity, 1);
-  filter:brightness(var(--bar-brightness, 1.45));
-}
-
 /* MENU */
 
 .ww-menu{
   position:absolute;
   z-index:80;
-  top:calc(3.2% + 84px);
+  top:3.2%;
   right:3.3%;
   width:56px;
   height:56px;
@@ -560,20 +502,20 @@ html,body{
     <div class="ww-logo-softener"></div>
     <div class="ww-left-focus"></div>
 
-    <div class="ww-left-panel">
-      <div class="ww-title-meta">
-        <div class="ww-title-main">WINTERWORD</div>
-        <div class="ww-title-status">Base Station</div>
-        <div class="ww-title-org">${safeText(seasonLabel)} ✧ ${safeText(orgName)}</div>
-        <div class="ww-title-sub">
-          A letter per week from a wintry scroll.<br>
-          Piece them together — reveal the whole.
-        </div>
+    <div class="ww-title-meta">
+      <div class="ww-title-org">${safeText(seasonLabel)} ✧ ${safeText(orgName)}</div>
+      <div class="ww-title-main">WINTERWORD</div>
+      <div class="ww-title-status">LIVE</div>
+      <div class="ww-title-sub">
+        A letter per week from a wintry scroll.<br>
+        Piece them together — reveal the whole.
       </div>
+    </div>
 
-      <div class="ww-rule"></div>
-
+    <div class="ww-left-panel">
       <nav class="ww-word-nav">
+        <div class="ww-rule"></div>
+
         <button class="ww-word-link" type="button" data-nav="clues" data-tooltip="clue">CLUE</button>
 
         <button class="ww-word-link" type="button" data-nav="lifeline" data-tooltip="life" data-disabled="${lifelineAvailable ? "false" : "true"}">LIFE</button>
@@ -590,12 +532,6 @@ html,body{
           <div class="ww-guidepost-title">The Guidepost</div>
         </div>
       </nav>
-    </div>
-
-    <div class="ww-signal-box" aria-hidden="true">
-      <div class="ww-signal-graph">
-        <span></span><span></span><span></span><span></span>
-      </div>
     </div>
 
     <div class="ww-tooltip ww-clue-tooltip" data-tooltip-card="clue">
@@ -702,23 +638,6 @@ html,body{
       }
     });
   }
-
-  const signalBars = app.querySelectorAll(".ww-signal-graph span");
-
-  const randomiseSignal = () => {
-    signalBars.forEach((bar) => {
-      const height = Math.floor(14 + Math.random() * 30);
-      const opacity = (0.88 + Math.random() * 0.12).toFixed(2);
-      const brightness = (1.25 + Math.random() * 0.5).toFixed(2);
-
-      bar.style.setProperty("--bar-height", `${height}px`);
-      bar.style.setProperty("--bar-opacity", opacity);
-      bar.style.setProperty("--bar-brightness", brightness);
-    });
-  };
-
-  randomiseSignal();
-  setInterval(randomiseSignal, 520);
 
   const stage = app.querySelector("#wwStage");
 
