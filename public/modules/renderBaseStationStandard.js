@@ -87,7 +87,6 @@ html,body{
   transition:transform 180ms ease-out;
 }
 
-/* softens the logo wall very slightly so the left rail wins first glance */
 .ww-logo-softener{
   position:absolute;
   z-index:12;
@@ -105,7 +104,6 @@ html,body{
   mix-blend-mode:multiply;
 }
 
-/* gives the left UI a barely-there focus field */
 .ww-left-focus{
   position:absolute;
   z-index:13;
@@ -184,23 +182,25 @@ html,body{
 }
 
 .ww-title-sub{
-  margin-top:.72rem;
+  margin-top:1rem;
 
-  max-width:90%;
+  max-width:88%;
 
   font-family:Georgia,serif;
 
-  font-size:clamp(12px,.82vw,16px);
-  line-height:1.45;
+  font-size:clamp(13px,.88vw,17px);
+  line-height:1.48;
 
   font-style:italic;
+  font-weight:500;
 
-  letter-spacing:.025em;
+  letter-spacing:.012em;
 
-  color:rgba(255,238,214,.84);
+  color:rgba(255,218,166,.88);
 
   text-shadow:
-    0 2px 10px rgba(0,0,0,.88);
+    0 2px 10px rgba(0,0,0,.9),
+    0 0 16px rgba(255,181,75,.08);
 }
 
 .ww-rule{
@@ -538,141 +538,107 @@ html,body{
 }
 
 /* ========================= */
-/* MORSE */
+/* SIGNAL BOX */
 /* ========================= */
 
-.ww-morse-pulse{
+.ww-signal-box{
   position:absolute;
-  z-index:24;
+  z-index:79;
 
-  top:5.2%;
-  left:84.7%;
+  top:3.2%;
+  right:3.3%;
+
+  width:56px;
+  height:106px;
+
+  border:1px solid rgba(255,197,111,.56);
+  border-radius:.8rem;
+
+  background:rgba(5,9,13,.42);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    0 0 18px rgba(242,178,76,.14);
 
   display:flex;
+  flex-direction:column;
   align-items:center;
-  gap:6px;
+  justify-content:center;
+
+  gap:10px;
 
   pointer-events:none;
 }
 
-.ww-morse-pulse i,
-.ww-morse-pulse b{
-  display:block;
-  height:8px;
-  border-radius:999px;
+.ww-signal-label{
+  font-size:8px;
+  line-height:1;
 
-  background:rgba(255,222,150,.88);
-
-  box-shadow:
-    0 0 8px rgba(242,178,76,.32);
-
-  animation:wwMorseBlink 1.8s infinite;
-}
-
-.ww-morse-pulse i{
-  width:5px;
-}
-
-.ww-morse-pulse b{
-  width:15px;
-}
-
-@keyframes wwMorseBlink{
-  0%,20%,100%{
-    opacity:.18;
-  }
-
-  10%{
-    opacity:.92;
-  }
-}
-
-/* ========================= */
-/* TOOLTIPS */
-/* ========================= */
-
-.ww-tooltip{
-  position:absolute;
-  z-index:60;
-
-  left:29.5%;
-
-  width:18%;
-  min-width:190px;
-
-  padding:.82rem .92rem;
-
-  border:1px solid rgba(230,230,230,.92);
-  border-radius:.75rem;
-
-  background:rgba(255,255,255,.96);
-
-  color:rgba(0,0,0,.88);
-
-  font-size:clamp(9px,.72vw,13px);
-  line-height:1.42;
-
-  box-shadow:
-    0 16px 44px rgba(0,0,0,.38);
-
-  opacity:0;
-  pointer-events:none;
-
-  transform:translateY(-50%) translateX(-6px);
-
-  transition:
-    opacity 150ms ease,
-    transform 150ms ease;
-}
-
-.ww-tooltip--locked{
-  background:linear-gradient(
-    180deg,
-    rgba(158,38,45,.96),
-    rgba(104,18,25,.98)
-  );
-
-  color:#fff;
-}
-
-.ww-tooltip-title{
-  display:block;
-
-  margin-bottom:.32rem;
-
-  font-size:1.08em;
-  letter-spacing:.16em;
+  letter-spacing:.22em;
   text-transform:uppercase;
 
   font-weight:900;
+
+  color:rgba(255,220,159,.96);
+
+  text-shadow:
+    0 0 8px rgba(242,178,76,.24);
 }
 
-.ww-clue-tooltip{
-  top:29.5%;
+.ww-signal-graph{
+  width:30px;
+  height:30px;
+
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:4px;
 }
 
-.ww-life-tooltip{
-  top:39.8%;
+.ww-signal-graph span{
+  display:block;
+  width:5px;
+
+  border-radius:2px 2px 0 0;
+
+  background:rgba(255,220,159,.96);
+
+  box-shadow:
+    0 0 8px rgba(242,178,76,.30);
+
+  animation:wwSignalRise 1.8s infinite ease-in-out;
 }
 
-.ww-leader-tooltip{
-  top:49.8%;
+.ww-signal-graph span:nth-child(1){
+  height:9px;
+  animation-delay:0s;
 }
 
-.ww-solve-tooltip{
-  top:63.5%;
+.ww-signal-graph span:nth-child(2){
+  height:15px;
+  animation-delay:.12s;
 }
 
-.ww-clue-trigger:hover ~ .ww-clue-tooltip,
-.ww-clue-trigger:focus-visible ~ .ww-clue-tooltip,
-.ww-life-trigger:hover ~ .ww-life-tooltip,
-.ww-life-trigger:focus-visible ~ .ww-life-tooltip,
-.ww-leader-trigger:hover ~ .ww-leader-tooltip,
-.ww-leader-trigger:focus-visible ~ .ww-leader-tooltip,
-.ww-solve-trigger:hover ~ .ww-solve-tooltip,
-.ww-solve-trigger:focus-visible ~ .ww-solve-tooltip{
-  opacity:1;
-  transform:translateY(-50%) translateX(0);
+.ww-signal-graph span:nth-child(3){
+  height:22px;
+  animation-delay:.24s;
+}
+
+.ww-signal-graph span:nth-child(4){
+  height:30px;
+  animation-delay:.36s;
+}
+
+@keyframes wwSignalRise{
+  0%,100%{
+    opacity:.46;
+    filter:brightness(.82);
+  }
+
+  45%{
+    opacity:1;
+    filter:brightness(1.18);
+  }
 }
 
 /* ========================= */
@@ -683,7 +649,7 @@ html,body{
   position:absolute;
   z-index:80;
 
-  top:3.2%;
+  top:calc(3.2% + 118px);
   right:3.3%;
 
   width:56px;
@@ -844,6 +810,94 @@ html,body{
   color:#f2b24c;
 }
 
+/* ========================= */
+/* TOOLTIPS */
+/* ========================= */
+
+.ww-tooltip{
+  position:absolute;
+  z-index:60;
+
+  left:29.5%;
+
+  width:18%;
+  min-width:190px;
+
+  padding:.82rem .92rem;
+
+  border:1px solid rgba(230,230,230,.92);
+  border-radius:.75rem;
+
+  background:rgba(255,255,255,.96);
+
+  color:rgba(0,0,0,.88);
+
+  font-size:clamp(9px,.72vw,13px);
+  line-height:1.42;
+
+  box-shadow:
+    0 16px 44px rgba(0,0,0,.38);
+
+  opacity:0;
+  pointer-events:none;
+
+  transform:translateY(-50%) translateX(-6px);
+
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
+}
+
+.ww-tooltip--locked{
+  background:linear-gradient(
+    180deg,
+    rgba(158,38,45,.96),
+    rgba(104,18,25,.98)
+  );
+
+  color:#fff;
+}
+
+.ww-tooltip-title{
+  display:block;
+
+  margin-bottom:.32rem;
+
+  font-size:1.08em;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+
+  font-weight:900;
+}
+
+.ww-clue-tooltip{
+  top:29.5%;
+}
+
+.ww-life-tooltip{
+  top:39.8%;
+}
+
+.ww-leader-tooltip{
+  top:49.8%;
+}
+
+.ww-solve-tooltip{
+  top:63.5%;
+}
+
+.ww-clue-trigger:hover ~ .ww-clue-tooltip,
+.ww-clue-trigger:focus-visible ~ .ww-clue-tooltip,
+.ww-life-trigger:hover ~ .ww-life-tooltip,
+.ww-life-trigger:focus-visible ~ .ww-life-tooltip,
+.ww-leader-trigger:hover ~ .ww-leader-tooltip,
+.ww-leader-trigger:focus-visible ~ .ww-leader-tooltip,
+.ww-solve-trigger:hover ~ .ww-solve-tooltip,
+.ww-solve-trigger:focus-visible ~ .ww-solve-tooltip{
+  opacity:1;
+  transform:translateY(-50%) translateX(0);
+}
+
 </style>
 
 <div id="wwPortal">
@@ -932,8 +986,19 @@ html,body{
 
     </div>
 
-    <div class="ww-morse-pulse">
-      <i></i><i></i><b></b><i></i><b></b>
+    <div class="ww-signal-box" aria-hidden="true">
+
+      <div class="ww-signal-label">
+        Signal
+      </div>
+
+      <div class="ww-signal-graph">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
     </div>
 
     <div class="ww-tooltip ww-clue-tooltip">
