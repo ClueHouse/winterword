@@ -337,19 +337,19 @@ html,body{
 
 .ww-signal-box{
   position:absolute;
-  z-index:120;
+  z-index:160;
   top:3.2%;
   right:3.3%;
   width:72px;
   height:72px;
-  border:1px solid rgba(255,197,111,.78);
+  border:1px solid rgba(255,197,111,.9);
   border-radius:.9rem;
-  background:rgba(3,7,11,.96);
+  background:rgba(3,7,11,.97);
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.08),
-    inset 0 0 24px rgba(255,197,111,.08),
-    0 0 24px rgba(242,178,76,.24),
-    0 0 40px rgba(0,0,0,.45);
+    inset 0 0 0 1px rgba(255,255,255,.11),
+    inset 0 0 24px rgba(255,197,111,.11),
+    0 0 24px rgba(242,178,76,.32),
+    0 0 40px rgba(0,0,0,.55);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -357,11 +357,22 @@ html,body{
   pointer-events:none;
 }
 
+.ww-signal-box::before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border-radius:.62rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,0)),
+    radial-gradient(circle at 50% 100%, rgba(255,197,111,.16), transparent 62%);
+  pointer-events:none;
+}
+
 .ww-signal-graph{
   position:relative;
-  z-index:121;
-  width:48px;
-  height:44px;
+  z-index:162;
+  width:50px;
+  height:46px;
   display:flex;
   align-items:flex-end;
   justify-content:center;
@@ -370,20 +381,20 @@ html,body{
 
 .ww-signal-graph span{
   position:relative;
-  z-index:122;
+  z-index:163;
   display:block;
   width:7px;
-  height:var(--bar-height, 18px);
-  min-height:10px;
+  height:var(--bar-height, 24px);
+  min-height:12px;
   border-radius:3px 3px 0 0;
   background:linear-gradient(180deg, rgba(255,255,255,1), rgba(255,198,96,1));
   box-shadow:
-    0 0 12px rgba(255,240,200,.85),
-    0 0 22px rgba(242,178,76,.52),
-    0 0 40px rgba(242,178,76,.22);
+    0 0 10px rgba(255,255,255,.95),
+    0 0 18px rgba(255,218,154,.8),
+    0 0 32px rgba(242,178,76,.48);
   transition:height 360ms ease, opacity 260ms ease, filter 260ms ease;
-  opacity:1;
-  filter:brightness(1.35);
+  opacity:var(--bar-opacity, 1);
+  filter:brightness(var(--bar-brightness, 1.45));
 }
 
 /* MENU */
@@ -696,9 +707,9 @@ html,body{
 
   const randomiseSignal = () => {
     signalBars.forEach((bar) => {
-      const height = Math.floor(13 + Math.random() * 30);
-      const opacity = (0.86 + Math.random() * 0.14).toFixed(2);
-      const brightness = (1.22 + Math.random() * 0.45).toFixed(2);
+      const height = Math.floor(14 + Math.random() * 30);
+      const opacity = (0.88 + Math.random() * 0.12).toFixed(2);
+      const brightness = (1.25 + Math.random() * 0.5).toFixed(2);
 
       bar.style.setProperty("--bar-height", `${height}px`);
       bar.style.setProperty("--bar-opacity", opacity);
