@@ -113,7 +113,7 @@ html,body{
   z-index:13;
   left:0;
   top:0;
-  width:32%;
+  width:39.3%;
   height:100%;
   pointer-events:none;
   background:linear-gradient(90deg, rgba(2,6,9,.24), rgba(2,6,9,.08) 58%, rgba(2,6,9,0));
@@ -122,9 +122,9 @@ html,body{
 .ww-title-meta{
   position:absolute;
   z-index:24;
-  left:2.8%;
+  left:0;
   top:4.4%;
-  width:32%;
+  width:39.3%;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -182,9 +182,40 @@ html,body{
   content:"";
   height:1px;
   flex:1;
-  background:#f0d7a7;
-  opacity:.9;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(90deg, rgba(240,215,167,.18), rgba(240,215,167,.72), rgba(240,215,167,.18));
   box-shadow:0 0 8px rgba(255,190,95,.18);
+}
+
+.ww-title-status::before{
+  background:
+    linear-gradient(90deg, rgba(240,215,167,.14), rgba(240,215,167,.58), rgba(240,215,167,.14)),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
+  background-size:100% 100%, 34% 100%;
+  background-position:center, -60% 0;
+  background-repeat:no-repeat;
+  animation:wwStatusSweepLeft 3.8s ease-in-out infinite;
+}
+
+.ww-title-status::after{
+  background:
+    linear-gradient(90deg, rgba(240,215,167,.14), rgba(240,215,167,.58), rgba(240,215,167,.14)),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
+  background-size:100% 100%, 34% 100%;
+  background-position:center, 160% 0;
+  background-repeat:no-repeat;
+  animation:wwStatusSweepRight 3.8s ease-in-out infinite;
+}
+
+@keyframes wwStatusSweepLeft{
+  0%, 18%{ background-position:center, -60% 0; }
+  58%, 100%{ background-position:center, 160% 0; }
+}
+
+@keyframes wwStatusSweepRight{
+  0%, 18%{ background-position:center, 160% 0; }
+  58%, 100%{ background-position:center, -60% 0; }
 }
 
 .ww-title-sub{
@@ -201,9 +232,9 @@ html,body{
 .ww-left-panel{
   position:absolute;
   z-index:24;
-  left:2.4%;
+  left:0;
   top:29.2%;
-  width:32%;
+  width:39.3%;
   height:50%;
   display:flex;
   flex-direction:column;
@@ -309,7 +340,7 @@ html,body{
   align-items:center;
   justify-content:center;
   text-align:center;
-  gap:.9rem;
+  gap:1rem;
 }
 
 .ww-guidepost-title{
@@ -317,12 +348,15 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:1.1rem;
-  font-size:clamp(12px,.74vw,15px);
-  letter-spacing:.26em;
+  gap:1.15rem;
+  font-size:clamp(15px,1vw,21px);
+  letter-spacing:.3em;
   text-transform:uppercase;
-  font-weight:900;
-  color:rgba(255,232,188,.9);
+  font-weight:950;
+  color:rgba(255,236,198,.98);
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.9),
+    0 0 14px rgba(255,190,95,.16);
 }
 
 .ww-guidepost-title::before,
@@ -330,22 +364,25 @@ html,body{
   content:"";
   height:2px;
   flex:1;
-  background:linear-gradient(90deg, transparent, rgba(255,206,140,.62));
-  box-shadow:0 0 8px rgba(255,190,95,.18);
+  background:linear-gradient(90deg, transparent, rgba(255,206,140,.7));
+  box-shadow:0 0 8px rgba(255,190,95,.22);
 }
 
 .ww-guidepost-title::after{
-  background:linear-gradient(90deg, rgba(255,206,140,.62), transparent);
+  background:linear-gradient(90deg, rgba(255,206,140,.7), transparent);
 }
 
 .ww-guidepost-copy{
   max-width:92%;
-  font-family:Georgia,serif;
-  font-size:clamp(11px,.74vw,15px);
-  line-height:1.5;
-  font-style:italic;
-  color:rgba(255,218,166,.88);
-  text-shadow:0 2px 10px rgba(0,0,0,.9);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:clamp(10px,.72vw,14px);
+  line-height:1.62;
+  font-style:normal;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.92);
+  text-shadow:0 2px 10px rgba(0,0,0,.92);
 }
 
 .ww-menu{
