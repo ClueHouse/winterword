@@ -3,6 +3,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   const {
     orgName = "WinterWord",
     seasonLabel = "WINTERWORD • 2026",
+    guidepost = "",
     lifelineAvailable = false,
     hasLeaderboardEntries = false
   } = data;
@@ -16,6 +17,12 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#39;");
+
+  const guidepostContent =
+    safeText(
+      guidepost ||
+      "Updates from the trail will appear here."
+    ).replace(/\n/g, "<br>");
 
   const mailSafeOrgName =
     orgName && String(orgName).trim()
@@ -188,9 +195,9 @@ html,body{
   position:absolute;
   z-index:24;
   left:5.2%;
-  top:35.5%;
+  top:31.5%;
   width:32%;
-  height:46%;
+  height:50%;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -202,7 +209,7 @@ html,body{
 .ww-rule{
   width:88%;
   height:1px;
-  margin:2.25vh 0 1.55vh;
+  margin:1.55vh 0;
   background:linear-gradient(90deg, transparent, rgba(255,190,95,.16), rgba(255,218,154,.42), rgba(255,190,95,.16), transparent);
   position:relative;
 }
@@ -225,12 +232,8 @@ html,body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:1.45vh;
+  gap:1.25vh;
   pointer-events:auto;
-}
-
-.ww-word-nav > .ww-rule{
-  margin:1.55vh 0 1.55vh;
 }
 
 .ww-word-link{
@@ -306,15 +309,17 @@ html,body{
 }
 
 .ww-guidepost{
-  width:100%;
+  width:88%;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
+  gap:.9rem;
 }
 
 .ww-guidepost-title{
-  width:88%;
+  width:100%;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -337,6 +342,16 @@ html,body{
 
 .ww-guidepost-title::after{
   background:linear-gradient(90deg, rgba(255,206,140,.62), transparent);
+}
+
+.ww-guidepost-copy{
+  max-width:92%;
+  font-family:Georgia,serif;
+  font-size:clamp(12px,.82vw,16px);
+  line-height:1.5;
+  font-style:italic;
+  color:rgba(255,218,166,.88);
+  text-shadow:0 2px 10px rgba(0,0,0,.9);
 }
 
 /* MENU */
@@ -514,7 +529,6 @@ html,body{
 
     <div class="ww-left-panel">
       <nav class="ww-word-nav">
-        <div class="ww-rule"></div>
 
         <button class="ww-word-link" type="button" data-nav="clues" data-tooltip="clue">CLUE</button>
 
@@ -530,6 +544,7 @@ html,body{
 
         <div class="ww-guidepost">
           <div class="ww-guidepost-title">The Guidepost</div>
+          <div class="ww-guidepost-copy">${guidepostContent}</div>
         </div>
       </nav>
     </div>
