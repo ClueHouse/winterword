@@ -25,18 +25,18 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
   const encodedOrgName = encodeURIComponent(mailSafeOrgName);
 
   const reportProblemHref =
-    \`mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20\${encodedOrgName}\`;
+    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}`;
 
   const subscribeHref =
-    \`mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20\${encodedOrgName}\`;
+    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}`;
 
   const solveHref =
-    \`mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20\${encodedOrgName}%20-%202026\`;
+    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026`;
 
   const contactHref =
-    \`mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry\`;
+    `mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry`;
 
-  app.innerHTML = \`
+  app.innerHTML = `
 <style>
 
 *{
@@ -545,7 +545,7 @@ html,body{
 <div id="wwPortal">
 
   <div class="ww-title-meta">
-    \${safeText(seasonLabel)} &nbsp;✦&nbsp; \${safeText(orgName)}
+    ${safeText(seasonLabel)} &nbsp;✦&nbsp; ${safeText(orgName)}
   </div>
 
   <div id="wwStage">
@@ -575,7 +575,7 @@ html,body{
         class="ww-word-link ww-life-trigger"
         type="button"
         data-nav="lifeline"
-        data-disabled="\${lifelineAvailable ? "false" : "true"}"
+        data-disabled="${lifelineAvailable ? "false" : "true"}"
       >
         LIFE
       </button>
@@ -584,14 +584,14 @@ html,body{
         class="ww-word-link ww-leader-trigger"
         type="button"
         data-nav="leaderboard"
-        data-disabled="\${leaderboardAvailable ? "false" : "true"}"
+        data-disabled="${leaderboardAvailable ? "false" : "true"}"
       >
         LEAD
       </button>
 
       <a
         class="ww-word-link ww-word-solve ww-solve-trigger"
-        href="\${solveHref}"
+        href="${solveHref}"
       >
         SOLVE
       </a>
@@ -603,14 +603,14 @@ html,body{
       Each clue reveals another piece.
     </div>
 
-    <div class="ww-tooltip ww-life-tooltip \${lifelineAvailable ? "" : "ww-tooltip--locked"}">
+    <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}">
       <span class="ww-tooltip-title">Lifeline</span>
-      \${lifelineAvailable ? "This passage is open." : "This passage waits its moment."}
+      ${lifelineAvailable ? "This passage is open." : "This passage waits its moment."}
     </div>
 
-    <div class="ww-tooltip ww-leader-tooltip \${leaderboardAvailable ? "" : "ww-tooltip--locked"}">
+    <div class="ww-tooltip ww-leader-tooltip ${leaderboardAvailable ? "" : "ww-tooltip--locked"}">
       <span class="ww-tooltip-title">Leaderboard</span>
-      \${leaderboardAvailable ? "The board remembers all." : "No answers received yet."}
+      ${leaderboardAvailable ? "The board remembers all." : "No answers received yet."}
     </div>
 
     <div class="ww-tooltip ww-solve-tooltip">
@@ -629,15 +629,15 @@ html,body{
 
         <a href="#" data-nav="welcome">Welcome</a>
 
-        <a href="\${subscribeHref}">
+        <a href="${subscribeHref}">
           Subscribe
         </a>
 
-        <a href="\${reportProblemHref}">
+        <a href="${reportProblemHref}">
           Report a Problem
         </a>
 
-        <a href="\${contactHref}">
+        <a href="${contactHref}">
           Contact
         </a>
 
@@ -672,7 +672,7 @@ html,body{
   </div>
 
 </div>
-\`;
+`;
 
   const navButtons = app.querySelectorAll("[data-nav]");
 
