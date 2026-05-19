@@ -4,6 +4,10 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     orgName = "WinterWord",
     seasonLabel = "WINTERWORD • 2026",
     guidepost = "",
+    guidepostText = "",
+    updates_content = "",
+    updatesText = "",
+    updatesContent = "",
     lifelineAvailable = false,
     hasLeaderboardEntries = false
   } = data;
@@ -19,7 +23,14 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       .replaceAll("'", "&#39;");
 
   const guidepostContent =
-    safeText(guidepost || "").replace(/\n/g, "<br>");
+    safeText(
+      guidepost ||
+      guidepostText ||
+      updates_content ||
+      updatesText ||
+      updatesContent ||
+      ""
+    ).replace(/\n/g, "<br>");
 
   const mailSafeOrgName =
     orgName && String(orgName).trim()
@@ -100,18 +111,18 @@ html,body{
 .ww-left-focus{
   position:absolute;
   z-index:13;
-  left:3.8%;
+  left:0;
   top:0;
-  width:30.8%;
+  width:32%;
   height:100%;
   pointer-events:none;
-  background:linear-gradient(90deg, rgba(2,6,9,.22), rgba(2,6,9,.08) 58%, rgba(2,6,9,0));
+  background:linear-gradient(90deg, rgba(2,6,9,.24), rgba(2,6,9,.08) 58%, rgba(2,6,9,0));
 }
 
 .ww-title-meta{
   position:absolute;
   z-index:24;
-  left:5.9%;
+  left:2.8%;
   top:4.4%;
   width:32%;
   display:flex;
@@ -179,7 +190,7 @@ html,body{
 .ww-left-panel{
   position:absolute;
   z-index:24;
-  left:5.2%;
+  left:2.4%;
   top:31.5%;
   width:32%;
   height:50%;
@@ -447,7 +458,7 @@ html,body{
 .ww-tooltip{
   position:absolute;
   z-index:100;
-  left:29.5%;
+  left:26.7%;
   width:18%;
   min-width:190px;
   padding:.82rem .92rem;
