@@ -51,7 +51,14 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}`;
 
   const solveHref =
-    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026`;
+    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026` +
+    `&body=You%20feel%20the%20pieces%20have%20settled.%0A%0A` +
+    `Clues%20gathered.%20Letters%20found.%0A` +
+    `A%20pattern%2C%20perhaps%2C%20now%20clear%20beneath%20the%20frost.%0A%0A` +
+    `If%20you%20believe%20you%20can%20name%20the%20WinterWord%2C%0A` +
+    `set%20it%20down%20below.%0A%0A` +
+    `Your%20answer%3A%0A%0A%5BTYPE%20YOUR%20FINAL%20WORD%20HERE%5D%0A%0A%0A` +
+    `(Only%20one%20submission%20is%20counted.%0AChoose%20your%20moment%20%E2%80%94%20winter%20does%20not%20answer%20twice.)`;
 
   const contactHref =
     `mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry`;
@@ -136,6 +143,8 @@ html,body{
   justify-content:center;
   text-align:center;
   pointer-events:none;
+  transform:translate(calc(var(--ww-drift-x) * -.12), calc(var(--ww-drift-y) * -.12));
+  transition:transform 180ms ease-out;
 }
 
 .ww-title-org{
@@ -186,12 +195,32 @@ html,body{
 
 .ww-title-status::before{
   background:
-    linear-gradient(90deg, rgba(240,215,167,.14), rgba(240,215,167,.58), rgba(240,215,167,.14));
+    linear-gradient(90deg, rgba(240,215,167,.14), rgba(240,215,167,.58), rgba(240,215,167,.14)),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
+  background-size:100% 100%, 34% 100%;
+  background-position:center, -60% 0;
+  background-repeat:no-repeat;
+  animation:wwStatusSweepLeft 8.5s linear infinite;
 }
 
 .ww-title-status::after{
   background:
-    linear-gradient(90deg, rgba(240,215,167,.14), rgba(240,215,167,.58), rgba(240,215,167,.14));
+    linear-gradient(90deg, rgba(240,215,167,.14), rgba(240,215,167,.58), rgba(240,215,167,.14)),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
+  background-size:100% 100%, 34% 100%;
+  background-position:center, 160% 0;
+  background-repeat:no-repeat;
+  animation:wwStatusSweepRight 8.5s linear infinite;
+}
+
+@keyframes wwStatusSweepLeft{
+  0%{ background-position:center, -60% 0; }
+  100%{ background-position:center, 160% 0; }
+}
+
+@keyframes wwStatusSweepRight{
+  0%{ background-position:center, 160% 0; }
+  100%{ background-position:center, -60% 0; }
 }
 
 .ww-title-sub{
@@ -215,6 +244,9 @@ html,body{
   display:flex;
   flex-direction:column;
   align-items:center;
+  pointer-events:none;
+  transform:translate(calc(var(--ww-drift-x) * -.12), calc(var(--ww-drift-y) * -.12));
+  transition:transform 180ms ease-out;
 }
 
 .ww-word-nav{
@@ -244,6 +276,7 @@ html,body{
   border:1px solid rgba(255,198,107,.54);
   transform:translate(-50%,-50%) rotate(45deg);
   background:rgba(5,9,13,.92);
+  box-shadow:0 0 10px rgba(255,180,75,.14);
 }
 
 .ww-word-link{
@@ -254,6 +287,8 @@ html,body{
   justify-content:center;
   width:13rem;
   min-height:2rem;
+  padding:0;
+  margin:0;
   border:0;
   background:transparent;
   cursor:pointer;
@@ -265,14 +300,15 @@ html,body{
   letter-spacing:.34em;
   text-transform:uppercase;
   color:rgba(250,250,247,.95);
-  text-shadow:0 2px 10px rgba(0,0,0,.88);
-  transition:transform 170ms ease,color 170ms ease;
+  text-shadow:0 2px 10px rgba(0,0,0,.88), 0 0 10px rgba(255,255,255,.035);
+  transition:transform 170ms ease,color 170ms ease,text-shadow 170ms ease,filter 170ms ease;
 }
 
 .ww-word-link:hover,
 .ww-word-link:focus-visible{
   transform:translateY(-2px);
   color:#fff;
+  filter:brightness(1.06);
   outline:none;
 }
 
@@ -286,12 +322,21 @@ html,body{
   border:1px solid rgba(255,199,112,.58);
   transform:translateY(-50%) rotate(45deg);
   background:rgba(5,9,13,.7);
+  box-shadow:0 0 9px rgba(255,181,75,.13);
+  opacity:.78;
 }
 
 .ww-word-disabled{
-  color:rgba(165,165,165,.42)!important;
-  text-shadow:none!important;
-  filter:saturate(.3);
+  color:rgba(255,166,72,.42)!important;
+  text-shadow:0 2px 8px rgba(0,0,0,.72), 0 0 12px rgba(255,132,38,.06)!important;
+  filter:saturate(.72) brightness(.78);
+}
+
+.ww-word-disabled:hover,
+.ww-word-disabled:focus-visible{
+  color:rgba(255,177,88,.48)!important;
+  transform:none;
+  filter:saturate(.72) brightness(.78);
 }
 
 .ww-word-solve{
@@ -300,7 +345,7 @@ html,body{
   border:1px solid rgba(255,197,111,.44);
   border-radius:1rem;
   background:linear-gradient(180deg, rgba(255,197,111,.105), rgba(255,197,111,.035));
-  box-shadow:0 0 18px rgba(255,185,80,.055);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.035), 0 0 18px rgba(255,185,80,.055);
   font-size:clamp(22px,1.58vw,33px);
   letter-spacing:.34em;
   color:#ffc56f;
@@ -318,18 +363,13 @@ html,body{
   padding:2rem 2.2rem 2.1rem;
   border-radius:1.8rem;
   background:
-    radial-gradient(
-      ellipse at top,
-      rgba(255,181,80,.07),
-      rgba(255,181,80,0) 46%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(22,28,38,.56) 0%,
-      rgba(12,16,24,.68) 48%,
-      rgba(5,8,14,.86) 100%
-    );
+    radial-gradient(ellipse at top, rgba(255,181,80,.07), rgba(255,181,80,0) 46%),
+    linear-gradient(180deg, rgba(22,28,38,.56) 0%, rgba(12,16,24,.68) 48%, rgba(5,8,14,.86) 100%);
   border:2px solid rgba(120,78,36,.68);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.035),
+    inset 0 -24px 48px rgba(0,0,0,.22),
+    0 0 28px rgba(0,0,0,.28);
   backdrop-filter:blur(4px);
 }
 
@@ -347,6 +387,15 @@ html,body{
   text-transform:uppercase;
   font-weight:700;
   color:rgba(255,236,198,.98);
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.92),
+    0 0 18px rgba(255,180,75,.18),
+    0 0 34px rgba(255,180,75,.08);
+  filter:drop-shadow(0 0 12px rgba(255,170,60,.08));
+}
+
+.ww-guidepost-title::before{
+  display:none;
 }
 
 .ww-guidepost-title::after{
@@ -358,13 +407,8 @@ html,body{
   height:2px;
   transform:translateX(-50%);
   border-radius:999px;
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,201,120,.92),
-      transparent
-    );
+  background:linear-gradient(90deg, transparent, rgba(255,201,120,.92), transparent);
+  box-shadow:0 0 12px rgba(255,181,75,.28);
 }
 
 .ww-guidepost-copy{
@@ -380,6 +424,146 @@ html,body{
   letter-spacing:.08em;
   text-transform:uppercase;
   color:rgba(255,255,255,.92);
+  text-shadow:0 2px 10px rgba(0,0,0,.92);
+}
+
+.ww-menu{
+  position:absolute;
+  z-index:80;
+  top:3.1%;
+  right:3.1%;
+  width:66px;
+  height:66px;
+}
+
+.ww-menu-hotspot{
+  position:absolute;
+  inset:0;
+  border-radius:1.25rem;
+  border:1.5px solid rgba(181,124,54,.72);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.015)),
+    linear-gradient(135deg, rgba(56,34,16,.58), rgba(9,12,18,.82));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 0 0 1px rgba(255,210,140,.05),
+    0 0 0 1px rgba(0,0,0,.55),
+    0 10px 28px rgba(0,0,0,.42),
+    0 0 18px rgba(191,128,48,.12);
+  backdrop-filter:blur(6px);
+  cursor:pointer;
+  transition:
+    transform .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease,
+    background .22s ease;
+}
+
+.ww-menu-hotspot::before{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:1.15rem;
+  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,0));
+  pointer-events:none;
+}
+
+.ww-menu-hotspot:hover,
+.ww-menu-hotspot:focus-visible{
+  transform:translateY(-1px) scale(1.03);
+  border-color:rgba(236,177,94,.92);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.11),
+    inset 0 0 0 1px rgba(255,210,140,.08),
+    0 0 0 1px rgba(0,0,0,.62),
+    0 14px 34px rgba(0,0,0,.5),
+    0 0 24px rgba(255,182,72,.22);
+  outline:none;
+}
+
+.ww-menu-lines,
+.ww-menu-lines::before,
+.ww-menu-lines::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  width:26px;
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(255,224,173,.88), rgba(255,197,111,1), rgba(255,224,173,.88));
+  transform:translateX(-50%);
+  box-shadow:0 0 10px rgba(255,182,72,.24);
+}
+
+.ww-menu-lines{
+  top:32px;
+}
+
+.ww-menu-lines::before{
+  top:-8px;
+}
+
+.ww-menu-lines::after{
+  top:8px;
+}
+
+.ww-menu-dropdown,
+.ww-legal-submenu{
+  position:absolute;
+  min-width:220px;
+  padding:.55rem;
+  border:1px solid rgba(224,155,32,.46);
+  border-radius:.85rem;
+  background:rgba(3,8,13,.94);
+  box-shadow:0 22px 54px rgba(0,0,0,.62);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 150ms ease, transform 150ms ease;
+}
+
+.ww-menu-dropdown{
+  top:calc(100% + .7rem);
+  right:0;
+  transform:translateY(-4px);
+}
+
+.ww-menu.is-open .ww-menu-dropdown{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+.ww-legal-wrap{
+  position:relative;
+}
+
+.ww-legal-submenu{
+  top:0;
+  right:calc(100% + .55rem);
+}
+
+.ww-legal-wrap:hover .ww-legal-submenu{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.ww-menu-dropdown a,
+.ww-legal-submenu a{
+  display:block;
+  padding:.72rem .86rem;
+  border-radius:.55rem;
+  color:rgba(255,244,224,.92);
+  text-decoration:none;
+  font-size:.78rem;
+  font-weight:850;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.ww-menu-dropdown a:hover,
+.ww-legal-submenu a:hover{
+  background:rgba(224,155,32,.15);
+  color:#f2b24c;
 }
 
 .ww-tooltip{
@@ -421,6 +605,14 @@ html,body{
   font-weight:900;
 }
 
+.ww-tooltip-line{
+  display:block;
+}
+
+.ww-tooltip-line + .ww-tooltip-line{
+  margin-top:.22rem;
+}
+
 .ww-clue-tooltip{ top:33%; }
 .ww-life-tooltip{ top:38%; }
 .ww-leader-tooltip{ top:44%; }
@@ -433,8 +625,12 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,.72);
-  backdrop-filter:blur(10px);
+  padding:4vh 4vw;
+  background:
+    radial-gradient(circle at top right, rgba(218,162,50,.16), transparent 34%),
+    radial-gradient(circle at bottom left, rgba(70,110,165,.24), transparent 42%),
+    rgba(0,0,0,.74);
+  backdrop-filter:blur(11px);
   opacity:0;
   pointer-events:none;
   transition:opacity .25s ease;
@@ -446,83 +642,172 @@ html,body{
 }
 
 .ww-solve-card{
-  width:min(92vw,620px);
-  padding:4rem 3rem;
-  border-radius:2rem;
-  border:2px solid rgba(190,128,42,.72);
-  background:
-    linear-gradient(180deg,
-    rgba(186,128,49,.96),
-    rgba(129,79,24,.96));
-  box-shadow:
-    0 30px 90px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(255,230,180,.12);
-  text-align:center;
+  width:min(92vw,650px);
+  min-height:520px;
   position:relative;
+  overflow:hidden;
+  border-radius:2.2rem;
+  border:1px solid rgba(224,155,32,.58);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,224,160,.16), transparent 34%),
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,.08), transparent 26%),
+    linear-gradient(180deg, rgba(13,27,42,.98), rgba(5,10,16,.98));
+  box-shadow:
+    0 34px 100px rgba(0,0,0,.68),
+    0 0 0 1px rgba(255,224,160,.08),
+    inset 0 0 42px rgba(255,180,70,.045);
+  text-align:center;
+  padding:4.25rem 3.2rem 3.5rem;
+  transform:translateY(10px) scale(.985);
+  transition:transform .25s ease;
+}
+
+.ww-solve-overlay.is-open .ww-solve-card{
+  transform:translateY(0) scale(1);
+}
+
+.ww-solve-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.08), transparent 30%, transparent 68%, rgba(224,155,32,.07)),
+    radial-gradient(circle at 50% 115%, rgba(224,155,32,.18), transparent 50%);
+  opacity:.9;
+}
+
+.ww-solve-card::after{
+  content:"";
+  position:absolute;
+  inset:1.05rem;
+  border-radius:1.55rem;
+  border:1px solid rgba(224,155,32,.28);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    inset 0 0 32px rgba(0,0,0,.24);
+  pointer-events:none;
+}
+
+.ww-solve-kicker{
+  position:relative;
+  z-index:2;
+  margin-bottom:1rem;
+  font-size:clamp(.68rem,.86vw,.92rem);
+  font-weight:900;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:rgba(255,224,173,.78);
+  text-shadow:0 2px 9px rgba(0,0,0,.8);
 }
 
 .ww-solve-heading{
-  font-family:"Arial Black",sans-serif;
-  font-size:clamp(2rem,4vw,4rem);
-  line-height:1;
+  position:relative;
+  z-index:2;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(2.45rem,5vw,5rem);
+  line-height:.9;
+  font-weight:400;
+  letter-spacing:.025em;
   text-transform:uppercase;
-  color:#0b0b0b;
-  margin-bottom:2rem;
+  color:#f4f1ea;
+  text-shadow:
+    0 3px 14px rgba(0,0,0,.86),
+    0 0 24px rgba(255,180,72,.16);
+  margin-bottom:1.85rem;
 }
 
 .ww-solve-copy{
+  position:relative;
+  z-index:2;
+  max-width:480px;
+  margin:0 auto 2.5rem;
   font-family:Georgia,serif;
-  font-size:clamp(1.1rem,1.5vw,1.6rem);
+  font-size:clamp(1rem,1.25vw,1.35rem);
   line-height:1.6;
-  color:#1a1207;
-  margin-bottom:3rem;
+  color:rgba(255,236,198,.9);
+  text-shadow:0 2px 10px rgba(0,0,0,.88);
 }
 
 .ww-solve-button{
+  position:relative;
+  z-index:2;
   display:inline-flex;
   align-items:center;
   justify-content:center;
   min-width:320px;
-  padding:1.4rem 2rem;
-  border-radius:1.2rem;
-  border:2px solid rgba(255,181,75,.42);
-  background:#050505;
-  color:#ffb23e;
+  padding:1.15rem 1.7rem;
+  border-radius:1rem;
+  border:1px solid rgba(255,197,111,.5);
+  background:
+    linear-gradient(180deg, rgba(255,197,111,.105), rgba(255,197,111,.035)),
+    rgba(3,8,13,.94);
+  color:#ffc56f;
   text-decoration:none;
-  font-family:"Arial Black",sans-serif;
-  font-size:clamp(1.2rem,2vw,2.2rem);
+  font-family:"Courier New",monospace;
+  font-size:clamp(1.05rem,1.55vw,1.7rem);
+  font-weight:900;
   text-transform:uppercase;
-  letter-spacing:.08em;
+  letter-spacing:.16em;
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.05),
-    0 0 24px rgba(255,166,44,.18);
-  transition:transform .18s ease;
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    0 0 24px rgba(255,185,80,.12),
+    0 18px 42px rgba(0,0,0,.36);
+  transition:transform .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
 
-.ww-solve-button:hover{
+.ww-solve-button:hover,
+.ww-solve-button:focus-visible{
   transform:translateY(-2px) scale(1.01);
+  color:#fff0cf;
+  border-color:rgba(255,211,140,.74);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.055),
+    0 0 32px rgba(255,185,80,.2),
+    0 20px 48px rgba(0,0,0,.42);
+  outline:none;
 }
 
 .ww-solve-warning{
-  margin-top:3rem;
+  position:relative;
+  z-index:2;
+  margin:2.45rem auto 0;
+  max-width:430px;
+  padding-top:1.5rem;
+  border-top:1px solid rgba(224,155,32,.26);
   font-family:Georgia,serif;
-  font-size:clamp(1.05rem,1.4vw,1.5rem);
-  line-height:1.7;
-  color:#120d06;
+  font-size:clamp(.98rem,1.08vw,1.18rem);
+  line-height:1.62;
+  color:rgba(255,244,224,.78);
+  text-shadow:0 2px 10px rgba(0,0,0,.86);
 }
 
 .ww-solve-close{
   position:absolute;
+  z-index:5;
   top:18px;
   right:18px;
   width:42px;
   height:42px;
-  border-radius:999px;
-  border:none;
-  background:rgba(0,0,0,.16);
-  color:#1b1207;
-  font-size:1.4rem;
+  border-radius:.85rem;
+  border:1px solid rgba(224,155,32,.42);
+  background:rgba(3,8,13,.58);
+  color:rgba(255,239,206,.9);
+  font-size:1.2rem;
+  line-height:1;
   cursor:pointer;
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.34),
+    inset 0 0 12px rgba(224,155,32,.08);
+  transition:transform .18s ease, color .18s ease, border-color .18s ease;
+}
+
+.ww-solve-close:hover,
+.ww-solve-close:focus-visible{
+  transform:scale(1.04);
+  color:#ffd990;
+  border-color:rgba(224,155,32,.72);
+  outline:none;
 }
 
 </style>
@@ -530,7 +815,7 @@ html,body{
 <div id="wwPortal">
   <div id="wwStage">
 
-    <img class="ww-shell" src="/assets/winterword/shared/BS1.png" alt="WinterWord Base Station">
+    <img class="ww-shell" src="/assets/winterword/shared/BS1.png" alt="WinterWord Base Station" draggable="false">
 
     <div class="ww-logo-softener"></div>
     <div class="ww-left-focus"></div>
@@ -603,16 +888,16 @@ html,body{
 
     <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}" data-tooltip-card="life">
       <span class="ww-tooltip-title">Lifeline</span>
-      ${lifelineAvailable
-        ? "This passage is open. Step carefully."
-        : "This passage waits its moment."}
+      ${lifelineAvailable ? "This passage is open. Step carefully." : "This passage waits its moment."}
     </div>
 
     <div class="ww-tooltip ww-leader-tooltip ${leaderboardAvailable ? "" : "ww-tooltip--locked"}" data-tooltip-card="leader">
       <span class="ww-tooltip-title">Leaderboard</span>
-      ${leaderboardAvailable
-        ? "The WinterWord has been pierced. Footprints are beginning to appear."
-        : "No answers received yet. No correct ones, anyway..."}
+      ${
+        leaderboardAvailable
+          ? "The WinterWord has been pierced. Footprints are beginning to appear."
+          : `<span class="ww-tooltip-line">No answers received yet.</span><span class="ww-tooltip-line">No correct ones, anyway...</span>`
+      }
     </div>
 
     <div class="ww-tooltip ww-solve-tooltip" data-tooltip-card="solve">
@@ -620,19 +905,75 @@ html,body{
       Submit the WinterWord when the answer is clear.
     </div>
 
+    <div class="ww-menu">
+
+      <button class="ww-menu-hotspot" type="button" aria-label="Open menu">
+        <span class="ww-menu-lines"></span>
+      </button>
+
+      <div class="ww-menu-dropdown">
+
+        <a href="#" data-nav="welcome">
+          Welcome
+        </a>
+
+        <a href="${subscribeHref}">
+          Subscribe
+        </a>
+
+        <a href="${reportProblemHref}">
+          Report a Problem
+        </a>
+
+        <a href="${contactHref}">
+          Contact
+        </a>
+
+        <div class="ww-legal-wrap">
+
+          <a href="#">
+            Legal ▸
+          </a>
+
+          <div class="ww-legal-submenu">
+
+            <a href="/legal/privacy-policy.html">
+              Privacy Policy
+            </a>
+
+            <a href="/legal/terms-of-use.html">
+              Terms of Use
+            </a>
+
+            <a href="/legal/disclaimer.html">
+              Disclaimer
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
     <div class="ww-solve-overlay" id="wwSolveOverlay">
 
       <div class="ww-solve-card">
 
-        <button class="ww-solve-close" id="wwSolveClose">✕</button>
+        <button class="ww-solve-close" id="wwSolveClose" type="button" aria-label="Close solve panel">✕</button>
+
+        <div class="ww-solve-kicker">
+          Final Submission
+        </div>
 
         <div class="ww-solve-heading">
-          THE LAST WORD
+          The Last Word
         </div>
 
         <div class="ww-solve-copy">
           When the wind quietens,<br>
-          certainty stirs
+          certainty stirs.
         </div>
 
         <a class="ww-solve-button" href="${solveHref}">
@@ -710,9 +1051,54 @@ html,body{
 
     });
 
-    trigger.addEventListener("mouseleave", hideTooltips);
+    trigger.addEventListener("focus", () => {
+
+      hideTooltips();
+
+      if (card) {
+        card.classList.add("is-visible");
+      }
+
+    });
+
+    trigger.addEventListener(
+      "mouseleave",
+      hideTooltips
+    );
+
+    trigger.addEventListener(
+      "blur",
+      hideTooltips
+    );
 
   });
+
+  const menu =
+    app.querySelector(".ww-menu");
+
+  const menuHotspot =
+    app.querySelector(".ww-menu-hotspot");
+
+  if (menu && menuHotspot) {
+
+    menuHotspot.addEventListener("click", (event) => {
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      menu.classList.toggle("is-open");
+
+    });
+
+    document.addEventListener("click", (event) => {
+
+      if (!menu.contains(event.target)) {
+        menu.classList.remove("is-open");
+      }
+
+    });
+
+  }
 
   const solveOpen =
     app.querySelector("#wwSolveOpen");
@@ -725,8 +1111,12 @@ html,body{
 
   if (solveOpen && solveOverlay) {
 
-    solveOpen.addEventListener("click", () => {
+    solveOpen.addEventListener("click", (event) => {
+
+      event.preventDefault();
+      hideTooltips();
       solveOverlay.classList.add("is-open");
+
     });
 
   }
@@ -734,7 +1124,9 @@ html,body{
   if (solveClose && solveOverlay) {
 
     solveClose.addEventListener("click", () => {
+
       solveOverlay.classList.remove("is-open");
+
     });
 
   }
@@ -746,6 +1138,50 @@ html,body{
       if (event.target === solveOverlay) {
         solveOverlay.classList.remove("is-open");
       }
+
+    });
+
+  }
+
+  const stage =
+    app.querySelector("#wwStage");
+
+  if (stage) {
+
+    stage.addEventListener("pointermove", (event) => {
+
+      const rect =
+        stage.getBoundingClientRect();
+
+      const x =
+        ((event.clientX - rect.left) / rect.width - .5) * 10;
+
+      const y =
+        ((event.clientY - rect.top) / rect.height - .5) * 10;
+
+      stage.style.setProperty(
+        "--ww-drift-x",
+        x + "px"
+      );
+
+      stage.style.setProperty(
+        "--ww-drift-y",
+        y + "px"
+      );
+
+    });
+
+    stage.addEventListener("pointerleave", () => {
+
+      stage.style.setProperty(
+        "--ww-drift-x",
+        "0px"
+      );
+
+      stage.style.setProperty(
+        "--ww-drift-y",
+        "0px"
+      );
 
     });
 
