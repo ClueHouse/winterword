@@ -647,10 +647,10 @@ html,body{
   font-weight:900;
 }
 
-.ww-clue-tooltip{ top:33.3%; }
-.ww-life-tooltip{ top:43%; }
-.ww-leader-tooltip{ top:52.7%; }
-.ww-solve-tooltip{ top:66.8%; }
+.ww-clue-tooltip{ top:30%; }
+.ww-life-tooltip{ top:40; }
+.ww-leader-tooltip{ top:50%; }
+.ww-solve-tooltip{ top:60%; }
 
 </style>
 
