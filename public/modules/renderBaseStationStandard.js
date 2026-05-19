@@ -369,21 +369,72 @@ html,body{
 }
 
 .ww-guidepost-title{
+
   width:100%;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:clamp(15px,1vw,21px);
-  letter-spacing:.3em;
+
+  position:relative;
+
+  padding-bottom:.25rem;
+
+  font-family:Georgia,"Times New Roman",serif;
+
+  font-size:
+    clamp(20px,1.42vw,32px);
+
+  line-height:1;
+
+  letter-spacing:.22em;
+
   text-transform:uppercase;
-  font-weight:950;
-  color:rgba(255,236,198,.98);
-  text-shadow:0 2px 10px rgba(0,0,0,.9), 0 0 14px rgba(255,190,95,.16);
+
+  font-weight:700;
+
+  color:
+    rgba(255,236,198,.98);
+
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.92),
+    0 0 18px rgba(255,180,75,.18),
+    0 0 34px rgba(255,180,75,.08);
+
+  filter:
+    drop-shadow(0 0 12px rgba(255,170,60,.08));
 }
 
-.ww-guidepost-title::before,
-.ww-guidepost-title::after{
+.ww-guidepost-title::before{
   display:none;
+}
+
+.ww-guidepost-title::after{
+
+  content:"";
+
+  position:absolute;
+
+  left:50%;
+  bottom:-.15rem;
+
+  width:72px;
+  height:2px;
+
+  transform:translateX(-50%);
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,201,120,.92),
+      transparent
+    );
+
+  box-shadow:
+    0 0 12px rgba(255,181,75,.28);
 }
 
 .ww-guidepost-copy{
@@ -612,14 +663,24 @@ html,body{
     <div class="ww-left-focus"></div>
 
     <div class="ww-title-meta">
-      <div class="ww-title-org">${safeText(seasonLabel)} ✧ ${safeText(orgName)}</div>
-      <div class="ww-title-main">WINTERWORD</div>
-      <div class="ww-title-status">LIVE</div>
+
+      <div class="ww-title-org">
+        ${safeText(seasonLabel)} ✧ ${safeText(orgName)}
+      </div>
+
+      <div class="ww-title-main">
+        WINTERWORD
+      </div>
+
+      <div class="ww-title-status">
+        LIVE
+      </div>
 
       <div class="ww-title-sub">
         A letter per week from a wintry scroll.<br>
         Piece them together — reveal the whole.
       </div>
+
     </div>
 
     <div class="ww-left-panel">
@@ -647,6 +708,7 @@ html,body{
         <div class="ww-rule"></div>
 
         <div class="ww-guidepost">
+
           <div class="ww-guidepost-title">
             The Guidepost
           </div>
@@ -654,6 +716,7 @@ html,body{
           <div class="ww-guidepost-copy">
             ${guidepostLines}
           </div>
+
         </div>
 
       </nav>
@@ -739,6 +802,7 @@ html,body{
   const navButtons = app.querySelectorAll("[data-nav]");
 
   navButtons.forEach((button) => {
+
     button.addEventListener("click", (event) => {
 
       const target = button.getAttribute("data-nav");
@@ -755,6 +819,7 @@ html,body{
       }
 
     });
+
   });
 
   const tooltipTriggers =
@@ -764,9 +829,11 @@ html,body{
     app.querySelectorAll("[data-tooltip-card]");
 
   const hideTooltips = () => {
+
     tooltipCards.forEach((card) =>
       card.classList.remove("is-visible")
     );
+
   };
 
   tooltipTriggers.forEach((trigger) => {
