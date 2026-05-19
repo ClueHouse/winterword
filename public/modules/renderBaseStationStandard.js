@@ -641,7 +641,7 @@ html,body{
 }
 
 .ww-solve-card{
-  width:min(92vw,760px);
+  width:min(46vw,380px);
   aspect-ratio:3 / 4;
   position:relative;
   overflow:hidden;
@@ -843,13 +843,13 @@ html,body{
       ${
         leaderboardAvailable
           ? "The WinterWord has been pierced. Footprints are beginning to appear."
-          : `<span class="ww-tooltip-line">No answers received yet.</span><span class="ww-tooltip-line">No correct ones, anyway...</span>`
+          : `<span class="ww-tooltip-line">No answers received.</span><span class="ww-tooltip-line">No correct ones, anyway...</span>`
       }
     </div>
 
     <div class="ww-tooltip ww-solve-tooltip" data-tooltip-card="solve">
       <span class="ww-tooltip-title">Solve</span>
-      Submit the WinterWord when the answer is clear.
+      Ready?
     </div>
 
     <div class="ww-menu">
