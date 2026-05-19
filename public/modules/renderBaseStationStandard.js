@@ -648,8 +648,8 @@ html,body{
 }
 
 .ww-clue-tooltip{ top:33%; }
-.ww-life-tooltip{ top:35%; }
-.ww-leader-tooltip{ top:40%; }
+.ww-life-tooltip{ top:38%; }
+.ww-leader-tooltip{ top:43%; }
 .ww-solve-tooltip{ top:55%; }
 
 </style>
