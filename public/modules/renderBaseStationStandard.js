@@ -137,9 +137,9 @@ html,body{
 
 .ww-title-org{
   max-width:100%;
-  margin-bottom:2.55rem;
+  margin-bottom:2.3rem;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:clamp(10px,.7vw,14px);
+  font-size:clamp(9px,.64vw,13px);
   line-height:1.35;
   letter-spacing:.22em;
   text-transform:uppercase;
@@ -151,7 +151,7 @@ html,body{
 .ww-title-main{
   width:100%;
   font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(2rem,3.75vw,4.15rem);
+  font-size:clamp(1.84rem,3.45vw,3.82rem);
   line-height:.94;
   font-weight:400;
   letter-spacing:.02em;
@@ -163,14 +163,14 @@ html,body{
 }
 
 .ww-title-status{
-  margin-top:1.2rem;
+  margin-top:1.1rem;
   width:68%;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:1rem;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:clamp(.68rem,.92vw,.92rem);
+  font-size:clamp(.62rem,.84vw,.84rem);
   font-weight:800;
   letter-spacing:.34em;
   text-transform:uppercase;
@@ -187,11 +187,22 @@ html,body{
   box-shadow:0 0 8px rgba(255,190,95,.18);
 }
 
+.ww-title-sub{
+  margin-top:1rem;
+  max-width:88%;
+  font-family:Georgia,serif;
+  font-size:clamp(11px,.78vw,15px);
+  line-height:1.5;
+  font-style:italic;
+  color:rgba(255,218,166,.88);
+  text-shadow:0 2px 10px rgba(0,0,0,.9);
+}
+
 .ww-left-panel{
   position:absolute;
   z-index:24;
   left:2.4%;
-  top:31.5%;
+  top:29.2%;
   width:32%;
   height:50%;
   display:flex;
@@ -205,7 +216,7 @@ html,body{
 .ww-rule{
   width:88%;
   height:1px;
-  margin:1.55vh 0;
+  margin:1.45vh 0;
   background:linear-gradient(90deg, transparent, rgba(255,190,95,.16), rgba(255,218,154,.42), rgba(255,190,95,.16), transparent);
   position:relative;
 }
@@ -228,7 +239,7 @@ html,body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:1.25vh;
+  gap:1.1vh;
   pointer-events:auto;
 }
 
@@ -238,8 +249,8 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:center;
-  width:13.6rem;
-  min-height:2.15rem;
+  width:13rem;
+  min-height:2rem;
   padding:0;
   margin:0;
   border:0;
@@ -247,7 +258,7 @@ html,body{
   cursor:pointer;
   text-decoration:none;
   font-family:"Courier New",monospace;
-  font-size:clamp(25px,1.78vw,35px);
+  font-size:clamp(23px,1.64vw,32px);
   font-weight:700;
   line-height:1;
   letter-spacing:.34em;
@@ -279,27 +290,14 @@ html,body{
   opacity:.78;
 }
 
-.ww-word-link:hover::after,
-.ww-word-link:focus-visible::after{
-  opacity:1;
-  transform:translateY(-50%) rotate(45deg) scale(1.2);
-  border-color:rgba(255,218,154,.86);
-  box-shadow:0 0 11px rgba(255,181,75,.34), 0 0 22px rgba(255,181,75,.12);
-}
-
-.ww-word-link[data-disabled="true"]:hover,
-.ww-word-link[data-disabled="true"]:focus-visible{
-  color:rgba(255,210,195,.95);
-}
-
 .ww-word-solve{
-  width:12.6rem;
-  padding:.74rem 1.05rem .74rem 1.28rem;
+  width:12rem;
+  padding:.68rem 1rem .68rem 1.2rem;
   border:1px solid rgba(255,197,111,.44);
   border-radius:.78rem;
   background:linear-gradient(180deg, rgba(255,197,111,.105), rgba(255,197,111,.035));
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.035), 0 0 18px rgba(255,185,80,.055);
-  font-size:clamp(24px,1.72vw,36px);
+  font-size:clamp(22px,1.58vw,33px);
   letter-spacing:.34em;
   color:#ffc56f;
 }
@@ -320,7 +318,7 @@ html,body{
   align-items:center;
   justify-content:center;
   gap:1.1rem;
-  font-size:clamp(13px,.82vw,17px);
+  font-size:clamp(12px,.74vw,15px);
   letter-spacing:.26em;
   text-transform:uppercase;
   font-weight:900;
@@ -343,7 +341,7 @@ html,body{
 .ww-guidepost-copy{
   max-width:92%;
   font-family:Georgia,serif;
-  font-size:clamp(12px,.82vw,16px);
+  font-size:clamp(11px,.74vw,15px);
   line-height:1.5;
   font-style:italic;
   color:rgba(255,218,166,.88);
@@ -513,6 +511,11 @@ html,body{
       <div class="ww-title-org">${safeText(seasonLabel)} ✧ ${safeText(orgName)}</div>
       <div class="ww-title-main">WINTERWORD</div>
       <div class="ww-title-status">LIVE</div>
+
+      <div class="ww-title-sub">
+        A letter per week from a wintry scroll.<br>
+        Piece them together — reveal the whole.
+      </div>
     </div>
 
     <div class="ww-left-panel">
@@ -539,7 +542,7 @@ html,body{
 
     <div class="ww-tooltip ww-clue-tooltip" data-tooltip-card="clue">
       <span class="ww-tooltip-title">Clues</span>
-      Each clue reveals another piece.
+      Each of your upcoming clues is designed to reveal just enough to move you forward — and hide the rest where only patience can reach it.
     </div>
 
     <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}" data-tooltip-card="life">
