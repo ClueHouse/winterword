@@ -1,331 +1,144 @@
-export function renderBaseStationStandard(app) {
-
-app.innerHTML = `
-<style>
-*{
-  box-sizing:border-box;
-}
-
-html,body{
-  margin:0;
-  padding:0;
-  background:#000;
-  font-family:system-ui,sans-serif;
-}
-
-#wwPortal{
-  min-height:100vh;
-  padding:48px;
-  background:
-    radial-gradient(circle at top right, rgba(214,140,36,.12), transparent 28%),
-    linear-gradient(180deg,#05080c,#010203);
-}
-
-.stage{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(240px,1fr));
-  gap:34px;
-}
-
-.panel{
-  min-height:380px;
-  padding:34px 28px;
-  background:#0b0f12;
-  border:1px solid rgba(255,255,255,.06);
-  box-shadow:
-    inset 0 0 24px rgba(0,0,0,.55),
-    0 12px 30px rgba(0,0,0,.45);
-}
-
-.label{
-  margin-bottom:28px;
-  color:rgba(255,220,170,.45);
-  font-size:11px;
-  letter-spacing:.24em;
-  text-transform:uppercase;
-}
-
-.menu{
+.ww-word-nav{
+  position:absolute;
+  z-index:24;
+  left:8.6%;
+  top:22%;
+  width:22%;
   display:flex;
   flex-direction:column;
+  align-items:center;
+  gap:3.2vh;
 }
 
-.menu span{
-  display:block;
-}
-
-/* ========== V1 ========== */
-
-.v1{
-  gap:28px;
-}
-
-.v1 span{
-  font-family:"Courier New",monospace;
-  font-size:36px;
-  font-weight:700;
-  letter-spacing:.22em;
-  color:#f3f3f3;
-}
-
-.v1 .solve{
-  margin-top:18px;
-  color:#f2b24c;
-}
-
-/* ========== V2 ========== */
-
-.v2{
-  gap:24px;
-}
-
-.v2 span{
-  font-family:"Lucida Console",monospace;
-  font-size:34px;
-  font-weight:700;
-  letter-spacing:.38em;
-  color:#ffffff;
-}
-
-.v2 .solve{
-  margin-top:24px;
-  color:#ffbf66;
-}
-
-/* ========== V3 ========== */
-
-.v3{
-  gap:22px;
-}
-
-.v3 span{
-  font-family:"Courier New",monospace;
-  font-size:32px;
-  font-weight:700;
-  letter-spacing:.52em;
-  color:#ededed;
-  text-shadow:
-    0 0 12px rgba(255,255,255,.06);
-}
-
-.v3 .solve{
-  margin-top:34px;
-  color:#f2a93b;
-  text-shadow:
-    0 0 14px rgba(242,169,59,.25);
-}
-
-/* ========== V4 ========== */
-
-.v4{
-  gap:26px;
-}
-
-.v4 span{
-  width:max-content;
-  padding-bottom:10px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  font-family:"Courier New",monospace;
-  font-size:30px;
-  font-weight:700;
-  letter-spacing:.42em;
-  color:#f1f1f1;
-}
-
-.v4 .solve{
-  margin-top:26px;
-  border-bottom-color:rgba(242,178,76,.32);
-  color:#f2b24c;
-}
-
-/* ========== V5 ========== */
-
-.v5{
-  gap:18px;
-}
-
-.v5 span{
-  font-family:"Consolas",monospace;
-  font-size:40px;
-  font-weight:700;
-  letter-spacing:.16em;
-  color:#ffffff;
-}
-
-.v5 .solve{
-  margin-top:30px;
-  font-size:56px;
-  color:#ffbe5e;
-}
-
-/* ========== V6 ========== */
-
-.v6{
-  gap:30px;
-}
-
-.v6 span{
+.ww-word-link{
+  appearance:none;
   position:relative;
+  display:block;
   width:max-content;
-  padding-left:18px;
+  padding:0;
+  margin:0;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  text-decoration:none;
+
   font-family:"Courier New",monospace;
-  font-size:28px;
+  font-size:clamp(30px,2.2vw,42px);
   font-weight:700;
-  letter-spacing:.44em;
-  color:#f4f4f4;
+  line-height:1;
+
+  letter-spacing:.58em;
+  text-transform:uppercase;
+
+  color:#f7f7f7;
+
+  text-shadow:
+    0 3px 10px rgba(0,0,0,.88),
+    0 0 10px rgba(255,255,255,.05);
+
+  transition:
+    transform 170ms ease,
+    color 170ms ease,
+    text-shadow 170ms ease,
+    filter 170ms ease;
 }
 
-.v6 span::before{
+.ww-word-link::before{
   content:"";
   position:absolute;
-  left:0;
-  top:50%;
-  width:6px;
-  height:1px;
-  background:rgba(255,255,255,.25);
+  top:-40%;
+  left:-70%;
+  width:34%;
+  height:180%;
+
+  background:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.06) 28%,
+    rgba(255,231,170,.44) 50%,
+    rgba(255,255,255,.06) 72%,
+    transparent 100%
+  );
+
+  transform:rotate(22deg);
+
+  opacity:0;
+  pointer-events:none;
 }
 
-.v6 .solve{
-  margin-top:26px;
-  color:#f2b24c;
-}
+.ww-word-link:hover,
+.ww-word-link:focus-visible{
+  transform:translateY(-2px);
 
-.v6 .solve::before{
-  background:rgba(242,178,76,.55);
-}
+  color:#ffffff;
 
-/* ========== V7 ========== */
-
-.v7{
-  gap:24px;
-  align-items:center;
-}
-
-.v7 span{
-  font-family:"Courier New",monospace;
-  font-size:30px;
-  font-weight:700;
-  letter-spacing:.58em;
-  color:#f7f7f7;
-}
-
-.v7 .solve{
-  margin-top:34px;
-  font-size:42px;
-  color:#ffc56f;
   text-shadow:
+    0 3px 12px rgba(0,0,0,.92),
+    0 0 14px rgba(255,255,255,.10),
+    0 0 28px rgba(255,255,255,.08);
+
+  filter:brightness(1.04);
+
+  outline:none;
+}
+
+.ww-word-link:hover::before,
+.ww-word-link:focus-visible::before{
+  animation:wwWordSweep 940ms ease-out forwards;
+}
+
+.ww-word-link[data-disabled="true"]{
+  cursor:pointer;
+}
+
+.ww-word-link[data-disabled="true"]:hover,
+.ww-word-link[data-disabled="true"]:focus-visible{
+  color:rgba(255,210,195,.95);
+
+  text-shadow:
+    0 3px 12px rgba(0,0,0,.92),
+    0 0 16px rgba(190,42,42,.22),
+    0 0 30px rgba(120,12,12,.18);
+}
+
+.ww-word-link[data-disabled="true"]::before{
+  display:none;
+}
+
+.ww-word-solve{
+  margin-top:3.6vh;
+
+  font-size:clamp(42px,3.4vw,72px);
+
+  color:#ffc56f;
+
+  text-shadow:
+    0 4px 14px rgba(0,0,0,.94),
     0 0 18px rgba(255,185,80,.18);
 }
 
-/* ========== V8 ========== */
+.ww-word-solve:hover,
+.ww-word-solve:focus-visible{
+  color:#ffd08b;
 
-.v8{
-  gap:20px;
+  text-shadow:
+    0 4px 16px rgba(0,0,0,.96),
+    0 0 22px rgba(255,185,80,.28),
+    0 0 42px rgba(255,185,80,.18);
 }
 
-.v8 span{
-  width:100%;
-  font-family:"Consolas",monospace;
-  font-size:34px;
-  font-weight:700;
-  letter-spacing:.24em;
-  color:#f4f4f4;
-  display:flex;
-  justify-content:space-between;
-}
+@keyframes wwWordSweep{
+  0%{
+    left:-70%;
+    opacity:0;
+  }
 
-.v8 .solve{
-  margin-top:32px;
-  color:#f2b24c;
-}
-</style>
+  18%{
+    opacity:1;
+  }
 
-<div id="wwPortal">
-
-  <main class="stage">
-
-    <section class="panel">
-      <div class="label">Variation 1</div>
-      <div class="menu v1">
-        <span>CLUE</span>
-        <span>LIFE</span>
-        <span>LEAD</span>
-        <span class="solve">SOLVE</span>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="label">Variation 2</div>
-      <div class="menu v2">
-        <span>CLUE</span>
-        <span>LIFE</span>
-        <span>LEAD</span>
-        <span class="solve">SOLVE</span>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="label">Variation 3</div>
-      <div class="menu v3">
-        <span>CLUE</span>
-        <span>LIFE</span>
-        <span>LEAD</span>
-        <span class="solve">SOLVE</span>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="label">Variation 4</div>
-      <div class="menu v4">
-        <span>CLUE</span>
-        <span>LIFE</span>
-        <span>LEAD</span>
-        <span class="solve">SOLVE</span>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="label">Variation 5</div>
-      <div class="menu v5">
-        <span>CLUE</span>
-        <span>LIFE</span>
-        <span>LEAD</span>
-        <span class="solve">SOLVE</span>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="label">Variation 6</div>
-      <div class="menu v6">
-        <span>CLUE</span>
-        <span>LIFE</span>
-        <span>LEAD</span>
-        <span class="solve">SOLVE</span>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="label">Variation 7</div>
-      <div class="menu v7">
-        <span>CLUE</span>
-        <span>LIFE</span>
-        <span>LEAD</span>
-        <span class="solve">SOLVE</span>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="label">Variation 8</div>
-      <div class="menu v8">
-        <span><b>C</b><b>L</b><b>U</b><b>E</b></span>
-        <span><b>L</b><b>I</b><b>F</b><b>E</b></span>
-        <span><b>L</b><b>E</b><b>A</b><b>D</b></span>
-        <span class="solve">SOLVE</span>
-      </div>
-    </section>
-
-  </main>
-
-</div>
-`;
+  100%{
+    left:128%;
+    opacity:0;
+  }
 }
