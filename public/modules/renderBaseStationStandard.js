@@ -60,29 +60,6 @@ html,body{
   position:relative;
 }
 
-.ww-title-meta{
-  position:absolute;
-  z-index:30;
-  width:100%;
-  top:1.8%;
-  text-align:center;
-
-  font-size:clamp(12px,1vw,18px);
-  line-height:1.2;
-  letter-spacing:.32em;
-  text-transform:uppercase;
-
-  color:rgba(255,244,224,.92);
-
-  font-weight:900;
-
-  text-shadow:
-    0 2px 8px rgba(0,0,0,.82),
-    0 0 12px rgba(218,162,50,.16);
-
-  white-space:nowrap;
-}
-
 #wwStage{
   position:relative;
   width:100vw;
@@ -102,6 +79,50 @@ html,body{
 }
 
 /* ========================= */
+/* TOP META */
+/* ========================= */
+
+.ww-title-meta{
+  position:absolute;
+  z-index:30;
+
+  left:7.9%;
+  top:2.7%;
+
+  width:24%;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  gap:.34rem;
+
+  text-align:center;
+
+  pointer-events:none;
+}
+
+.ww-title-line{
+
+  font-size:clamp(11px,.74vw,15px);
+  line-height:1;
+
+  letter-spacing:.34em;
+  text-transform:uppercase;
+
+  color:rgba(255,244,224,.90);
+
+  font-weight:900;
+
+  white-space:nowrap;
+
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.82),
+    0 0 12px rgba(218,162,50,.16);
+}
+
+/* ========================= */
 /* WORD NAVIGATION */
 /* ========================= */
 
@@ -109,16 +130,16 @@ html,body{
   position:absolute;
   z-index:24;
 
-  left:8.6%;
-  top:22%;
+  left:8.2%;
+  top:24.2%;
 
-  width:22%;
+  width:18%;
 
   display:flex;
   flex-direction:column;
-  align-items:center;
+  align-items:flex-start;
 
-  gap:3.2vh;
+  gap:2.6vh;
 }
 
 .ww-word-link{
@@ -140,18 +161,18 @@ html,body{
 
   font-family:"Courier New",monospace;
 
-  font-size:clamp(30px,2.2vw,42px);
+  font-size:clamp(28px,2vw,38px);
   font-weight:700;
   line-height:1;
 
-  letter-spacing:.58em;
+  letter-spacing:.46em;
   text-transform:uppercase;
 
-  color:#f7f7f7;
+  color:#f5f3ee;
 
   text-shadow:
-    0 3px 10px rgba(0,0,0,.88),
-    0 0 10px rgba(255,255,255,.05);
+    0 2px 10px rgba(0,0,0,.88),
+    0 0 10px rgba(255,255,255,.04);
 
   transition:
     transform 170ms ease,
@@ -229,9 +250,11 @@ html,body{
 
 .ww-word-solve{
 
-  margin-top:3.6vh;
+  margin-top:4.4vh;
 
-  font-size:clamp(42px,3.4vw,72px);
+  font-size:clamp(44px,3vw,64px);
+
+  letter-spacing:.34em;
 
   color:#ffc56f;
 
@@ -545,7 +568,15 @@ html,body{
 <div id="wwPortal">
 
   <div class="ww-title-meta">
-    ${safeText(seasonLabel)} &nbsp;✦&nbsp; ${safeText(orgName)}
+
+    <div class="ww-title-line">
+      ${safeText(seasonLabel)}
+    </div>
+
+    <div class="ww-title-line">
+      ${safeText(orgName)}
+    </div>
+
   </div>
 
   <div id="wwStage">
