@@ -1,7 +1,8 @@
 export function renderBaseStationStandard(app, data = {}, navigate) {
+
   const {
     orgName = "WinterWord",
-    seasonLabel = "WINTERWORD",
+    seasonLabel = "WINTERWORD • 2026",
     guidepost = "",
     guidepostText = "",
     updates_content = "",
@@ -21,20 +22,15 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#39;");
 
-  const rawGuidepost =
-    guidepost ||
-    guidepostText ||
-    updates_content ||
-    updatesText ||
-    updatesContent ||
-    "";
-
-  const guidepostLines = safeText(rawGuidepost)
-    .split(/\n+/)
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => `<span>${line}</span>`)
-    .join("");
+  const guidepostContent =
+    safeText(
+      guidepost ||
+      guidepostText ||
+      updates_content ||
+      updatesText ||
+      updatesContent ||
+      ""
+    ).replace(/\n/g, "<br>");
 
   const mailSafeOrgName =
     orgName && String(orgName).trim()
@@ -83,6 +79,8 @@ html,body{
   height:100vh;
   overflow:hidden;
   background:#020609;
+  --ww-drift-x:0px;
+  --ww-drift-y:0px;
 }
 
 .ww-shell{
@@ -94,6 +92,31 @@ html,body{
   object-position:center center;
   user-select:none;
   pointer-events:none;
+  transform:translate(calc(var(--ww-drift-x) * .18), calc(var(--ww-drift-y) * .18)) scale(1.003);
+  transition:transform 180ms ease-out;
+}
+
+.ww-logo-softener{
+  position:absolute;
+  z-index:12;
+  left:34.4%;
+  top:20.5%;
+  width:18.5%;
+  height:43%;
+  pointer-events:none;
+  background:radial-gradient(ellipse at center, rgba(2,6,9,.16), rgba(2,6,9,.10) 38%, rgba(2,6,9,0) 72%);
+  mix-blend-mode:multiply;
+}
+
+.ww-left-focus{
+  position:absolute;
+  z-index:13;
+  left:0;
+  top:0;
+  width:39.3%;
+  height:100%;
+  pointer-events:none;
+  background:linear-gradient(90deg, rgba(2,6,9,.24), rgba(2,6,9,.08) 58%, rgba(2,6,9,0));
 }
 
 .ww-title-meta{
@@ -108,18 +131,21 @@ html,body{
   justify-content:center;
   text-align:center;
   pointer-events:none;
+  transform:translate(calc(var(--ww-drift-x) * -.12), calc(var(--ww-drift-y) * -.12));
+  transition:transform 180ms ease-out;
 }
 
 .ww-title-org{
   max-width:100%;
   margin-bottom:2.3rem;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
   font-size:clamp(9px,.64vw,13px);
   line-height:1.35;
   letter-spacing:.22em;
   text-transform:uppercase;
   color:rgba(255,255,255,.82);
   font-weight:800;
-  text-shadow:0 2px 8px rgba(0,0,0,.82);
+  text-shadow:0 2px 8px rgba(0,0,0,.82), 0 0 12px rgba(255,255,255,.08);
 }
 
 .ww-title-main{
@@ -131,7 +157,9 @@ html,body{
   letter-spacing:.02em;
   color:#f4f1ea;
   text-align:center;
-  text-shadow:0 2px 12px rgba(0,0,0,.72);
+  text-shadow:
+    0 2px 12px rgba(0,0,0,.72),
+    0 0 24px rgba(255,255,255,.06);
 }
 
 .ww-title-status{
@@ -141,6 +169,7 @@ html,body{
   align-items:center;
   justify-content:center;
   gap:1rem;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
   font-size:clamp(.62rem,.84vw,.84rem);
   font-weight:800;
   letter-spacing:.34em;
@@ -153,13 +182,40 @@ html,body{
   content:"";
   height:1px;
   flex:1;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(90deg, rgba(240,215,167,.18), rgba(240,215,167,.72), rgba(240,215,167,.18));
+  box-shadow:0 0 8px rgba(255,190,95,.18);
+}
+
+.ww-title-status::before{
   background:
-    linear-gradient(
-      90deg,
-      rgba(240,215,167,.14),
-      rgba(240,215,167,.58),
-      rgba(240,215,167,.14)
-    );
+    linear-gradient(90deg, rgba(240,215,167,.14), rgba(240,215,167,.58), rgba(240,215,167,.14)),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
+  background-size:100% 100%, 34% 100%;
+  background-position:center, -60% 0;
+  background-repeat:no-repeat;
+  animation:wwStatusSweepLeft 3.8s ease-in-out infinite;
+}
+
+.ww-title-status::after{
+  background:
+    linear-gradient(90deg, rgba(240,215,167,.14), rgba(240,215,167,.58), rgba(240,215,167,.14)),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
+  background-size:100% 100%, 34% 100%;
+  background-position:center, 160% 0;
+  background-repeat:no-repeat;
+  animation:wwStatusSweepRight 3.8s ease-in-out infinite;
+}
+
+@keyframes wwStatusSweepLeft{
+  0%, 18%{ background-position:center, -60% 0; }
+  58%, 100%{ background-position:center, 160% 0; }
+}
+
+@keyframes wwStatusSweepRight{
+  0%, 18%{ background-position:center, 160% 0; }
+  58%, 100%{ background-position:center, -60% 0; }
 }
 
 .ww-title-sub{
@@ -173,190 +229,6 @@ html,body{
   text-shadow:0 2px 10px rgba(0,0,0,.9);
 }
 
-.ww-menu-wrap{
-  position:absolute;
-  z-index:80;
-  top:5.2%;
-  right:4.3%;
-  pointer-events:auto;
-}
-
-.ww-menu-button{
-  width:46px;
-  height:46px;
-  border-radius:999px;
-  border:1px solid rgba(207,155,78,.54);
-  background:
-    radial-gradient(circle at 32% 24%, rgba(255,225,157,.14), transparent 34%),
-    linear-gradient(180deg, rgba(34,29,22,.74), rgba(8,9,10,.88));
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    inset 0 -12px 22px rgba(0,0,0,.28),
-    0 10px 28px rgba(0,0,0,.32);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-  flex-direction:column;
-  cursor:pointer;
-  padding:0;
-  transition:
-    transform .18s ease,
-    border-color .18s ease,
-    filter .18s ease,
-    box-shadow .18s ease;
-}
-
-.ww-menu-button span{
-  display:block;
-  width:18px;
-  height:2px;
-  border-radius:999px;
-  background:rgba(245,208,135,.88);
-  box-shadow:0 0 8px rgba(255,180,65,.16);
-  transition:
-    transform .18s ease,
-    opacity .18s ease,
-    background .18s ease;
-}
-
-.ww-menu-button:hover,
-.ww-menu-button:focus-visible{
-  transform:translateY(-1px);
-  border-color:rgba(239,190,98,.78);
-  filter:brightness(1.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.1),
-    inset 0 -12px 22px rgba(0,0,0,.24),
-    0 12px 32px rgba(0,0,0,.36),
-    0 0 16px rgba(255,174,58,.12);
-  outline:none;
-}
-
-.ww-menu-button.is-open span:nth-child(1){
-  transform:translateY(6px) rotate(45deg);
-}
-
-.ww-menu-button.is-open span:nth-child(2){
-  opacity:0;
-}
-
-.ww-menu-button.is-open span:nth-child(3){
-  transform:translateY(-6px) rotate(-45deg);
-}
-
-.ww-menu-panel{
-  position:absolute;
-  top:56px;
-  right:0;
-  width:230px;
-  padding:.8rem;
-  border-radius:1.1rem;
-  border:1px solid rgba(196,139,62,.46);
-  background:
-    radial-gradient(circle at top right, rgba(255,181,74,.09), transparent 42%),
-    linear-gradient(180deg, rgba(18,22,28,.94), rgba(6,8,12,.96));
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05),
-    0 20px 46px rgba(0,0,0,.44);
-  backdrop-filter:blur(8px);
-  opacity:0;
-  pointer-events:none;
-  transform:translateY(-8px) scale(.98);
-  transform-origin:top right;
-  transition:
-    opacity .18s ease,
-    transform .18s ease;
-}
-
-.ww-menu-panel.is-open{
-  opacity:1;
-  pointer-events:auto;
-  transform:translateY(0) scale(1);
-}
-
-.ww-menu-title{
-  padding:.35rem .55rem .62rem;
-  margin-bottom:.35rem;
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:.78rem;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:rgba(255,218,150,.84);
-  border-bottom:1px solid rgba(255,202,120,.16);
-}
-
-.ww-menu-link,
-.ww-menu-item{
-  width:100%;
-  min-height:38px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:.75rem;
-  padding:.55rem .62rem;
-  border:0;
-  border-radius:.7rem;
-  background:transparent;
-  color:rgba(255,255,255,.86);
-  text-decoration:none;
-  font-size:.82rem;
-  line-height:1.25;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  font-weight:800;
-  cursor:pointer;
-  transition:
-    background .16s ease,
-    color .16s ease,
-    transform .16s ease;
-}
-
-.ww-menu-link:hover,
-.ww-menu-link:focus-visible,
-.ww-menu-item:hover,
-.ww-menu-item:focus-visible{
-  background:rgba(255,194,92,.09);
-  color:#fff1cc;
-  transform:translateX(-2px);
-  outline:none;
-}
-
-.ww-menu-chevron{
-  color:rgba(255,202,120,.68);
-  font-size:.9rem;
-}
-
-.ww-legal-submenu{
-  display:none;
-  margin:.2rem 0 .35rem;
-  padding:.25rem .35rem .35rem .75rem;
-  border-left:1px solid rgba(255,202,120,.18);
-}
-
-.ww-legal-submenu.is-open{
-  display:block;
-}
-
-.ww-legal-submenu a{
-  display:block;
-  padding:.42rem .45rem;
-  border-radius:.55rem;
-  color:rgba(255,255,255,.7);
-  text-decoration:none;
-  font-size:.72rem;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  font-weight:800;
-}
-
-.ww-legal-submenu a:hover,
-.ww-legal-submenu a:focus-visible{
-  background:rgba(255,194,92,.08);
-  color:#fff1cc;
-  outline:none;
-}
-
 .ww-left-panel{
   position:absolute;
   z-index:24;
@@ -367,29 +239,16 @@ html,body{
   display:flex;
   flex-direction:column;
   align-items:center;
-}
-
-.ww-word-nav{
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:1.8vh;
-  pointer-events:auto;
+  pointer-events:none;
+  transform:translate(calc(var(--ww-drift-x) * -.12), calc(var(--ww-drift-y) * -.12));
+  transition:transform 180ms ease-out;
 }
 
 .ww-rule{
   width:88%;
   height:1px;
-  margin:1.9vh 0;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,190,95,.16),
-    rgba(255,218,154,.42),
-    rgba(255,190,95,.16),
-    transparent
-  );
+  margin:1.45vh 0;
+  background:linear-gradient(90deg, transparent, rgba(255,190,95,.16), rgba(255,218,154,.42), rgba(255,190,95,.16), transparent);
   position:relative;
 }
 
@@ -403,6 +262,16 @@ html,body{
   border:1px solid rgba(255,198,107,.54);
   transform:translate(-50%,-50%) rotate(45deg);
   background:rgba(5,9,13,.92);
+  box-shadow:0 0 10px rgba(255,180,75,.14);
+}
+
+.ww-word-nav{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1.1vh;
+  pointer-events:auto;
 }
 
 .ww-word-link{
@@ -413,6 +282,8 @@ html,body{
   justify-content:center;
   width:13rem;
   min-height:2rem;
+  padding:0;
+  margin:0;
   border:0;
   background:transparent;
   cursor:pointer;
@@ -424,14 +295,15 @@ html,body{
   letter-spacing:.34em;
   text-transform:uppercase;
   color:rgba(250,250,247,.95);
-  text-shadow:0 2px 10px rgba(0,0,0,.88);
-  transition:transform 170ms ease,color 170ms ease;
+  text-shadow:0 2px 10px rgba(0,0,0,.88), 0 0 10px rgba(255,255,255,.035);
+  transition:transform 170ms ease,color 170ms ease,text-shadow 170ms ease,filter 170ms ease;
 }
 
 .ww-word-link:hover,
 .ww-word-link:focus-visible{
   transform:translateY(-2px);
   color:#fff;
+  filter:brightness(1.06);
   outline:none;
 }
 
@@ -445,29 +317,17 @@ html,body{
   border:1px solid rgba(255,199,112,.58);
   transform:translateY(-50%) rotate(45deg);
   background:rgba(5,9,13,.7);
-}
-
-.ww-word-disabled{
-  color:rgba(255,166,72,.42)!important;
-  text-shadow:
-    0 2px 8px rgba(0,0,0,.72),
-    0 0 12px rgba(255,132,38,.06)!important;
+  box-shadow:0 0 9px rgba(255,181,75,.13);
+  opacity:.78;
 }
 
 .ww-word-solve{
   width:12rem;
   padding:.68rem 1rem .68rem 1.2rem;
   border:1px solid rgba(255,197,111,.44);
-  border-radius:1rem;
-  background:linear-gradient(
-    180deg,
-    rgba(255,197,111,.105),
-    rgba(255,197,111,.035)
-  );
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.035),
-    0 0 18px rgba(255,185,80,.055);
-
+  border-radius:.78rem;
+  background:linear-gradient(180deg, rgba(255,197,111,.105), rgba(255,197,111,.035));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.035), 0 0 18px rgba(255,185,80,.055);
   font-size:clamp(22px,1.58vw,33px);
   letter-spacing:.34em;
   color:#ffc56f;
@@ -480,32 +340,7 @@ html,body{
   align-items:center;
   justify-content:center;
   text-align:center;
-  gap:1.45rem;
-  margin-top:.5rem;
-  padding:2rem 2.2rem 2.1rem;
-  border-radius:1.8rem;
-
-  background:
-    radial-gradient(
-      ellipse at top,
-      rgba(255,181,80,.07),
-      rgba(255,181,80,0) 46%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(22,28,38,.56) 0%,
-      rgba(12,16,24,.68) 48%,
-      rgba(5,8,14,.86) 100%
-    );
-
-  border:2px solid rgba(120,78,36,.68);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.035),
-    inset 0 -24px 48px rgba(0,0,0,.22),
-    0 0 28px rgba(0,0,0,.28);
-
-  backdrop-filter:blur(4px);
+  gap:1rem;
 }
 
 .ww-guidepost-title{
@@ -513,59 +348,146 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:center;
-  position:relative;
-  padding-bottom:.25rem;
-
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(20px,1.42vw,32px);
-  line-height:1;
-  letter-spacing:.22em;
+  gap:1.15rem;
+  font-size:clamp(15px,1vw,21px);
+  letter-spacing:.3em;
   text-transform:uppercase;
-  font-weight:700;
-
+  font-weight:950;
   color:rgba(255,236,198,.98);
-
   text-shadow:
-    0 2px 10px rgba(0,0,0,.92),
-    0 0 18px rgba(255,180,75,.18),
-    0 0 34px rgba(255,180,75,.08);
+    0 2px 10px rgba(0,0,0,.9),
+    0 0 14px rgba(255,190,95,.16);
+}
+
+.ww-guidepost-title::before,
+.ww-guidepost-title::after{
+  content:"";
+  height:2px;
+  flex:1;
+  background:linear-gradient(90deg, transparent, rgba(255,206,140,.7));
+  box-shadow:0 0 8px rgba(255,190,95,.22);
 }
 
 .ww-guidepost-title::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:-.15rem;
-  width:72px;
-  height:2px;
-  transform:translateX(-50%);
-  border-radius:999px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,201,120,.92),
-      transparent
-    );
+  background:linear-gradient(90deg, rgba(255,206,140,.7), transparent);
 }
 
 .ww-guidepost-copy{
   max-width:92%;
-  display:flex;
-  flex-direction:column;
-  gap:1.35rem;
-
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
   font-size:clamp(10px,.72vw,14px);
   line-height:1.62;
+  font-style:normal;
   font-weight:700;
   letter-spacing:.08em;
   text-transform:uppercase;
-
   color:rgba(255,255,255,.92);
-
   text-shadow:0 2px 10px rgba(0,0,0,.92);
+}
+
+.ww-menu{
+  position:absolute;
+  z-index:80;
+  top:3.2%;
+  right:3.3%;
+  width:56px;
+  height:56px;
+}
+
+.ww-menu-hotspot{
+  width:56px;
+  height:56px;
+  position:absolute;
+  top:0;
+  right:0;
+  border:1px solid rgba(255,197,111,.56);
+  border-radius:.8rem;
+  background:rgba(5,9,13,.42);
+  cursor:pointer;
+  z-index:82;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.035), 0 0 18px rgba(242,178,76,.14);
+}
+
+.ww-menu-hotspot span,
+.ww-menu-hotspot::before,
+.ww-menu-hotspot::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  width:27px;
+  height:2px;
+  border-radius:999px;
+  background:rgba(255,220,159,.96);
+  transform:translateX(-50%);
+  box-shadow:0 0 8px rgba(242,178,76,.28);
+}
+
+.ww-menu-hotspot::before{ top:18px; }
+.ww-menu-hotspot span{ top:27px; }
+.ww-menu-hotspot::after{ top:36px; }
+
+.ww-menu-hotspot:hover,
+.ww-menu-hotspot:focus-visible{
+  transform:scale(1.06);
+  background:rgba(255,197,111,.08);
+  outline:none;
+}
+
+.ww-menu-dropdown,
+.ww-legal-submenu{
+  position:absolute;
+  min-width:220px;
+  padding:.55rem;
+  border:1px solid rgba(224,155,32,.46);
+  border-radius:.85rem;
+  background:rgba(3,8,13,.94);
+  box-shadow:0 22px 54px rgba(0,0,0,.62);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 150ms ease, transform 150ms ease;
+}
+
+.ww-menu-dropdown{
+  top:calc(100% + .7rem);
+  right:0;
+  transform:translateY(-4px);
+}
+
+.ww-menu.is-open .ww-menu-dropdown{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+.ww-legal-wrap{ position:relative; }
+
+.ww-legal-submenu{
+  top:0;
+  right:calc(100% + .55rem);
+}
+
+.ww-legal-wrap:hover .ww-legal-submenu{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.ww-menu-dropdown a,
+.ww-legal-submenu a{
+  display:block;
+  padding:.72rem .86rem;
+  border-radius:.55rem;
+  color:rgba(255,244,224,.92);
+  text-decoration:none;
+  font-size:.78rem;
+  font-weight:850;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.ww-menu-dropdown a:hover,
+.ww-legal-submenu a:hover{
+  background:rgba(224,155,32,.15);
+  color:#f2b24c;
 }
 
 .ww-tooltip{
@@ -594,13 +516,7 @@ html,body{
 }
 
 .ww-tooltip--locked{
-  background:
-    linear-gradient(
-      180deg,
-      rgba(158,38,45,.96),
-      rgba(104,18,25,.98)
-    );
-
+  background:linear-gradient(180deg, rgba(158,38,45,.96), rgba(104,18,25,.98));
   color:#fff;
 }
 
@@ -613,249 +529,10 @@ html,body{
   font-weight:900;
 }
 
-.ww-tooltip-line{
-  display:block;
-}
-
-.ww-tooltip-line + .ww-tooltip-line{
-  margin-top:.22rem;
-}
-
-.ww-clue-tooltip{ top:33%; }
-.ww-life-tooltip{ top:38%; }
-.ww-leader-tooltip{ top:44%; }
-.ww-solve-tooltip{ top:55%; }
-
-.ww-solve-overlay{
-  position:fixed;
-  inset:0;
-  z-index:400;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  padding:4vh 4vw;
-
-  background:
-    radial-gradient(circle at top right, rgba(218,162,50,.16), transparent 34%),
-    radial-gradient(circle at bottom left, rgba(70,110,165,.24), transparent 42%),
-    rgba(0,0,0,.74);
-
-  backdrop-filter:blur(11px);
-
-  opacity:0;
-  pointer-events:none;
-
-  transition:opacity .25s ease;
-}
-
-.ww-solve-overlay.is-open{
-  opacity:1;
-  pointer-events:auto;
-}
-
-.ww-solve-card{
-  width:min(46vw,380px);
-  aspect-ratio:3 / 4;
-
-  position:relative;
-
-  overflow:visible;
-
-  background-image:url("/assets/winterword/shared/lastword.png");
-  background-size:contain;
-  background-repeat:no-repeat;
-  background-position:center;
-
-  border:none;
-  border-radius:0;
-
-  box-shadow:none;
-
-  text-align:center;
-
-  padding:0;
-
-  transform:translateY(10px) scale(.985);
-
-  transition:transform .25s ease;
-}
-
-.ww-solve-overlay.is-open .ww-solve-card{
-  transform:translateY(0) scale(1);
-}
-
-.ww-solve-card::before{
-  display:none;
-}
-
-.ww-solve-card::after{
-  display:none;
-}
-
-.ww-solve-kicker,
-.ww-solve-heading,
-.ww-solve-copy,
-.ww-solve-warning{
-  position:absolute;
-  z-index:3;
-  left:50%;
-  transform:translateX(-50%);
-  color:transparent;
-  font-size:0;
-  pointer-events:none;
-}
-
-.ww-solve-kicker{
-  top:13.6%;
-  width:70%;
-  margin:0;
-}
-
-.ww-solve-heading{
-  top:21%;
-  width:80%;
-}
-
-.ww-solve-copy{
-  top:42.2%;
-  width:70%;
-}
-
-.ww-solve-warning{
-  top:76.8%;
-  width:70%;
-  border:none;
-}
-
-.ww-solve-button{
-  position:absolute;
-  z-index:5;
-
-  left:50%;
-  top:53.5%;
-
-  transform:translateX(-50%);
-
-  width:53%;
-  height:10.2%;
-
-  border-radius:0;
-
-  background:transparent;
-
-  border:none;
-  box-shadow:none;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:#f0a326;
-
-  text-shadow:
-    0 2px 0 rgba(0,0,0,.85),
-    0 0 10px rgba(255,150,20,.34);
-
-  font-family:"Arial Black","Impact",system-ui,sans-serif;
-  font-size:clamp(1.3rem,2.2vw,2.4rem);
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-
-  text-decoration:none;
-
-  transition:
-    transform .18s ease,
-    filter .18s ease;
-}
-
-.ww-solve-button:hover,
-.ww-solve-button:focus-visible{
-
-  transform:translateX(-50%) scale(1.02);
-
-  filter:
-    brightness(1.08)
-    drop-shadow(0 0 18px rgba(255,177,64,.42));
-
-  outline:none;
-}
-
-.ww-solve-close{
-  position:absolute;
-  z-index:12;
-
-  top:10%;
-  right:4.9%;
-
-  width:34px;
-  height:34px;
-
-  border-radius:999px;
-
-  border:1px solid rgba(215,159,72,.54);
-
-  background:
-    radial-gradient(
-      circle at 34% 28%,
-      rgba(255,218,139,.16),
-      rgba(111,70,22,.18) 34%,
-      rgba(7,7,6,.74) 72%
-    );
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  cursor:pointer;
-
-  color:rgba(244,196,105,.9);
-
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:1.18rem;
-  font-weight:700;
-  line-height:1;
-
-  text-shadow:
-    0 1px 0 rgba(0,0,0,.92),
-    0 0 7px rgba(255,164,48,.2);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    inset 0 -8px 15px rgba(0,0,0,.25),
-    0 3px 10px rgba(0,0,0,.34);
-
-  backdrop-filter:blur(2px);
-
-  transition:
-    transform .18s ease,
-    filter .18s ease,
-    border-color .18s ease,
-    box-shadow .18s ease,
-    color .18s ease;
-}
-
-.ww-solve-close:hover,
-.ww-solve-close:focus-visible{
-  transform:scale(1.06);
-
-  color:rgba(255,214,137,.98);
-
-  border-color:rgba(239,190,98,.78);
-
-  filter:
-    brightness(1.06)
-    drop-shadow(0 0 7px rgba(255,177,64,.22));
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.12),
-    inset 0 -8px 15px rgba(0,0,0,.22),
-    0 3px 13px rgba(0,0,0,.38);
-
-  outline:none;
-}
+.ww-clue-tooltip{ top:33.3%; }
+.ww-life-tooltip{ top:43%; }
+.ww-leader-tooltip{ top:52.7%; }
+.ww-solve-tooltip{ top:66.8%; }
 
 </style>
 
@@ -864,107 +541,40 @@ html,body{
 
     <img class="ww-shell" src="/assets/winterword/shared/BS1.png" alt="WinterWord Base Station" draggable="false">
 
-    <div class="ww-menu-wrap">
-
-      <button class="ww-menu-button" id="wwMenuButton" type="button" aria-label="Open WinterWord menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <div class="ww-menu-panel" id="wwMenuPanel">
-
-        <div class="ww-menu-title">Menu</div>
-
-        <button class="ww-menu-item" id="wwLegalToggle" type="button">
-          Legal
-          <span class="ww-menu-chevron">›</span>
-        </button>
-
-        <div class="ww-legal-submenu" id="wwLegalSubmenu">
-          <a href="/legal/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
-          <a href="/legal/terms-of-use" target="_blank" rel="noopener">Terms of Use</a>
-          <a href="/legal/disclaimer" target="_blank" rel="noopener">Disclaimer</a>
-        </div>
-
-        <a class="ww-menu-link" href="${reportProblemHref}">
-          Site Help
-          <span class="ww-menu-chevron">›</span>
-        </a>
-
-        <a class="ww-menu-link" href="${contactHref}">
-          Contact
-          <span class="ww-menu-chevron">›</span>
-        </a>
-
-        <a class="ww-menu-link" href="${subscribeHref}">
-          Subscribe
-          <span class="ww-menu-chevron">›</span>
-        </a>
-
-      </div>
-
-    </div>
+    <div class="ww-logo-softener"></div>
+    <div class="ww-left-focus"></div>
 
     <div class="ww-title-meta">
-
-      <div class="ww-title-org">
-        ${safeText(seasonLabel)} ✧ 2026 ✧ ${safeText(orgName)}
-      </div>
-
-      <div class="ww-title-main">
-        WINTERWORD
-      </div>
-
-      <div class="ww-title-status">
-        LIVE
-      </div>
+      <div class="ww-title-org">${safeText(seasonLabel)} ✧ ${safeText(orgName)}</div>
+      <div class="ww-title-main">WINTERWORD</div>
+      <div class="ww-title-status">LIVE</div>
 
       <div class="ww-title-sub">
         A letter per week from a wintry scroll.<br>
         Piece them together — reveal the whole.
       </div>
-
     </div>
 
     <div class="ww-left-panel">
-
       <nav class="ww-word-nav">
 
-        <button class="ww-word-link" type="button" data-nav="clues" data-tooltip="clue">
-          CLUE
-        </button>
+        <button class="ww-word-link" type="button" data-nav="clues" data-tooltip="clue">CLUE</button>
 
-        <button class="ww-word-link ${lifelineAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="lifeline" data-tooltip="life" data-disabled="${lifelineAvailable ? "false" : "true"}">
-          LIFE
-        </button>
+        <button class="ww-word-link" type="button" data-nav="lifeline" data-tooltip="life" data-disabled="${lifelineAvailable ? "false" : "true"}">LIFE</button>
 
-        <button class="ww-word-link ${leaderboardAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="leaderboard" data-tooltip="leader" data-disabled="${leaderboardAvailable ? "false" : "true"}">
-          LEAD
-        </button>
+        <button class="ww-word-link" type="button" data-nav="leaderboard" data-tooltip="leader" data-disabled="${leaderboardAvailable ? "false" : "true"}">LEAD</button>
 
         <div class="ww-rule"></div>
 
-        <button class="ww-word-link ww-word-solve" type="button" id="wwSolveOpen" data-tooltip="solve">
-          SOLVE
-        </button>
+        <a class="ww-word-link ww-word-solve" href="${solveHref}" data-tooltip="solve">SOLVE</a>
 
         <div class="ww-rule"></div>
 
         <div class="ww-guidepost">
-
-          <div class="ww-guidepost-title">
-            The Guidepost
-          </div>
-
-          <div class="ww-guidepost-copy">
-            ${guidepostLines}
-          </div>
-
+          <div class="ww-guidepost-title">The Guidepost</div>
+          <div class="ww-guidepost-copy">${guidepostContent}</div>
         </div>
-
       </nav>
-
     </div>
 
     <div class="ww-tooltip ww-clue-tooltip" data-tooltip-card="clue">
@@ -974,126 +584,51 @@ html,body{
 
     <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}" data-tooltip-card="life">
       <span class="ww-tooltip-title">Lifeline</span>
-      ${lifelineAvailable ? "This passage is open. Step carefully." : "This passage waits its moment."}
+      ${lifelineAvailable ? "This passage is open." : "This passage waits its moment."}
     </div>
 
     <div class="ww-tooltip ww-leader-tooltip ${leaderboardAvailable ? "" : "ww-tooltip--locked"}" data-tooltip-card="leader">
       <span class="ww-tooltip-title">Leaderboard</span>
-      ${
-        leaderboardAvailable
-          ? "The WinterWord has been pierced. Footprints are beginning to appear."
-          : `<span class="ww-tooltip-line">No answers received.</span><span class="ww-tooltip-line">No correct ones, anyway...</span>`
-      }
+      ${leaderboardAvailable ? "The board remembers all." : "No answers received yet."}
     </div>
 
     <div class="ww-tooltip ww-solve-tooltip" data-tooltip-card="solve">
       <span class="ww-tooltip-title">Solve</span>
-      Ready?
+      Submit the WinterWord when the answer is clear.
     </div>
 
-    <div class="ww-solve-overlay" id="wwSolveOverlay">
+    <div class="ww-menu">
+      <button class="ww-menu-hotspot" type="button" aria-label="Open menu">
+        <span></span>
+      </button>
 
-      <div class="ww-solve-card">
+      <div class="ww-menu-dropdown">
+        <a href="#" data-nav="welcome">Welcome</a>
+        <a href="${subscribeHref}">Subscribe</a>
+        <a href="${reportProblemHref}">Report a Problem</a>
+        <a href="${contactHref}">Contact</a>
 
-        <button class="ww-solve-close" id="wwSolveClose" type="button" aria-label="Close solve panel">
-          ×
-        </button>
-
-        <div class="ww-solve-kicker">Final Submission</div>
-
-        <div class="ww-solve-heading">The Last Word</div>
-
-        <div class="ww-solve-copy">
-          When the wind quietens,<br>
-          certainty stirs.
+        <div class="ww-legal-wrap">
+          <a href="#">Legal ▸</a>
+          <div class="ww-legal-submenu">
+            <a href="/legal/privacy-policy.html">Privacy Policy</a>
+            <a href="/legal/terms-of-use.html">Terms of Use</a>
+            <a href="/legal/disclaimer.html">Disclaimer</a>
+          </div>
         </div>
-
-        <a class="ww-solve-button" href="${solveHref}" aria-label="Solve WinterWord">
-          SOLVE
-        </a>
-
-        <div class="ww-solve-warning">
-          One word.<br>
-          One chance.<br>
-          Guess wrong, and the silence wins.
-        </div>
-
       </div>
-
     </div>
 
   </div>
 </div>
 `;
 
-  const menuButton =
-    app.querySelector("#wwMenuButton");
-
-  const menuPanel =
-    app.querySelector("#wwMenuPanel");
-
-  const legalToggle =
-    app.querySelector("#wwLegalToggle");
-
-  const legalSubmenu =
-    app.querySelector("#wwLegalSubmenu");
-
-  const closeMenu = () => {
-    if (menuButton) {
-      menuButton.classList.remove("is-open");
-      menuButton.setAttribute("aria-expanded", "false");
-    }
-
-    if (menuPanel) {
-      menuPanel.classList.remove("is-open");
-    }
-
-    if (legalSubmenu) {
-      legalSubmenu.classList.remove("is-open");
-    }
-  };
-
-  if (menuButton && menuPanel) {
-    menuButton.addEventListener("click", (event) => {
-      event.stopPropagation();
-
-      const isOpen =
-        menuPanel.classList.contains("is-open");
-
-      menuPanel.classList.toggle("is-open", !isOpen);
-      menuButton.classList.toggle("is-open", !isOpen);
-      menuButton.setAttribute("aria-expanded", String(!isOpen));
-
-      if (isOpen && legalSubmenu) {
-        legalSubmenu.classList.remove("is-open");
-      }
-    });
-  }
-
-  if (legalToggle && legalSubmenu) {
-    legalToggle.addEventListener("click", (event) => {
-      event.stopPropagation();
-      legalSubmenu.classList.toggle("is-open");
-    });
-  }
-
-  if (menuPanel) {
-    menuPanel.addEventListener("click", (event) => {
-      event.stopPropagation();
-    });
-  }
-
-  document.addEventListener("click", closeMenu);
-
   const navButtons = app.querySelectorAll("[data-nav]");
 
   navButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
-
       const target = button.getAttribute("data-nav");
-
-      const disabled =
-        button.getAttribute("data-disabled") === "true";
+      const disabled = button.getAttribute("data-disabled") === "true";
 
       if (disabled) return;
 
@@ -1102,83 +637,68 @@ html,body{
       if (typeof navigate === "function") {
         navigate(target);
       }
-
     });
   });
 
-  const tooltipTriggers =
-    app.querySelectorAll("[data-tooltip]");
-
-  const tooltipCards =
-    app.querySelectorAll("[data-tooltip-card]");
+  const tooltipTriggers = app.querySelectorAll("[data-tooltip]");
+  const tooltipCards = app.querySelectorAll("[data-tooltip-card]");
 
   const hideTooltips = () => {
-
-    tooltipCards.forEach((card) =>
-      card.classList.remove("is-visible")
-    );
-
+    tooltipCards.forEach((card) => card.classList.remove("is-visible"));
   };
 
   tooltipTriggers.forEach((trigger) => {
-
-    const key =
-      trigger.getAttribute("data-tooltip");
-
-    const card =
-      app.querySelector(
-        '[data-tooltip-card="' + key + '"]'
-      );
+    const key = trigger.getAttribute("data-tooltip");
+    const card = app.querySelector(`[data-tooltip-card="${key}"]`);
 
     trigger.addEventListener("mouseenter", () => {
-
       hideTooltips();
+      if (card) card.classList.add("is-visible");
+    });
 
-      if (card) {
-        card.classList.add("is-visible");
-      }
-
+    trigger.addEventListener("focus", () => {
+      hideTooltips();
+      if (card) card.classList.add("is-visible");
     });
 
     trigger.addEventListener("mouseleave", hideTooltips);
-
+    trigger.addEventListener("blur", hideTooltips);
   });
 
-  const solveOpen =
-    app.querySelector("#wwSolveOpen");
+  const menu = app.querySelector(".ww-menu");
+  const menuHotspot = app.querySelector(".ww-menu-hotspot");
 
-  const solveOverlay =
-    app.querySelector("#wwSolveOverlay");
-
-  const solveClose =
-    app.querySelector("#wwSolveClose");
-
-  if (solveOpen && solveOverlay) {
-
-    solveOpen.addEventListener("click", () => {
-      solveOverlay.classList.add("is-open");
+  if (menu && menuHotspot) {
+    menuHotspot.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      menu.classList.toggle("is-open");
     });
 
-  }
-
-  if (solveClose && solveOverlay) {
-
-    solveClose.addEventListener("click", () => {
-      solveOverlay.classList.remove("is-open");
-    });
-
-  }
-
-  if (solveOverlay) {
-
-    solveOverlay.addEventListener("click", (event) => {
-
-      if (event.target === solveOverlay) {
-        solveOverlay.classList.remove("is-open");
+    document.addEventListener("click", (event) => {
+      if (!menu.contains(event.target)) {
+        menu.classList.remove("is-open");
       }
+    });
+  }
 
+  const stage = app.querySelector("#wwStage");
+
+  if (stage) {
+    stage.addEventListener("pointermove", (event) => {
+      const rect = stage.getBoundingClientRect();
+
+      const x = ((event.clientX - rect.left) / rect.width - .5) * 10;
+      const y = ((event.clientY - rect.top) / rect.height - .5) * 10;
+
+      stage.style.setProperty("--ww-drift-x", `${x}px`);
+      stage.style.setProperty("--ww-drift-y", `${y}px`);
     });
 
+    stage.addEventListener("pointerleave", () => {
+      stage.style.setProperty("--ww-drift-x", "0px");
+      stage.style.setProperty("--ww-drift-y", "0px");
+    });
   }
 
 }
