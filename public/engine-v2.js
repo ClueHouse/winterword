@@ -1,5 +1,5 @@
-// WinterWord Clean Engine v1.3
-// Flash clue now renders as an overlay inside the standard Base Station.
+// WinterWord Clean Engine v1.4
+// Pop clues render as overlays inside the standard Base Station.
 
 (async function winterwordEngine() {
   "use strict";
@@ -267,14 +267,7 @@
       answer: "answer",
 
       lifeline: "lifeline",
-      leaderboard: "leaderboard",
-
-      pop: "pop-clue",
-      "pop-clue": "pop-clue",
-      popclue: "pop-clue",
-      flash: "pop-clue",
-      "flash-clue": "pop-clue",
-      flashclue: "pop-clue"
+      leaderboard: "leaderboard"
     };
 
     return aliases[page] || page;
@@ -313,74 +306,6 @@
       letter: found?.letter || "",
       unlocked: isResolved && clueId <= totalClues
     };
-  }
-
-  function renderPopCluePlaceholder(app, navigate) {
-    app.innerHTML = `
-      <main style="
-        min-height:100vh;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding:40px;
-        background:#10141b;
-        color:#f5f7fb;
-        font-family:Arial,sans-serif;
-        text-align:center;
-        box-sizing:border-box;
-      ">
-        <section style="
-          max-width:680px;
-          padding:34px;
-          border-radius:22px;
-          border:1px solid rgba(240,138,36,0.44);
-          background:rgba(255,255,255,0.07);
-          box-shadow:0 24px 80px rgba(0,0,0,0.35);
-        ">
-          <p style="
-            margin:0 0 10px;
-            color:#f08a24;
-            font-weight:900;
-            letter-spacing:0.22em;
-            text-transform:uppercase;
-          ">
-            Flash Clue
-          </p>
-
-          <h1 style="margin:0 0 16px;font-size:42px;color:#f3f6f9;">
-            Something brief has surfaced.
-          </h1>
-
-          <p style="margin:0 0 26px;font-size:18px;line-height:1.65;color:rgba(214,221,230,0.78);">
-            The signal is live, but the dedicated Flash Clue page has not been dressed yet.
-          </p>
-
-          <button
-            type="button"
-            id="wwBackToBase"
-            style="
-              appearance:none;
-              border:1px solid rgba(240,138,36,0.9);
-              background:#243242;
-              color:#fff;
-              padding:14px 20px;
-              border-radius:10px;
-              font-weight:900;
-              letter-spacing:0.12em;
-              text-transform:uppercase;
-              cursor:pointer;
-            "
-          >
-            Back to Base Station
-          </button>
-        </section>
-      </main>
-    `;
-
-    const back = app.querySelector("#wwBackToBase");
-    if (back) {
-      back.addEventListener("click", () => navigate("base-station"));
-    }
   }
 
   try {
@@ -438,18 +363,15 @@
       orgState.has_leaderboard_entries === true ||
       Number(orgState.leaderboardCount || orgState.leaderboard_count || 0) > 0;
 
-    const flashClueLive =
-      orgState.flash_clue_live === true ||
-      orgState.flash_clue_live === "true" ||
-      orgState.flashClueLive === true ||
-      orgState.flashClueLive === "true";
+    const pop1 =
+      orgState.pop1 === true ||
+      orgState.pop1 === "true";
 
-    const popClueLive =
-      flashClueLive ||
-      orgState.pop_clue_live === true ||
-      orgState.pop_clue_live === "true" ||
-      orgState.popClueLive === true ||
-      orgState.popClueLive === "true";
+    const pop2 =
+      orgState.pop2 === true ||
+      orgState.pop2 === "true";
+
+    const popClueLive = pop1 || pop2;
 
     function navigate(pageName, options = {}) {
       const page = normalisePageName(pageName);
@@ -495,7 +417,8 @@
                 totalClues,
                 lifelineAvailable,
                 lifelineUnlockClue,
-                flashClueLive: false,
+                pop1: false,
+                pop2: false,
                 popClueLive: false,
                 hasLeaderboardEntries,
                 isResolved: true
@@ -529,25 +452,14 @@
               seasonState,
               lifelineAvailable,
               lifelineUnlockClue,
-              flashClueLive,
-              flash_clue_live: flashClueLive,
+              pop1,
+              pop2,
               popClueLive,
-              pop_clue_live: popClueLive,
               hasLeaderboardEntries,
               isResolved: false
             },
             navigate
           );
-          return;
-        }
-
-        case "pop-clue": {
-          if (!popClueLive || isResolved) {
-            navigate("base-station");
-            return;
-          }
-
-          renderPopCluePlaceholder(app, navigate);
           return;
         }
 
@@ -573,7 +485,8 @@
               lifeline_live: orgState.lifeline_live,
               lifelineLive: orgState.lifelineLive,
               org: orgState,
-              flashClueLive,
+              pop1,
+              pop2,
               popClueLive,
               isResolved
             },
@@ -619,7 +532,8 @@
               lifeline_live: orgState.lifeline_live,
               lifelineLive: orgState.lifelineLive,
               org: orgState,
-              flashClueLive,
+              pop1,
+              pop2,
               popClueLive
             },
             navigate
