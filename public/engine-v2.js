@@ -1,12 +1,11 @@
-// WinterWord Clean Engine v1.2
-// Airtable status is now authoritative: complete immediately resolves season.
+// WinterWord Clean Engine v1.3
+// Flash clue now renders as an overlay inside the standard Base Station.
 
 (async function winterwordEngine() {
   "use strict";
 
   const MODULE_PATHS = {
     baseStationStandard: "/modules/renderBaseStationStandard.js",
-    baseStationPop: "/modules/renderBaseStationPop.js",
     baseStationResolved: "/modules/base-station-resolved.js",
     clueList: "/modules/clue-list.js",
     cluePage: "/modules/clue-page.js",
@@ -272,7 +271,10 @@
 
       pop: "pop-clue",
       "pop-clue": "pop-clue",
-      popclue: "pop-clue"
+      popclue: "pop-clue",
+      flash: "pop-clue",
+      "flash-clue": "pop-clue",
+      flashclue: "pop-clue"
     };
 
     return aliases[page] || page;
@@ -342,7 +344,7 @@
             letter-spacing:0.22em;
             text-transform:uppercase;
           ">
-            Pop Clue
+            Flash Clue
           </p>
 
           <h1 style="margin:0 0 16px;font-size:42px;color:#f3f6f9;">
@@ -350,7 +352,7 @@
           </h1>
 
           <p style="margin:0 0 26px;font-size:18px;line-height:1.65;color:rgba(214,221,230,0.78);">
-            The signal is live, but the dedicated Pop Clue page has not been dressed yet.
+            The signal is live, but the dedicated Flash Clue page has not been dressed yet.
           </p>
 
           <button
@@ -436,9 +438,14 @@
       orgState.has_leaderboard_entries === true ||
       Number(orgState.leaderboardCount || orgState.leaderboard_count || 0) > 0;
 
-    const popClueLive =
+    const flashClueLive =
       orgState.flash_clue_live === true ||
       orgState.flash_clue_live === "true" ||
+      orgState.flashClueLive === true ||
+      orgState.flashClueLive === "true";
+
+    const popClueLive =
+      flashClueLive ||
       orgState.pop_clue_live === true ||
       orgState.pop_clue_live === "true" ||
       orgState.popClueLive === true ||
@@ -488,43 +495,10 @@
                 totalClues,
                 lifelineAvailable,
                 lifelineUnlockClue,
-                popClueLive,
+                flashClueLive: false,
+                popClueLive: false,
                 hasLeaderboardEntries,
                 isResolved: true
-              },
-              navigate
-            );
-            return;
-          }
-
-          if (popClueLive) {
-            const renderBaseStationPop =
-              modules.baseStationPop.renderBaseStationPop;
-
-            if (typeof renderBaseStationPop !== "function") {
-              renderError("POP Base Station module error", "renderBaseStationPop was not found.");
-              return;
-            }
-
-            renderBaseStationPop(
-              app,
-              {
-                orgName: orgState.org_name || game.org_name || "WinterWord",
-                seasonLabel: game.season_label || "WINTERWORD • 2026",
-                introLine1: game.base_station_intro_line_1,
-                introLine2: game.base_station_intro_line_2,
-                howParagraphs: game.how_it_works_paragraphs,
-                guidepost: orgState.guidepost || orgState.guidepostText || orgState.updates_content || game.updates_text || "",
-                guidepostText: orgState.guidepost || orgState.guidepostText || orgState.updates_content || game.updates_text || "",
-                updatesText: orgState.guidepost || orgState.guidepostText || orgState.updates_content || game.updates_text || "",
-                currentClue,
-                totalClues,
-                seasonState,
-                lifelineAvailable,
-                lifelineUnlockClue,
-                popClueLive,
-                hasLeaderboardEntries,
-                isResolved: false
               },
               navigate
             );
@@ -555,7 +529,10 @@
               seasonState,
               lifelineAvailable,
               lifelineUnlockClue,
+              flashClueLive,
+              flash_clue_live: flashClueLive,
               popClueLive,
+              pop_clue_live: popClueLive,
               hasLeaderboardEntries,
               isResolved: false
             },
@@ -596,6 +573,7 @@
               lifeline_live: orgState.lifeline_live,
               lifelineLive: orgState.lifelineLive,
               org: orgState,
+              flashClueLive,
               popClueLive,
               isResolved
             },
@@ -640,7 +618,9 @@
               lifelineAvailable,
               lifeline_live: orgState.lifeline_live,
               lifelineLive: orgState.lifelineLive,
-              org: orgState
+              org: orgState,
+              flashClueLive,
+              popClueLive
             },
             navigate
           );
