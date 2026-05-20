@@ -603,7 +603,7 @@ html,body{
   position:absolute;
   z-index:12;
 
-  top:4.6%;
+  top:6%;
   right:4.9%;
 
   width:34px;
