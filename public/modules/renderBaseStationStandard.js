@@ -961,6 +961,9 @@ html,body{
       </button>
 
       <div class="ww-menu-dropdown">
+
+        <a href="#" data-nav="welcome">Welcome</a>
+
         <div class="ww-legal-wrap">
           <a href="#">Legal ▸</a>
           <div class="ww-legal-submenu">
@@ -973,6 +976,7 @@ html,body{
         <a href="${reportProblemHref}">Report a Problem</a>
         <a href="${subscribeHref}">Subscribe</a>
         <a href="${contactHref}">Contact</a>
+
       </div>
     </div>
 
