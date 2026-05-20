@@ -1,7 +1,7 @@
 export async function onRequestGet(context) {
   try {
     const { request, env } = context;
-
+ 
     const url = new URL(request.url);
     const slug = url.searchParams.get("slug");
 
