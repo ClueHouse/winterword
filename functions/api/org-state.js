@@ -1,3 +1,75 @@
+ChatGPT
+
+Pasted text(326).txt
+Document
+is this the only script in the entire winterword script/pages/files that needs amending to facilitate the overlay? 
+
+Pasted text(327).txt
+Document
+1 step at a time okay?  
+
+Pasted text(328).txt
+Document
+
+Generated image: A hidden clue has surfaced
+
+Generated image: A hidden clue has surfaced
+
+Generated image: Clue unlocked: time to act
+
+Generated image: Sci-fi alert UI with glowing triangle
+
+i like these buttons, please replicate.  the sparks and fod behind the triangle were nice too 
+
+Generated image: A hidden clue has surfaced alert
+
+Generated image: A hidden clue has surfaced
+
+Generated image: Hidden chamber puzzle challenge
+
+Excellent.
+
+Next: update org-state so it returns Airtable pop1 and pop2.
+
+Send me your current:
+
+/functions/api/org-state.js
+
+We’ll do that first, then Base Station.
+
+Pasted text(329).txt
+Document
+
+Perfect. 🙂
+
+Replace this section:
+
+flash_clue_live: record.flash_clue_live === true,
+flashClueLive: record.flash_clue_live === true,
+
+with this:
+
+pop1: record.pop1 === true,
+pop2: record.pop2 === true,
+
+So the final section becomes:
+
+lifeline_live: record.lifeline_live === true,
+lifelineLive: record.lifeline_live === true,
+
+pop1: record.pop1 === true,
+pop2: record.pop2 === true,
+
+has_leaderboard_entries: has_leaderboard_entries,
+leaderboard_count: leaderboard_count,
+
+hasLeaderboardEntries: has_leaderboard_entries,
+leaderboardCount: leaderboard_count,
+
+That’s the only change needed in this file.
+
+please return full corrected code
+
 export async function onRequestGet(context) {
   try {
     const { request, env } = context;
@@ -314,8 +386,8 @@ export async function onRequestGet(context) {
       lifeline_live: record.lifeline_live === true,
       lifelineLive: record.lifeline_live === true,
 
-      flash_clue_live: record.flash_clue_live === true,
-      flashClueLive: record.flash_clue_live === true,
+      pop1: record.pop1 === true,
+      pop2: record.pop2 === true,
 
       has_leaderboard_entries: has_leaderboard_entries,
       leaderboard_count: leaderboard_count,
@@ -335,3 +407,5 @@ export async function onRequestGet(context) {
     });
   }
 }
+
+
