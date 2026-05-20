@@ -3,7 +3,7 @@
 
 (async function winterwordEngine() {
   "use strict";
-
+ 
   const MODULE_PATHS = {
     baseStationStandard: "/modules/renderBaseStationStandard.js",
     baseStationResolved: "/modules/base-station-resolved.js",
