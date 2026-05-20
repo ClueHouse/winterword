@@ -173,6 +173,190 @@ html,body{
   text-shadow:0 2px 10px rgba(0,0,0,.9);
 }
 
+.ww-menu-wrap{
+  position:absolute;
+  z-index:80;
+  top:5.2%;
+  right:4.3%;
+  pointer-events:auto;
+}
+
+.ww-menu-button{
+  width:46px;
+  height:46px;
+  border-radius:999px;
+  border:1px solid rgba(207,155,78,.54);
+  background:
+    radial-gradient(circle at 32% 24%, rgba(255,225,157,.14), transparent 34%),
+    linear-gradient(180deg, rgba(34,29,22,.74), rgba(8,9,10,.88));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -12px 22px rgba(0,0,0,.28),
+    0 10px 28px rgba(0,0,0,.32);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  flex-direction:column;
+  cursor:pointer;
+  padding:0;
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    filter .18s ease,
+    box-shadow .18s ease;
+}
+
+.ww-menu-button span{
+  display:block;
+  width:18px;
+  height:2px;
+  border-radius:999px;
+  background:rgba(245,208,135,.88);
+  box-shadow:0 0 8px rgba(255,180,65,.16);
+  transition:
+    transform .18s ease,
+    opacity .18s ease,
+    background .18s ease;
+}
+
+.ww-menu-button:hover,
+.ww-menu-button:focus-visible{
+  transform:translateY(-1px);
+  border-color:rgba(239,190,98,.78);
+  filter:brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.1),
+    inset 0 -12px 22px rgba(0,0,0,.24),
+    0 12px 32px rgba(0,0,0,.36),
+    0 0 16px rgba(255,174,58,.12);
+  outline:none;
+}
+
+.ww-menu-button.is-open span:nth-child(1){
+  transform:translateY(6px) rotate(45deg);
+}
+
+.ww-menu-button.is-open span:nth-child(2){
+  opacity:0;
+}
+
+.ww-menu-button.is-open span:nth-child(3){
+  transform:translateY(-6px) rotate(-45deg);
+}
+
+.ww-menu-panel{
+  position:absolute;
+  top:56px;
+  right:0;
+  width:230px;
+  padding:.8rem;
+  border-radius:1.1rem;
+  border:1px solid rgba(196,139,62,.46);
+  background:
+    radial-gradient(circle at top right, rgba(255,181,74,.09), transparent 42%),
+    linear-gradient(180deg, rgba(18,22,28,.94), rgba(6,8,12,.96));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 20px 46px rgba(0,0,0,.44);
+  backdrop-filter:blur(8px);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(-8px) scale(.98);
+  transform-origin:top right;
+  transition:
+    opacity .18s ease,
+    transform .18s ease;
+}
+
+.ww-menu-panel.is-open{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0) scale(1);
+}
+
+.ww-menu-title{
+  padding:.35rem .55rem .62rem;
+  margin-bottom:.35rem;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:.78rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(255,218,150,.84);
+  border-bottom:1px solid rgba(255,202,120,.16);
+}
+
+.ww-menu-link,
+.ww-menu-item{
+  width:100%;
+  min-height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.75rem;
+  padding:.55rem .62rem;
+  border:0;
+  border-radius:.7rem;
+  background:transparent;
+  color:rgba(255,255,255,.86);
+  text-decoration:none;
+  font-size:.82rem;
+  line-height:1.25;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:800;
+  cursor:pointer;
+  transition:
+    background .16s ease,
+    color .16s ease,
+    transform .16s ease;
+}
+
+.ww-menu-link:hover,
+.ww-menu-link:focus-visible,
+.ww-menu-item:hover,
+.ww-menu-item:focus-visible{
+  background:rgba(255,194,92,.09);
+  color:#fff1cc;
+  transform:translateX(-2px);
+  outline:none;
+}
+
+.ww-menu-chevron{
+  color:rgba(255,202,120,.68);
+  font-size:.9rem;
+}
+
+.ww-legal-submenu{
+  display:none;
+  margin:.2rem 0 .35rem;
+  padding:.25rem .35rem .35rem .75rem;
+  border-left:1px solid rgba(255,202,120,.18);
+}
+
+.ww-legal-submenu.is-open{
+  display:block;
+}
+
+.ww-legal-submenu a{
+  display:block;
+  padding:.42rem .45rem;
+  border-radius:.55rem;
+  color:rgba(255,255,255,.7);
+  text-decoration:none;
+  font-size:.72rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:800;
+}
+
+.ww-legal-submenu a:hover,
+.ww-legal-submenu a:focus-visible{
+  background:rgba(255,194,92,.08);
+  color:#fff1cc;
+  outline:none;
+}
+
 .ww-left-panel{
   position:absolute;
   z-index:24;
@@ -680,6 +864,48 @@ html,body{
 
     <img class="ww-shell" src="/assets/winterword/shared/BS1.png" alt="WinterWord Base Station" draggable="false">
 
+    <div class="ww-menu-wrap">
+
+      <button class="ww-menu-button" id="wwMenuButton" type="button" aria-label="Open WinterWord menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="ww-menu-panel" id="wwMenuPanel">
+
+        <div class="ww-menu-title">Menu</div>
+
+        <button class="ww-menu-item" id="wwLegalToggle" type="button">
+          Legal
+          <span class="ww-menu-chevron">›</span>
+        </button>
+
+        <div class="ww-legal-submenu" id="wwLegalSubmenu">
+          <a href="/legal/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+          <a href="/legal/terms-of-use" target="_blank" rel="noopener">Terms of Use</a>
+          <a href="/legal/disclaimer" target="_blank" rel="noopener">Disclaimer</a>
+        </div>
+
+        <a class="ww-menu-link" href="${reportProblemHref}">
+          Site Help
+          <span class="ww-menu-chevron">›</span>
+        </a>
+
+        <a class="ww-menu-link" href="${contactHref}">
+          Contact
+          <span class="ww-menu-chevron">›</span>
+        </a>
+
+        <a class="ww-menu-link" href="${subscribeHref}">
+          Subscribe
+          <span class="ww-menu-chevron">›</span>
+        </a>
+
+      </div>
+
+    </div>
+
     <div class="ww-title-meta">
 
       <div class="ww-title-org">
@@ -799,6 +1025,65 @@ html,body{
   </div>
 </div>
 `;
+
+  const menuButton =
+    app.querySelector("#wwMenuButton");
+
+  const menuPanel =
+    app.querySelector("#wwMenuPanel");
+
+  const legalToggle =
+    app.querySelector("#wwLegalToggle");
+
+  const legalSubmenu =
+    app.querySelector("#wwLegalSubmenu");
+
+  const closeMenu = () => {
+    if (menuButton) {
+      menuButton.classList.remove("is-open");
+      menuButton.setAttribute("aria-expanded", "false");
+    }
+
+    if (menuPanel) {
+      menuPanel.classList.remove("is-open");
+    }
+
+    if (legalSubmenu) {
+      legalSubmenu.classList.remove("is-open");
+    }
+  };
+
+  if (menuButton && menuPanel) {
+    menuButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      const isOpen =
+        menuPanel.classList.contains("is-open");
+
+      menuPanel.classList.toggle("is-open", !isOpen);
+      menuButton.classList.toggle("is-open", !isOpen);
+      menuButton.setAttribute("aria-expanded", String(!isOpen));
+
+      if (isOpen && legalSubmenu) {
+        legalSubmenu.classList.remove("is-open");
+      }
+    });
+  }
+
+  if (legalToggle && legalSubmenu) {
+    legalToggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      legalSubmenu.classList.toggle("is-open");
+    });
+  }
+
+  if (menuPanel) {
+    menuPanel.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+  }
+
+  document.addEventListener("click", closeMenu);
 
   const navButtons = app.querySelectorAll("[data-nav]");
 
