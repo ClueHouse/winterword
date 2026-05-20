@@ -550,7 +550,7 @@ html,body{
   z-index:5;
 
   left:50%;
-  top:55.2%;
+  top:53%;
 
   transform:translateX(-50%);
 
@@ -603,7 +603,7 @@ html,body{
   position:absolute;
   z-index:8;
 
-  top:2%;
+  top:4.5%;
   right:6.1%;
 
   width:7%;
