@@ -153,13 +153,79 @@ html,body{
   content:"";
   height:1px;
   flex:1;
+  position:relative;
+  overflow:hidden;
+
   background:
     linear-gradient(
       90deg,
       rgba(240,215,167,.14),
       rgba(240,215,167,.58),
       rgba(240,215,167,.14)
+    ),
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.92),
+      transparent
     );
+
+  background-size:
+    100% 100%,
+    34% 100%;
+
+  background-repeat:no-repeat;
+
+  box-shadow:
+    0 0 8px rgba(255,190,95,.18);
+}
+
+.ww-title-status::before{
+  background-position:
+    center,
+    -60% 0;
+
+  animation:wwStatusSweepLeft 4.6s ease-in-out infinite;
+}
+
+.ww-title-status::after{
+  background-position:
+    center,
+    160% 0;
+
+  animation:wwStatusSweepRight 4.6s ease-in-out infinite;
+}
+
+@keyframes wwStatusSweepLeft{
+
+  0%,18%{
+    background-position:
+      center,
+      -60% 0;
+  }
+
+  58%,100%{
+    background-position:
+      center,
+      160% 0;
+  }
+
+}
+
+@keyframes wwStatusSweepRight{
+
+  0%,18%{
+    background-position:
+      center,
+      160% 0;
+  }
+
+  58%,100%{
+    background-position:
+      center,
+      -60% 0;
+  }
+
 }
 
 .ww-title-sub{
