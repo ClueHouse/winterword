@@ -43,11 +43,40 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
 
   const encodedOrgName = encodeURIComponent(mailSafeOrgName);
 
+  const reportProblemBody = encodeURIComponent(
+`SET THE SCENE:
+Which page were you on?
+
+PLOT TWIST:
+What went wrong?
+
+ALTERNATE ENDING:
+What did you expect to happen?
+
+YOUR TRAVELLER’S GEAR:
+Which device + browser you brought on this journey.
+
+Thanks for sharing — we’ll follow the trail and set things right.`
+  );
+
+  const subscribeBody = encodeURIComponent(
+`Sign me up.
+
+The winter hush is starting to feel personal.
+
+Statistically, this probably ends with me squinting at maps at midnight.
+
+I understand that I’ll only receive signals relevant to this journey.
+If I ever feel that my inbox is snowed under, I can use this email to unsub at any time.
+
+Somewhere, a clue just noticed me looking back.`
+  );
+
   const reportProblemHref =
-    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}`;
+    `mailto:fix@cluehouse.co.nz?subject=WinterWord%20Issue%20-%20${encodedOrgName}&body=${reportProblemBody}`;
 
   const subscribeHref =
-    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}`;
+    `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}&body=${subscribeBody}`;
 
   const solveHref =
     `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026`;
@@ -299,23 +328,25 @@ html,body{
 }
 
 .ww-menu-dropdown,
-.ww-legal-submenu{
+.ww-house-submenu{
   position:absolute;
-  min-width:220px;
+  min-width:240px;
   padding:.55rem;
   border:1px solid rgba(224,155,32,.46);
-  border-radius:.85rem;
-  background:rgba(3,8,13,.94);
+  border-radius:.95rem;
+  background:rgba(3,8,13,.95);
   box-shadow:0 22px 54px rgba(0,0,0,.62);
   opacity:0;
   pointer-events:none;
-  transition:opacity 150ms ease, transform 150ms ease;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
 }
 
 .ww-menu-dropdown{
-  top:calc(100% + .7rem);
+  top:calc(100% + .8rem);
   right:0;
-  transform:translateY(-4px);
+  transform:translateY(-8px);
 }
 
 .ww-menu.is-open .ww-menu-dropdown{
@@ -324,43 +355,98 @@ html,body{
   transform:translateY(0);
 }
 
-.ww-legal-wrap{
+.ww-house-wrap{
   position:relative;
 }
 
-.ww-legal-submenu{
+.ww-house-submenu{
   top:0;
   right:calc(100% + .55rem);
-  transform:translateX(4px);
+  transform:translateX(6px);
 }
 
-.ww-legal-wrap:hover .ww-legal-submenu,
-.ww-legal-wrap:focus-within .ww-legal-submenu{
+.ww-house-wrap:hover .ww-house-submenu,
+.ww-house-wrap:focus-within .ww-house-submenu{
   opacity:1;
   pointer-events:auto;
   transform:translateX(0);
 }
 
+.ww-menu-title{
+  padding:.72rem .9rem .8rem;
+  margin-bottom:.2rem;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:#f0d7a7;
+  border-bottom:1px solid rgba(255,197,111,.16);
+}
+
 .ww-menu-dropdown a,
-.ww-legal-submenu a{
+.ww-house-submenu a{
   display:block;
-  padding:.72rem .86rem;
-  border-radius:.55rem;
+  padding:.78rem .9rem;
+  border-radius:.6rem;
   color:rgba(255,244,224,.92);
   text-decoration:none;
   font-size:.78rem;
   font-weight:850;
   letter-spacing:.12em;
   text-transform:uppercase;
+  transition:
+    background .14s ease,
+    color .14s ease,
+    transform .14s ease;
 }
 
 .ww-menu-dropdown a:hover,
 .ww-menu-dropdown a:focus-visible,
-.ww-legal-submenu a:hover,
-.ww-legal-submenu a:focus-visible{
+.ww-house-submenu a:hover,
+.ww-house-submenu a:focus-visible{
   background:rgba(224,155,32,.15);
   color:#f2b24c;
+  transform:translateX(2px);
   outline:none;
+}
+
+.ww-avalanche{
+  position:relative;
+}
+
+.ww-avalanche-tooltip{
+  position:absolute;
+  right:105%;
+  top:50%;
+  transform:translateY(-50%);
+  white-space:nowrap;
+
+  padding:.55rem .75rem;
+
+  border:1px solid rgba(255,255,255,.92);
+  border-radius:.7rem;
+
+  background:rgba(255,255,255,.97);
+  color:#111;
+
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.06em;
+
+  box-shadow:0 14px 36px rgba(0,0,0,.38);
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:
+    opacity .14s ease,
+    transform .14s ease;
+}
+
+.ww-avalanche:hover .ww-avalanche-tooltip,
+.ww-avalanche:focus-within .ww-avalanche-tooltip{
+  opacity:1;
+  transform:translateY(-50%) translateX(-2px);
 }
 
 .ww-left-panel{
@@ -574,295 +660,6 @@ html,body{
   text-shadow:0 2px 10px rgba(0,0,0,.92);
 }
 
-.ww-tooltip{
-  position:absolute;
-  z-index:100;
-  left:26.7%;
-  width:18%;
-  min-width:190px;
-  padding:.82rem .92rem;
-  border:1px solid rgba(230,230,230,.92);
-  border-radius:.75rem;
-  background:rgba(255,255,255,.96);
-  color:rgba(0,0,0,.88);
-  font-size:clamp(9px,.72vw,13px);
-  line-height:1.42;
-  box-shadow:0 16px 44px rgba(0,0,0,.38);
-  opacity:0;
-  pointer-events:none;
-  transform:translateY(-50%) translateX(-6px);
-  transition:opacity 150ms ease, transform 150ms ease;
-}
-
-.ww-tooltip.is-visible{
-  opacity:1;
-  transform:translateY(-50%) translateX(0);
-}
-
-.ww-tooltip--locked{
-  background:
-    linear-gradient(
-      180deg,
-      rgba(158,38,45,.96),
-      rgba(104,18,25,.98)
-    );
-
-  color:#fff;
-}
-
-.ww-tooltip-title{
-  display:block;
-  margin-bottom:.32rem;
-  font-size:1.08em;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  font-weight:900;
-}
-
-.ww-tooltip-line{
-  display:block;
-}
-
-.ww-tooltip-line + .ww-tooltip-line{
-  margin-top:.22rem;
-}
-
-.ww-clue-tooltip{ top:33%; }
-.ww-life-tooltip{ top:38%; }
-.ww-leader-tooltip{ top:44%; }
-.ww-solve-tooltip{ top:55%; }
-
-.ww-solve-overlay{
-  position:fixed;
-  inset:0;
-  z-index:400;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  padding:4vh 4vw;
-
-  background:
-    radial-gradient(circle at top right, rgba(218,162,50,.16), transparent 34%),
-    radial-gradient(circle at bottom left, rgba(70,110,165,.24), transparent 42%),
-    rgba(0,0,0,.74);
-
-  backdrop-filter:blur(11px);
-
-  opacity:0;
-  pointer-events:none;
-
-  transition:opacity .25s ease;
-}
-
-.ww-solve-overlay.is-open{
-  opacity:1;
-  pointer-events:auto;
-}
-
-.ww-solve-card{
-  width:min(46vw,380px);
-  aspect-ratio:3 / 4;
-
-  position:relative;
-
-  overflow:visible;
-
-  background-image:url("/assets/winterword/shared/lastword.png");
-  background-size:contain;
-  background-repeat:no-repeat;
-  background-position:center;
-
-  border:none;
-  border-radius:0;
-
-  box-shadow:none;
-
-  text-align:center;
-
-  padding:0;
-
-  transform:translateY(10px) scale(.985);
-
-  transition:transform .25s ease;
-}
-
-.ww-solve-overlay.is-open .ww-solve-card{
-  transform:translateY(0) scale(1);
-}
-
-.ww-solve-card::before{
-  display:none;
-}
-
-.ww-solve-card::after{
-  display:none;
-}
-
-.ww-solve-kicker,
-.ww-solve-heading,
-.ww-solve-copy,
-.ww-solve-warning{
-  position:absolute;
-  z-index:3;
-  left:50%;
-  transform:translateX(-50%);
-  color:transparent;
-  font-size:0;
-  pointer-events:none;
-}
-
-.ww-solve-kicker{
-  top:13.6%;
-  width:70%;
-  margin:0;
-}
-
-.ww-solve-heading{
-  top:21%;
-  width:80%;
-}
-
-.ww-solve-copy{
-  top:42.2%;
-  width:70%;
-}
-
-.ww-solve-warning{
-  top:76.8%;
-  width:70%;
-  border:none;
-}
-
-.ww-solve-button{
-  position:absolute;
-  z-index:5;
-
-  left:50%;
-  top:53.5%;
-
-  transform:translateX(-50%);
-
-  width:53%;
-  height:10.2%;
-
-  border-radius:0;
-
-  background:transparent;
-
-  border:none;
-  box-shadow:none;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:#f0a326;
-
-  text-shadow:
-    0 2px 0 rgba(0,0,0,.85),
-    0 0 10px rgba(255,150,20,.34);
-
-  font-family:"Arial Black","Impact",system-ui,sans-serif;
-  font-size:clamp(1.3rem,2.2vw,2.4rem);
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-
-  text-decoration:none;
-
-  transition:
-    transform .18s ease,
-    filter .18s ease;
-}
-
-.ww-solve-button:hover,
-.ww-solve-button:focus-visible{
-
-  transform:translateX(-50%) scale(1.02);
-
-  filter:
-    brightness(1.08)
-    drop-shadow(0 0 18px rgba(255,177,64,.42));
-
-  outline:none;
-}
-
-.ww-solve-close{
-  position:absolute;
-  z-index:12;
-
-  top:10%;
-  right:4.9%;
-
-  width:34px;
-  height:34px;
-
-  border-radius:999px;
-
-  border:1px solid rgba(215,159,72,.54);
-
-  background:
-    radial-gradient(
-      circle at 34% 28%,
-      rgba(255,218,139,.16),
-      rgba(111,70,22,.18) 34%,
-      rgba(7,7,6,.74) 72%
-    );
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  cursor:pointer;
-
-  color:rgba(244,196,105,.9);
-
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:1.18rem;
-  font-weight:700;
-  line-height:1;
-
-  text-shadow:
-    0 1px 0 rgba(0,0,0,.92),
-    0 0 7px rgba(255,164,48,.2);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    inset 0 -8px 15px rgba(0,0,0,.25),
-    0 3px 10px rgba(0,0,0,.34);
-
-  backdrop-filter:blur(2px);
-
-  transition:
-    transform .18s ease,
-    filter .18s ease,
-    border-color .18s ease,
-    box-shadow .18s ease,
-    color .18s ease;
-}
-
-.ww-solve-close:hover,
-.ww-solve-close:focus-visible{
-  transform:scale(1.06);
-
-  color:rgba(255,214,137,.98);
-
-  border-color:rgba(239,190,98,.78);
-
-  filter:
-    brightness(1.06)
-    drop-shadow(0 0 7px rgba(255,177,64,.22));
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.12),
-    inset 0 -8px 15px rgba(0,0,0,.22),
-    0 3px 13px rgba(0,0,0,.38);
-
-  outline:none;
-}
-
 </style>
 
 <div id="wwPortal">
@@ -895,21 +692,21 @@ html,body{
 
       <nav class="ww-word-nav">
 
-        <button class="ww-word-link" type="button" data-nav="clues" data-tooltip="clue">
+        <button class="ww-word-link" type="button" data-nav="clues">
           CLUE
         </button>
 
-        <button class="ww-word-link ${lifelineAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="lifeline" data-tooltip="life" data-disabled="${lifelineAvailable ? "false" : "true"}">
+        <button class="ww-word-link ${lifelineAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="lifeline" data-disabled="${lifelineAvailable ? "false" : "true"}">
           LIFE
         </button>
 
-        <button class="ww-word-link ${leaderboardAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="leaderboard" data-tooltip="leader" data-disabled="${leaderboardAvailable ? "false" : "true"}">
+        <button class="ww-word-link ${leaderboardAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="leaderboard" data-disabled="${leaderboardAvailable ? "false" : "true"}">
           LEAD
         </button>
 
         <div class="ww-rule"></div>
 
-        <button class="ww-word-link ww-word-solve" type="button" id="wwSolveOpen" data-tooltip="solve">
+        <button class="ww-word-link ww-word-solve" type="button" id="wwSolveOpen">
           SOLVE
         </button>
 
@@ -931,80 +728,62 @@ html,body{
 
     </div>
 
-    <div class="ww-tooltip ww-clue-tooltip" data-tooltip-card="clue">
-      <span class="ww-tooltip-title">Clues</span>
-      Each of your upcoming clues is designed to reveal just enough to move you forward — and hide the rest where only patience can reach it.
-    </div>
-
-    <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}" data-tooltip-card="life">
-      <span class="ww-tooltip-title">Lifeline</span>
-      ${lifelineAvailable ? "This passage is open. Step carefully." : "This passage waits its moment."}
-    </div>
-
-    <div class="ww-tooltip ww-leader-tooltip ${leaderboardAvailable ? "" : "ww-tooltip--locked"}" data-tooltip-card="leader">
-      <span class="ww-tooltip-title">Leaderboard</span>
-      ${
-        leaderboardAvailable
-          ? "The WinterWord has been pierced. Footprints are beginning to appear."
-          : `<span class="ww-tooltip-line">No answers received.</span><span class="ww-tooltip-line">No correct ones, anyway...</span>`
-      }
-    </div>
-
-    <div class="ww-tooltip ww-solve-tooltip" data-tooltip-card="solve">
-      <span class="ww-tooltip-title">Solve</span>
-      Ready?
-    </div>
-
     <div class="ww-menu">
+
       <button class="ww-menu-hotspot" type="button" aria-label="Open menu">
         <span></span>
       </button>
 
       <div class="ww-menu-dropdown">
 
-        <a href="#" data-nav="welcome">Welcome</a>
+        <div class="ww-menu-title">
+          THE LANTERN
+        </div>
 
-        <div class="ww-legal-wrap">
-          <a href="#">Legal ▸</a>
-          <div class="ww-legal-submenu">
-            <a href="/legal/privacy-policy.html">Privacy Policy</a>
-            <a href="/legal/terms-of-use.html">Terms of Use</a>
-            <a href="/legal/disclaimer.html">Disclaimer</a>
+        <a href="#" data-nav="welcome">
+          Welcome
+        </a>
+
+        <a href="${subscribeHref}">
+          Subscribe
+        </a>
+
+        <div class="ww-avalanche">
+          <a href="${reportProblemHref}">
+            AVALANCHE!
+          </a>
+
+          <div class="ww-avalanche-tooltip">
+            Report a problem.
           </div>
         </div>
 
-        <a href="${reportProblemHref}">Report a Problem</a>
-        <a href="${subscribeHref}">Subscribe</a>
-        <a href="${contactHref}">Contact</a>
-
-      </div>
-    </div>
-
-    <div class="ww-solve-overlay" id="wwSolveOverlay">
-
-      <div class="ww-solve-card">
-
-        <button class="ww-solve-close" id="wwSolveClose" type="button" aria-label="Close solve panel">
-          ×
-        </button>
-
-        <div class="ww-solve-kicker">Final Submission</div>
-
-        <div class="ww-solve-heading">The Last Word</div>
-
-        <div class="ww-solve-copy">
-          When the wind quietens,<br>
-          certainty stirs.
-        </div>
-
-        <a class="ww-solve-button" href="${solveHref}" aria-label="Solve WinterWord">
-          SOLVE
+        <a href="${contactHref}">
+          Contact
         </a>
 
-        <div class="ww-solve-warning">
-          One word.<br>
-          One chance.<br>
-          Guess wrong, and the silence wins.
+        <div class="ww-house-wrap">
+
+          <a href="#">
+            House Rules ▸
+          </a>
+
+          <div class="ww-house-submenu">
+
+            <a href="/legal/privacy-policy.html" target="_blank" rel="noopener">
+              Privacy Policy
+            </a>
+
+            <a href="/legal/terms-of-use.html" target="_blank" rel="noopener">
+              Terms of Use
+            </a>
+
+            <a href="/legal/disclaimer.html" target="_blank" rel="noopener">
+              Disclaimer
+            </a>
+
+          </div>
+
         </div>
 
       </div>
@@ -1018,6 +797,7 @@ html,body{
   const navButtons = app.querySelectorAll("[data-nav]");
 
   navButtons.forEach((button) => {
+
     button.addEventListener("click", (event) => {
 
       const target = button.getAttribute("data-nav");
@@ -1029,59 +809,18 @@ html,body{
 
       event.preventDefault();
 
+      const menu =
+        app.querySelector(".ww-menu");
+
+      if (menu) {
+        menu.classList.remove("is-open");
+      }
+
       if (typeof navigate === "function") {
         navigate(target);
       }
 
     });
-  });
-
-  const tooltipTriggers =
-    app.querySelectorAll("[data-tooltip]");
-
-  const tooltipCards =
-    app.querySelectorAll("[data-tooltip-card]");
-
-  const hideTooltips = () => {
-
-    tooltipCards.forEach((card) =>
-      card.classList.remove("is-visible")
-    );
-
-  };
-
-  tooltipTriggers.forEach((trigger) => {
-
-    const key =
-      trigger.getAttribute("data-tooltip");
-
-    const card =
-      app.querySelector(
-        '[data-tooltip-card="' + key + '"]'
-      );
-
-    trigger.addEventListener("mouseenter", () => {
-
-      hideTooltips();
-
-      if (card) {
-        card.classList.add("is-visible");
-      }
-
-    });
-
-    trigger.addEventListener("focus", () => {
-
-      hideTooltips();
-
-      if (card) {
-        card.classList.add("is-visible");
-      }
-
-    });
-
-    trigger.addEventListener("mouseleave", hideTooltips);
-    trigger.addEventListener("blur", hideTooltips);
 
   });
 
@@ -1094,50 +833,18 @@ html,body{
   if (menu && menuHotspot) {
 
     menuHotspot.addEventListener("click", (event) => {
+
       event.preventDefault();
       event.stopPropagation();
+
       menu.classList.toggle("is-open");
+
     });
 
     document.addEventListener("click", (event) => {
+
       if (!menu.contains(event.target)) {
         menu.classList.remove("is-open");
-      }
-    });
-
-  }
-
-  const solveOpen =
-    app.querySelector("#wwSolveOpen");
-
-  const solveOverlay =
-    app.querySelector("#wwSolveOverlay");
-
-  const solveClose =
-    app.querySelector("#wwSolveClose");
-
-  if (solveOpen && solveOverlay) {
-
-    solveOpen.addEventListener("click", () => {
-      solveOverlay.classList.add("is-open");
-    });
-
-  }
-
-  if (solveClose && solveOverlay) {
-
-    solveClose.addEventListener("click", () => {
-      solveOverlay.classList.remove("is-open");
-    });
-
-  }
-
-  if (solveOverlay) {
-
-    solveOverlay.addEventListener("click", (event) => {
-
-      if (event.target === solveOverlay) {
-        solveOverlay.classList.remove("is-open");
       }
 
     });
