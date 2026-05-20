@@ -477,7 +477,7 @@ html,body{
 
   position:relative;
 
-  overflow:hidden;
+  overflow:visible;
 
   background-image:url("/assets/winterword/shared/lastword.png");
   background-size:contain;
@@ -601,38 +601,74 @@ html,body{
 
 .ww-solve-close{
   position:absolute;
-  z-index:8;
+  z-index:12;
 
-  top:4.5%;
-  right:6.1%;
+  top:4.6%;
+  right:4.9%;
 
-  width:7%;
-  aspect-ratio:1;
+  width:34px;
+  height:34px;
 
   border-radius:999px;
 
-  border:none;
-  background:transparent;
+  border:1px solid rgba(215,159,72,.54);
 
-  color:transparent;
+  background:
+    radial-gradient(
+      circle at 34% 28%,
+      rgba(255,218,139,.16),
+      rgba(111,70,22,.18) 34%,
+      rgba(7,7,6,.74) 72%
+    );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
   cursor:pointer;
 
-  box-shadow:none;
+  color:rgba(244,196,105,.9);
+
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:1.18rem;
+  font-weight:700;
+  line-height:1;
+
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.92),
+    0 0 7px rgba(255,164,48,.2);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -8px 15px rgba(0,0,0,.25),
+    0 3px 10px rgba(0,0,0,.34);
+
+  backdrop-filter:blur(2px);
 
   transition:
     transform .18s ease,
-    filter .18s ease;
+    filter .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    color .18s ease;
 }
 
 .ww-solve-close:hover,
 .ww-solve-close:focus-visible{
-
   transform:scale(1.06);
 
+  color:rgba(255,214,137,.98);
+
+  border-color:rgba(239,190,98,.78);
+
   filter:
-    brightness(1.08)
-    drop-shadow(0 0 12px rgba(255,177,64,.36));
+    brightness(1.06)
+    drop-shadow(0 0 7px rgba(255,177,64,.22));
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -8px 15px rgba(0,0,0,.22),
+    0 3px 13px rgba(0,0,0,.38);
 
   outline:none;
 }
@@ -733,7 +769,9 @@ html,body{
 
       <div class="ww-solve-card">
 
-        <button class="ww-solve-close" id="wwSolveClose" type="button" aria-label="Close solve panel">✕</button>
+        <button class="ww-solve-close" id="wwSolveClose" type="button" aria-label="Close solve panel">
+          ×
+        </button>
 
         <div class="ww-solve-kicker">Final Submission</div>
 
