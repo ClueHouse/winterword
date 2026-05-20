@@ -10,7 +10,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     lifelineAvailable = false,
     hasLeaderboardEntries = false
   } = data;
-
+ 
   const leaderboardAvailable = hasLeaderboardEntries === true;
 
   const safeText = (value, fallback = "") =>
