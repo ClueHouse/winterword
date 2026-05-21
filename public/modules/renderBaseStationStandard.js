@@ -1019,6 +1019,7 @@ html,body{
 
   outline:none;
 }
+
 .ww-pop-alert-overlay{
   position:fixed;
   inset:0;
@@ -1105,13 +1106,20 @@ html,body{
     0 0 10px rgba(255,115,30,.32);
 
   transition:
+    transform .15s ease,
     filter .15s ease,
     opacity .15s ease;
 }
 
 .ww-pop-alert-action:hover,
 .ww-pop-alert-action:focus-visible{
-  filter:brightness(1.12) drop-shadow(0 0 14px rgba(255,165,55,.42));
+
+  transform:scale(1.08);
+
+  filter:
+    brightness(1.22)
+    drop-shadow(0 0 14px rgba(255,165,55,.42));
+
   outline:none;
 }
 
@@ -1219,6 +1227,13 @@ html,body{
     border-color .15s ease;
 }
 
+.ww-pop-clue-close:hover,
+.ww-pop-clue-close:focus-visible{
+  transform:scale(1.06);
+  filter:brightness(1.08) drop-shadow(0 0 10px rgba(255,153,42,.28));
+  border-color:rgba(255,220,158,.82);
+  outline:none;
+}
 .ww-pop-clue-close:hover,
 .ww-pop-clue-close:focus-visible{
   transform:scale(1.06);
