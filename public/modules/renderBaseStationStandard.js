@@ -1075,7 +1075,7 @@ html,body{
 .ww-pop-alert-actions{
   position:absolute;
   left:50%;
-  bottom:16.5%;
+  bottom:30%;
   transform:translateX(-50%);
   width:48%;
   display:grid;
