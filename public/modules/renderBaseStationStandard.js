@@ -1161,7 +1161,6 @@ html,body{
 
   transition:opacity .28s ease;
 }
-
 .ww-pop-clue-overlay.is-open{
   opacity:1;
   pointer-events:auto;
@@ -1234,13 +1233,7 @@ html,body{
   border-color:rgba(255,220,158,.82);
   outline:none;
 }
-.ww-pop-clue-close:hover,
-.ww-pop-clue-close:focus-visible{
-  transform:scale(1.06);
-  filter:brightness(1.08) drop-shadow(0 0 10px rgba(255,153,42,.28));
-  border-color:rgba(255,220,158,.82);
-  outline:none;
-}
+
 .ww-pop-submit{
   position:absolute;
   z-index:4;
@@ -1282,6 +1275,10 @@ html,body{
     transform .16s ease,
     filter .16s ease,
     box-shadow .16s ease;
+}
+
+.ww-pop-submit-pop2{
+  bottom:10vh;
 }
 
 .ww-pop-submit:hover,
@@ -1336,7 +1333,6 @@ html,body{
   }
 
 }
-
 </style>
 
 <div id="wwPortal">
