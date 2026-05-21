@@ -1075,7 +1075,7 @@ html,body{
 .ww-pop-alert-actions{
   position:absolute;
   left:50%;
-  bottom:25.5%;
+  bottom:26%;
   transform:translateX(-50%);
   width:50%;
   display:grid;
@@ -1117,6 +1117,11 @@ font-size:clamp(18px,1.5vw,30px);
   text-shadow:
     0 1px 0 rgba(0,0,0,.9),
     0 0 10px rgba(255,115,30,.32);
+}
+
+.ww-pop-alert-close{
+  position:relative;
+  left:8px;
 }
 
 .ww-pop-clue-overlay{
