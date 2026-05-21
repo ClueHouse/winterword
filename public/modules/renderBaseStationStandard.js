@@ -11,14 +11,45 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     hasLeaderboardEntries = false,
     pop1 = false,
     pop2 = false,
-    popClueLive = false
+    popClueLive = false,
+    season_start = "",
+    drop_frequency = "weekly"
   } = data;
 
-const leaderboardAvailable =
-  hasLeaderboardEntries === true ||
-  hasLeaderboardEntries === "true" ||
-  hasLeaderboardEntries === 1 ||
-  hasLeaderboardEntries === "1";
+  const leaderboardAvailable =
+    hasLeaderboardEntries === true ||
+    hasLeaderboardEntries === "true" ||
+    hasLeaderboardEntries === 1 ||
+    hasLeaderboardEntries === "1";
+
+  const seasonStartDate = new Date(season_start);
+
+  const totalClues = 12;
+
+  const dropDays =
+    drop_frequency === "weekly"
+      ? 7
+      : drop_frequency === "daily"
+        ? 1
+        : drop_frequency === "quarter_hourly"
+          ? (15 / 1440)
+          : 7;
+
+  const seasonEndDate = new Date(
+    seasonStartDate.getTime() +
+    ((totalClues - 1) * dropDays * 24 * 60 * 60 * 1000)
+  );
+
+  const startYear =
+    seasonStartDate.getFullYear();
+
+  const endYear =
+    seasonEndDate.getFullYear();
+
+  const seasonYearLabel =
+    startYear === endYear
+      ? `${startYear}`
+      : `${startYear}/${String(endYear).slice(-2)}`;
 
   const pop1Live =
     pop1 === true ||
@@ -132,7 +163,7 @@ The WinterWord is:`
   );
 
   const solveHref =
-    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026&body=${solveBody}`;
+    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%20${seasonYearLabel}&body=${solveBody}`;
 
   const popSubmitHref =
     `mailto:ice@cluehouse.co.nz?subject=${encodeURIComponent(`${activePop?.subject || "BLACK ICE DETECTED"} — ${mailSafeOrgName}`)}&body=${popSubmitBody}`;
