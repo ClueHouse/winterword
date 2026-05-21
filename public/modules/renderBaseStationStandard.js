@@ -1497,7 +1497,7 @@ html,body{
 
     <div class="ww-solve-overlay" id="wwSolveOverlay">
 
-      <div class="ww-solve-card">
+   <div class="ww-solve-card">
 
         <button class="ww-solve-close" id="wwSolveClose" type="button" aria-label="Close solve panel">
           ×
@@ -1561,7 +1561,7 @@ html,body{
                 ×
               </button>
 
-              <a class="ww-pop-submit" id="wwPopSubmit" href="${popSubmitHref}" aria-label="Submit Black Ice answer">
+              <a class="ww-pop-submit ${activePop.key === "pop2" ? "ww-pop-submit-pop2" : ""}" id="wwPopSubmit" href="${popSubmitHref}" aria-label="Submit Black Ice answer">
                 SUBMIT ANSWER
               </a>
 
@@ -1599,7 +1599,6 @@ html,body{
       if (menu) {
         menu.classList.remove("is-open");
       }
-
       if (typeof navigate === "function") {
         navigate(target);
       }
