@@ -1278,7 +1278,7 @@ html,body{
 }
 
 .ww-pop-submit-pop2{
-  bottom:7vh;
+  bottom:7.5vh;
 }
 
 .ww-pop-submit:hover,
