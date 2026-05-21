@@ -123,8 +123,16 @@ I believe the solution is:`
   const subscribeHref =
     `mailto:opt@cluehouse.co.nz?subject=WinterWord%20Subscribe%20-%20${encodedOrgName}&body=${subscribeBody}`;
 
+  const solveBody = encodeURIComponent(
+`I have chased this word all winter.
+
+The path ends here.
+
+The WinterWord is:`
+  );
+
   const solveHref =
-    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026`;
+    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026&body=${solveBody}`;
 
   const popSubmitHref =
     `mailto:ice@cluehouse.co.nz?subject=${encodeURIComponent(`${activePop?.subject || "BLACK ICE DETECTED"} — ${mailSafeOrgName}`)}&body=${popSubmitBody}`;
@@ -143,7 +151,6 @@ html,body{
   width:100%;
   height:100%;
 }
-
 #wwPortal{
   width:100vw;
   height:100vh;
