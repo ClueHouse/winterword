@@ -106,11 +106,11 @@ Somewhere, a clue just noticed me looking back.`
   );
 
   const popSubmitBody = encodeURIComponent(
-`The ice appeared without warning.
+The ice arrived without warning.
+Others have also noticed.
+Can you answer first?
 
-Fresh tracks are already forming.
-
-I believe the answer is:`
+I believe the solution is:
   );
 
   const reportProblemHref =
