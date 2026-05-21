@@ -37,7 +37,7 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
             key: "pop2",
             number: "2",
             image: "/assets/winterword/shared/pop2.png",
-            subject: "BLACK ICE DETECTED"
+            subject: "BLACK ICE DETECTED (2)"
           }
         : null;
 
