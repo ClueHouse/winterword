@@ -1122,7 +1122,7 @@ font-size:clamp(18px,1.5vw,30px);
 
 .ww-pop-alert-close{
   position:relative;
-  left:-6px;
+  left:-12px;
 }
 
 .ww-pop-clue-overlay{
