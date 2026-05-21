@@ -106,11 +106,11 @@ Somewhere, a clue just noticed me looking back.`
   );
 
   const popSubmitBody = encodeURIComponent(
-The ice arrived without warning.
+`The ice arrived without warning.
 Others have also noticed.
 Can you answer first?
 
-I believe the solution is:
+I believe the solution is:`
   );
 
   const reportProblemHref =
