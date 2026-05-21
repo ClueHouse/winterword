@@ -14,7 +14,11 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     popClueLive = false
   } = data;
 
-  const leaderboardAvailable = hasLeaderboardEntries === true;
+const leaderboardAvailable =
+  hasLeaderboardEntries === true ||
+  hasLeaderboardEntries === "true" ||
+  hasLeaderboardEntries === 1 ||
+  hasLeaderboardEntries === "1";
 
   const pop1Live =
     pop1 === true ||
