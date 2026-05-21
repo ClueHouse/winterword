@@ -1075,9 +1075,9 @@ html,body{
 .ww-pop-alert-actions{
   position:absolute;
   left:50%;
-  bottom:27%;
+  bottom:25.5%;
   transform:translateX(-50%);
-  width:48%;
+  width:50%;
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:4.8%;
@@ -1093,7 +1093,7 @@ html,body{
   min-height:42px;
   cursor:pointer;
   color:#140b05;
-font-size:clamp(20px,1.5vw,30px);
+font-size:clamp(18px,1.5vw,30px);
   line-height:1;
   font-weight:950;
   letter-spacing:.16em;
