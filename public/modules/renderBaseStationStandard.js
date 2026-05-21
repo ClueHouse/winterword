@@ -30,14 +30,14 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
           key: "pop1",
           number: "1",
           image: "/assets/winterword/shared/pop1.png",
-          subject: "WinterWord Pop 1 Answer"
+          subject: "BLACK ICE DETECTED"
         }
       : pop2Live
         ? {
             key: "pop2",
             number: "2",
             image: "/assets/winterword/shared/pop2.png",
-            subject: "WinterWord Pop 2 Answer"
+            subject: "BLACK ICE DETECTED"
           }
         : null;
 
@@ -106,11 +106,11 @@ Somewhere, a clue just noticed me looking back.`
   );
 
   const popSubmitBody = encodeURIComponent(
-`POP CLUE ANSWER:
-Your answer goes here.
+`The ice appeared without warning.
 
-PLAYER NAME:
-Your name goes here.`
+Fresh tracks are already forming.
+
+I believe the answer is:`
   );
 
   const reportProblemHref =
@@ -123,7 +123,7 @@ Your name goes here.`
     `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%202026`;
 
   const popSubmitHref =
-    `mailto:key@cluehouse.co.nz?subject=${encodeURIComponent(`${activePop?.subject || "WinterWord Pop Answer"} - ${mailSafeOrgName} - 2026`)}&body=${popSubmitBody}`;
+    `mailto:ice@cluehouse.co.nz?subject=${encodeURIComponent(`${activePop?.subject || "BLACK ICE DETECTED"} — ${mailSafeOrgName}`)}&body=${popSubmitBody}`;
 
   const contactHref =
     `mailto:hq@cluehouse.co.nz?subject=Clue%20House%20Enquiry`;
@@ -583,7 +583,8 @@ html,body{
   font-size:clamp(23px,1.64vw,32px);
   font-weight:700;
   line-height:1;
-  letter-spacing:.34em;
+
+    letter-spacing:.34em;
   text-transform:uppercase;
   color:rgba(250,250,247,.95);
   text-shadow:0 2px 10px rgba(0,0,0,.88);
@@ -1085,12 +1086,15 @@ html,body{
 
 .ww-pop-alert-action{
   appearance:none;
+  position:relative;
+  top:0;
   border:none;
   background:transparent;
   min-height:42px;
   cursor:pointer;
   color:#140b05;
   font-size:clamp(12px,.96vw,18px);
+  line-height:1;
   font-weight:950;
   letter-spacing:.16em;
   text-transform:uppercase;
@@ -1143,16 +1147,18 @@ html,body{
 
 .ww-pop-clue-frame{
   position:relative;
-  width:100vw;
-  height:100vh;
+  width:min(70vw,1180px);
+  max-height:80vh;
   display:flex;
   align-items:center;
   justify-content:center;
+  transform:translateY(-4vh);
 }
 
 .ww-pop-clue-img{
-  width:100vw;
-  height:100vh;
+  width:100%;
+  max-height:80vh;
+  height:auto;
   object-fit:contain;
   user-select:none;
   pointer-events:none;
@@ -1163,8 +1169,9 @@ html,body{
 .ww-pop-clue-close{
   position:absolute;
   z-index:4;
-  top:3.2vh;
-  right:3.2vw;
+
+    top:-18px;
+  right:-18px;
 
   width:44px;
   height:44px;
@@ -1277,9 +1284,19 @@ html,body{
     letter-spacing:.12em;
   }
 
+  .ww-pop-clue-frame{
+    width:94vw;
+    max-height:78vh;
+    transform:translateY(-3vh);
+  }
+
+  .ww-pop-clue-img{
+    max-height:78vh;
+  }
+
   .ww-pop-clue-close{
-    top:2vh;
-    right:4vw;
+    top:-12px;
+    right:-6px;
     width:38px;
     height:38px;
   }
@@ -1488,15 +1505,15 @@ html,body{
 
             <div class="ww-pop-alert-card">
 
-              <img class="ww-pop-alert-img" src="/assets/winterword/shared/popalert.png" alt="A hidden clue has surfaced" draggable="false">
+              <img class="ww-pop-alert-img" src="/assets/winterword/shared/popalert.png" alt="Black Ice alert" draggable="false">
 
               <div class="ww-pop-alert-actions">
 
-                <button class="ww-pop-alert-action ww-pop-alert-view" id="wwPopView" type="button" aria-label="View hidden clue">
+                <button class="ww-pop-alert-action ww-pop-alert-view" id="wwPopView" type="button" aria-label="View Black Ice clue">
                   VIEW
                 </button>
 
-                <button class="ww-pop-alert-action ww-pop-alert-close" id="wwPopAlertClose" type="button" aria-label="Close hidden clue alert">
+                <button class="ww-pop-alert-action ww-pop-alert-close" id="wwPopAlertClose" type="button" aria-label="Close Black Ice alert">
                   CLOSE
                 </button>
 
@@ -1510,13 +1527,13 @@ html,body{
 
             <div class="ww-pop-clue-frame">
 
-              <img class="ww-pop-clue-img" src="${activePop.image}" alt="WinterWord hidden clue ${activePop.number}" draggable="false">
+              <img class="ww-pop-clue-img" src="${activePop.image}" alt="Black Ice clue" draggable="false">
 
-              <button class="ww-pop-clue-close" id="wwPopClueClose" type="button" aria-label="Close hidden clue">
+              <button class="ww-pop-clue-close" id="wwPopClueClose" type="button" aria-label="Close Black Ice clue">
                 ×
               </button>
 
-              <a class="ww-pop-submit" id="wwPopSubmit" href="${popSubmitHref}" aria-label="Submit hidden clue answer">
+              <a class="ww-pop-submit" id="wwPopSubmit" href="${popSubmitHref}" aria-label="Submit Black Ice answer">
                 SUBMIT ANSWER
               </a>
 
