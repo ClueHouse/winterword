@@ -1090,6 +1090,7 @@ html,body{
   top:0;
   border:none;
   background:transparent;
+  color:#ffc56f;
   min-height:42px;
   cursor:pointer;
   color:#140b05;
@@ -1121,7 +1122,7 @@ font-size:clamp(18px,1.5vw,30px);
 
 .ww-pop-alert-close{
   position:relative;
-  left:0px;
+  left:-6px;
 }
 
 .ww-pop-clue-overlay{
