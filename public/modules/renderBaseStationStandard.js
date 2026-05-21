@@ -1019,7 +1019,6 @@ html,body{
 
   outline:none;
 }
-
 .ww-pop-alert-overlay{
   position:fixed;
   inset:0;
@@ -1090,39 +1089,48 @@ html,body{
   top:0;
   border:none;
   background:transparent;
-  color:#ffc56f;
   min-height:42px;
   cursor:pointer;
-  color:#140b05;
-font-size:clamp(18px,1.5vw,30px);
+
+  color:#ffc56f;
+
+  font-size:clamp(18px,1.5vw,30px);
   line-height:1;
   font-weight:950;
   letter-spacing:.16em;
   text-transform:uppercase;
-  text-shadow:0 1px 0 rgba(255,234,192,.42);
+
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.9),
+    0 0 10px rgba(255,115,30,.32);
+
   transition:
-    transform .15s ease,
     filter .15s ease,
     opacity .15s ease;
 }
 
 .ww-pop-alert-action:hover,
 .ww-pop-alert-action:focus-visible{
-  transform:translateY(-1px) scale(1.02);
   filter:brightness(1.12) drop-shadow(0 0 14px rgba(255,165,55,.42));
   outline:none;
 }
 
-.ww-pop-alert-close{
-  color:rgba(255,231,192,.9);
-  text-shadow:
-    0 1px 0 rgba(0,0,0,.9),
-    0 0 10px rgba(255,115,30,.32);
+.ww-pop-alert-view{
+  position:relative;
+  left:0;
+  top:0;
 }
 
 .ww-pop-alert-close{
   position:relative;
-  left:-12px;
+  left:-20px;
+  top:0;
+
+  color:#ffc56f;
+
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.9),
+    0 0 10px rgba(255,115,30,.32);
 }
 
 .ww-pop-clue-overlay{
@@ -1176,7 +1184,7 @@ font-size:clamp(18px,1.5vw,30px);
   position:absolute;
   z-index:4;
 
-    top:-18px;
+  top:-18px;
   right:-18px;
 
   width:44px;
@@ -1218,7 +1226,6 @@ font-size:clamp(18px,1.5vw,30px);
   border-color:rgba(255,220,158,.82);
   outline:none;
 }
-
 .ww-pop-submit{
   position:absolute;
   z-index:4;
