@@ -35,10 +35,10 @@ export function renderAnswerList(app, data = {}, navigate) {
         color:var(--ww-ink);
         background:
           radial-gradient(circle at 18% 12%, rgba(255,255,255,0.95), transparent 24%),
-          radial-gradient(circle at 83% 8%, rgba(255,226,162,0.35), transparent 26%),
-          radial-gradient(circle at 70% 82%, rgba(168,190,137,0.18), transparent 30%),
+          radial-gradient(circle at 83% 8%, rgba(255,226,162,0.32), transparent 26%),
+          radial-gradient(circle at 70% 82%, rgba(168,190,137,0.16), transparent 30%),
           linear-gradient(135deg,#fff8ec 0%, #f3e4cc 42%, #dfcaa9 100%);
-        padding:2rem;
+        padding:1rem;
         overflow-x:hidden;
       }
 
@@ -48,11 +48,11 @@ export function renderAnswerList(app, data = {}, navigate) {
         inset:0;
         pointer-events:none;
         background:
-          linear-gradient(90deg, rgba(255,255,255,0.28), transparent 18%, transparent 78%, rgba(119,84,42,0.08)),
+          linear-gradient(90deg, rgba(255,255,255,0.24), transparent 18%, transparent 78%, rgba(119,84,42,0.07)),
           repeating-linear-gradient(
             0deg,
-            rgba(96,64,32,0.025) 0px,
-            rgba(96,64,32,0.025) 1px,
+            rgba(96,64,32,0.022) 0px,
+            rgba(96,64,32,0.022) 1px,
             transparent 1px,
             transparent 5px
           );
@@ -61,26 +61,26 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       .ww-answer-shell{
         position:relative;
-        max-width:88rem;
+        max-width:78rem;
         margin:0 auto;
-        min-height:calc(100vh - 4rem);
-        border-radius:2rem;
+        min-height:calc(100vh - 2rem);
+        border-radius:1.55rem;
         overflow:hidden;
         background:
-          linear-gradient(180deg, rgba(255,255,255,0.64), rgba(255,248,235,0.45));
+          linear-gradient(180deg, rgba(255,255,255,0.64), rgba(255,248,235,0.42));
         box-shadow:
-          0 30px 90px rgba(91,61,28,0.24),
+          0 22px 70px rgba(91,61,28,0.22),
           inset 0 0 0 1px rgba(255,255,255,0.76);
         backdrop-filter:blur(10px);
       }
 
       .ww-answer-content{
         position:relative;
-        min-height:calc(100vh - 4rem);
-        padding:2.35rem 2.4rem;
+        min-height:calc(100vh - 2rem);
+        padding:1.45rem 1.55rem;
         display:grid;
-        grid-template-columns:7rem minmax(0,1fr);
-        gap:2.1rem;
+        grid-template-columns:6rem minmax(0,1fr);
+        gap:1.35rem;
       }
 
       .ww-side{
@@ -88,15 +88,15 @@ export function renderAnswerList(app, data = {}, navigate) {
         flex-direction:column;
         align-items:center;
         justify-content:center;
-        gap:2.4rem;
-        padding:.8rem 0;
+        gap:1.8rem;
+        padding:.5rem 0;
       }
 
       .ww-side-logo{
         display:flex;
         flex-direction:column;
         align-items:center;
-        gap:.8rem;
+        gap:.7rem;
         text-decoration:none;
         cursor:pointer;
         background:none;
@@ -105,7 +105,7 @@ export function renderAnswerList(app, data = {}, navigate) {
       }
 
       .ww-side-logo img{
-        width:9.8rem;
+        width:7.6rem;
         max-width:none;
         display:block;
         background:transparent !important;
@@ -114,14 +114,14 @@ export function renderAnswerList(app, data = {}, navigate) {
       }
 
       .ww-divider{
-        width:42px;
+        width:34px;
         height:1px;
         background:rgba(83,58,33,0.28);
       }
 
       .ww-side-label{
-        font-size:.68rem;
-        letter-spacing:.2em;
+        font-size:.62rem;
+        letter-spacing:.19em;
         text-transform:uppercase;
         font-weight:900;
         color:#5f4a34;
@@ -130,26 +130,26 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       .ww-word-btn{
         position:relative;
-        width:10.3rem;
-        padding:1rem .85rem 1.04rem;
+        width:8.7rem;
+        padding:.82rem .7rem .86rem;
         border:none;
         border-radius:999px;
         cursor:pointer;
         text-align:center;
         color:#fffdf7;
-        font:900 .66rem/1.22 system-ui,-apple-system,"Segoe UI",sans-serif;
-        letter-spacing:.15em;
+        font:900 .58rem/1.22 system-ui,-apple-system,"Segoe UI",sans-serif;
+        letter-spacing:.14em;
         text-transform:uppercase;
         background:
           linear-gradient(180deg, rgba(255,255,255,0.26), rgba(255,255,255,0.04)),
           linear-gradient(145deg, #b68b45, #7d5b2f);
         box-shadow:
-          0 16px 32px rgba(91,61,28,0.28),
+          0 12px 24px rgba(91,61,28,0.24),
           inset 0 1px 0 rgba(255,255,255,0.32),
           inset 0 0 0 1px rgba(255,255,255,0.2);
         transition:transform .22s ease, box-shadow .22s ease, filter .22s ease;
         overflow:hidden;
-        margin-top:.5rem;
+        margin-top:.2rem;
       }
 
       .ww-word-btn::before{
@@ -188,7 +188,7 @@ export function renderAnswerList(app, data = {}, navigate) {
       }
 
       .ww-word-btn .ww-word-line + .ww-word-line{
-        margin-top:.18rem;
+        margin-top:.14rem;
       }
 
       .ww-main{
@@ -198,11 +198,11 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       .ww-gallery{
         width:100%;
-        border-radius:1.7rem;
+        border-radius:1.35rem;
         position:relative;
         overflow:hidden;
         background:
-          radial-gradient(circle at 20% 0%, rgba(255,255,255,0.86), transparent 30%),
+          radial-gradient(circle at 20% 0%, rgba(255,255,255,0.82), transparent 30%),
           linear-gradient(180deg, rgba(255,255,255,0.48), rgba(255,248,235,0.2));
         box-shadow:
           inset 0 0 0 1px rgba(255,255,255,0.65);
@@ -214,51 +214,51 @@ export function renderAnswerList(app, data = {}, navigate) {
         inset:0;
         pointer-events:none;
         background:
-          radial-gradient(circle at 10% 20%, rgba(181,138,69,0.1), transparent 28%),
-          radial-gradient(circle at 90% 80%, rgba(111,128,97,0.12), transparent 32%);
+          radial-gradient(circle at 10% 20%, rgba(181,138,69,0.09), transparent 28%),
+          radial-gradient(circle at 90% 80%, rgba(111,128,97,0.1), transparent 32%);
       }
 
       .ww-gallery-inner{
         position:relative;
         z-index:1;
-        padding:2.8rem 2.5rem 3rem;
+        padding:1.95rem 1.85rem 2.15rem;
       }
 
       .ww-head{
         text-align:center;
-        max-width:52rem;
-        margin:0 auto 2.3rem;
+        max-width:48rem;
+        margin:0 auto 1.55rem;
       }
 
       .ww-title{
-        margin:0 0 .65rem;
+        margin:0 0 .48rem;
         font-weight:1000;
         letter-spacing:.22em;
         text-transform:uppercase;
-        font-size:clamp(1.55rem,2.3vw,2.45rem);
+        font-size:clamp(1.35rem,1.85vw,2.05rem);
         color:#3c2b1c;
       }
 
       .ww-status{
-        font-size:.74rem;
-        letter-spacing:.22em;
+        font-size:.64rem;
+        letter-spacing:.2em;
         text-transform:uppercase;
-        margin-bottom:.85rem;
+        margin-bottom:.62rem;
         color:#8b6a35;
         font-weight:900;
       }
 
       .ww-intro{
-        font-size:.98rem;
+        font-size:.86rem;
         color:var(--ww-soft);
-        line-height:1.6;
+        line-height:1.5;
       }
 
       .ww-grid{
         display:grid;
         grid-template-columns:repeat(4, minmax(0, 1fr));
         grid-auto-flow:dense;
-        gap:1.25rem;
+        gap:.85rem;
         align-items:start;
       }
 
@@ -266,13 +266,13 @@ export function renderAnswerList(app, data = {}, navigate) {
         position:relative;
         border:0;
         cursor:pointer;
-        padding:.58rem .58rem .82rem;
-        border-radius:1rem;
+        padding:.42rem .42rem .58rem;
+        border-radius:.78rem;
         background:
           linear-gradient(180deg, #fffef9, #f8eddc);
         box-shadow:
-          0 18px 36px rgba(91,61,28,0.18),
-          0 5px 12px rgba(91,61,28,0.12),
+          0 12px 24px rgba(91,61,28,0.15),
+          0 4px 9px rgba(91,61,28,0.1),
           inset 0 0 0 1px rgba(255,255,255,0.82);
         transform:rotate(var(--tilt, 0deg));
         transition:
@@ -281,38 +281,38 @@ export function renderAnswerList(app, data = {}, navigate) {
           filter .24s ease;
       }
 
-      .ww-card:nth-child(1){ --tilt:-1.6deg; grid-column:span 2; }
-      .ww-card:nth-child(2){ --tilt:1.2deg; }
-      .ww-card:nth-child(3){ --tilt:-.8deg; }
-      .ww-card:nth-child(4){ --tilt:1.5deg; }
-      .ww-card:nth-child(5){ --tilt:-1.1deg; }
-      .ww-card:nth-child(6){ --tilt:.7deg; grid-column:span 2; }
-      .ww-card:nth-child(7){ --tilt:1.4deg; }
-      .ww-card:nth-child(8){ --tilt:-1.4deg; }
-      .ww-card:nth-child(9){ --tilt:.9deg; grid-column:span 2; }
-      .ww-card:nth-child(10){ --tilt:-.7deg; }
-      .ww-card:nth-child(11){ --tilt:1.1deg; }
-      .ww-card:nth-child(12){ --tilt:-1.2deg; grid-column:span 2; }
+      .ww-card:nth-child(1){ --tilt:-1.2deg; grid-column:span 2; }
+      .ww-card:nth-child(2){ --tilt:1deg; }
+      .ww-card:nth-child(3){ --tilt:-.7deg; }
+      .ww-card:nth-child(4){ --tilt:1.1deg; }
+      .ww-card:nth-child(5){ --tilt:-.8deg; }
+      .ww-card:nth-child(6){ --tilt:.6deg; grid-column:span 2; }
+      .ww-card:nth-child(7){ --tilt:1deg; }
+      .ww-card:nth-child(8){ --tilt:-1deg; }
+      .ww-card:nth-child(9){ --tilt:.7deg; grid-column:span 2; }
+      .ww-card:nth-child(10){ --tilt:-.6deg; }
+      .ww-card:nth-child(11){ --tilt:.9deg; }
+      .ww-card:nth-child(12){ --tilt:-.9deg; grid-column:span 2; }
 
       .ww-card::before{
         content:"";
         position:absolute;
         left:50%;
-        top:-.56rem;
-        width:3.2rem;
-        height:1.1rem;
-        border-radius:.16rem;
+        top:-.38rem;
+        width:2.5rem;
+        height:.78rem;
+        border-radius:.14rem;
         background:rgba(216,195,154,0.58);
-        box-shadow:0 2px 8px rgba(91,61,28,0.13);
+        box-shadow:0 2px 7px rgba(91,61,28,0.12);
         transform:translateX(-50%) rotate(calc(var(--tilt, 0deg) * -1));
         z-index:3;
       }
 
       .ww-card:hover{
-        transform:translateY(-6px) rotate(0deg);
+        transform:translateY(-4px) rotate(0deg);
         box-shadow:
-          0 26px 54px rgba(91,61,28,0.25),
-          0 8px 16px rgba(91,61,28,0.16),
+          0 20px 42px rgba(91,61,28,0.22),
+          0 6px 13px rgba(91,61,28,0.14),
           inset 0 0 0 1px rgba(255,255,255,0.9);
         filter:brightness(1.025);
         z-index:5;
@@ -320,9 +320,9 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       .ww-thumb{
         width:100%;
-        aspect-ratio:1.32 / .86;
+        aspect-ratio:1.34 / .78;
         overflow:hidden;
-        border-radius:.72rem;
+        border-radius:.56rem;
         background:#eadfcf;
         box-shadow:inset 0 0 0 1px rgba(90,61,35,0.1);
       }
@@ -331,7 +331,7 @@ export function renderAnswerList(app, data = {}, navigate) {
       .ww-card:nth-child(6) .ww-thumb,
       .ww-card:nth-child(9) .ww-thumb,
       .ww-card:nth-child(12) .ww-thumb{
-        aspect-ratio:1.78 / .92;
+        aspect-ratio:1.72 / .78;
       }
 
       .ww-thumb img{
@@ -342,9 +342,9 @@ export function renderAnswerList(app, data = {}, navigate) {
       }
 
       .ww-meta{
-        padding:.72rem .45rem 0;
-        font-size:.72rem;
-        letter-spacing:.18em;
+        padding:.52rem .35rem 0;
+        font-size:.61rem;
+        letter-spacing:.17em;
         text-transform:uppercase;
         text-align:center;
         color:#715436;
@@ -372,9 +372,9 @@ export function renderAnswerList(app, data = {}, navigate) {
       }
 
       .ww-modal-panel{
-        width:min(34rem, 92vw);
-        padding:2.35rem 2rem;
-        border-radius:1.7rem;
+        width:min(32rem, 92vw);
+        padding:2.1rem 1.8rem;
+        border-radius:1.5rem;
         text-align:center;
         background:
           radial-gradient(circle at 25% 0%, rgba(255,255,255,0.9), transparent 35%),
@@ -386,7 +386,7 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       .ww-modal-kicker-line{
         display:block;
-        font-size:.64rem;
+        font-size:.62rem;
         font-weight:900;
         letter-spacing:.28em;
         text-transform:uppercase;
@@ -395,7 +395,7 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       .ww-modal-word{
         margin-top:.75rem;
-        font-size:clamp(1.8rem,5vw,2.75rem);
+        font-size:clamp(1.7rem,5vw,2.55rem);
         font-weight:1000;
         letter-spacing:.14em;
         text-transform:uppercase;
@@ -403,7 +403,14 @@ export function renderAnswerList(app, data = {}, navigate) {
       }
 
       @media (max-width:1100px){
-        .ww-grid{grid-template-columns:repeat(3,1fr);}
+        .ww-answer-shell{
+          max-width:70rem;
+        }
+
+        .ww-grid{
+          grid-template-columns:repeat(3,1fr);
+        }
+
         .ww-card:nth-child(1),
         .ww-card:nth-child(6),
         .ww-card:nth-child(9),
@@ -415,14 +422,14 @@ export function renderAnswerList(app, data = {}, navigate) {
         .ww-card:nth-child(6) .ww-thumb,
         .ww-card:nth-child(9) .ww-thumb,
         .ww-card:nth-child(12) .ww-thumb{
-          aspect-ratio:1.32 / .86;
+          aspect-ratio:1.34 / .78;
         }
       }
 
       @media (max-width:820px){
         .ww-answer-content{
           grid-template-columns:1fr;
-          gap:1.4rem;
+          gap:1rem;
         }
 
         .ww-side{
@@ -432,11 +439,11 @@ export function renderAnswerList(app, data = {}, navigate) {
         }
 
         .ww-side-logo img{
-          width:7.7rem;
+          width:6.6rem;
         }
 
         .ww-word-btn{
-          width:9.3rem;
+          width:8.4rem;
         }
 
         .ww-grid{
@@ -446,15 +453,15 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       @media (max-width:560px){
         .ww-answer-list{
-          padding:1rem;
+          padding:.7rem;
         }
 
         .ww-answer-content{
-          padding:1.1rem;
+          padding:.85rem;
         }
 
         .ww-gallery-inner{
-          padding:2rem 1.1rem;
+          padding:1.65rem .9rem;
         }
 
         .ww-grid{
