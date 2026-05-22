@@ -175,7 +175,17 @@ export async function onRequestGet(context) {
 
     const current_clue = calculateCurrentClue();
 
+    //
+    // ⭐ FIXED SEASON VISIBILITY LOGIC
+    // If Airtable does NOT include is_visible, we treat it as TRUE.
+    //
     function getSeasonState() {
+
+      const isVisible = record.is_visible ?? true;
+
+      if (!isVisible) {
+        return "hidden";
+      }
 
       if (record.status === "paused") {
         return "paused";
