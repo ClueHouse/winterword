@@ -152,10 +152,10 @@ export function renderAnswerList(app, data = {}, navigate) {
     #c49758;
 
   --ww-orange:
-    #d08a36;
+    #d88a31;
 
   --ww-orange-deep:
-    #96531d;
+    #9a541a;
 
   --ww-orange-shadow:
     rgba(92,44,8,0.28);
@@ -194,29 +194,29 @@ body{
 
     radial-gradient(
       circle at 50% 0%,
-      rgba(255,255,255,0.72),
+      rgba(255,255,255,0.82),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(255,239,203,0.25),
       transparent 28%
     ),
 
     radial-gradient(
-      circle at 82% 12%,
-      rgba(255,245,218,0.16),
-      transparent 24%
-    ),
-
-    radial-gradient(
-      circle at 14% 82%,
-      rgba(255,223,176,0.12),
-      transparent 30%
+      circle at 82% 72%,
+      rgba(255,234,190,0.2),
+      transparent 34%
     ),
 
     linear-gradient(
       135deg,
-      #d8e7de 0%,
-      #bfd4c8 20%,
-      #e4ede3 48%,
-      #bfd3c7 74%,
-      #97b2a2 100%
+      #e8f0e8 0%,
+      #d8e6dc 18%,
+      #edf2e9 43%,
+      #cfe1d6 70%,
+      #abc6b8 100%
     );
 
 }
@@ -233,42 +233,42 @@ body{
 
     repeating-linear-gradient(
       0deg,
-      rgba(0,0,0,0.018) 0px,
-      rgba(0,0,0,0.018) 1px,
+      rgba(0,0,0,0.014) 0px,
+      rgba(0,0,0,0.014) 1px,
       transparent 1px,
       transparent 5px
     );
 
-  opacity:.36;
+  opacity:.34;
 }
 
 #wwAnswerPage::after{
   content:"";
 
-  position:absolute;
+  position:fixed;
 
   left:50%;
   top:50%;
 
-  width:min(82vw, 1100px);
+  width:min(118vw, 1700px);
   aspect-ratio:1 / 1;
 
   transform:
-    translate(-50%, -42%);
+    translate(-50%, -50%);
 
   background:
     url("/assets/winterword/shared/logo.png")
     center center / contain
     no-repeat;
 
-  opacity:.045;
+  opacity:.052;
 
   filter:
-    blur(7px)
+    blur(18px)
     sepia(1)
-    saturate(2.1)
+    saturate(2.15)
     hue-rotate(352deg)
-    brightness(.62);
+    brightness(.56);
 
   pointer-events:none;
 }
@@ -278,13 +278,13 @@ body{
   position:relative;
   z-index:2;
 
-  width:min(100%, 1220px);
+  width:min(100%, 1280px);
 
   margin:0 auto;
 
   padding:
-    1.2rem
     2rem
+    2.2rem
     2.6rem;
 
 }
@@ -295,7 +295,7 @@ body{
 
   text-align:center;
 
-  margin-bottom:2rem;
+  margin-bottom:1.55rem;
 
 }
 
@@ -310,14 +310,14 @@ body{
 
   font-size:
     clamp(
-      2.8rem,
-      5.3vw,
-      5.4rem
+      2.9rem,
+      5.5vw,
+      5.7rem
     );
 
-  line-height:.9;
+  line-height:.88;
 
-  letter-spacing:.015em;
+  letter-spacing:.012em;
 
   text-transform:uppercase;
 
@@ -327,59 +327,34 @@ body{
     rgba(58,39,26,0.92);
 
   text-shadow:
-    0 1px 0 rgba(255,255,255,0.18),
-    0 10px 24px rgba(12,30,24,0.08);
-
-}
-
-.ww-answer-logo{
-
-  width:
-    clamp(
-      5.2rem,
-      8vw,
-      7.8rem
-    );
-
-  display:block;
-
-  margin:
-    .55rem auto
-    .45rem;
-
-  filter:
-    sepia(1)
-    saturate(2)
-    hue-rotate(352deg)
-    brightness(.68);
-
-  opacity:.94;
+    0 1px 0 rgba(255,255,255,0.22),
+    0 12px 28px rgba(12,30,24,0.09);
 
 }
 
 .ww-answer-season{
 
-  margin-top:.2rem;
+  margin-top:.72rem;
 
   font-family:
     Georgia,
     "Times New Roman",
     serif;
 
-  font-size:.78rem;
+  font-size:.82rem;
 
   font-weight:700;
 
-  line-height:1;
+  line-height:1.15;
 
-  letter-spacing:.72em;
+  letter-spacing:.32em;
 
   text-transform:uppercase;
 
   color:
-    rgba(114,82,48,0.86);
+    rgba(114,82,48,0.9);
 
-  padding-left:.72em;
+  padding-left:.32em;
 
 }
 
@@ -390,11 +365,11 @@ body{
   align-items:center;
   justify-content:center;
 
-  gap:1rem;
+  gap:.86rem;
 
   margin:
-    .8rem auto
-    .7rem;
+    .68rem auto
+    .55rem;
 
 }
 
@@ -403,14 +378,14 @@ body{
 
   content:"";
 
-  width:6rem;
+  width:5.2rem;
   height:1px;
 
   background:
     linear-gradient(
       90deg,
       transparent,
-      rgba(108,77,42,0.46),
+      rgba(108,77,42,0.42),
       transparent
     );
 
@@ -418,13 +393,20 @@ body{
 
 .ww-answer-ornament-mark{
 
-  width:1rem;
+  width:.7rem;
+  height:.7rem;
 
-  opacity:.46;
+  border-radius:50%;
 
-  filter:
-    sepia(1)
-    saturate(2);
+  background:
+    radial-gradient(
+      circle,
+      rgba(166,112,42,0.7),
+      rgba(166,112,42,0.08) 62%,
+      transparent 70%
+    );
+
+  opacity:.62;
 
 }
 
@@ -441,12 +423,12 @@ body{
 
   font-size:
     clamp(
-      .96rem,
-      1.2vw,
-      1.08rem
+      1rem,
+      1.25vw,
+      1.12rem
     );
 
-  line-height:1.55;
+  line-height:1.48;
 
   color:
     rgba(62,46,34,0.82);
@@ -461,15 +443,17 @@ body{
 
   grid-template-columns:
     repeat(
-      6,
+      5,
       minmax(0,1fr)
     );
 
   gap:
-    1.4rem
-    1.4rem;
+    1.45rem
+    1.45rem;
 
   align-items:start;
+
+  margin-top:1.85rem;
 
 }
 
@@ -487,13 +471,13 @@ body{
     linear-gradient(
       180deg,
       rgba(250,244,234,0.98),
-      rgba(233,219,194,0.96)
+      rgba(232,218,193,0.97)
     );
 
   padding:
     .42rem
     .42rem
-    .62rem;
+    .66rem;
 
   box-shadow:
 
@@ -516,7 +500,7 @@ body{
     translateY(-4px);
 
   filter:
-    brightness(1.025);
+    brightness(1.028);
 
   box-shadow:
 
@@ -535,11 +519,11 @@ body{
   width:100%;
 
   aspect-ratio:
-    .96 / 1.05;
+    16 / 10;
 
   overflow:hidden;
 
-  border-radius:.72rem;
+  border-radius:.74rem;
 
   background:#d9ccb8;
 
@@ -560,7 +544,7 @@ body{
 
   text-align:center;
 
-  padding-top:.62rem;
+  padding-top:.66rem;
 
 }
 
@@ -571,7 +555,7 @@ body{
     "Times New Roman",
     serif;
 
-  font-size:1.05rem;
+  font-size:1.02rem;
 
   line-height:1;
 
@@ -586,22 +570,22 @@ body{
 
 .ww-answer-date{
 
-  margin-top:.3rem;
+  margin-top:.28rem;
 
   min-height:.8rem;
 
-  font-size:.52rem;
+  font-size:.5rem;
 
   line-height:1.3;
 
   font-weight:900;
 
-  letter-spacing:.22em;
+  letter-spacing:.18em;
 
   text-transform:uppercase;
 
   color:
-    rgba(76,58,44,0.76);
+    rgba(76,58,44,0.72);
 
 }
 
@@ -615,9 +599,9 @@ body{
 
   justify-content:center;
 
-  gap:1rem;
+  gap:.92rem;
 
-  margin-top:2.2rem;
+  margin-top:2rem;
 
 }
 
@@ -628,7 +612,7 @@ body{
   align-items:center;
   justify-content:center;
 
-  gap:1rem;
+  gap:.92rem;
 
   border:none;
 
@@ -647,7 +631,7 @@ body{
 
   font-weight:900;
 
-  letter-spacing:.34em;
+  letter-spacing:.22em;
 
   text-transform:uppercase;
 
@@ -658,7 +642,7 @@ body{
 
   content:"";
 
-  width:6.2rem;
+  width:5.6rem;
   height:1px;
 
   background:
@@ -680,11 +664,11 @@ body{
   align-items:center;
   justify-content:center;
 
-  min-width:18rem;
+  min-width:20rem;
 
   padding:
-    1.1rem
-    2rem;
+    1.22rem
+    2.35rem;
 
   border:none;
 
@@ -694,40 +678,40 @@ body{
 
   background:
 
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.14),
-      rgba(255,255,255,0.03)
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255,255,255,0.28),
+      transparent 42%
     ),
 
     linear-gradient(
       145deg,
-      #df9a42,
-      #bf7323 56%,
-      #8e4f18
+      #f0a13f,
+      #cf7824 55%,
+      #934f18
     );
 
   color:#fff8ef;
 
-  font-size:.72rem;
+  font-size:.78rem;
 
   line-height:1;
 
   font-weight:950;
 
-  letter-spacing:.24em;
+  letter-spacing:.22em;
 
   text-transform:uppercase;
 
   box-shadow:
 
-    0 22px 42px rgba(90,44,10,0.22),
+    0 20px 38px rgba(90,44,10,0.22),
 
-    0 6px 16px rgba(90,44,10,0.14),
+    0 6px 14px rgba(90,44,10,0.14),
 
-    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.3),
 
-    inset 0 0 0 1px rgba(0,0,0,0.12);
+    inset 0 0 0 1px rgba(0,0,0,0.13);
 
   transition:
     transform .2s ease,
@@ -740,18 +724,18 @@ body{
 
   transform:
     translateY(-2px)
-    scale(1.018);
+    scale(1.02);
 
   filter:
-    brightness(1.06);
+    brightness(1.07);
 
   box-shadow:
 
-    0 30px 54px rgba(90,44,10,0.26),
+    0 28px 50px rgba(90,44,10,0.27),
 
     0 8px 18px rgba(90,44,10,0.18),
 
-    inset 0 1px 0 rgba(255,255,255,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.32),
 
     inset 0 0 0 1px rgba(0,0,0,0.16);
 
@@ -796,80 +780,81 @@ body{
 
 .ww-answer-modal-panel{
 
-  width:min(92vw, 34rem);
+  width:min(92vw, 36rem);
 
-  border-radius:1.7rem;
+  border-radius:1.8rem;
 
   text-align:center;
 
   padding:
-    2.3rem
-    2rem;
+    2.45rem
+    2.15rem;
 
   background:
 
     radial-gradient(
       circle at 50% 0%,
-      rgba(255,255,255,0.74),
+      rgba(255,255,255,0.72),
       transparent 34%
     ),
 
     linear-gradient(
       180deg,
-      #f1e0c5,
-      #cfa166
+      #f4dec0,
+      #df9a42 52%,
+      #a85b1b
     );
 
   box-shadow:
 
-    0 40px 90px rgba(12,26,22,0.32),
+    0 42px 94px rgba(12,26,22,0.34),
 
-    inset 0 0 0 1px rgba(255,255,255,0.64);
+    inset 0 0 0 1px rgba(255,255,255,0.58);
 
 }
 
 .ww-answer-modal-kicker{
 
-  font-size:.62rem;
+  font-size:.66rem;
 
   line-height:1.6;
 
-  font-weight:900;
+  font-weight:950;
 
-  letter-spacing:.28em;
+  letter-spacing:.25em;
 
   text-transform:uppercase;
 
   color:
-    rgba(102,67,30,0.9);
+    rgba(86,48,16,0.92);
 
 }
 
 .ww-answer-modal-word{
 
-  margin-top:.8rem;
+  margin-top:.92rem;
 
   font-size:
     clamp(
-      1.9rem,
+      2rem,
       5vw,
-      2.9rem
+      3.1rem
     );
 
   line-height:1;
 
   font-weight:1000;
 
-  letter-spacing:.14em;
+  letter-spacing:.13em;
 
   text-transform:uppercase;
 
   color:
-    rgba(34,22,14,0.94);
+    rgba(31,20,13,0.96);
 
 }
 
-@media (max-width:1200px){
+@media (max-width:1240px){
 
   .ww-answer-grid{
 
@@ -883,14 +868,14 @@ body{
 
 }
 
-@media (max-width:820px){
+@media (max-width:900px){
 
   .ww-answer-shell{
 
     padding:
-      1rem
-      1rem
-      2rem;
+      1.5rem
+      1.2rem
+      2.2rem;
 
   }
 
@@ -902,27 +887,27 @@ body{
         minmax(0,1fr)
       );
 
-    gap:1rem;
+    gap:1.05rem;
 
   }
 
   .ww-answer-title{
 
-    font-size:3rem;
+    font-size:3.2rem;
 
   }
 
   .ww-answer-season{
 
-    letter-spacing:.45em;
+    letter-spacing:.24em;
 
-    padding-left:.45em;
+    padding-left:.24em;
 
   }
 
 }
 
-@media (max-width:620px){
+@media (max-width:640px){
 
   .ww-answer-grid{
 
@@ -949,7 +934,7 @@ body{
 
 }
 
-@media (max-width:420px){
+@media (max-width:430px){
 
   .ww-answer-grid{
 
@@ -959,7 +944,14 @@ body{
 
   .ww-answer-title{
 
-    font-size:2.2rem;
+    font-size:2.35rem;
+
+  }
+
+  .ww-answer-thumb{
+
+    aspect-ratio:
+      16 / 9;
 
   }
 
@@ -977,23 +969,16 @@ body{
         The Answers
       </h1>
 
-      <img
-        class="ww-answer-logo"
-        src="/assets/winterword/shared/logo.png"
-        alt="${escapeHtml(orgName)}"
-      >
-
       <div class="ww-answer-season">
         WinterWord ${escapeHtml(seasonYearLabel)}
       </div>
 
       <div class="ww-answer-ornament">
 
-        <img
+        <span
           class="ww-answer-ornament-mark"
-          src="/assets/winterword/shared/logo.png"
-          alt=""
-        >
+          aria-hidden="true"
+        ></span>
 
       </div>
 
