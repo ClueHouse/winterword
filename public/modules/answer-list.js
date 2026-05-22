@@ -90,13 +90,14 @@ export function renderAnswerList(app, data = {}, navigate) {
   app.innerHTML = `
     <style>
       :root{
-        --ww-ink:#261a10;
-        --ww-espresso:#1f150e;
-        --ww-muted:#6c5338;
+        --ww-ink:#23180f;
+        --ww-espresso:#1d130c;
+        --ww-jade:#6f8778;
+        --ww-jade-dark:#415a4d;
+        --ww-jade-deep:#263b32;
         --ww-bronze:#8a5f28;
         --ww-bronze-soft:#b88a45;
-        --ww-paper:#f4e6cf;
-        --ww-paper-light:#fff7ea;
+        --ww-paper:#f5ead7;
       }
 
       *{ box-sizing:border-box; }
@@ -105,14 +106,14 @@ export function renderAnswerList(app, data = {}, navigate) {
         min-height:100vh;
         width:100%;
         margin:0;
-        padding:1.05rem 1.4rem .9rem;
+        padding:1rem 1.4rem .9rem;
         font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
         color:var(--ww-ink);
         background:
-          radial-gradient(circle at 50% 8%, rgba(255,248,231,0.82), transparent 33%),
-          radial-gradient(circle at 18% 92%, rgba(145,96,42,0.10), transparent 34%),
-          radial-gradient(circle at 88% 18%, rgba(94,58,24,0.10), transparent 30%),
-          linear-gradient(135deg,#ead7b9 0%, #f7ead4 42%, #d6b987 100%);
+          radial-gradient(circle at 50% 6%, rgba(235,245,235,0.34), transparent 34%),
+          radial-gradient(circle at 12% 88%, rgba(32,56,46,0.28), transparent 34%),
+          radial-gradient(circle at 92% 20%, rgba(218,188,125,0.16), transparent 30%),
+          linear-gradient(135deg,#8fa798 0%, #6f8b7c 42%, #405c50 100%);
         overflow-x:hidden;
       }
 
@@ -124,20 +125,14 @@ export function renderAnswerList(app, data = {}, navigate) {
         background:
           repeating-linear-gradient(
             0deg,
-            rgba(55,34,18,0.032) 0px,
-            rgba(55,34,18,0.032) 1px,
+            rgba(10,30,24,0.035) 0px,
+            rgba(10,30,24,0.035) 1px,
             transparent 1px,
             transparent 5px
           ),
-          repeating-linear-gradient(
-            90deg,
-            rgba(255,255,255,0.18) 0px,
-            rgba(255,255,255,0.18) 1px,
-            transparent 1px,
-            transparent 7px
-          );
+          radial-gradient(circle at 50% 50%, rgba(255,250,235,0.16), transparent 62%);
         mix-blend-mode:multiply;
-        opacity:.58;
+        opacity:.72;
       }
 
       .ww-answer-wrap{
@@ -152,6 +147,19 @@ export function renderAnswerList(app, data = {}, navigate) {
         margin:0 auto 1.08rem;
       }
 
+      .ww-hero-logo{
+        width:4.8rem;
+        display:block;
+        margin:0 auto .52rem;
+        filter:
+          sepia(1)
+          saturate(2.2)
+          hue-rotate(350deg)
+          brightness(.52)
+          contrast(1.22);
+        opacity:.96;
+      }
+
       .ww-title{
         margin:0;
         font-family:Georgia,"Times New Roman",serif;
@@ -159,11 +167,11 @@ export function renderAnswerList(app, data = {}, navigate) {
         line-height:.88;
         letter-spacing:.025em;
         text-transform:uppercase;
-        color:var(--ww-espresso);
+        color:#21150d;
         font-weight:800;
         text-shadow:
-          0 1px 0 rgba(255,255,255,0.4),
-          0 10px 24px rgba(84,52,20,0.08);
+          0 1px 0 rgba(255,255,255,0.24),
+          0 10px 24px rgba(8,28,22,0.16);
       }
 
       .ww-season{
@@ -174,7 +182,7 @@ export function renderAnswerList(app, data = {}, navigate) {
         letter-spacing:.72em;
         text-transform:uppercase;
         font-weight:700;
-        color:#805621;
+        color:#51371a;
         padding-left:.72em;
       }
 
@@ -191,19 +199,7 @@ export function renderAnswerList(app, data = {}, navigate) {
         content:"";
         width:4.8rem;
         height:1px;
-        background:linear-gradient(90deg, transparent, rgba(125,84,35,0.54), transparent);
-      }
-
-      .ww-ornament img{
-        width:.92rem;
-        height:auto;
-        opacity:.78;
-        filter:
-          sepia(1)
-          saturate(2.1)
-          hue-rotate(350deg)
-          brightness(.58)
-          contrast(1.15);
+        background:linear-gradient(90deg, transparent, rgba(74,51,24,0.58), transparent);
       }
 
       .ww-subtitle{
@@ -212,7 +208,7 @@ export function renderAnswerList(app, data = {}, navigate) {
         font-family:Georgia,"Times New Roman",serif;
         font-size:.95rem;
         line-height:1.45;
-        color:#513b27;
+        color:#2c2016;
         font-style:italic;
       }
 
@@ -231,8 +227,8 @@ export function renderAnswerList(app, data = {}, navigate) {
         background:
           linear-gradient(180deg, rgba(255,250,240,0.98), rgba(239,220,190,0.98));
         box-shadow:
-          0 14px 28px rgba(72,43,16,0.15),
-          0 3px 7px rgba(72,43,16,0.10),
+          0 14px 28px rgba(18,37,30,0.24),
+          0 3px 7px rgba(18,37,30,0.15),
           inset 0 0 0 1px rgba(255,255,255,0.82);
         transition:
           transform .2s ease,
@@ -244,8 +240,8 @@ export function renderAnswerList(app, data = {}, navigate) {
         transform:translateY(-3px);
         filter:brightness(1.025);
         box-shadow:
-          0 20px 40px rgba(72,43,16,0.20),
-          0 5px 12px rgba(72,43,16,0.13),
+          0 20px 40px rgba(18,37,30,0.30),
+          0 5px 12px rgba(18,37,30,0.18),
           inset 0 0 0 1px rgba(255,255,255,0.95);
       }
 
@@ -294,19 +290,6 @@ export function renderAnswerList(app, data = {}, navigate) {
         text-align:center;
       }
 
-      .ww-footer-logo{
-        width:4.9rem;
-        display:block;
-        margin:0 auto .36rem;
-        filter:
-          sepia(1)
-          saturate(2.2)
-          hue-rotate(350deg)
-          brightness(.55)
-          contrast(1.18);
-        opacity:.92;
-      }
-
       .ww-footer-base{
         display:inline-flex;
         align-items:center;
@@ -316,7 +299,7 @@ export function renderAnswerList(app, data = {}, navigate) {
         background:transparent;
         cursor:pointer;
         padding:.22rem .5rem;
-        color:#6f4a1f;
+        color:#2d2115;
         font:950 .66rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
         letter-spacing:.34em;
         text-transform:uppercase;
@@ -327,30 +310,46 @@ export function renderAnswerList(app, data = {}, navigate) {
         content:"";
         width:5rem;
         height:1px;
-        background:linear-gradient(90deg, transparent, rgba(111,74,31,0.45), transparent);
+        background:linear-gradient(90deg, transparent, rgba(45,33,21,0.52), transparent);
       }
 
       .ww-footer-base:hover{
-        color:#3f2811;
+        color:#140d08;
       }
 
       .ww-word-button{
-        display:block;
-        margin:.36rem auto 0;
-        border:0;
-        background:transparent;
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        margin:.54rem auto 0;
+        border:1px solid rgba(255,245,220,0.18);
+        border-radius:999px;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+          linear-gradient(145deg, #3f5d50, #263b32);
         cursor:pointer;
-        color:#765222;
-        font:900 .52rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
-        letter-spacing:.22em;
+        color:#fff2dd;
+        font:950 .58rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+        letter-spacing:.2em;
         text-transform:uppercase;
-        opacity:.88;
+        padding:.72rem 1.15rem;
+        box-shadow:
+          0 12px 26px rgba(12,28,23,0.28),
+          inset 0 1px 0 rgba(255,255,255,0.16),
+          inset 0 0 0 1px rgba(0,0,0,0.18);
+        transition:
+          transform .2s ease,
+          filter .2s ease,
+          box-shadow .2s ease;
       }
 
       .ww-word-button:hover{
-        opacity:1;
-        text-decoration:underline;
-        text-underline-offset:.28rem;
+        transform:translateY(-2px);
+        filter:brightness(1.08);
+        box-shadow:
+          0 17px 34px rgba(12,28,23,0.36),
+          inset 0 1px 0 rgba(255,255,255,0.18),
+          inset 0 0 0 1px rgba(0,0,0,0.2);
       }
 
       .ww-modal{
@@ -361,7 +360,7 @@ export function renderAnswerList(app, data = {}, navigate) {
         align-items:center;
         justify-content:center;
         padding:1.5rem;
-        background:rgba(49,34,18,0.38);
+        background:rgba(17,34,28,0.48);
         backdrop-filter:blur(10px);
         opacity:0;
         pointer-events:none;
@@ -379,10 +378,10 @@ export function renderAnswerList(app, data = {}, navigate) {
         border-radius:1.45rem;
         text-align:center;
         background:
-          radial-gradient(circle at 50% 0%, rgba(255,255,255,0.82), transparent 36%),
-          linear-gradient(180deg, #f7ead4, #d4b47e);
+          radial-gradient(circle at 50% 0%, rgba(255,255,255,0.78), transparent 36%),
+          linear-gradient(180deg, #f2e4cd, #c9a66e);
         box-shadow:
-          0 30px 80px rgba(56,37,18,0.34),
+          0 30px 80px rgba(12,28,23,0.42),
           inset 0 0 0 1px rgba(255,255,255,0.62);
       }
 
@@ -392,7 +391,7 @@ export function renderAnswerList(app, data = {}, navigate) {
         font-weight:900;
         letter-spacing:.28em;
         text-transform:uppercase;
-        color:#77511f;
+        color:#684619;
       }
 
       .ww-modal-word{
@@ -401,7 +400,7 @@ export function renderAnswerList(app, data = {}, navigate) {
         font-weight:1000;
         letter-spacing:.14em;
         text-transform:uppercase;
-        color:#261a10;
+        color:#20150d;
       }
 
       @media (max-width:900px){
@@ -454,11 +453,10 @@ export function renderAnswerList(app, data = {}, navigate) {
       <div class="ww-answer-wrap">
 
         <header class="ww-answer-header">
+          <img class="ww-hero-logo" src="/assets/winterword/shared/logo.png" alt="${escapeHtml(orgName)}">
           <h1 class="ww-title">The Answers</h1>
           <div class="ww-season">WinterWord ${escapeHtml(seasonYearLabel)}</div>
-          <div class="ww-ornament">
-            <img src="/assets/winterword/shared/logo.png" alt="">
-          </div>
+          <div class="ww-ornament"></div>
           <div class="ww-subtitle">
             The ice has melted. All that remains is transparency.
           </div>
@@ -479,7 +477,6 @@ export function renderAnswerList(app, data = {}, navigate) {
         </section>
 
         <footer class="ww-footer">
-          <img class="ww-footer-logo" src="/assets/winterword/shared/logo.png" alt="${escapeHtml(orgName)}">
           <button class="ww-footer-base" type="button" data-nav="base-station">
             Base Station
           </button>
