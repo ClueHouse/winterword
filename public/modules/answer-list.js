@@ -74,7 +74,7 @@ export function renderAnswerList(app, data = {}, navigate) {
   function formatReleaseDate(index) {
 
     if (!hasValidSeasonStart) {
-      return "";
+      return "DATE TO BE ADVISED";
     }
 
     const releaseDate =
@@ -505,33 +505,37 @@ body{
   padding-top:.72rem;
 }
 
-.ww-answer-number{
+.ww-answer-release-date{
   display:flex;
   align-items:center;
   justify-content:center;
 
   gap:.58rem;
 
+  min-height:1.2rem;
+
   font-family:
     Georgia,
     "Times New Roman",
     serif;
 
-  font-size:1.12rem;
-  line-height:1;
+  font-size:.82rem;
+  line-height:1.15;
 
-  font-weight:800;
+  font-weight:900;
 
   letter-spacing:.13em;
+  text-transform:uppercase;
 
   color:
     rgba(140,92,42,.98);
 }
 
-.ww-answer-number::before,
-.ww-answer-number::after{
+.ww-answer-release-date::before,
+.ww-answer-release-date::after{
   content:"";
 
+  flex:0 0 .95rem;
   width:.95rem;
   height:1px;
 
@@ -543,30 +547,13 @@ body{
     );
 }
 
-.ww-answer-number::after{
+.ww-answer-release-date::after{
   background:
     linear-gradient(
       90deg,
       rgba(118,76,31,.72),
       transparent
     );
-}
-
-.ww-answer-date{
-  margin-top:.3rem;
-
-  min-height:.6rem;
-
-  font-size:.5rem;
-  line-height:1.25;
-
-  font-weight:900;
-
-  letter-spacing:.16em;
-  text-transform:uppercase;
-
-  color:
-    rgba(76,58,44,.62);
 }
 
 .ww-answer-footer{
@@ -829,6 +816,17 @@ body{
       1.2rem;
   }
 
+  .ww-answer-release-date{
+    font-size:.72rem;
+    letter-spacing:.1em;
+  }
+
+  .ww-answer-release-date::before,
+  .ww-answer-release-date::after{
+    flex-basis:.72rem;
+    width:.72rem;
+  }
+
 }
 
 @media (max-width:1120px){
@@ -868,6 +866,11 @@ body{
     min-width:min(100%, 24rem);
   }
 
+  .ww-answer-release-date{
+    font-size:.68rem;
+    letter-spacing:.08em;
+  }
+
 }
 
 @media (max-width:620px){
@@ -899,6 +902,15 @@ body{
 
   .ww-answer-word::before,
   .ww-answer-word::after{
+    display:none;
+  }
+
+  .ww-answer-release-date{
+    font-size:.62rem;
+  }
+
+  .ww-answer-release-date::before,
+  .ww-answer-release-date::after{
     display:none;
   }
 
@@ -981,11 +993,7 @@ body{
 
           <div class="ww-answer-meta">
 
-            <div class="ww-answer-number">
-              ${answer.number}
-            </div>
-
-            <div class="ww-answer-date">
+            <div class="ww-answer-release-date">
               ${escapeHtml(answer.releaseDate)}
             </div>
 
