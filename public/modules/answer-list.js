@@ -124,14 +124,20 @@ export function renderAnswerList(app, data = {}, navigate) {
 
 :root{
 
-  --ww-paper:#efe3cb;
-  --ww-paper-soft:#f8efdd;
-  --ww-ink:#4a3324;
-  --ww-ink-soft:#6b503b;
-  --ww-bronze:#9e6829;
-  --ww-bronze-soft:#c08a45;
-  --ww-orange:#e9902d;
-  --ww-orange-deep:#9a5418;
+  --ww-paper:#f2e7d4;
+  --ww-paper-soft:#fbf4e8;
+
+  --ww-ink:#4d3628;
+  --ww-ink-soft:#6e5440;
+
+  --ww-bronze:#8d6033;
+  --ww-bronze-soft:#ba8a57;
+
+  --ww-brown-deep:#3d281d;
+  --ww-brown-mid:#5a3a28;
+  --ww-brown-soft:#74503b;
+
+  --ww-gold-glow:rgba(255,221,166,.48);
 
 }
 
@@ -149,8 +155,10 @@ body{
 
 #wwAnswerPage{
   position:relative;
+
   width:100%;
   min-height:100vh;
+
   overflow-x:hidden;
 
   font-family:
@@ -162,138 +170,67 @@ body{
   color:var(--ww-ink);
 
   background:
-    radial-gradient(
-      circle at 50% 8%,
-      rgba(255,255,255,0.94),
-      rgba(255,255,255,0.6) 18%,
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 50% 96%,
-      rgba(255,255,255,0.38),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 15% 28%,
-      rgba(255,247,224,0.18),
-      transparent 26%
-    ),
-    radial-gradient(
-      circle at 85% 72%,
-      rgba(255,247,224,0.14),
-      transparent 28%
-    ),
     linear-gradient(
       135deg,
-      #dfece4 0%,
-      #c9ddd1 23%,
-      #edf1e8 48%,
-      #c2d9cd 74%,
-      #9fbba9 100%
-    );
+      rgba(247,248,242,.88),
+      rgba(228,236,228,.82)
+    ),
+    url("/assets/winterword/shared/answerlistbg.png")
+    center center / cover
+    no-repeat;
+
+  background-attachment:fixed;
 }
 
 #wwAnswerPage::before{
   content:"";
+
   position:fixed;
   inset:0;
-  pointer-events:none;
+
   z-index:0;
+  pointer-events:none;
 
   background:
     radial-gradient(
-      circle at 14% 22%,
-      rgba(255,255,255,0.24),
-      transparent 23%
+      circle at 50% 0%,
+      rgba(255,255,255,.74),
+      rgba(255,255,255,.18) 34%,
+      transparent 58%
     ),
     radial-gradient(
-      circle at 86% 76%,
-      rgba(255,245,220,0.19),
-      transparent 28%
+      circle at 50% 100%,
+      rgba(255,255,255,.2),
+      transparent 36%
     ),
     repeating-linear-gradient(
       0deg,
-      rgba(40,42,32,0.024) 0px,
-      rgba(40,42,32,0.024) 1px,
+      rgba(44,42,34,.018) 0px,
+      rgba(44,42,34,.018) 1px,
       transparent 1px,
-      transparent 5px
+      transparent 4px
     );
 
-  opacity:.52;
-}
-
-#wwAnswerPage::after{
-  content:"";
-  position:fixed;
-  left:50%;
-  top:17%;
-
-  width:min(62vw, 980px);
-  aspect-ratio:1 / 1;
-
-  transform:
-    translate(-50%, -22%);
-
-  background:
-    url("/assets/winterword/shared/logo.png")
-    center center / contain
-    no-repeat;
-
-  opacity:.08;
-
-  filter:
-    blur(28px)
-    sepia(1)
-    saturate(2.25)
-    hue-rotate(350deg)
-    brightness(.82);
-
-  pointer-events:none;
-  z-index:0;
+  opacity:.82;
 }
 
 .ww-answer-shell{
   position:relative;
   z-index:2;
 
-  width:min(100%, 1570px);
+  width:min(100%, 1660px);
+
   margin:0 auto;
 
   padding:
-    4.25rem
-    2.6rem
-    2.4rem;
+    5rem
+    3rem
+    3.6rem;
 }
 
 .ww-answer-header{
   text-align:center;
-  margin-bottom:1.65rem;
-}
-
-.ww-answer-header::before{
-  content:"";
-
-  display:block;
-
-  width:7.2rem;
-  height:7.2rem;
-
-  margin:
-    0 auto
-    1.05rem;
-
-  background:
-    url("/assets/winterword/shared/logo.png")
-    center center / contain
-    no-repeat;
-
-  filter:
-    sepia(1)
-    saturate(2.1)
-    hue-rotate(350deg)
-    brightness(.78);
-
-  opacity:.92;
+  margin-bottom:3.3rem;
 }
 
 .ww-answer-title{
@@ -306,22 +243,24 @@ body{
 
   font-size:
     clamp(
-      4rem,
-      6.1vw,
-      7.2rem
+      4.4rem,
+      6.5vw,
+      7.8rem
     );
 
   line-height:.82;
-  letter-spacing:.08em;
-  text-transform:uppercase;
+
   font-weight:700;
 
+  letter-spacing:.08em;
+  text-transform:uppercase;
+
   color:
-    rgba(70,48,34,0.96);
+    rgba(69,46,31,.97);
 
   text-shadow:
-    0 1px 0 rgba(255,255,255,0.35),
-    0 12px 28px rgba(30,36,28,0.11);
+    0 1px 0 rgba(255,255,255,.34),
+    0 14px 38px rgba(28,33,28,.12);
 
   padding-left:.08em;
 }
@@ -330,88 +269,72 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+
   gap:1.25rem;
 
-  margin-top:.65rem;
+  margin-top:.9rem;
 }
 
 .ww-answer-season-row::before,
 .ww-answer-season-row::after{
   content:"";
-  width:8.2rem;
+
+  width:8rem;
   height:1px;
 
   background:
     linear-gradient(
       90deg,
       transparent,
-      rgba(115,78,39,0.42),
+      rgba(128,89,52,.42),
       transparent
     );
 }
 
 .ww-answer-season{
-  position:relative;
-
   font-family:
     Georgia,
     "Times New Roman",
     serif;
 
   font-size:.88rem;
-  font-weight:800;
   line-height:1;
 
-  letter-spacing:.44em;
+  font-weight:900;
+
+  letter-spacing:.42em;
   text-transform:uppercase;
 
   color:
-    rgba(137,91,42,0.94);
+    rgba(133,88,43,.95);
 
-  padding-left:.44em;
-}
-
-.ww-answer-season::before,
-.ww-answer-season::after{
-  content:"◆";
-  position:relative;
-  top:-.05rem;
-
-  font-size:.42rem;
-  color:
-    rgba(172,112,44,0.9);
-}
-
-.ww-answer-season::before{
-  margin-right:1rem;
-}
-
-.ww-answer-season::after{
-  margin-left:.56rem;
+  padding-left:.42em;
 }
 
 .ww-answer-ornament{
   display:flex;
   align-items:center;
   justify-content:center;
+
   gap:.8rem;
 
   margin:
-    .82rem auto
-    .52rem;
+    .9rem auto
+    .9rem;
 }
 
 .ww-answer-ornament::before,
 .ww-answer-ornament::after{
   content:"";
-  width:4.6rem;
+
+  width:4.8rem;
   height:1px;
 
   background:
     linear-gradient(
       90deg,
       transparent,
-      rgba(149,96,37,0.54),
+      rgba(156,105,49,.56),
       transparent
     );
 }
@@ -425,16 +348,17 @@ body{
   background:
     linear-gradient(
       135deg,
-      rgba(221,157,71,0.96),
-      rgba(126,78,29,0.72)
+      rgba(214,157,83,.98),
+      rgba(128,82,39,.82)
     );
 
   box-shadow:
-    0 0 0 3px rgba(184,124,51,0.08);
+    0 0 0 3px rgba(190,136,65,.08);
 }
 
 .ww-answer-subtitle{
-  max-width:46rem;
+  max-width:52rem;
+
   margin:0 auto;
 
   font-family:
@@ -445,18 +369,18 @@ body{
   font-size:
     clamp(
       1rem,
-      1.12vw,
-      1.16rem
+      1.14vw,
+      1.18rem
     );
 
-  line-height:1.45;
+  line-height:1.5;
   font-style:italic;
 
   color:
-    rgba(67,48,36,0.86);
+    rgba(73,54,41,.82);
 
   text-shadow:
-    0 1px 0 rgba(255,255,255,0.28);
+    0 1px 0 rgba(255,255,255,.24);
 }
 
 .ww-answer-grid{
@@ -469,12 +393,12 @@ body{
     );
 
   gap:
-    1.15rem
-    1.45rem;
+    1.5rem
+    1.65rem;
 
   align-items:start;
 
-  margin-top:2rem;
+  margin-top:3.4rem;
 }
 
 .ww-answer-card{
@@ -483,24 +407,24 @@ body{
   border:none;
   cursor:pointer;
 
-  border-radius:.78rem;
+  border-radius:.92rem;
 
   background:
     linear-gradient(
       180deg,
-      rgba(252,247,238,0.98),
-      rgba(234,219,191,0.98)
+      rgba(252,248,241,.985),
+      rgba(237,223,198,.985)
     );
 
   padding:
-    .42rem
-    .42rem
-    .68rem;
+    .44rem
+    .44rem
+    .82rem;
 
   box-shadow:
-    0 20px 36px rgba(24,39,32,0.15),
-    0 4px 10px rgba(24,39,32,0.09),
-    inset 0 0 0 1px rgba(255,255,255,0.88);
+    0 18px 34px rgba(24,36,30,.11),
+    0 5px 12px rgba(24,36,30,.07),
+    inset 0 0 0 1px rgba(255,255,255,.88);
 
   transition:
     transform .22s ease,
@@ -510,6 +434,7 @@ body{
 
 .ww-answer-card::before{
   content:"";
+
   position:absolute;
   inset:0;
 
@@ -518,7 +443,7 @@ body{
   pointer-events:none;
 
   box-shadow:
-    inset 0 0 0 1px rgba(115,78,39,0.14);
+    inset 0 0 0 1px rgba(115,78,39,.12);
 }
 
 .ww-answer-card:hover{
@@ -526,16 +451,17 @@ body{
     translateY(-5px);
 
   filter:
-    brightness(1.035);
+    brightness(1.03);
 
   box-shadow:
-    0 30px 52px rgba(24,39,32,0.19),
-    0 6px 14px rgba(24,39,32,0.12),
-    inset 0 0 0 1px rgba(255,255,255,0.95);
+    0 26px 44px rgba(24,36,30,.14),
+    0 8px 16px rgba(24,36,30,.09),
+    inset 0 0 0 1px rgba(255,255,255,.94);
 }
 
 .ww-answer-thumb{
   position:relative;
+
   width:100%;
 
   aspect-ratio:
@@ -543,13 +469,14 @@ body{
 
   overflow:hidden;
 
-  border-radius:.52rem;
+  border-radius:.58rem;
 
-  background:#d9ccb8;
+  background:#ddd0bc;
 }
 
 .ww-answer-thumb::after{
   content:"";
+
   position:absolute;
   inset:0;
 
@@ -558,31 +485,34 @@ body{
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,0.08),
+      rgba(255,255,255,.08),
       transparent 24%,
-      rgba(0,0,0,0.08) 100%
+      rgba(0,0,0,.06) 100%
     );
 
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.38);
+    inset 0 0 0 1px rgba(255,255,255,.34);
 }
 
 .ww-answer-thumb img{
   width:100%;
   height:100%;
+
   display:block;
+
   object-fit:cover;
 }
 
 .ww-answer-meta{
   text-align:center;
-  padding-top:.62rem;
+  padding-top:.72rem;
 }
 
 .ww-answer-number{
   display:flex;
   align-items:center;
   justify-content:center;
+
   gap:.58rem;
 
   font-family:
@@ -590,27 +520,29 @@ body{
     "Times New Roman",
     serif;
 
-  font-size:1.08rem;
+  font-size:1.12rem;
   line-height:1;
 
   font-weight:800;
+
   letter-spacing:.13em;
 
   color:
-    rgba(144,92,35,0.98);
+    rgba(140,92,42,.98);
 }
 
 .ww-answer-number::before,
 .ww-answer-number::after{
   content:"";
-  width:.9rem;
+
+  width:.95rem;
   height:1px;
 
   background:
     linear-gradient(
       90deg,
       transparent,
-      rgba(118,76,31,0.72)
+      rgba(118,76,31,.72)
     );
 }
 
@@ -618,24 +550,26 @@ body{
   background:
     linear-gradient(
       90deg,
-      rgba(118,76,31,0.72),
+      rgba(118,76,31,.72),
       transparent
     );
 }
 
 .ww-answer-date{
-  margin-top:.25rem;
+  margin-top:.3rem;
+
   min-height:.6rem;
 
-  font-size:.48rem;
+  font-size:.5rem;
   line-height:1.25;
+
   font-weight:900;
 
   letter-spacing:.16em;
   text-transform:uppercase;
 
   color:
-    rgba(76,58,44,0.68);
+    rgba(76,58,44,.62);
 }
 
 .ww-answer-footer{
@@ -644,9 +578,9 @@ body{
   align-items:center;
   justify-content:center;
 
-  gap:.95rem;
+  gap:1.35rem;
 
-  margin-top:2.15rem;
+  margin-top:4.2rem;
 }
 
 .ww-answer-base{
@@ -654,38 +588,42 @@ body{
   align-items:center;
   justify-content:center;
 
-  gap:1.05rem;
+  gap:1rem;
 
   border:none;
   background:transparent;
+
   cursor:pointer;
+
   padding:0;
 
   color:
-    rgba(45,32,23,0.94);
+    rgba(46,34,26,.94);
 
   font-size:.76rem;
   line-height:1;
 
   font-weight:950;
-  letter-spacing:.36em;
+
+  letter-spacing:.38em;
   text-transform:uppercase;
 
-  padding-left:.36em;
+  padding-left:.38em;
 }
 
 .ww-answer-base::before,
 .ww-answer-base::after{
   content:"";
-  width:8rem;
+
+  width:9rem;
   height:1px;
 
   background:
     linear-gradient(
       90deg,
       transparent,
-      rgba(87,59,30,0.44),
-      rgba(170,110,43,0.54),
+      rgba(87,59,30,.42),
+      rgba(170,110,43,.5),
       transparent
     );
 }
@@ -697,12 +635,14 @@ body{
 .ww-answer-base span::before,
 .ww-answer-base span::after{
   content:"◆";
+
   position:relative;
   top:-.06rem;
 
   font-size:.38rem;
+
   color:
-    rgba(175,111,39,0.88);
+    rgba(175,111,39,.88);
 }
 
 .ww-answer-base span::before{
@@ -710,7 +650,7 @@ body{
 }
 
 .ww-answer-base span::after{
-  margin-left:.44rem;
+  margin-left:.45rem;
 }
 
 .ww-answer-word{
@@ -720,11 +660,11 @@ body{
   align-items:center;
   justify-content:center;
 
-  min-width:27rem;
+  min-width:28rem;
 
   padding:
-    1.14rem
-    3.1rem;
+    1.18rem
+    3.5rem;
 
   border:none;
   border-radius:999px;
@@ -732,47 +672,48 @@ body{
   cursor:pointer;
 
   background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(255,244,214,0.48),
-      transparent 40%
-    ),
     linear-gradient(
       145deg,
-      #f5a13a,
-      #d87d24 54%,
-      #9b5318
+      var(--ww-brown-soft),
+      var(--ww-brown-mid) 56%,
+      var(--ww-brown-deep)
     );
 
-  color:#fff8ef;
+  color:
+    #fff7ec;
 
   font-size:.82rem;
   line-height:1;
 
   font-weight:950;
+
   letter-spacing:.28em;
   text-transform:uppercase;
 
   box-shadow:
-    0 24px 42px rgba(91,43,9,0.28),
-    0 8px 18px rgba(91,43,9,0.17),
-    inset 0 1px 0 rgba(255,255,255,0.34),
-    inset 0 0 0 1px rgba(0,0,0,0.14);
+    0 0 0 1px rgba(255,255,255,.08),
+    0 0 36px rgba(255,222,170,.28),
+    0 0 72px rgba(255,222,170,.14),
+    0 22px 44px rgba(48,26,15,.28),
+    0 8px 18px rgba(48,26,15,.16),
+    inset 0 1px 0 rgba(255,255,255,.24);
 
   transition:
     transform .2s ease,
-    box-shadow .2s ease,
-    filter .2s ease;
+    filter .2s ease,
+    box-shadow .2s ease;
 }
 
 .ww-answer-word::before,
 .ww-answer-word::after{
   content:"❄";
+
   position:relative;
 
   font-size:.8rem;
+
   color:
-    rgba(255,234,197,0.72);
+    rgba(255,232,196,.72);
 }
 
 .ww-answer-word::before{
@@ -780,27 +721,30 @@ body{
 }
 
 .ww-answer-word::after{
-  margin-left:.9rem;
+  margin-left:1rem;
 }
 
 .ww-answer-word:hover{
   transform:
     translateY(-2px)
-    scale(1.018);
+    scale(1.02);
 
   filter:
-    brightness(1.075);
+    brightness(1.06);
 
   box-shadow:
-    0 32px 56px rgba(91,43,9,0.32),
-    0 10px 20px rgba(91,43,9,0.22),
-    inset 0 1px 0 rgba(255,255,255,0.38),
-    inset 0 0 0 1px rgba(0,0,0,0.18);
+    0 0 0 1px rgba(255,255,255,.12),
+    0 0 44px rgba(255,226,178,.42),
+    0 0 92px rgba(255,226,178,.18),
+    0 28px 52px rgba(48,26,15,.34),
+    0 10px 22px rgba(48,26,15,.2),
+    inset 0 1px 0 rgba(255,255,255,.28);
 }
 
 .ww-answer-modal{
   position:fixed;
   inset:0;
+
   z-index:9999;
 
   display:flex;
@@ -810,7 +754,7 @@ body{
   padding:1.4rem;
 
   background:
-    rgba(18,34,28,0.44);
+    rgba(18,30,24,.48);
 
   backdrop-filter:
     blur(12px);
@@ -831,28 +775,23 @@ body{
   width:min(92vw, 36rem);
 
   border-radius:1.8rem;
+
   text-align:center;
 
   padding:
-    2.45rem
-    2.15rem;
+    2.5rem
+    2.2rem;
 
   background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(255,255,255,0.72),
-      transparent 34%
-    ),
     linear-gradient(
       180deg,
-      #f4dec0,
-      #df9a42 52%,
-      #a85b1b
+      rgba(251,243,230,.98),
+      rgba(229,209,180,.98)
     );
 
   box-shadow:
-    0 42px 94px rgba(12,26,22,0.34),
-    inset 0 0 0 1px rgba(255,255,255,0.58);
+    0 42px 94px rgba(12,26,22,.34),
+    inset 0 0 0 1px rgba(255,255,255,.62);
 }
 
 .ww-answer-modal-kicker{
@@ -860,52 +799,45 @@ body{
   line-height:1.6;
 
   font-weight:950;
+
   letter-spacing:.25em;
   text-transform:uppercase;
 
   color:
-    rgba(86,48,16,0.92);
+    rgba(86,48,16,.92);
 }
 
 .ww-answer-modal-word{
-  margin-top:.92rem;
+  margin-top:.95rem;
 
   font-size:
     clamp(
       2rem,
       5vw,
-      3.1rem
+      3.2rem
     );
 
   line-height:1;
 
   font-weight:1000;
+
   letter-spacing:.13em;
   text-transform:uppercase;
 
   color:
-    rgba(31,20,13,0.96);
+    rgba(31,20,13,.96);
 }
 
 @media (max-width:1380px){
 
   .ww-answer-shell{
-    width:min(100%, 1260px);
+    width:min(100%, 1320px);
   }
 
   .ww-answer-grid{
     gap:
-      1rem
-      1.1rem;
-  }
-
-  .ww-answer-title{
-    font-size:
-      clamp(
-        3.8rem,
-        6vw,
-        6.4rem
-      );
+      1.2rem
+      1.2rem;
   }
 
 }
@@ -920,26 +852,15 @@ body{
       );
   }
 
-  .ww-answer-title{
-    letter-spacing:.055em;
-    padding-left:.055em;
-  }
-
 }
 
 @media (max-width:860px){
 
   .ww-answer-shell{
     padding:
-      2.2rem
+      2.4rem
       1rem
       2rem;
-  }
-
-  .ww-answer-header::before{
-    width:5.8rem;
-    height:5.8rem;
-    margin-bottom:.8rem;
   }
 
   .ww-answer-grid{
@@ -948,32 +869,10 @@ body{
         3,
         minmax(0,1fr)
       );
-
-    gap:1rem;
   }
 
   .ww-answer-title{
-    font-size:3.15rem;
-  }
-
-  .ww-answer-season-row{
-    gap:.65rem;
-  }
-
-  .ww-answer-season-row::before,
-  .ww-answer-season-row::after{
-    width:3.6rem;
-  }
-
-  .ww-answer-season{
-    font-size:.72rem;
-    letter-spacing:.22em;
-    padding-left:.22em;
-  }
-
-  .ww-answer-base::before,
-  .ww-answer-base::after{
-    width:3.2rem;
+    font-size:3.4rem;
   }
 
   .ww-answer-word{
@@ -993,7 +892,7 @@ body{
   }
 
   .ww-answer-title{
-    font-size:2.55rem;
+    font-size:2.7rem;
   }
 
   .ww-answer-word{
@@ -1001,10 +900,11 @@ body{
     min-width:0;
 
     padding:
-      1.05rem
+      1rem
       1.2rem;
 
     font-size:.68rem;
+
     letter-spacing:.18em;
   }
 
@@ -1022,7 +922,7 @@ body{
   }
 
   .ww-answer-title{
-    font-size:2.15rem;
+    font-size:2.2rem;
   }
 
   .ww-answer-season-row::before,
