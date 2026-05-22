@@ -204,10 +204,8 @@ body{
 
 #wwAnswerPage{
   position:relative;
-
   width:100%;
   min-height:100vh;
-
   overflow-x:hidden;
 
   font-family:
@@ -233,10 +231,8 @@ body{
 
 #wwAnswerPage::before{
   content:"";
-
   position:fixed;
   inset:0;
-
   pointer-events:none;
   z-index:0;
 
@@ -265,15 +261,9 @@ body{
 .ww-answer-shell{
   position:relative;
   z-index:2;
-
   width:min(100%, 1660px);
-
   margin:0 auto;
-
-  padding:
-    4.4rem
-    3rem
-    3.5rem;
+  padding:4.4rem 3rem 3.5rem;
 }
 
 .ww-answer-header{
@@ -297,9 +287,7 @@ body{
     );
 
   line-height:.82;
-
   font-weight:700;
-
   letter-spacing:.08em;
   text-transform:uppercase;
 
@@ -317,16 +305,13 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-
   gap:1.25rem;
-
   margin-top:.9rem;
 }
 
 .ww-answer-season-row::before,
 .ww-answer-season-row::after{
   content:"";
-
   width:8rem;
   height:1px;
 
@@ -347,9 +332,7 @@ body{
 
   font-size:.88rem;
   line-height:1;
-
   font-weight:900;
-
   letter-spacing:.42em;
   text-transform:uppercase;
 
@@ -363,18 +346,13 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-
   gap:.8rem;
-
-  margin:
-    .9rem auto
-    .9rem;
+  margin:.9rem auto .9rem;
 }
 
 .ww-answer-ornament::before,
 .ww-answer-ornament::after{
   content:"";
-
   width:4.8rem;
   height:1px;
 
@@ -390,7 +368,6 @@ body{
 .ww-answer-ornament-mark{
   width:.55rem;
   height:.55rem;
-
   transform:rotate(45deg);
 
   background:
@@ -406,7 +383,6 @@ body{
 
 .ww-answer-subtitle{
   max-width:52rem;
-
   margin:0 auto;
 
   font-family:
@@ -445,16 +421,13 @@ body{
     1.7rem;
 
   align-items:start;
-
   margin-top:3.6rem;
 }
 
 .ww-answer-card{
   position:relative;
-
   border:none;
   cursor:pointer;
-
   border-radius:.92rem;
 
   background:
@@ -464,10 +437,7 @@ body{
       rgba(237,223,198,.985)
     );
 
-  padding:
-    .44rem
-    .44rem
-    .82rem;
+  padding:.44rem .44rem .82rem;
 
   box-shadow:
     0 16px 30px rgba(24,36,30,.1),
@@ -482,12 +452,9 @@ body{
 
 .ww-answer-card::before{
   content:"";
-
   position:absolute;
   inset:0;
-
   border-radius:inherit;
-
   pointer-events:none;
 
   box-shadow:
@@ -509,25 +476,17 @@ body{
 
 .ww-answer-thumb{
   position:relative;
-
   width:100%;
-
-  aspect-ratio:
-    16 / 10;
-
+  aspect-ratio:16 / 10;
   overflow:hidden;
-
   border-radius:.58rem;
-
   background:#ddd0bc;
 }
 
 .ww-answer-thumb::after{
   content:"";
-
   position:absolute;
   inset:0;
-
   pointer-events:none;
 
   background:
@@ -545,9 +504,7 @@ body{
 .ww-answer-thumb img{
   width:100%;
   height:100%;
-
   display:block;
-
   object-fit:cover;
 }
 
@@ -560,9 +517,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-
   gap:.58rem;
-
   min-height:1.2rem;
 
   font-family:
@@ -572,9 +527,7 @@ body{
 
   font-size:.82rem;
   line-height:1.15;
-
   font-weight:900;
-
   letter-spacing:.13em;
   text-transform:uppercase;
 
@@ -585,7 +538,6 @@ body{
 .ww-answer-release-date::before,
 .ww-answer-release-date::after{
   content:"";
-
   flex:0 0 .95rem;
   width:.95rem;
   height:1px;
@@ -612,44 +564,55 @@ body{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-
   gap:1.45rem;
-
   margin-top:4.4rem;
 }
 
 .ww-answer-base{
+  position:relative;
+
   display:flex;
   align-items:center;
   justify-content:center;
-
   gap:1rem;
 
   border:none;
   background:transparent;
-
   cursor:pointer;
 
-  padding:0;
+  padding:
+    .28rem
+    .8rem;
 
   color:
-    rgba(46,34,26,.94);
+    rgba(46,34,26,.96);
 
   font-size:.76rem;
   line-height:1;
-
   font-weight:950;
-
   letter-spacing:.38em;
   text-transform:uppercase;
 
-  padding-left:.38em;
+  padding-left:1.18em;
+
+  text-shadow:
+    0 0 10px rgba(255,239,198,.55),
+    0 0 22px rgba(214,151,71,.22),
+    0 1px 0 rgba(255,255,255,.42);
+
+  filter:
+    drop-shadow(0 0 8px rgba(255,228,178,.32));
+
+  transition:
+    color .2s ease,
+    filter .2s ease,
+    text-shadow .2s ease,
+    transform .2s ease;
 }
 
 .ww-answer-base::before,
 .ww-answer-base::after{
   content:"";
-
   width:9rem;
   height:1px;
 
@@ -663,17 +626,23 @@ body{
     );
 }
 
+.ww-answer-base span{
+  position:relative;
+  z-index:2;
+}
+
 .ww-answer-base span::before,
 .ww-answer-base span::after{
   content:"◆";
-
   position:relative;
   top:-.06rem;
-
   font-size:.38rem;
 
   color:
     rgba(175,111,39,.88);
+
+  text-shadow:
+    0 0 8px rgba(255,219,166,.5);
 }
 
 .ww-answer-base span::before{
@@ -682,6 +651,22 @@ body{
 
 .ww-answer-base span::after{
   margin-left:.45rem;
+}
+
+.ww-answer-base:hover{
+  color:
+    rgba(38,27,20,.98);
+
+  transform:
+    translateY(-1px);
+
+  filter:
+    drop-shadow(0 0 12px rgba(255,228,178,.48));
+
+  text-shadow:
+    0 0 14px rgba(255,239,198,.72),
+    0 0 30px rgba(214,151,71,.3),
+    0 1px 0 rgba(255,255,255,.5);
 }
 
 .ww-answer-word{
@@ -715,16 +700,11 @@ body{
 
   font-size:.82rem;
   line-height:1;
-
   font-weight:950;
-
   letter-spacing:.28em;
   text-transform:uppercase;
 
   box-shadow:
-    0 0 28px rgba(255,220,170,.22),
-    0 0 60px rgba(255,210,150,.12),
-    0 0 120px rgba(160,100,40,.10),
     0 20px 40px rgba(48,26,15,.26),
     inset 0 1px 0 rgba(255,255,255,.2);
 
@@ -737,9 +717,7 @@ body{
 .ww-answer-word::before,
 .ww-answer-word::after{
   content:"❄";
-
   position:relative;
-
   font-size:.8rem;
 
   color:
@@ -763,9 +741,6 @@ body{
     brightness(1.06);
 
   box-shadow:
-    0 0 40px rgba(255,226,178,.34),
-    0 0 90px rgba(255,210,150,.2),
-    0 0 140px rgba(160,100,40,.13),
     0 26px 48px rgba(48,26,15,.3),
     inset 0 1px 0 rgba(255,255,255,.26);
 }
@@ -773,7 +748,6 @@ body{
 .ww-answer-modal{
   position:fixed;
   inset:0;
-
   z-index:9999;
 
   display:flex;
@@ -802,14 +776,9 @@ body{
 
 .ww-answer-modal-panel{
   width:min(92vw, 36rem);
-
   border-radius:1.8rem;
-
   text-align:center;
-
-  padding:
-    2.5rem
-    2.2rem;
+  padding:2.5rem 2.2rem;
 
   background:
     linear-gradient(
@@ -826,9 +795,7 @@ body{
 .ww-answer-modal-kicker{
   font-size:.66rem;
   line-height:1.6;
-
   font-weight:950;
-
   letter-spacing:.25em;
   text-transform:uppercase;
 
@@ -847,9 +814,7 @@ body{
     );
 
   line-height:1;
-
   font-weight:1000;
-
   letter-spacing:.13em;
   text-transform:uppercase;
 
@@ -940,6 +905,17 @@ body{
     font-size:2.7rem;
   }
 
+  .ww-answer-base{
+    font-size:.66rem;
+    letter-spacing:.26em;
+    padding-left:1.06em;
+  }
+
+  .ww-answer-base::before,
+  .ww-answer-base::after{
+    width:4.8rem;
+  }
+
   .ww-answer-word{
     width:100%;
     min-width:0;
@@ -949,7 +925,6 @@ body{
       1.2rem;
 
     font-size:.68rem;
-
     letter-spacing:.18em;
   }
 
@@ -981,6 +956,11 @@ body{
 
   .ww-answer-season-row::before,
   .ww-answer-season-row::after{
+    display:none;
+  }
+
+  .ww-answer-base::before,
+  .ww-answer-base::after{
     display:none;
   }
 
