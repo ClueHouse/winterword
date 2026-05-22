@@ -125,7 +125,7 @@ export function renderAnswerList(app, data = {}, navigate) {
 :root{
 
   --ww-paper:#efe3cb;
-  --ww-paper-soft:#f8efdD;
+  --ww-paper-soft:#f8efdd;
   --ww-ink:#4a3324;
   --ww-ink-soft:#6b503b;
   --ww-bronze:#9e6829;
@@ -164,13 +164,23 @@ body{
   background:
     radial-gradient(
       circle at 50% 8%,
-      rgba(255,255,255,0.92),
-      rgba(255,255,255,0.56) 18%,
+      rgba(255,255,255,0.94),
+      rgba(255,255,255,0.6) 18%,
       transparent 35%
     ),
     radial-gradient(
       circle at 50% 96%,
       rgba(255,255,255,0.38),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 15% 28%,
+      rgba(255,247,224,0.18),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 85% 72%,
+      rgba(255,247,224,0.14),
       transparent 28%
     ),
     linear-gradient(
@@ -216,27 +226,27 @@ body{
   content:"";
   position:fixed;
   left:50%;
-  top:18%;
+  top:17%;
 
-  width:min(46vw, 720px);
+  width:min(62vw, 980px);
   aspect-ratio:1 / 1;
 
   transform:
-    translate(-50%, -28%);
+    translate(-50%, -22%);
 
   background:
     url("/assets/winterword/shared/logo.png")
     center center / contain
     no-repeat;
 
-  opacity:.105;
+  opacity:.08;
 
   filter:
-    blur(20px)
+    blur(28px)
     sepia(1)
     saturate(2.25)
     hue-rotate(350deg)
-    brightness(.74);
+    brightness(.82);
 
   pointer-events:none;
   z-index:0;
@@ -250,7 +260,7 @@ body{
   margin:0 auto;
 
   padding:
-    1.35rem
+    4.25rem
     2.6rem
     2.4rem;
 }
@@ -258,6 +268,32 @@ body{
 .ww-answer-header{
   text-align:center;
   margin-bottom:1.65rem;
+}
+
+.ww-answer-header::before{
+  content:"";
+
+  display:block;
+
+  width:7.2rem;
+  height:7.2rem;
+
+  margin:
+    0 auto
+    1.05rem;
+
+  background:
+    url("/assets/winterword/shared/logo.png")
+    center center / contain
+    no-repeat;
+
+  filter:
+    sepia(1)
+    saturate(2.1)
+    hue-rotate(350deg)
+    brightness(.78);
+
+  opacity:.92;
 }
 
 .ww-answer-title{
@@ -895,9 +931,15 @@ body{
 
   .ww-answer-shell{
     padding:
-      1.2rem
+      2.2rem
       1rem
       2rem;
+  }
+
+  .ww-answer-header::before{
+    width:5.8rem;
+    height:5.8rem;
+    margin-bottom:.8rem;
   }
 
   .ww-answer-grid{
