@@ -311,8 +311,8 @@ export async function onRequestGet(context) {
       is_resolved: is_resolved,
       isResolved: is_resolved,
 
-      lifeline_live: record.lifeline_live === true,
-      lifelineLive: record.lifeline_live === true,
+      lifeline_live: record.lifeline_live,
+      lifelineLive: record.lifeline_live,
 
       pop1: record.pop1 === true,
       pop2: record.pop2 === true,
