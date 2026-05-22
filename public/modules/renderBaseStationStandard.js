@@ -38,34 +38,79 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     hasLeaderboardEntries === 1 ||
     hasLeaderboardEntries === "1";
 
-  const seasonStartDate = new Date(season_start);
-
   const totalClues = 12;
 
+  const normalisedDropFrequency =
+    String(drop_frequency || "weekly")
+      .trim()
+      .toLowerCase();
+
   const dropDays =
-    drop_frequency === "weekly"
-      ? 7
-      : drop_frequency === "daily"
-        ? 1
-        : drop_frequency === "quarter_hourly"
+    normalisedDropFrequency === "daily"
+      ? 1
+      : normalisedDropFrequency === "hourly"
+        ? (1 / 24)
+        : normalisedDropFrequency === "quarter_hourly"
           ? (15 / 1440)
           : 7;
 
-  const seasonEndDate = new Date(
-    seasonStartDate.getTime() +
-    ((totalClues - 1) * dropDays * 24 * 60 * 60 * 1000)
-  );
+  const seasonStartDate =
+    season_start
+      ? new Date(season_start)
+      : null;
+
+  const hasValidSeasonStart =
+    seasonStartDate instanceof Date &&
+    !Number.isNaN(seasonStartDate.getTime());
+
+  const seasonEndDate =
+    hasValidSeasonStart
+      ? new Date(
+          seasonStartDate.getTime() +
+          ((totalClues - 1) * dropDays * 24 * 60 * 60 * 1000)
+        )
+      : null;
+
+  const hasValidSeasonEnd =
+    seasonEndDate instanceof Date &&
+    !Number.isNaN(seasonEndDate.getTime());
 
   const startYear =
-    seasonStartDate.getFullYear();
+    hasValidSeasonStart
+      ? seasonStartDate.getFullYear()
+      : "";
 
   const endYear =
-    seasonEndDate.getFullYear();
+    hasValidSeasonEnd
+      ? seasonEndDate.getFullYear()
+      : "";
 
   const seasonYearLabel =
-    startYear === endYear
-      ? `${startYear}`
-      : `${startYear}/${String(endYear).slice(-2)}`;
+    startYear && endYear
+      ? startYear === endYear
+        ? `${startYear}`
+        : `${startYear}/${String(endYear).slice(-2)}`
+      : "";
+
+  const cleanSeasonLabel =
+    String(seasonLabel || "WINTERWORD")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const seasonLabelAlreadyHasYear =
+    seasonYearLabel
+      ? cleanSeasonLabel.includes(seasonYearLabel)
+      : /\b20\d{2}\b/.test(cleanSeasonLabel);
+
+  const displaySeasonLabel =
+    seasonYearLabel && !seasonLabelAlreadyHasYear
+      ? `${cleanSeasonLabel} ✧ ${seasonYearLabel}`
+      : cleanSeasonLabel;
+
+  const emailSeasonSuffix =
+    seasonYearLabel
+      ? `%20-%20${encodeURIComponent(seasonYearLabel)}`
+      : "";
 
   const pop1Live =
     pop1 === true ||
@@ -179,7 +224,7 @@ The WinterWord is:`
   );
 
   const solveHref =
-    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}%20-%20${seasonYearLabel}&body=${solveBody}`;
+    `mailto:key@cluehouse.co.nz?subject=FINAL%20WinterWord%20Submission%20-%20${encodedOrgName}${emailSeasonSuffix}&body=${solveBody}`;
 
   const popSubmitHref =
     `mailto:ice@cluehouse.co.nz?subject=${encodeURIComponent(`${activePop?.subject || "BLACK ICE DETECTED"} — ${mailSafeOrgName}`)}&body=${popSubmitBody}`;
