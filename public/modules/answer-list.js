@@ -170,8 +170,8 @@ body{
   background:
     linear-gradient(
       135deg,
-      rgba(247,248,242,.36),
-      rgba(228,236,228,.28)
+      rgba(247,248,242,.18),
+      rgba(228,236,228,.12)
     ),
     url("/assets/winterword/shared/answerlistbg.png")
     center center / cover
