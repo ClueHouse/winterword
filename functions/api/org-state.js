@@ -31,6 +31,20 @@ export async function onRequestGet(context) {
         .replace(/'/g, "\\'");
     }
 
+    function truthyAirtableValue(value) {
+      return value === true || value === "true" || value === "TRUE" || value === 1 || value === "1";
+    }
+
+    function getAirtableField(fields, names, fallback = undefined) {
+      for (const name of names) {
+        if (Object.prototype.hasOwnProperty.call(fields, name)) {
+          return fields[name];
+        }
+      }
+
+      return fallback;
+    }
+
     const safeSlug = escapeAirtableFormulaString(slug);
 
     const endpoint =
@@ -86,6 +100,7 @@ export async function onRequestGet(context) {
         }
 
         const leaderboardData = await leaderboardRes.json();
+
         return Array.isArray(leaderboardData.records)
           ? leaderboardData.records.length
           : 0;
@@ -176,12 +191,6 @@ export async function onRequestGet(context) {
     const current_clue = calculateCurrentClue();
 
     function getSeasonState() {
-      const isVisible = record.is_visible ?? true;
-
-      if (!isVisible) {
-        return "hidden";
-      }
-
       if (record.status === "paused") {
         return "paused";
       }
@@ -215,11 +224,11 @@ export async function onRequestGet(context) {
     function calculateIsResolved() {
       const override = record.base_station_resolved_override;
 
-      if (override === true || override === "true") {
+      if (truthyAirtableValue(override)) {
         return true;
       }
 
-      if (override === false || override === "false") {
+      if (override === false || override === "false" || override === "FALSE" || override === 0 || override === "0") {
         return false;
       }
 
@@ -265,7 +274,19 @@ export async function onRequestGet(context) {
 
     const is_resolved = calculateIsResolved();
 
-    const lifelineLive = record.lifeline_live === true;
+    const lifelineRaw = getAirtableField(record, [
+      "lifeline_live",
+      "lifelineLive",
+      "Lifeline Live",
+      "Lifeline live",
+      "lifeline live",
+      "lifeline"
+    ], false);
+
+    const lifelineLive = truthyAirtableValue(lifelineRaw);
+
+    const pop1Raw = getAirtableField(record, ["pop1", "POP1", "Pop 1", "pop_1"], false);
+    const pop2Raw = getAirtableField(record, ["pop2", "POP2", "Pop 2", "pop_2"], false);
 
     return Response.json({
       ok: true,
@@ -301,9 +322,6 @@ export async function onRequestGet(context) {
       season_end: record.season_end || "",
       seasonEnd: record.season_end || "",
 
-      is_visible: record.is_visible ?? true,
-      isVisible: record.is_visible ?? true,
-
       notes: record.notes || "",
 
       season_state: season_state,
@@ -319,8 +337,8 @@ export async function onRequestGet(context) {
       lifelineLive: lifelineLive,
       lifelineAvailable: lifelineLive,
 
-      pop1: record.pop1 === true,
-      pop2: record.pop2 === true,
+      pop1: truthyAirtableValue(pop1Raw),
+      pop2: truthyAirtableValue(pop2Raw),
 
       has_leaderboard_entries: has_leaderboard_entries,
       leaderboard_count: leaderboard_count,
