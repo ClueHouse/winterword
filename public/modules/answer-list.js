@@ -2,24 +2,33 @@ export function renderAnswerList(app, data = {}, navigate) {
   const orgName = data.orgName || data.org_name || "WinterWord";
   const finalWord = data.final_word || data.finalWord || "HOUSEWARMING";
 
-  const season_start = data.season_start || "";
-  const drop_frequency = data.drop_frequency || "weekly";
+  const seasonStartRaw =
+    data.season_start ||
+    data.seasonStart ||
+    data.start_date ||
+    data.startDate ||
+    "";
+
+  const dropFrequency =
+    data.drop_frequency ||
+    data.dropFrequency ||
+    "weekly";
 
   const totalClues = 12;
-  const seasonStartDate = new Date(season_start);
-
-  const dropDays =
-    drop_frequency === "weekly"
-      ? 7
-      : drop_frequency === "daily"
-        ? 1
-        : drop_frequency === "quarter_hourly"
-          ? (15 / 1440)
-          : 7;
+  const seasonStartDate = new Date(seasonStartRaw);
 
   const hasValidSeasonStart =
-    season_start &&
+    seasonStartRaw &&
     !Number.isNaN(seasonStartDate.getTime());
+
+  const dropDays =
+    dropFrequency === "weekly"
+      ? 7
+      : dropFrequency === "daily"
+        ? 1
+        : dropFrequency === "quarter_hourly"
+          ? (15 / 1440)
+          : 7;
 
   const seasonEndDate = hasValidSeasonStart
     ? new Date(
@@ -42,18 +51,20 @@ export function renderAnswerList(app, data = {}, navigate) {
       : `${startYear}/${String(endYear).slice(-2)}`;
 
   const formatReleaseDate = (index) => {
-    if (!hasValidSeasonStart) return "DATE TO BE SET";
+    if (!hasValidSeasonStart) return "";
 
     const releaseDate = new Date(
       seasonStartDate.getTime() +
       (index * dropDays * 24 * 60 * 60 * 1000)
     );
 
-    return releaseDate.toLocaleDateString("en-NZ", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric"
-    }).toUpperCase();
+    return releaseDate
+      .toLocaleDateString("en-NZ", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      })
+      .toUpperCase();
   };
 
   const answers = Array.from({ length: totalClues }, (_, index) => {
@@ -71,12 +82,12 @@ export function renderAnswerList(app, data = {}, navigate) {
   app.innerHTML = `
     <style>
       :root{
-        --ww-ink:#2b2118;
-        --ww-muted:#6f5c45;
+        --ww-ink:#241a13;
+        --ww-muted:#67513a;
         --ww-gold:#a97931;
-        --ww-gold-dark:#755426;
-        --ww-cream:#fff8ed;
-        --ww-card:#fffdf7;
+        --ww-gold-soft:#c79a52;
+        --ww-cream:#fff8ee;
+        --ww-card:#fffaf1;
       }
 
       *{ box-sizing:border-box; }
@@ -85,12 +96,13 @@ export function renderAnswerList(app, data = {}, navigate) {
         min-height:100vh;
         width:100%;
         margin:0;
-        padding:1.25rem 1.7rem 1.1rem;
+        padding:1.1rem 1.4rem .9rem;
         font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
         color:var(--ww-ink);
         background:
-          radial-gradient(circle at 50% 0%, rgba(255,255,255,0.9), transparent 30%),
-          linear-gradient(135deg,#fffaf1 0%, #f3e4c8 52%, #dec393 100%);
+          radial-gradient(circle at 50% -8%, rgba(255,255,255,0.96), transparent 30%),
+          radial-gradient(circle at 48% 46%, rgba(255,255,255,0.34), transparent 34%),
+          linear-gradient(135deg,#fffaf2 0%, #f4e6cb 52%, #dec394 100%);
         overflow-x:hidden;
       }
 
@@ -102,8 +114,8 @@ export function renderAnswerList(app, data = {}, navigate) {
         background:
           repeating-linear-gradient(
             0deg,
-            rgba(92,62,30,0.025) 0px,
-            rgba(92,62,30,0.025) 1px,
+            rgba(92,62,30,0.022) 0px,
+            rgba(92,62,30,0.022) 1px,
             transparent 1px,
             transparent 5px
           );
@@ -113,63 +125,87 @@ export function renderAnswerList(app, data = {}, navigate) {
       .ww-answer-wrap{
         position:relative;
         z-index:1;
-        width:min(100%, 62rem);
+        width:min(100%, 58rem);
         margin:0 auto;
       }
 
       .ww-answer-header{
         text-align:center;
-        margin:0 auto 1rem;
+        margin:0 auto 1.02rem;
       }
 
       .ww-title{
         margin:0;
         font-family:Georgia,"Times New Roman",serif;
-        font-size:clamp(2rem,4vw,3.75rem);
-        line-height:.95;
-        letter-spacing:.045em;
+        font-size:clamp(2.4rem,4.4vw,4.7rem);
+        line-height:.88;
+        letter-spacing:.035em;
         text-transform:uppercase;
-        color:#241b14;
+        color:#211711;
         font-weight:800;
       }
 
       .ww-season{
-        margin-top:.55rem;
+        margin-top:.62rem;
         font-size:.72rem;
         line-height:1;
-        letter-spacing:.56em;
+        letter-spacing:.7em;
         text-transform:uppercase;
         font-weight:950;
-        color:#9a6f2f;
-        padding-left:.56em;
+        color:#966b2d;
+        padding-left:.7em;
+      }
+
+      .ww-ornament{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:.75rem;
+        margin:.58rem auto .52rem;
+        color:#a97931;
+      }
+
+      .ww-ornament::before,
+      .ww-ornament::after{
+        content:"";
+        width:4.2rem;
+        height:1px;
+        background:rgba(169,121,49,0.42);
+      }
+
+      .ww-ornament img{
+        width:1rem;
+        height:auto;
+        opacity:.82;
       }
 
       .ww-subtitle{
-        margin:.58rem auto 0;
-        max-width:38rem;
-        font-size:.78rem;
+        margin:0 auto;
+        max-width:36rem;
+        font-family:Georgia,"Times New Roman",serif;
+        font-size:.92rem;
         line-height:1.45;
-        color:#66513b;
+        color:#5f4a36;
       }
 
       .ww-grid{
         display:grid;
         grid-template-columns:repeat(4, minmax(0, 1fr));
-        gap:.68rem;
+        gap:.82rem;
         align-items:stretch;
       }
 
       .ww-answer-card{
         border:0;
         cursor:pointer;
-        padding:.38rem .38rem .48rem;
-        border-radius:.78rem;
+        padding:.34rem .34rem .56rem;
+        border-radius:.7rem;
         background:
-          linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,239,219,0.96));
+          linear-gradient(180deg, rgba(255,255,255,0.98), rgba(252,242,224,0.97));
         box-shadow:
-          0 11px 22px rgba(76,49,23,0.13),
-          0 3px 7px rgba(76,49,23,0.09),
-          inset 0 0 0 1px rgba(255,255,255,0.82);
+          0 13px 28px rgba(76,49,23,0.13),
+          0 3px 7px rgba(76,49,23,0.08),
+          inset 0 0 0 1px rgba(255,255,255,0.9);
         transition:
           transform .2s ease,
           box-shadow .2s ease,
@@ -180,18 +216,18 @@ export function renderAnswerList(app, data = {}, navigate) {
         transform:translateY(-3px);
         filter:brightness(1.025);
         box-shadow:
-          0 17px 34px rgba(76,49,23,0.18),
-          0 5px 11px rgba(76,49,23,0.12),
-          inset 0 0 0 1px rgba(255,255,255,0.9);
+          0 19px 38px rgba(76,49,23,0.18),
+          0 5px 11px rgba(76,49,23,0.11),
+          inset 0 0 0 1px rgba(255,255,255,0.95);
       }
 
       .ww-thumb{
         width:100%;
-        aspect-ratio:1.55 / .83;
+        aspect-ratio:1.62 / .82;
         overflow:hidden;
-        border-radius:.58rem;
+        border-radius:.48rem;
         background:#eadfcf;
-        box-shadow:inset 0 0 0 1px rgba(70,45,20,0.12);
+        box-shadow:inset 0 0 0 1px rgba(70,45,20,0.1);
       }
 
       .ww-thumb img{
@@ -203,74 +239,77 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       .ww-card-meta{
         text-align:center;
-        padding-top:.38rem;
+        padding-top:.48rem;
       }
 
       .ww-card-number{
-        font-size:.66rem;
-        font-weight:1000;
-        letter-spacing:.18em;
-        color:#8c642b;
+        font-family:Georgia,"Times New Roman",serif;
+        font-size:1.18rem;
+        line-height:1;
+        font-weight:700;
+        letter-spacing:.08em;
+        color:#9a6d2e;
       }
 
       .ww-card-date{
-        margin-top:.16rem;
-        font-size:.48rem;
+        margin-top:.26rem;
+        font-size:.52rem;
         font-weight:850;
-        letter-spacing:.11em;
+        letter-spacing:.24em;
         text-transform:uppercase;
-        color:#7d6a54;
+        color:#4f4030;
+        min-height:.65rem;
       }
 
       .ww-footer{
-        margin-top:1rem;
+        margin-top:1.35rem;
         text-align:center;
       }
 
       .ww-footer-logo{
-        width:4.6rem;
+        width:4.9rem;
         display:block;
-        margin:0 auto .22rem;
+        margin:0 auto .34rem;
       }
 
       .ww-footer-base{
         display:inline-flex;
         align-items:center;
         justify-content:center;
-        gap:.55rem;
+        gap:.72rem;
         border:0;
         background:transparent;
         cursor:pointer;
-        padding:.25rem .5rem;
-        color:#7f5b29;
-        font:950 .62rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
-        letter-spacing:.22em;
+        padding:.22rem .5rem;
+        color:#805a28;
+        font:950 .66rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+        letter-spacing:.32em;
         text-transform:uppercase;
       }
 
       .ww-footer-base::before,
       .ww-footer-base::after{
         content:"";
-        width:3.2rem;
+        width:4.6rem;
         height:1px;
-        background:rgba(127,91,41,0.34);
+        background:rgba(128,90,40,0.34);
       }
 
       .ww-footer-base:hover{
-        color:#5e421f;
+        color:#563a19;
       }
 
       .ww-word-button{
         display:block;
-        margin:.42rem auto 0;
+        margin:.34rem auto 0;
         border:0;
         background:transparent;
         cursor:pointer;
         color:#8c642b;
-        font:900 .54rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
-        letter-spacing:.18em;
+        font:900 .5rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+        letter-spacing:.24em;
         text-transform:uppercase;
-        opacity:.88;
+        opacity:.86;
       }
 
       .ww-word-button:hover{
@@ -332,11 +371,16 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       @media (max-width:900px){
         .ww-answer-wrap{
-          width:min(100%, 50rem);
+          width:min(100%, 48rem);
         }
 
         .ww-grid{
           grid-template-columns:repeat(3, minmax(0, 1fr));
+        }
+
+        .ww-season{
+          letter-spacing:.45em;
+          padding-left:.45em;
         }
       }
 
@@ -349,9 +393,9 @@ export function renderAnswerList(app, data = {}, navigate) {
           grid-template-columns:repeat(2, minmax(0, 1fr));
         }
 
-        .ww-season{
-          letter-spacing:.32em;
-          padding-left:.32em;
+        .ww-footer-base::before,
+        .ww-footer-base::after{
+          width:2.4rem;
         }
       }
 
@@ -361,7 +405,12 @@ export function renderAnswerList(app, data = {}, navigate) {
         }
 
         .ww-title{
-          font-size:2.25rem;
+          font-size:2.35rem;
+        }
+
+        .ww-season{
+          letter-spacing:.28em;
+          padding-left:.28em;
         }
       }
     </style>
@@ -372,6 +421,9 @@ export function renderAnswerList(app, data = {}, navigate) {
         <header class="ww-answer-header">
           <h1 class="ww-title">The Answers</h1>
           <div class="ww-season">WinterWord ${escapeHtml(seasonYearLabel)}</div>
+          <div class="ww-ornament">
+            <img src="/assets/winterword/shared/logo.png" alt="">
+          </div>
           <div class="ww-subtitle">
             The ice has melted. All that remains is transparency.
           </div>
