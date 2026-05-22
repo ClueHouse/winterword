@@ -8,6 +8,8 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     updatesText = "",
     updatesContent = "",
     lifelineAvailable = false,
+    lifeline_live = false,
+    lifelineLive = false,
     hasLeaderboardEntries = false,
     pop1 = false,
     pop2 = false,
@@ -15,6 +17,20 @@ export function renderBaseStationStandard(app, data = {}, navigate) {
     season_start = "",
     drop_frequency = "weekly"
   } = data;
+
+  const lifelineIsAvailable =
+    lifelineAvailable === true ||
+    lifelineAvailable === "true" ||
+    lifelineAvailable === 1 ||
+    lifelineAvailable === "1" ||
+    lifeline_live === true ||
+    lifeline_live === "true" ||
+    lifeline_live === 1 ||
+    lifeline_live === "1" ||
+    lifelineLive === true ||
+    lifelineLive === "true" ||
+    lifelineLive === 1 ||
+    lifelineLive === "1";
 
   const leaderboardAvailable =
     hasLeaderboardEntries === true ||
