@@ -398,7 +398,6 @@
           );
           return;
         }
-
         case "base-station": {
           if (isResolved) {
             const renderBaseStationResolved = modules.baseStationResolved.renderBaseStationResolved;
@@ -416,6 +415,8 @@
                 currentClue,
                 totalClues,
                 lifelineAvailable,
+                lifeline_live: orgState.lifeline_live,
+                lifelineLive: orgState.lifelineLive,
                 lifelineUnlockClue,
                 pop1: false,
                 pop2: false,
@@ -451,6 +452,8 @@
               totalClues,
               seasonState,
               lifelineAvailable,
+              lifeline_live: orgState.lifeline_live,
+              lifelineLive: orgState.lifelineLive,
               lifelineUnlockClue,
               pop1,
               pop2,
@@ -657,7 +660,6 @@
           return;
       }
     }
-
     if (hasSeenWelcome(slug)) {
       navigate("base-station");
     } else {
