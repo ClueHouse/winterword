@@ -3,7 +3,7 @@
 
 (async function winterwordEngine() {
   "use strict";
- 
+
   const MODULE_PATHS = {
     baseStationStandard: "/modules/renderBaseStationStandard.js",
     baseStationResolved: "/modules/base-station-resolved.js",
@@ -203,15 +203,26 @@
   }
 
   function computeResolvedFallback(orgState, totalClues) {
-    const seasonStart = orgState?.season_start ? new Date(orgState.season_start) : null;
-    const dropFrequency = orgState?.drop_frequency || "weekly";
+    const seasonStart = orgState?.season_start
+      ? new Date(orgState.season_start)
+      : orgState?.seasonStart
+        ? new Date(orgState.seasonStart)
+        : null;
+
+    const dropFrequency =
+      orgState?.drop_frequency ||
+      orgState?.dropFrequency ||
+      "weekly";
+
     const intervalMs = getFrequencyMs(dropFrequency);
 
     if (!seasonStart || Number.isNaN(seasonStart.getTime())) {
       return false;
     }
 
-    const resolveTime = seasonStart.getTime() + Number(totalClues) * intervalMs;
+    const resolveTime =
+      seasonStart.getTime() + Number(totalClues || 12) * intervalMs;
+
     return Date.now() >= resolveTime;
   }
 
@@ -335,20 +346,39 @@
 
     const game = await loadGame();
 
-    const totalClues = Number(game.total_clues || 12);
+    const totalClues =
+      Number(
+        game.total_clues ||
+        game.totalClues ||
+        orgState.total_clues ||
+        orgState.totalClues ||
+        12
+      ) || 12;
 
     const isResolved =
       rawSeasonState === "complete" ||
       rawSeasonState === "resolved" ||
       orgState.is_resolved === true ||
+      orgState.isResolved === true ||
       orgState.is_complete === true ||
+      orgState.isComplete === true ||
       computeResolvedFallback(orgState, totalClues);
 
     const seasonState = isResolved ? "complete" : rawSeasonState;
 
     const currentClue = isResolved
       ? totalClues
-      : Math.max(0, Math.min(Number(orgState.current_clue || 0), totalClues));
+      : Math.max(
+          0,
+          Math.min(
+            Number(
+              orgState.current_clue ||
+              orgState.currentClue ||
+              0
+            ),
+            totalClues
+          )
+        );
 
     const lifelineUnlockClue = Number(game.lifeline_unlock_clue || 6);
 
@@ -388,7 +418,7 @@
           renderWelcomeIntro(
             app,
             {
-              orgName: orgState.org_name || game.org_name || "WinterWord",
+              orgName: orgState.org_name || orgState.orgName || game.org_name || "WinterWord",
               slug
             },
             function handleWelcomeDone() {
@@ -398,6 +428,7 @@
           );
           return;
         }
+
         case "base-station": {
           if (isResolved) {
             const renderBaseStationResolved = modules.baseStationResolved.renderBaseStationResolved;
@@ -410,10 +441,14 @@
             renderBaseStationResolved(
               app,
               {
-                orgName: orgState.org_name || game.org_name || "WinterWord",
+                ...orgState,
+                orgName: orgState.org_name || orgState.orgName || game.org_name || "WinterWord",
+                org_name: orgState.org_name || orgState.orgName || game.org_name || "WinterWord",
                 seasonLabel: game.season_label || "WINTERWORD • 2026",
                 currentClue,
+                current_clue: currentClue,
                 totalClues,
+                total_clues: totalClues,
                 lifelineAvailable,
                 lifeline_live: orgState.lifeline_live,
                 lifelineLive: orgState.lifelineLive,
@@ -422,7 +457,8 @@
                 pop2: false,
                 popClueLive: false,
                 hasLeaderboardEntries,
-                isResolved: true
+                isResolved: true,
+                is_resolved: true
               },
               navigate
             );
@@ -440,7 +476,9 @@
           renderBaseStationStandard(
             app,
             {
-              orgName: orgState.org_name || game.org_name || "WinterWord",
+              ...orgState,
+              orgName: orgState.org_name || orgState.orgName || game.org_name || "WinterWord",
+              org_name: orgState.org_name || orgState.orgName || game.org_name || "WinterWord",
               seasonLabel: game.season_label || "WINTERWORD • 2026",
               introLine1: game.base_station_intro_line_1,
               introLine2: game.base_station_intro_line_2,
@@ -449,8 +487,11 @@
               guidepostText: orgState.guidepost || orgState.guidepostText || orgState.updates_content || game.updates_text || "",
               updatesText: orgState.guidepost || orgState.guidepostText || orgState.updates_content || game.updates_text || "",
               currentClue,
+              current_clue: currentClue,
               totalClues,
+              total_clues: totalClues,
               seasonState,
+              season_state: seasonState,
               lifelineAvailable,
               lifeline_live: orgState.lifeline_live,
               lifelineLive: orgState.lifelineLive,
@@ -459,7 +500,8 @@
               pop2,
               popClueLive,
               hasLeaderboardEntries,
-              isResolved: false
+              isResolved: false,
+              is_resolved: false
             },
             navigate
           );
@@ -482,8 +524,11 @@
           renderClueList(
             app,
             {
+              ...orgState,
               currentClue,
+              current_clue: currentClue,
               totalClues,
+              total_clues: totalClues,
               lifelineAvailable,
               lifeline_live: orgState.lifeline_live,
               lifelineLive: orgState.lifelineLive,
@@ -491,7 +536,8 @@
               pop1,
               pop2,
               popClueLive,
-              isResolved
+              isResolved,
+              is_resolved: isResolved
             },
             navigate
           );
@@ -526,11 +572,15 @@
           renderCluePage(
             app,
             {
+              ...orgState,
               clueId,
               totalClues,
+              total_clues: totalClues,
               clue: clueData,
               currentClue,
+              current_clue: currentClue,
               isResolved,
+              is_resolved: isResolved,
               lifelineAvailable,
               lifeline_live: orgState.lifeline_live,
               lifelineLive: orgState.lifelineLive,
@@ -560,9 +610,65 @@
           renderAnswerList(
             app,
             {
-              orgName: orgState.org_name || game.org_name || "WinterWord",
+              ...orgState,
+              org: orgState,
+
+              orgName:
+                orgState.org_name ||
+                orgState.orgName ||
+                game.org_name ||
+                "WinterWord",
+
+              org_name:
+                orgState.org_name ||
+                orgState.orgName ||
+                game.org_name ||
+                "WinterWord",
+
               totalClues,
-              final_word: orgState.final_word || game.final_word || "HOUSEWARMING"
+              total_clues: totalClues,
+
+              final_word:
+                orgState.final_word ||
+                orgState.finalWord ||
+                game.final_word ||
+                game.finalWord ||
+                "HOUSEWARMING",
+
+              finalWord:
+                orgState.finalWord ||
+                orgState.final_word ||
+                game.finalWord ||
+                game.final_word ||
+                "HOUSEWARMING",
+
+              season_start:
+                orgState.season_start ||
+                orgState.seasonStart ||
+                "",
+
+              seasonStart:
+                orgState.seasonStart ||
+                orgState.season_start ||
+                "",
+
+              drop_frequency:
+                orgState.drop_frequency ||
+                orgState.dropFrequency ||
+                "weekly",
+
+              dropFrequency:
+                orgState.dropFrequency ||
+                orgState.drop_frequency ||
+                "weekly",
+
+              season_state: seasonState,
+              seasonState,
+
+              isResolved,
+              is_resolved: isResolved,
+              isComplete: isResolved,
+              is_complete: isResolved
             },
             navigate
           );
@@ -588,10 +694,13 @@
           renderAnswerPage(
             app,
             {
+              ...orgState,
               clueId: answerId,
               totalClues,
+              total_clues: totalClues,
               answer,
               isResolved,
+              is_resolved: isResolved,
               lifelineAvailable,
               lifeline_live: orgState.lifeline_live,
               lifelineLive: orgState.lifelineLive,
@@ -618,12 +727,14 @@
           renderLifelinePage(
             app,
             {
+              ...orgState,
               isAvailable: true,
               currentClue,
+              current_clue: currentClue,
               lifelineTitle: game.lifeline_title || "Need a nudge?",
               lifelineBody: game.lifeline_body || "Your lifeline content goes here.",
               lifelineImage: game.lifeline_image || "",
-              orgName: orgState.org_name || game.org_name || "WinterWord",
+              orgName: orgState.org_name || orgState.orgName || game.org_name || "WinterWord",
               lifelineAvailable,
               lifeline_live: orgState.lifeline_live,
               lifelineLive: orgState.lifelineLive,
@@ -645,7 +756,8 @@
           renderLeaderboardPage(
             app,
             {
-              orgName: orgState.org_name || game.org_name || "WinterWord",
+              ...orgState,
+              orgName: orgState.org_name || orgState.orgName || game.org_name || "WinterWord",
               seasonLabel: game.season_label || "WINTERWORD • 2026",
               slug,
               leaderboardEndpoint: LEADERBOARD_ENDPOINT
@@ -660,11 +772,13 @@
           return;
       }
     }
+
     if (hasSeenWelcome(slug)) {
       navigate("base-station");
     } else {
       navigate("welcome");
     }
+
   } catch (error) {
     renderError(
       "WinterWord could not load",
