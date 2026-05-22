@@ -1,7 +1,7 @@
 export async function onRequestGet(context) {
   try {
     const { request, env } = context;
-
+ 
     const url = new URL(request.url);
     const slug = url.searchParams.get("slug");
 
@@ -176,8 +176,8 @@ export async function onRequestGet(context) {
     const current_clue = calculateCurrentClue();
 
     //
-    // ⭐ FIXED SEASON VISIBILITY LOGIC
-    // If Airtable does NOT include is_visible, we treat it as TRUE.
+    // ⭐ FIXED VISIBILITY LOGIC
+    // If Airtable does NOT include is_visible, treat it as TRUE.
     //
     function getSeasonState() {
 
@@ -318,8 +318,8 @@ export async function onRequestGet(context) {
       is_resolved: is_resolved,
       isResolved: is_resolved,
 
-      lifeline_live: record.lifeline_live,
-      lifelineLive: record.lifeline_live,
+      lifeline_live: record.lifeline_live === true,
+      lifelineLive: record.lifeline_live === true,
 
       pop1: record.pop1 === true,
       pop2: record.pop2 === true,
