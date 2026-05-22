@@ -1397,7 +1397,6 @@ html,body{
         <div class="ww-title-status">
           LIVE
         </div>
-
         <div class="ww-title-sub">
           A letter per week from a wintry scroll.<br>
           Piece them together — reveal the whole.
@@ -1413,7 +1412,7 @@ html,body{
             CLUE
           </button>
 
-          <button class="ww-word-link ${lifelineAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="lifeline" data-tooltip="life" data-disabled="${lifelineAvailable ? "false" : "true"}">
+          <button class="ww-word-link ${lifelineIsAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="lifeline" data-tooltip="life" data-disabled="${lifelineIsAvailable ? "false" : "true"}">
             LIFE
           </button>
 
@@ -1450,9 +1449,9 @@ html,body{
         Each of your upcoming clues is designed to reveal just enough to move you forward — and hide the rest where only patience can reach it.
       </div>
 
-      <div class="ww-tooltip ww-life-tooltip ${lifelineAvailable ? "" : "ww-tooltip--locked"}" data-tooltip-card="life">
+      <div class="ww-tooltip ww-life-tooltip ${lifelineIsAvailable ? "" : "ww-tooltip--locked"}" data-tooltip-card="life">
         <span class="ww-tooltip-title">Lifeline</span>
-        ${lifelineAvailable ? "This passage is open. Step carefully." : "This passage waits its moment."}
+        ${lifelineIsAvailable ? "This passage is open. Step carefully." : "This passage waits its moment."}
       </div>
 
       <div class="ww-tooltip ww-leader-tooltip ${leaderboardAvailable ? "" : "ww-tooltip--locked"}" data-tooltip-card="leader">
