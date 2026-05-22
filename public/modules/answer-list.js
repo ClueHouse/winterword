@@ -2,13 +2,68 @@ export function renderAnswerList(app, data = {}, navigate) {
   const orgName = data.orgName || data.org_name || "WinterWord";
   const finalWord = data.final_word || data.finalWord || "HOUSEWARMING";
 
-  const answers = Array.from({ length: 12 }, (_, index) => {
+  const season_start = data.season_start || "";
+  const drop_frequency = data.drop_frequency || "weekly";
+
+  const totalClues = 12;
+  const seasonStartDate = new Date(season_start);
+
+  const dropDays =
+    drop_frequency === "weekly"
+      ? 7
+      : drop_frequency === "daily"
+        ? 1
+        : drop_frequency === "quarter_hourly"
+          ? (15 / 1440)
+          : 7;
+
+  const hasValidSeasonStart =
+    seasonStartDate instanceof Date &&
+    !Number.isNaN(seasonStartDate.getTime());
+
+  const seasonEndDate = hasValidSeasonStart
+    ? new Date(
+        seasonStartDate.getTime() +
+        ((totalClues - 1) * dropDays * 24 * 60 * 60 * 1000)
+      )
+    : null;
+
+  const startYear = hasValidSeasonStart
+    ? seasonStartDate.getFullYear()
+    : new Date().getFullYear();
+
+  const endYear = seasonEndDate
+    ? seasonEndDate.getFullYear()
+    : startYear;
+
+  const seasonYearLabel =
+    startYear === endYear
+      ? `${startYear}`
+      : `${startYear}/${String(endYear).slice(-2)}`;
+
+  const formatReleaseDate = (index) => {
+    if (!hasValidSeasonStart) return "";
+
+    const releaseDate = new Date(
+      seasonStartDate.getTime() +
+      (index * dropDays * 24 * 60 * 60 * 1000)
+    );
+
+    return releaseDate.toLocaleDateString("en-NZ", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+  };
+
+  const answers = Array.from({ length: totalClues }, (_, index) => {
     const num = String(index + 1).padStart(2, "0");
     const ext = index + 1 === 12 ? "gif" : "png";
 
     return {
       id: num,
-      label: `${num} · Revealed`,
+      number: num,
+      date: formatReleaseDate(index),
       image: `/assets/winterword/display/${num}.${ext}`,
       path: `/answers/${num}`
     };
@@ -17,353 +72,239 @@ export function renderAnswerList(app, data = {}, navigate) {
   app.innerHTML = `
     <style>
       :root{
-        --ww-ink:#2f241b;
-        --ww-soft:#6f5b47;
+        --ww-ink:#2c241c;
+        --ww-muted:#7b6750;
+        --ww-gold:#b58a45;
+        --ww-gold-dark:#7d5b2f;
         --ww-cream:#fff8ed;
-        --ww-paper:#fffdf6;
-        --ww-brass:#b58a45;
-        --ww-sage:#6f8061;
-        --ww-shadow:rgba(72,48,24,0.22);
+        --ww-card:#fffdf7;
+        --ww-shadow:rgba(70,45,20,0.18);
       }
 
-      *{box-sizing:border-box;}
+      *{ box-sizing:border-box; }
 
-      .ww-answer-list{
+      .ww-answer-page{
         min-height:100vh;
+        width:100%;
         margin:0;
+        padding:2.2rem 2.4rem 1.45rem;
         font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
         color:var(--ww-ink);
         background:
-          radial-gradient(circle at 18% 12%, rgba(255,255,255,0.95), transparent 24%),
-          radial-gradient(circle at 83% 8%, rgba(255,226,162,0.32), transparent 26%),
-          radial-gradient(circle at 70% 82%, rgba(168,190,137,0.16), transparent 30%),
-          linear-gradient(135deg,#fff8ec 0%, #f3e4cc 42%, #dfcaa9 100%);
-        padding:1rem;
+          radial-gradient(circle at 50% 0%, rgba(255,255,255,0.94), transparent 28%),
+          radial-gradient(circle at 20% 18%, rgba(255,232,184,0.42), transparent 26%),
+          radial-gradient(circle at 82% 26%, rgba(226,199,145,0.18), transparent 30%),
+          linear-gradient(135deg,#fffaf1 0%, #f4e7cf 48%, #e2ca9e 100%);
         overflow-x:hidden;
       }
 
-      .ww-answer-list::before{
+      .ww-answer-page::before{
         content:"";
         position:fixed;
         inset:0;
         pointer-events:none;
         background:
-          linear-gradient(90deg, rgba(255,255,255,0.24), transparent 18%, transparent 78%, rgba(119,84,42,0.07)),
           repeating-linear-gradient(
             0deg,
-            rgba(96,64,32,0.022) 0px,
-            rgba(96,64,32,0.022) 1px,
+            rgba(95,67,38,0.026) 0px,
+            rgba(95,67,38,0.026) 1px,
             transparent 1px,
             transparent 5px
           );
         mix-blend-mode:multiply;
       }
 
-      .ww-answer-shell{
+      .ww-answer-wrap{
         position:relative;
-        max-width:78rem;
+        z-index:1;
+        width:min(100%, 76rem);
         margin:0 auto;
-        min-height:calc(100vh - 2rem);
-        border-radius:1.55rem;
-        overflow:hidden;
-        background:
-          linear-gradient(180deg, rgba(255,255,255,0.64), rgba(255,248,235,0.42));
-        box-shadow:
-          0 22px 70px rgba(91,61,28,0.22),
-          inset 0 0 0 1px rgba(255,255,255,0.76);
-        backdrop-filter:blur(10px);
       }
 
-      .ww-answer-content{
-        position:relative;
-        min-height:calc(100vh - 2rem);
-        padding:1.45rem 1.55rem;
-        display:grid;
-        grid-template-columns:6rem minmax(0,1fr);
-        gap:1.35rem;
-      }
-
-      .ww-side{
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
-        gap:1.8rem;
-        padding:.5rem 0;
-      }
-
-      .ww-side-logo{
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        gap:.7rem;
-        text-decoration:none;
-        cursor:pointer;
-        background:none;
-        border:none;
-        padding:0;
-      }
-
-      .ww-side-logo img{
-        width:7.6rem;
-        max-width:none;
-        display:block;
-        background:transparent !important;
-        box-shadow:none !important;
-        border:none !important;
-      }
-
-      .ww-divider{
-        width:34px;
-        height:1px;
-        background:rgba(83,58,33,0.28);
-      }
-
-      .ww-side-label{
-        font-size:.62rem;
-        letter-spacing:.19em;
-        text-transform:uppercase;
-        font-weight:900;
-        color:#5f4a34;
+      .ww-answer-header{
         text-align:center;
-      }
-
-      .ww-word-btn{
-        position:relative;
-        width:8.7rem;
-        padding:.82rem .7rem .86rem;
-        border:none;
-        border-radius:999px;
-        cursor:pointer;
-        text-align:center;
-        color:#fffdf7;
-        font:900 .58rem/1.22 system-ui,-apple-system,"Segoe UI",sans-serif;
-        letter-spacing:.14em;
-        text-transform:uppercase;
-        background:
-          linear-gradient(180deg, rgba(255,255,255,0.26), rgba(255,255,255,0.04)),
-          linear-gradient(145deg, #b68b45, #7d5b2f);
-        box-shadow:
-          0 12px 24px rgba(91,61,28,0.24),
-          inset 0 1px 0 rgba(255,255,255,0.32),
-          inset 0 0 0 1px rgba(255,255,255,0.2);
-        transition:transform .22s ease, box-shadow .22s ease, filter .22s ease;
-        overflow:hidden;
-        margin-top:.2rem;
-      }
-
-      .ww-word-btn::before{
-        content:"";
-        position:absolute;
-        inset:0;
-        background:
-          linear-gradient(115deg,
-            rgba(255,255,255,0) 0%,
-            rgba(255,255,255,0.12) 32%,
-            rgba(255,255,255,0.34) 48%,
-            rgba(255,255,255,0.08) 64%,
-            rgba(255,255,255,0) 100%);
-        transform:translateX(-120%) skewX(-18deg);
-        pointer-events:none;
-      }
-
-      .ww-word-btn:hover{
-        transform:translateY(-2px);
-        filter:brightness(1.06);
-      }
-
-      .ww-word-btn:hover::before{
-        animation:wwBtnSweep .85s ease forwards;
-      }
-
-      @keyframes wwBtnSweep{
-        0%{ transform:translateX(-120%) skewX(-18deg); }
-        100%{ transform:translateX(170%) skewX(-18deg); }
-      }
-
-      .ww-word-btn span{
-        display:block;
-        position:relative;
-        z-index:1;
-      }
-
-      .ww-word-btn .ww-word-line + .ww-word-line{
-        margin-top:.14rem;
-      }
-
-      .ww-main{
-        display:flex;
-        min-width:0;
-      }
-
-      .ww-gallery{
-        width:100%;
-        border-radius:1.35rem;
-        position:relative;
-        overflow:hidden;
-        background:
-          radial-gradient(circle at 20% 0%, rgba(255,255,255,0.82), transparent 30%),
-          linear-gradient(180deg, rgba(255,255,255,0.48), rgba(255,248,235,0.2));
-        box-shadow:
-          inset 0 0 0 1px rgba(255,255,255,0.65);
-      }
-
-      .ww-gallery::before{
-        content:"";
-        position:absolute;
-        inset:0;
-        pointer-events:none;
-        background:
-          radial-gradient(circle at 10% 20%, rgba(181,138,69,0.09), transparent 28%),
-          radial-gradient(circle at 90% 80%, rgba(111,128,97,0.1), transparent 32%);
-      }
-
-      .ww-gallery-inner{
-        position:relative;
-        z-index:1;
-        padding:1.95rem 1.85rem 2.15rem;
-      }
-
-      .ww-head{
-        text-align:center;
-        max-width:48rem;
-        margin:0 auto 1.55rem;
+        margin:0 auto 1.75rem;
       }
 
       .ww-title{
-        margin:0 0 .48rem;
-        font-weight:1000;
-        letter-spacing:.22em;
+        margin:0;
+        font-family:Georgia,"Times New Roman",serif;
+        font-size:clamp(2rem,4.6vw,4.7rem);
+        line-height:.95;
+        letter-spacing:.05em;
         text-transform:uppercase;
-        font-size:clamp(1.35rem,1.85vw,2.05rem);
-        color:#3c2b1c;
+        color:#261e17;
+        font-weight:800;
       }
 
-      .ww-status{
-        font-size:.64rem;
-        letter-spacing:.2em;
+      .ww-season{
+        margin-top:.9rem;
+        font-size:clamp(.72rem,1.2vw,.98rem);
+        line-height:1;
+        letter-spacing:.62em;
         text-transform:uppercase;
-        margin-bottom:.62rem;
-        color:#8b6a35;
-        font-weight:900;
+        font-weight:950;
+        color:#9c7336;
+        padding-left:.62em;
       }
 
-      .ww-intro{
-        font-size:.86rem;
-        color:var(--ww-soft);
+      .ww-subtitle{
+        margin:.86rem auto 0;
+        max-width:44rem;
+        font-size:clamp(.82rem,1.1vw,.98rem);
         line-height:1.5;
+        color:#6e5a43;
       }
 
       .ww-grid{
         display:grid;
         grid-template-columns:repeat(4, minmax(0, 1fr));
-        grid-auto-flow:dense;
-        gap:.85rem;
-        align-items:start;
+        gap:1rem;
+        align-items:stretch;
       }
 
-      .ww-card{
-        position:relative;
+      .ww-answer-card{
         border:0;
         cursor:pointer;
-        padding:.42rem .42rem .58rem;
-        border-radius:.78rem;
+        padding:.55rem .55rem .72rem;
+        border-radius:1rem;
         background:
-          linear-gradient(180deg, #fffef9, #f8eddc);
+          linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,239,219,0.96));
         box-shadow:
-          0 12px 24px rgba(91,61,28,0.15),
-          0 4px 9px rgba(91,61,28,0.1),
+          0 16px 34px rgba(76,49,23,0.14),
+          0 4px 10px rgba(76,49,23,0.1),
           inset 0 0 0 1px rgba(255,255,255,0.82);
-        transform:rotate(var(--tilt, 0deg));
         transition:
-          transform .24s ease,
-          box-shadow .24s ease,
-          filter .24s ease;
+          transform .22s ease,
+          box-shadow .22s ease,
+          filter .22s ease;
       }
 
-      .ww-card:nth-child(1){ --tilt:-1.2deg; grid-column:span 2; }
-      .ww-card:nth-child(2){ --tilt:1deg; }
-      .ww-card:nth-child(3){ --tilt:-.7deg; }
-      .ww-card:nth-child(4){ --tilt:1.1deg; }
-      .ww-card:nth-child(5){ --tilt:-.8deg; }
-      .ww-card:nth-child(6){ --tilt:.6deg; grid-column:span 2; }
-      .ww-card:nth-child(7){ --tilt:1deg; }
-      .ww-card:nth-child(8){ --tilt:-1deg; }
-      .ww-card:nth-child(9){ --tilt:.7deg; grid-column:span 2; }
-      .ww-card:nth-child(10){ --tilt:-.6deg; }
-      .ww-card:nth-child(11){ --tilt:.9deg; }
-      .ww-card:nth-child(12){ --tilt:-.9deg; grid-column:span 2; }
-
-      .ww-card::before{
-        content:"";
-        position:absolute;
-        left:50%;
-        top:-.38rem;
-        width:2.5rem;
-        height:.78rem;
-        border-radius:.14rem;
-        background:rgba(216,195,154,0.58);
-        box-shadow:0 2px 7px rgba(91,61,28,0.12);
-        transform:translateX(-50%) rotate(calc(var(--tilt, 0deg) * -1));
-        z-index:3;
-      }
-
-      .ww-card:hover{
-        transform:translateY(-4px) rotate(0deg);
-        box-shadow:
-          0 20px 42px rgba(91,61,28,0.22),
-          0 6px 13px rgba(91,61,28,0.14),
-          inset 0 0 0 1px rgba(255,255,255,0.9);
+      .ww-answer-card:hover{
+        transform:translateY(-4px);
         filter:brightness(1.025);
-        z-index:5;
+        box-shadow:
+          0 23px 48px rgba(76,49,23,0.2),
+          0 7px 15px rgba(76,49,23,0.13),
+          inset 0 0 0 1px rgba(255,255,255,0.9);
       }
 
       .ww-thumb{
         width:100%;
-        aspect-ratio:1.34 / .78;
+        aspect-ratio:1.45 / .86;
         overflow:hidden;
-        border-radius:.56rem;
+        border-radius:.72rem;
         background:#eadfcf;
-        box-shadow:inset 0 0 0 1px rgba(90,61,35,0.1);
-      }
-
-      .ww-card:nth-child(1) .ww-thumb,
-      .ww-card:nth-child(6) .ww-thumb,
-      .ww-card:nth-child(9) .ww-thumb,
-      .ww-card:nth-child(12) .ww-thumb{
-        aspect-ratio:1.72 / .78;
+        box-shadow:inset 0 0 0 1px rgba(70,45,20,0.12);
       }
 
       .ww-thumb img{
+        display:block;
         width:100%;
         height:100%;
         object-fit:cover;
+      }
+
+      .ww-card-meta{
+        text-align:center;
+        padding-top:.62rem;
+      }
+
+      .ww-card-number{
+        font-size:.82rem;
+        font-weight:1000;
+        letter-spacing:.2em;
+        color:#8c682f;
+      }
+
+      .ww-card-date{
+        margin-top:.22rem;
+        font-size:.62rem;
+        font-weight:800;
+        letter-spacing:.08em;
+        text-transform:uppercase;
+        color:#7d6a54;
+      }
+
+      .ww-footer{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:1rem;
+        margin-top:1.35rem;
+      }
+
+      .ww-footer-logo{
+        width:7.8rem;
         display:block;
       }
 
-      .ww-meta{
-        padding:.52rem .35rem 0;
-        font-size:.61rem;
-        letter-spacing:.17em;
+      .ww-footer-button{
+        border:0;
+        cursor:pointer;
+        border-radius:999px;
+        padding:.72rem 1.15rem;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.32), rgba(255,255,255,0.05)),
+          linear-gradient(145deg, var(--ww-gold), var(--ww-gold-dark));
+        color:#fffaf2;
+        font:950 .68rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+        letter-spacing:.18em;
         text-transform:uppercase;
-        text-align:center;
-        color:#715436;
-        font-weight:950;
+        box-shadow:
+          0 12px 26px rgba(80,52,24,0.22),
+          inset 0 1px 0 rgba(255,255,255,0.34),
+          inset 0 0 0 1px rgba(255,255,255,0.2);
+        transition:transform .2s ease, filter .2s ease, box-shadow .2s ease;
+      }
+
+      .ww-footer-button:hover{
+        transform:translateY(-2px);
+        filter:brightness(1.06);
+        box-shadow:
+          0 16px 32px rgba(80,52,24,0.27),
+          inset 0 1px 0 rgba(255,255,255,0.34),
+          inset 0 0 0 1px rgba(255,255,255,0.2);
+      }
+
+      .ww-word-button{
+        border:0;
+        cursor:pointer;
+        border-radius:999px;
+        padding:.72rem 1.15rem;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,235,210,0.94));
+        color:#6c4d24;
+        font:950 .68rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+        letter-spacing:.16em;
+        text-transform:uppercase;
+        box-shadow:
+          0 12px 26px rgba(80,52,24,0.16),
+          inset 0 0 0 1px rgba(181,138,69,0.32);
+        transition:transform .2s ease, filter .2s ease, box-shadow .2s ease;
+      }
+
+      .ww-word-button:hover{
+        transform:translateY(-2px);
+        filter:brightness(1.04);
+        box-shadow:
+          0 16px 32px rgba(80,52,24,0.21),
+          inset 0 0 0 1px rgba(181,138,69,0.42);
       }
 
       .ww-modal{
         position:fixed;
         inset:0;
+        z-index:9999;
         display:flex;
         align-items:center;
         justify-content:center;
         padding:1.5rem;
-        background:rgba(61,42,24,0.36);
+        background:rgba(49,34,18,0.36);
         backdrop-filter:blur(10px);
         opacity:0;
         pointer-events:none;
         transition:opacity .3s ease;
-        z-index:9999;
       }
 
       .ww-modal.is-open{
@@ -372,12 +313,12 @@ export function renderAnswerList(app, data = {}, navigate) {
       }
 
       .ww-modal-panel{
-        width:min(32rem, 92vw);
-        padding:2.1rem 1.8rem;
-        border-radius:1.5rem;
+        width:min(34rem, 92vw);
+        padding:2.35rem 2rem;
+        border-radius:1.6rem;
         text-align:center;
         background:
-          radial-gradient(circle at 25% 0%, rgba(255,255,255,0.9), transparent 35%),
+          radial-gradient(circle at 50% 0%, rgba(255,255,255,0.92), transparent 36%),
           linear-gradient(180deg, #fffaf0, #ead7b9);
         box-shadow:
           0 30px 80px rgba(56,37,18,0.32),
@@ -386,7 +327,7 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       .ww-modal-kicker-line{
         display:block;
-        font-size:.62rem;
+        font-size:.64rem;
         font-weight:900;
         letter-spacing:.28em;
         text-transform:uppercase;
@@ -395,139 +336,110 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       .ww-modal-word{
         margin-top:.75rem;
-        font-size:clamp(1.7rem,5vw,2.55rem);
+        font-size:clamp(1.8rem,5vw,2.75rem);
         font-weight:1000;
         letter-spacing:.14em;
         text-transform:uppercase;
         color:#332417;
       }
 
-      @media (max-width:1100px){
-        .ww-answer-shell{
-          max-width:70rem;
+      @media (max-width:980px){
+        .ww-answer-page{
+          padding:1.6rem 1.4rem 1.2rem;
         }
 
         .ww-grid{
-          grid-template-columns:repeat(3,1fr);
+          grid-template-columns:repeat(3, minmax(0, 1fr));
         }
 
-        .ww-card:nth-child(1),
-        .ww-card:nth-child(6),
-        .ww-card:nth-child(9),
-        .ww-card:nth-child(12){
-          grid-column:span 1;
-        }
-
-        .ww-card:nth-child(1) .ww-thumb,
-        .ww-card:nth-child(6) .ww-thumb,
-        .ww-card:nth-child(9) .ww-thumb,
-        .ww-card:nth-child(12) .ww-thumb{
-          aspect-ratio:1.34 / .78;
+        .ww-season{
+          letter-spacing:.42em;
+          padding-left:.42em;
         }
       }
 
-      @media (max-width:820px){
-        .ww-answer-content{
-          grid-template-columns:1fr;
-          gap:1rem;
-        }
-
-        .ww-side{
-          flex-direction:row;
-          justify-content:space-between;
-          gap:1rem;
-        }
-
-        .ww-side-logo img{
-          width:6.6rem;
-        }
-
-        .ww-word-btn{
-          width:8.4rem;
-        }
-
+      @media (max-width:720px){
         .ww-grid{
-          grid-template-columns:repeat(2,1fr);
+          grid-template-columns:repeat(2, minmax(0, 1fr));
+        }
+
+        .ww-footer{
+          flex-wrap:wrap;
+        }
+
+        .ww-footer-logo{
+          width:6.8rem;
         }
       }
 
-      @media (max-width:560px){
-        .ww-answer-list{
-          padding:.7rem;
-        }
-
-        .ww-answer-content{
-          padding:.85rem;
-        }
-
-        .ww-gallery-inner{
-          padding:1.65rem .9rem;
+      @media (max-width:480px){
+        .ww-answer-page{
+          padding:1.2rem .8rem 1rem;
         }
 
         .ww-grid{
           grid-template-columns:1fr;
+          gap:.8rem;
         }
 
-        .ww-side{
-          flex-direction:column;
+        .ww-title{
+          font-size:2.35rem;
+        }
+
+        .ww-season{
+          letter-spacing:.26em;
+          padding-left:.26em;
+        }
+
+        .ww-subtitle{
+          font-size:.82rem;
         }
       }
     </style>
 
-    <main class="ww-answer-list">
-      <section class="ww-answer-shell">
-        <div class="ww-answer-content">
+    <main class="ww-answer-page">
+      <div class="ww-answer-wrap">
 
-          <aside class="ww-side">
-            <button class="ww-side-logo" type="button" data-nav="base-station" aria-label="Return to Base Station">
-              <img src="/assets/winterword/shared/logo.png" alt="${escapeHtml(orgName)}">
-              <div class="ww-divider"></div>
-              <div class="ww-side-label">BASE STATION</div>
-            </button>
+        <header class="ww-answer-header">
+          <h1 class="ww-title">The Answers</h1>
+          <div class="ww-season">WinterWord ${escapeHtml(seasonYearLabel)}</div>
+          <div class="ww-subtitle">
+            The ice has melted. All that remains is transparency.
+          </div>
+        </header>
 
-            <button class="ww-word-btn" type="button" id="wwWordBtn">
-              <span class="ww-word-line">The</span>
-              <span class="ww-word-line">Winterword</span>
-              <span class="ww-word-line">Is:</span>
-            </button>
-          </aside>
-
-          <section class="ww-main">
-            <div class="ww-gallery">
-              <div class="ww-gallery-inner">
-
-                <header class="ww-head">
-                  <h1 class="ww-title">The Answers</h1>
-                  <div class="ww-status">WinterWord Complete • All Revealed</div>
-                  <div class="ww-intro">
-                    The hunt is over. What was hidden may now be viewed in full.
-                  </div>
-                </header>
-
-                <div class="ww-grid">
-                  ${answers.map((answer) => `
-                    <button class="ww-card" type="button" data-nav="answer" data-id="${parseInt(answer.id, 10)}">
-                      <div class="ww-thumb">
-                        <img src="${answer.image}" alt="${escapeHtml(answer.label)}">
-                      </div>
-                      <div class="ww-meta">${escapeHtml(answer.label)}</div>
-                    </button>
-                  `).join("")}
-                </div>
-
+        <section class="ww-grid" aria-label="WinterWord answers">
+          ${answers.map((answer) => `
+            <button class="ww-answer-card" type="button" data-nav="answer" data-id="${parseInt(answer.id, 10)}" aria-label="View answer ${parseInt(answer.id, 10)}">
+              <div class="ww-thumb">
+                <img src="${answer.image}" alt="Answer ${parseInt(answer.id, 10)}">
               </div>
-            </div>
-          </section>
+              <div class="ww-card-meta">
+                <div class="ww-card-number">${escapeHtml(answer.number)}</div>
+                <div class="ww-card-date">${escapeHtml(answer.date)}</div>
+              </div>
+            </button>
+          `).join("")}
+        </section>
 
-        </div>
-      </section>
+        <footer class="ww-footer">
+          <img class="ww-footer-logo" src="/assets/winterword/shared/logo.png" alt="${escapeHtml(orgName)}">
+          <button class="ww-footer-button" type="button" data-nav="base-station">
+            Base Station
+          </button>
+          <button class="ww-word-button" type="button" id="wwWordBtn">
+            WinterWord
+          </button>
+        </footer>
+
+      </div>
     </main>
 
     <div class="ww-modal" id="wwWordModal" aria-hidden="true">
       <div class="ww-modal-panel">
         <div class="ww-modal-kicker">
           <span class="ww-modal-kicker-line">The</span>
-          <span class="ww-modal-kicker-line">Winterword</span>
+          <span class="ww-modal-kicker-line">WinterWord</span>
         </div>
         <div class="ww-modal-word">${escapeHtml(finalWord)}</div>
       </div>
