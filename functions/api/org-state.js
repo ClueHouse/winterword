@@ -1,7 +1,7 @@
 export async function onRequestGet(context) {
   try {
     const { request, env } = context;
- 
+
     const url = new URL(request.url);
     const slug = url.searchParams.get("slug");
 
@@ -176,9 +176,6 @@ export async function onRequestGet(context) {
     const current_clue = calculateCurrentClue();
 
     function getSeasonState() {
-      if (!record.is_visible) {
-        return "hidden";
-      }
 
       if (record.status === "paused") {
         return "paused";
@@ -316,7 +313,7 @@ export async function onRequestGet(context) {
 
       pop1: record.pop1 === true,
       pop2: record.pop2 === true,
- 
+
       has_leaderboard_entries: has_leaderboard_entries,
       leaderboard_count: leaderboard_count,
 
