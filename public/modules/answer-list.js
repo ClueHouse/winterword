@@ -133,9 +133,9 @@ export function renderAnswerList(app, data = {}, navigate) {
   --ww-bronze:#8d6033;
   --ww-bronze-soft:#ba8a57;
 
-  --ww-brown-deep:#3d281d;
-  --ww-brown-mid:#5a3a28;
-  --ww-brown-soft:#74503b;
+--ww-brown-deep:#2f1d14;
+--ww-brown-mid:#4a2e20;
+--ww-brown-soft:#653f2d;
 
 }
 
