@@ -21,7 +21,7 @@ export function renderAnswerList(app, data = {}, navigate) {
     data.state?.season_start ||
     "";
 
-  const dropFrequency =
+  const dropFrequencyRaw =
     data.drop_frequency ||
     data.dropFrequency ||
     data.season?.drop_frequency ||
@@ -30,29 +30,59 @@ export function renderAnswerList(app, data = {}, navigate) {
     data.state?.drop_frequency ||
     "weekly";
 
+  const dropFrequency =
+    String(dropFrequencyRaw || "weekly")
+      .trim()
+      .toLowerCase();
+
   const totalClues = 12;
 
   const seasonStartDate =
     new Date(seasonStartRaw);
 
   const hasValidSeasonStart =
-    seasonStartRaw &&
+    Boolean(seasonStartRaw) &&
     !Number.isNaN(seasonStartDate.getTime());
 
-  const dropDays =
-    dropFrequency === "weekly"
-      ? 7
-      : dropFrequency === "daily"
-        ? 1
-        : dropFrequency === "quarter_hourly"
-          ? (15 / 1440)
-          : 7;
+  function getDropMs(freq) {
+
+    switch (freq) {
+
+      case "quarter_hourly":
+      case "quarter-hourly":
+      case "quarter hourly":
+      case "15_minutely":
+      case "15-minutely":
+      case "15 minutely":
+      case "15_minutes":
+      case "15 minutes":
+        return 15 * 60 * 1000;
+
+      case "hourly":
+      case "hour":
+        return 60 * 60 * 1000;
+
+      case "daily":
+      case "day":
+        return 24 * 60 * 60 * 1000;
+
+      case "weekly":
+      case "week":
+      default:
+        return 7 * 24 * 60 * 60 * 1000;
+
+    }
+
+  }
+
+  const dropMs =
+    getDropMs(dropFrequency);
 
   const seasonEndDate =
     hasValidSeasonStart
       ? new Date(
           seasonStartDate.getTime() +
-          ((totalClues - 1) * dropDays * 24 * 60 * 60 * 1000)
+          ((totalClues - 1) * dropMs)
         )
       : null;
 
@@ -80,17 +110,38 @@ export function renderAnswerList(app, data = {}, navigate) {
     const releaseDate =
       new Date(
         seasonStartDate.getTime() +
-        (index * dropDays * 24 * 60 * 60 * 1000)
+        (index * dropMs)
       );
 
+    const showTime =
+      dropFrequency === "hourly" ||
+      dropFrequency === "hour" ||
+      dropFrequency === "quarter_hourly" ||
+      dropFrequency === "quarter-hourly" ||
+      dropFrequency === "quarter hourly" ||
+      dropFrequency === "15_minutely" ||
+      dropFrequency === "15-minutely" ||
+      dropFrequency === "15 minutely" ||
+      dropFrequency === "15_minutes" ||
+      dropFrequency === "15 minutes";
+
     return releaseDate
-      .toLocaleDateString(
+      .toLocaleString(
         "en-NZ",
-        {
-          day: "2-digit",
-          month: "long",
-          year: "numeric"
-        }
+        showTime
+          ? {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+              hour: "numeric",
+              minute: "2-digit",
+              hour12: true
+            }
+          : {
+              day: "2-digit",
+              month: "long",
+              year: "numeric"
+            }
       )
       .toUpperCase();
   }
@@ -133,9 +184,9 @@ export function renderAnswerList(app, data = {}, navigate) {
   --ww-bronze:#8d6033;
   --ww-bronze-soft:#ba8a57;
 
---ww-brown-deep:#2f1d14;
---ww-brown-mid:#4a2e20;
---ww-brown-soft:#653f2d;
+  --ww-brown-deep:#2f1d14;
+  --ww-brown-mid:#4a2e20;
+  --ww-brown-soft:#653f2d;
 
 }
 
@@ -671,9 +722,10 @@ body{
   text-transform:uppercase;
 
   box-shadow:
-    0 0 36px rgba(255,224,179,.18),
-    0 0 70px rgba(255,224,179,.1),
-    0 20px 40px rgba(48,26,15,.24),
+    0 0 28px rgba(255,220,170,.22),
+    0 0 60px rgba(255,210,150,.12),
+    0 0 120px rgba(160,100,40,.10),
+    0 20px 40px rgba(48,26,15,.26),
     inset 0 1px 0 rgba(255,255,255,.2);
 
   transition:
@@ -711,8 +763,9 @@ body{
     brightness(1.06);
 
   box-shadow:
-    0 0 44px rgba(255,226,178,.28),
-    0 0 90px rgba(255,226,178,.14),
+    0 0 40px rgba(255,226,178,.34),
+    0 0 90px rgba(255,210,150,.2),
+    0 0 140px rgba(160,100,40,.13),
     0 26px 48px rgba(48,26,15,.3),
     inset 0 1px 0 rgba(255,255,255,.26);
 }
