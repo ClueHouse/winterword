@@ -208,7 +208,7 @@ body{
       transparent 4px
     );
 
-  opacity:.62;
+  opacity:.38;
 }
 
 .ww-answer-shell{
