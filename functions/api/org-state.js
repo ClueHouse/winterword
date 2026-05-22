@@ -316,7 +316,7 @@ export async function onRequestGet(context) {
 
       pop1: record.pop1 === true,
       pop2: record.pop2 === true,
-
+ 
       has_leaderboard_entries: has_leaderboard_entries,
       leaderboard_count: leaderboard_count,
 
