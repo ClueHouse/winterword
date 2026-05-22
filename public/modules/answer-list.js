@@ -137,8 +137,6 @@ export function renderAnswerList(app, data = {}, navigate) {
   --ww-brown-mid:#5a3a28;
   --ww-brown-soft:#74503b;
 
-  --ww-gold-glow:rgba(255,221,166,.48);
-
 }
 
 *{
@@ -172,8 +170,8 @@ body{
   background:
     linear-gradient(
       135deg,
-      rgba(247,248,242,.88),
-      rgba(228,236,228,.82)
+      rgba(247,248,242,.36),
+      rgba(228,236,228,.28)
     ),
     url("/assets/winterword/shared/answerlistbg.png")
     center center / cover
@@ -188,30 +186,29 @@ body{
   position:fixed;
   inset:0;
 
-  z-index:0;
   pointer-events:none;
+  z-index:0;
 
   background:
     radial-gradient(
       circle at 50% 0%,
-      rgba(255,255,255,.74),
-      rgba(255,255,255,.18) 34%,
-      transparent 58%
+      rgba(255,255,255,.34),
+      transparent 42%
     ),
     radial-gradient(
       circle at 50% 100%,
-      rgba(255,255,255,.2),
+      rgba(255,255,255,.12),
       transparent 36%
     ),
     repeating-linear-gradient(
       0deg,
-      rgba(44,42,34,.018) 0px,
-      rgba(44,42,34,.018) 1px,
+      rgba(44,42,34,.014) 0px,
+      rgba(44,42,34,.014) 1px,
       transparent 1px,
       transparent 4px
     );
 
-  opacity:.82;
+  opacity:.62;
 }
 
 .ww-answer-shell{
@@ -223,14 +220,14 @@ body{
   margin:0 auto;
 
   padding:
-    5rem
+    4.4rem
     3rem
-    3.6rem;
+    3.5rem;
 }
 
 .ww-answer-header{
   text-align:center;
-  margin-bottom:3.3rem;
+  margin-bottom:3.1rem;
 }
 
 .ww-answer-title{
@@ -243,9 +240,9 @@ body{
 
   font-size:
     clamp(
-      4.4rem,
-      6.5vw,
-      7.8rem
+      4.2rem,
+      6.2vw,
+      7.6rem
     );
 
   line-height:.82;
@@ -259,8 +256,8 @@ body{
     rgba(69,46,31,.97);
 
   text-shadow:
-    0 1px 0 rgba(255,255,255,.34),
-    0 14px 38px rgba(28,33,28,.12);
+    0 1px 0 rgba(255,255,255,.3),
+    0 14px 38px rgba(28,33,28,.1);
 
   padding-left:.08em;
 }
@@ -380,7 +377,7 @@ body{
     rgba(73,54,41,.82);
 
   text-shadow:
-    0 1px 0 rgba(255,255,255,.24);
+    0 1px 0 rgba(255,255,255,.2);
 }
 
 .ww-answer-grid{
@@ -394,11 +391,11 @@ body{
 
   gap:
     1.5rem
-    1.65rem;
+    1.7rem;
 
   align-items:start;
 
-  margin-top:3.4rem;
+  margin-top:3.6rem;
 }
 
 .ww-answer-card{
@@ -422,8 +419,8 @@ body{
     .82rem;
 
   box-shadow:
-    0 18px 34px rgba(24,36,30,.11),
-    0 5px 12px rgba(24,36,30,.07),
+    0 16px 30px rgba(24,36,30,.1),
+    0 5px 10px rgba(24,36,30,.06),
     inset 0 0 0 1px rgba(255,255,255,.88);
 
   transition:
@@ -454,8 +451,8 @@ body{
     brightness(1.03);
 
   box-shadow:
-    0 26px 44px rgba(24,36,30,.14),
-    0 8px 16px rgba(24,36,30,.09),
+    0 24px 42px rgba(24,36,30,.14),
+    0 8px 16px rgba(24,36,30,.08),
     inset 0 0 0 1px rgba(255,255,255,.94);
 }
 
@@ -487,7 +484,7 @@ body{
       180deg,
       rgba(255,255,255,.08),
       transparent 24%,
-      rgba(0,0,0,.06) 100%
+      rgba(0,0,0,.05) 100%
     );
 
   box-shadow:
@@ -578,9 +575,9 @@ body{
   align-items:center;
   justify-content:center;
 
-  gap:1.35rem;
+  gap:1.45rem;
 
-  margin-top:4.2rem;
+  margin-top:4.4rem;
 }
 
 .ww-answer-base{
@@ -626,10 +623,6 @@ body{
       rgba(170,110,43,.5),
       transparent
     );
-}
-
-.ww-answer-base span{
-  position:relative;
 }
 
 .ww-answer-base span::before,
@@ -691,12 +684,10 @@ body{
   text-transform:uppercase;
 
   box-shadow:
-    0 0 0 1px rgba(255,255,255,.08),
-    0 0 36px rgba(255,222,170,.28),
-    0 0 72px rgba(255,222,170,.14),
-    0 22px 44px rgba(48,26,15,.28),
-    0 8px 18px rgba(48,26,15,.16),
-    inset 0 1px 0 rgba(255,255,255,.24);
+    0 0 36px rgba(255,224,179,.18),
+    0 0 70px rgba(255,224,179,.1),
+    0 20px 40px rgba(48,26,15,.24),
+    inset 0 1px 0 rgba(255,255,255,.2);
 
   transition:
     transform .2s ease,
@@ -733,12 +724,10 @@ body{
     brightness(1.06);
 
   box-shadow:
-    0 0 0 1px rgba(255,255,255,.12),
-    0 0 44px rgba(255,226,178,.42),
-    0 0 92px rgba(255,226,178,.18),
-    0 28px 52px rgba(48,26,15,.34),
-    0 10px 22px rgba(48,26,15,.2),
-    inset 0 1px 0 rgba(255,255,255,.28);
+    0 0 44px rgba(255,226,178,.28),
+    0 0 90px rgba(255,226,178,.14),
+    0 26px 48px rgba(48,26,15,.3),
+    inset 0 1px 0 rgba(255,255,255,.26);
 }
 
 .ww-answer-modal{
