@@ -1448,7 +1448,7 @@ html,body{
       <div class="ww-title-meta">
 
         <div class="ww-title-org">
-          ${safeText(seasonLabel)} ✧ ${seasonYearLabel} ✧ ${safeText(orgName)}
+${safeText(displaySeasonLabel)} ✧ ${safeText(orgName)}
         </div>
 
         <div class="ww-title-main">
