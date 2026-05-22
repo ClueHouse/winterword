@@ -8,12 +8,18 @@ export function renderAnswerList(app, data = {}, navigate) {
     data.start_date ||
     data.startDate ||
     data.season?.season_start ||
+    data.orgState?.season_start ||
+    data.org_state?.season_start ||
+    data.state?.season_start ||
     "";
 
   const dropFrequency =
     data.drop_frequency ||
     data.dropFrequency ||
     data.season?.drop_frequency ||
+    data.orgState?.drop_frequency ||
+    data.org_state?.drop_frequency ||
+    data.state?.drop_frequency ||
     "weekly";
 
   const totalClues = 12;
@@ -137,19 +143,19 @@ export function renderAnswerList(app, data = {}, navigate) {
       .ww-answer-wrap{
         position:relative;
         z-index:1;
-        width:min(100%, 58rem);
+        width:min(100%, 61rem);
         margin:0 auto;
       }
 
       .ww-answer-header{
         text-align:center;
-        margin:0 auto 1.02rem;
+        margin:0 auto 1.08rem;
       }
 
       .ww-title{
         margin:0;
         font-family:Georgia,"Times New Roman",serif;
-        font-size:clamp(2.4rem,4.4vw,4.7rem);
+        font-size:clamp(2.15rem,3.95vw,4.2rem);
         line-height:.88;
         letter-spacing:.025em;
         text-transform:uppercase;
@@ -213,14 +219,14 @@ export function renderAnswerList(app, data = {}, navigate) {
       .ww-grid{
         display:grid;
         grid-template-columns:repeat(4, minmax(0, 1fr));
-        gap:.82rem;
+        gap:1rem;
         align-items:stretch;
       }
 
       .ww-answer-card{
         border:0;
         cursor:pointer;
-        padding:.34rem .34rem .56rem;
+        padding:.36rem .36rem .58rem;
         border-radius:.68rem;
         background:
           linear-gradient(180deg, rgba(255,250,240,0.98), rgba(239,220,190,0.98));
@@ -245,7 +251,7 @@ export function renderAnswerList(app, data = {}, navigate) {
 
       .ww-thumb{
         width:100%;
-        aspect-ratio:1.62 / .82;
+        aspect-ratio:1.68 / .84;
         overflow:hidden;
         border-radius:.46rem;
         background:#e5d2b4;
@@ -335,10 +341,10 @@ export function renderAnswerList(app, data = {}, navigate) {
         background:transparent;
         cursor:pointer;
         color:#765222;
-        font:900 .5rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
-        letter-spacing:.24em;
+        font:900 .52rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+        letter-spacing:.22em;
         text-transform:uppercase;
-        opacity:.86;
+        opacity:.88;
       }
 
       .ww-word-button:hover{
@@ -434,7 +440,7 @@ export function renderAnswerList(app, data = {}, navigate) {
         }
 
         .ww-title{
-          font-size:2.35rem;
+          font-size:2.15rem;
         }
 
         .ww-season{
@@ -478,7 +484,7 @@ export function renderAnswerList(app, data = {}, navigate) {
             Base Station
           </button>
           <button class="ww-word-button" type="button" id="wwWordBtn">
-            WinterWord
+            Your WinterWord is...
           </button>
         </footer>
 
@@ -488,8 +494,8 @@ export function renderAnswerList(app, data = {}, navigate) {
     <div class="ww-modal" id="wwWordModal" aria-hidden="true">
       <div class="ww-modal-panel">
         <div class="ww-modal-kicker">
-          <span class="ww-modal-kicker-line">The</span>
-          <span class="ww-modal-kicker-line">WinterWord</span>
+          <span class="ww-modal-kicker-line">Your</span>
+          <span class="ww-modal-kicker-line">WinterWord is</span>
         </div>
         <div class="ww-modal-word">${escapeHtml(finalWord)}</div>
       </div>
