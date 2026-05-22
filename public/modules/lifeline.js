@@ -1,10 +1,12 @@
-export function renderLifelinePage(app, data, navigate) {
+export function renderLifelinePage(app, data = {}, navigate = () => {}) {
   const {
     lifelineImage = "/assets/winterword/shared/lifelinebg.png",
     orgName = "WinterWord"
-  } = data;
+  } = data || {};
 
-  const subject = encodeURIComponent(`WinterWord Lifeline — ${orgName}`);
+  const safeOrgName = String(orgName || "WinterWord").trim() || "WinterWord";
+
+  const subject = encodeURIComponent(`WinterWord Lifeline — ${safeOrgName}`);
 
   const body = encodeURIComponent(
 `Curator,
@@ -38,11 +40,11 @@ Yes, No, Warm, or Cold.`
           <main class="ww-main">
             <section class="ww-lifeline" aria-label="WinterWord Lifeline">
 
-              <div class="ww-lifeline-media"></div>
-              <div class="ww-lifeline-glow"></div>
+              <div class="ww-lifeline-media" aria-hidden="true"></div>
+              <div class="ww-lifeline-glow" aria-hidden="true"></div>
 
               <div class="ww-lifeline-inner">
-                <div class="ww-lifeline-left"></div>
+                <div class="ww-lifeline-left" aria-hidden="true"></div>
 
                 <div class="ww-lifeline-right">
                   <div class="ww-lifeline-copy">
@@ -62,7 +64,7 @@ Yes, No, Warm, or Cold.`
                     <p>Your question must be clear. Direct. Unriddled.<br>
                     In return, you will hear only one of four replies:</p>
 
-                    <div class="ww-answer-row">
+                    <div class="ww-answer-row" aria-label="Possible Lifeline replies">
                       <span>Yes</span>
                       <span>No</span>
                       <span>Warm</span>
@@ -103,6 +105,11 @@ Yes, No, Warm, or Cold.`
 }
 
 function injectLifelineStyles(lifelineImage) {
+  const safeLifelineImage =
+    typeof lifelineImage === "string" && lifelineImage.trim()
+      ? lifelineImage.trim()
+      : "/assets/winterword/shared/lifelinebg.png";
+
   let style = document.getElementById("ww-lifeline-styles");
 
   if (!style) {
@@ -122,14 +129,22 @@ function injectLifelineStyles(lifelineImage) {
       --ww-ink:#fffaf0;
     }
 
-    *{box-sizing:border-box;}
-    html,body{margin:0;padding:0;}
+    *{
+      box-sizing:border-box;
+    }
+
+    html,
+    body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+    }
 
     body{
       margin:0;
       font-family:Georgia,"Times New Roman",serif;
       color:var(--ww-ink);
-      background-image:url("${lifelineImage}");
+      background-image:url("${safeLifelineImage}");
       background-size:cover;
       background-position:center;
       background-repeat:no-repeat;
@@ -163,6 +178,7 @@ function injectLifelineStyles(lifelineImage) {
       overflow:hidden;
       background:rgba(18,12,6,.52);
       backdrop-filter:blur(5px);
+      -webkit-backdrop-filter:blur(5px);
       box-shadow:
         0 34px 90px rgba(0,0,0,.52),
         0 0 70px rgba(255,164,65,.12),
@@ -192,16 +208,28 @@ function injectLifelineStyles(lifelineImage) {
       display:flex;
       flex-direction:column;
       align-items:center;
+      justify-content:center;
       gap:.82rem;
       background:transparent;
       border:0;
       cursor:pointer;
       padding:0;
+      color:inherit;
+      appearance:none;
+      -webkit-appearance:none;
     }
 
     .ww-side-logo img{
       width:9.6rem;
+      max-width:none;
+      display:block;
       filter:drop-shadow(0 0 14px rgba(255,255,255,.18));
+    }
+
+    .ww-side-logo:hover img{
+      filter:
+        drop-shadow(0 0 14px rgba(255,255,255,.22))
+        drop-shadow(0 0 16px rgba(255,176,70,.16));
     }
 
     .ww-divider{
@@ -218,13 +246,18 @@ function injectLifelineStyles(lifelineImage) {
       font-weight:900;
       color:#fff8e8;
       text-shadow:0 2px 12px rgba(0,0,0,.7);
+      white-space:nowrap;
     }
 
-    .ww-main{display:flex;}
+    .ww-main{
+      display:flex;
+      min-width:0;
+    }
 
     .ww-lifeline{
       position:relative;
       width:100%;
+      min-width:0;
       border-radius:1.45rem;
       overflow:hidden;
       box-shadow:
@@ -235,9 +268,10 @@ function injectLifelineStyles(lifelineImage) {
     .ww-lifeline-media{
       position:absolute;
       inset:0;
-      background-image:url("${lifelineImage}");
+      background-image:url("${safeLifelineImage}");
       background-size:cover;
       background-position:center;
+      background-repeat:no-repeat;
       filter:brightness(.94) saturate(1.18) contrast(1.04);
       transform:scale(1.01);
     }
@@ -260,14 +294,20 @@ function injectLifelineStyles(lifelineImage) {
       grid-template-columns:minmax(15rem,31%) minmax(0,1fr);
     }
 
+    .ww-lifeline-left{
+      min-width:0;
+    }
+
     .ww-lifeline-right{
       display:flex;
       align-items:center;
       justify-content:center;
       padding:3.2rem;
+      min-width:0;
     }
 
     .ww-lifeline-copy{
+      width:100%;
       max-width:40rem;
       padding:2.4rem 2.65rem;
       text-align:center;
@@ -317,25 +357,38 @@ function injectLifelineStyles(lifelineImage) {
     .ww-answer-row{
       display:flex;
       justify-content:center;
+      align-items:center;
       flex-wrap:wrap;
-      gap:.65rem;
-      margin:.25rem 0 1.35rem;
+      gap:1.05rem;
+      margin:.35rem 0 1.5rem;
     }
 
     .ww-answer-row span{
-      min-width:4.8rem;
-      padding:.45rem .9rem;
-      border-radius:999px;
-      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-      font-size:.82rem;
-      font-weight:900;
-      letter-spacing:.08em;
+      position:relative;
+      min-width:auto;
+      padding:0 .15rem .22rem;
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:1.02rem;
+      font-weight:800;
+      letter-spacing:.16em;
       text-transform:uppercase;
-      color:#281403;
-      background:linear-gradient(180deg, #ffe4a8, #f4a43f);
-      box-shadow:
-        0 7px 20px rgba(0,0,0,.22),
-        inset 0 1px 0 rgba(255,255,255,.5);
+      color:#ffe3aa;
+      background:transparent;
+      box-shadow:none;
+      text-shadow:
+        0 2px 10px rgba(0,0,0,.65),
+        0 0 18px rgba(255,171,62,.22);
+    }
+
+    .ww-answer-row span::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      bottom:0;
+      width:72%;
+      height:1px;
+      transform:translateX(-50%);
+      background:linear-gradient(90deg, transparent, rgba(255,199,118,.85), transparent);
     }
 
     .ww-final-line{
@@ -368,17 +421,47 @@ function injectLifelineStyles(lifelineImage) {
         box-shadow .18s ease;
     }
 
-    .ww-lifeline-email:hover{
+    .ww-lifeline-email:hover,
+    .ww-lifeline-email:focus-visible{
       transform:translateY(-2px) scale(1.035);
       filter:brightness(1.08);
       box-shadow:
         0 18px 40px rgba(0,0,0,.36),
         0 0 46px rgba(255,176,70,.45),
         inset 0 1px 0 rgba(255,255,255,.7);
+      outline:none;
+    }
+
+    .ww-side-logo:focus-visible,
+    .ww-lifeline-email:focus-visible{
+      outline:2px solid rgba(255,226,170,.85);
+      outline-offset:4px;
+    }
+
+    @media (max-width: 980px){
+      #wwContent{
+        grid-template-columns:6.6rem minmax(0,1fr);
+        gap:1.4rem;
+        padding:1.6rem;
+      }
+
+      .ww-lifeline-right{
+        padding:2rem;
+      }
+
+      .ww-lifeline-copy{
+        padding:2rem 1.8rem;
+      }
     }
 
     @media (max-width: 820px){
-      #wwPage{padding:1rem;}
+      body{
+        background-attachment:scroll;
+      }
+
+      #wwPage{
+        padding:1rem;
+      }
 
       #wwShell{
         min-height:calc(100vh - 2rem);
@@ -389,6 +472,7 @@ function injectLifelineStyles(lifelineImage) {
         min-height:calc(100vh - 2rem);
         grid-template-columns:1fr;
         padding:1rem;
+        gap:1rem;
       }
 
       .ww-side{
@@ -414,6 +498,55 @@ function injectLifelineStyles(lifelineImage) {
       .ww-lifeline-copy{
         padding:1.7rem 1.25rem;
         font-size:1rem;
+      }
+
+      .ww-lifeline-copy h1{
+        font-size:clamp(2.4rem,13vw,3.4rem);
+      }
+
+      .ww-answer-row{
+        gap:.85rem;
+      }
+    }
+
+    @media (max-width: 520px){
+      #wwPage{
+        padding:.65rem;
+      }
+
+      #wwShell{
+        min-height:calc(100vh - 1.3rem);
+      }
+
+      #wwContent{
+        padding:.65rem;
+      }
+
+      .ww-lifeline-right{
+        padding:.8rem;
+      }
+
+      .ww-lifeline-copy{
+        padding:1.45rem 1rem;
+        line-height:1.72;
+        font-size:.96rem;
+      }
+
+      .ww-lifeline-kicker{
+        font-size:.64rem;
+        letter-spacing:.2em;
+      }
+
+      .ww-answer-row span{
+        font-size:.92rem;
+        letter-spacing:.12em;
+      }
+
+      .ww-lifeline-email{
+        width:100%;
+        max-width:19rem;
+        padding:.82rem 1rem;
+        font-size:.88rem;
       }
     }
   `;
