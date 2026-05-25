@@ -575,18 +575,6 @@ body {
   }
 }
 
-@keyframes wwAnswerThreeGapReveal {
-  0% {
-    opacity: 0;
-    border-bottom-color: rgba(246,232,205,0);
-  }
-
-  100% {
-    opacity: 1;
-    border-bottom-color: rgba(246,232,205,0.72);
-  }
-}
-
 @keyframes wwAnswerThreeRevealR {
   0% {
     opacity: 0;
