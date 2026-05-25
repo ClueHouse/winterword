@@ -809,7 +809,7 @@ body {
         for (const character of line) {
           const characterElement = document.createElement("span");
           characterElement.className = "ww-answer-three-char";
-          characterElement.textContent = character;
+          characterElement.textContent = character === " " ? "\u00A0" : character;
           lineElement.appendChild(characterElement);
         }
 
