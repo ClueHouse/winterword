@@ -1407,7 +1407,11 @@ const gifElement = app.querySelector("#wwAnswerGif");
           (audioElement ? audioElement.paused : true);
 
         if (shouldPlay) {
-          if (videoElement) await videoElement.play();
+if (gifElement) gifElement.hidden = true;
+if (videoElement) {
+  videoElement.hidden = false;
+  await videoElement.play();
+}
           if (audioElement) await audioElement.play();
           setPlayingState(true);
         } else {
