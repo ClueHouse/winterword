@@ -448,12 +448,7 @@ body {
 }
 
 #wwPortal.ww-answer-three-start .ww-answer-three-gap {
-  animation:
-    wwAnswerThreeGapReveal
-    0.8s
-    ease
-    2.65s
-    forwards;
+  opacity: 0;
 }
 
 .ww-answer-three-reveal {
