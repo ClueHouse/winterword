@@ -45,8 +45,6 @@ Yet something’s not at home.
 `.trim();
 
   if (isAnswerThree) {
-
-    // FIXED: consistent alphabet, no accidental uppercase
     const alphabetLetters = [
       ..."abcdefghijklmnopqrstuvwxyz"
     ];
@@ -95,7 +93,6 @@ body {
   z-index: 30;
   pointer-events: none;
 }
-
 
 .ww-mini-core {
   position: absolute;
@@ -359,14 +356,14 @@ body {
   top: 48%;
   transform: translateY(-50%);
   z-index: 5;
-  width: 39%;
+  width: 43%;
   color: rgba(246,232,205,0.92);
   font-family: "Courier New", Courier, monospace;
   font-size: clamp(0.48rem, 0.82vw, 1rem);
   line-height: 1.42;
   letter-spacing: 0.012em;
   text-align: left;
-  white-space: pre-wrap;
+  white-space: normal;
   overflow: visible;
   text-shadow:
     0 0 12px rgba(255,220,170,0.14),
@@ -385,6 +382,11 @@ body {
   opacity: 0.78;
 }
 
+.ww-answer-three-line {
+  display: block;
+  white-space: nowrap;
+}
+
 .ww-answer-three-char {
   position: relative;
   display: inline-block;
@@ -393,7 +395,7 @@ body {
 
 .ww-answer-three-char.is-moving {
   z-index: 30;
-  text-transform: uppercase;
+  text-transform: lowercase;
   animation:
     wwAnswerThreeRealLetterMove
     2.25s
@@ -426,6 +428,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.03em;
   pointer-events: none;
+  text-transform: lowercase;
 }
 
 .ww-answer-three-slot {
@@ -435,6 +438,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-transform: lowercase;
 }
 
 .ww-answer-three-gap {
@@ -467,6 +471,7 @@ body {
   opacity: 0;
   text-align: center;
   pointer-events: none;
+  text-transform: uppercase;
 }
 
 .ww-answer-three-answer-top {
@@ -696,7 +701,7 @@ body {
 
   .ww-answer-three-poem {
     left: 5.6%;
-    width: 44%;
+    width: 48%;
     font-size: clamp(0.42rem, 1vw, 0.82rem);
     line-height: 1.34;
   }
@@ -728,8 +733,6 @@ body {
 
     </div>
 
-
-
   </div>
 
   <main id="wwRight">
@@ -747,10 +750,11 @@ body {
               id="wwAnswerThreePoem"
               aria-label="${esc(clueThreeText)}"
             ></div>
+
             <div
               class="ww-answer-three-alphabet"
               id="wwAnswerThreeAlphabet"
-              aria-label="Alphabet with missing R"
+              aria-label="Lowercase alphabet with missing r"
             >
               ${
                 alphabetLetters.map((letter) => `
@@ -760,7 +764,7 @@ body {
                     aria-hidden="true"
                   >
                     ${
-                      letter === "R"
+                      letter === "r"
                         ? `<span class="ww-answer-three-gap"></span>`
                         : ""
                     }
@@ -776,6 +780,7 @@ body {
             <div class="ww-answer-three-reveal" aria-label="Answer R">
               R
             </div>
+
             <div class="ww-answer-three-answer-label">
               is not at home
             </div>
@@ -811,12 +816,23 @@ body {
     if (poemContainer) {
       poemContainer.innerHTML = "";
 
-      for (const character of clueThreeText) {
-        const span = document.createElement("span");
-        span.className = "ww-answer-three-char";
-        span.textContent = character;
-        poemContainer.appendChild(span);
-      }
+      const lines = clueThreeText
+        .split(/\r?\n/)
+        .map((line) => line.trimEnd());
+
+      lines.forEach((line) => {
+        const lineElement = document.createElement("span");
+        lineElement.className = "ww-answer-three-line";
+
+        for (const character of line) {
+          const characterElement = document.createElement("span");
+          characterElement.className = "ww-answer-three-char";
+          characterElement.textContent = character;
+          lineElement.appendChild(characterElement);
+        }
+
+        poemContainer.appendChild(lineElement);
+      });
     }
 
     if (playButton && portal && poemContainer && alphabetContainer) {
@@ -839,13 +855,13 @@ body {
         const availableLetters = new Map();
 
         chars.forEach((char) => {
-          const value = String(char.textContent || "").toUpperCase();
+          const value = String(char.textContent || "").toLowerCase();
 
-          if (!/^[A-Z]$/.test(value)) {
+          if (!/^[a-z]$/.test(value)) {
             return;
           }
 
-          if (value === "R") {
+          if (value === "r") {
             char.classList.add("is-fading");
             return;
           }
@@ -865,9 +881,9 @@ body {
           );
 
           slots.forEach((slot, slotIndex) => {
-            const targetLetter = String(slot.getAttribute("data-letter") || "").toUpperCase();
+            const targetLetter = String(slot.getAttribute("data-letter") || "").toLowerCase();
 
-            if (!targetLetter || targetLetter === "R") {
+            if (!targetLetter || targetLetter === "r") {
               return;
             }
 
@@ -884,6 +900,7 @@ body {
             }
 
             selectedChars.add(movingChar);
+            movingChar.textContent = targetLetter;
 
             const fromRect = movingChar.getBoundingClientRect();
             const toRect = slot.getBoundingClientRect();
