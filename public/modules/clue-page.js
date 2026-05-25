@@ -115,64 +115,6 @@ body {
   overflow: hidden;
 }
 
-.ww-clue-map.is-clue-three {
-  background-image:
-    radial-gradient(circle at 32% 46%, rgba(255,230,190,0.055), transparent 26%),
-    linear-gradient(90deg, rgba(0,0,0,0.28), rgba(0,0,0,0.04) 44%, rgba(0,0,0,0.12)),
-    url("${esc(image)}");
-  background-position: center center;
-  background-size: cover;
-}
-
-.ww-clue-three-poem {
-  position: absolute;
-  left: 7.4vw;
-  top: 46%;
-  transform: translateY(-50%);
-  z-index: 3;
-  width: min(35vw, 620px);
-  color: rgba(246,232,205,0.92);
-  font-family: "Courier New", Courier, monospace;
-  font-size: clamp(0.92rem, 1.18vw, 1.42rem);
-  line-height: 1.42;
-  letter-spacing: 0.012em;
-  text-align: left;
-  white-space: pre-wrap;
-  text-shadow:
-    0 0 12px rgba(255,220,170,0.14),
-    0 2px 8px rgba(0,0,0,0.78);
-  opacity: 0.92;
-  animation: wwClueThreeBreath 7.4s ease-in-out infinite;
-}
-
-.ww-clue-three-poem::before {
-  content: "";
-  position: absolute;
-  inset: -1.2rem -1.4rem;
-  z-index: -1;
-  background:
-    radial-gradient(circle at 42% 48%, rgba(0,0,0,0.24), transparent 68%);
-  filter: blur(8px);
-  opacity: 0.78;
-}
-
-@keyframes wwClueThreeBreath {
-  0%, 100% {
-    opacity: 0.86;
-    transform: translateY(-50%) translateX(0);
-  }
-
-  45% {
-    opacity: 0.98;
-    transform: translateY(-50%) translateX(1px);
-  }
-
-  72% {
-    opacity: 0.91;
-    transform: translateY(-50%) translateX(-1px);
-  }
-}
-
 .ww-main-clue {
   position: absolute;
   right: 7vw;
@@ -217,6 +159,122 @@ body {
     0 12px 32px rgba(0,0,0,0.72),
     inset 0 0 10px rgba(255,255,255,0.03),
     inset 0 0 24px rgba(0,0,0,0.55);
+}
+
+.ww-clue-three-frame {
+  position: absolute;
+  right: 7vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(54vw, 1088px);
+  aspect-ratio: 16 / 9;
+  max-height: 78vh;
+  display: block;
+  z-index: 2;
+  padding: 0.9rem;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(24,24,24,0.98) 0%,
+      rgba(10,10,10,1) 18%,
+      rgba(38,38,38,0.96) 36%,
+      rgba(6,6,6,1) 58%,
+      rgba(28,28,28,0.96) 78%,
+      rgba(0,0,0,1) 100%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.018) 0px,
+      rgba(255,255,255,0.018) 2px,
+      transparent 2px,
+      transparent 6px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255,255,255,0.012) 0px,
+      rgba(255,255,255,0.012) 2px,
+      transparent 2px,
+      transparent 6px
+    );
+
+  border: 2px solid rgba(70,70,70,0.35);
+
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,0.92),
+    0 12px 32px rgba(0,0,0,0.72),
+    inset 0 0 10px rgba(255,255,255,0.03),
+    inset 0 0 24px rgba(0,0,0,0.55);
+}
+
+.ww-clue-three-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 28% 45%, rgba(255,230,190,0.055), transparent 28%),
+    linear-gradient(90deg, rgba(0,0,0,0.38), rgba(0,0,0,0.04) 52%, rgba(0,0,0,0.16)),
+    url("${esc(image)}") center center / cover no-repeat;
+}
+
+.ww-clue-three-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 52% 48%, transparent 36%, rgba(0,0,0,0.18) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.16), transparent 26%, rgba(0,0,0,0.22));
+}
+
+.ww-clue-three-poem {
+  position: absolute;
+  left: 6.2%;
+  top: 48%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 39%;
+  color: rgba(246,232,205,0.92);
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(0.48rem, 0.82vw, 1rem);
+  line-height: 1.42;
+  letter-spacing: 0.012em;
+  text-align: left;
+  white-space: pre-wrap;
+  text-shadow:
+    0 0 12px rgba(255,220,170,0.14),
+    0 2px 8px rgba(0,0,0,0.78);
+  opacity: 0.92;
+  animation: wwClueThreeBreath 7.4s ease-in-out infinite;
+}
+
+.ww-clue-three-poem::before {
+  content: "";
+  position: absolute;
+  inset: -0.8rem -1rem;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 42% 48%, rgba(0,0,0,0.22), transparent 68%);
+  filter: blur(8px);
+  opacity: 0.78;
+}
+
+@keyframes wwClueThreeBreath {
+  0%, 100% {
+    opacity: 0.86;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  45% {
+    opacity: 0.98;
+    transform: translateY(-50%) translateX(1px);
+  }
+
+  72% {
+    opacity: 0.91;
+    transform: translateY(-50%) translateX(-1px);
+  }
 }
 
 .ww-clue-fallback {
@@ -309,6 +367,13 @@ body {
   animation: wwSilverSweep 900ms ease-out forwards;
 }
 
+.ww-hotspot-base:hover,
+.ww-hotspot-clues:hover,
+.ww-hotspot-life[data-locked="false"]:hover {
+  background: transparent;
+  box-shadow: none;
+}
+
 .ww-hotspot-life[data-locked="true"] {
   cursor: pointer;
 }
@@ -327,6 +392,7 @@ body {
   font-size: 0.86rem;
   font-weight: 800;
   letter-spacing: 0.035em;
+  text-transform: none;
   color: rgba(78,8,8,0.98);
   background: rgba(255,248,244,0.96);
   border: 1px solid rgba(120,20,20,0.35);
@@ -421,18 +487,31 @@ body {
   white-space: nowrap;
   border: 0;
 }
+
+@media (max-width: 900px) {
+  .ww-clue-three-poem {
+    left: 5.6%;
+    width: 44%;
+    font-size: clamp(0.42rem, 1vw, 0.82rem);
+    line-height: 1.34;
+  }
+}
 </style>
 
 <div id="wwPortal">
   <main class="ww-clue-stage" aria-label="${esc(title)}">
-    <section class="ww-clue-map ${isClueThree ? "is-clue-three" : ""}" aria-label="WinterWord clue page">
+    <section class="ww-clue-map" aria-label="WinterWord clue page">
 
       ${
-        isClueThree
+        isClueThree && image
           ? `
-            <div class="ww-clue-three-poem" aria-label="${esc(clueThreeText)}">
+            <section class="ww-clue-three-frame" aria-label="${esc(alt)}">
+              <div class="ww-clue-three-scene">
+                <div class="ww-clue-three-poem" aria-label="${esc(clueThreeText)}">
 ${esc(clueThreeText)}
-            </div>
+                </div>
+              </div>
+            </section>
           `
           : image
             ? `
