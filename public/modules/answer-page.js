@@ -1336,8 +1336,8 @@ body {
               <div class="ww-answer-inner">
                 <div class="ww-answer-media">
                   ${
-                    isVideo
-                      ? `
+isVideo || isGifVideo
+  ? `
                         <video id="wwAnswerVideo" playsinline preload="metadata" aria-label="${esc(alt)}">
                           <source src="${esc(image)}" type="video/mp4">
                         </video>
