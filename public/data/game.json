@@ -237,10 +237,11 @@
     {
       "id": 12,
       "title": "Answer 12",
-      "variant": "video",
+      "variant": "gif-video",
       "body": "Explanation for clue 12.",
       "letter": "L",
-      "image": "/assets/winterword/answers/12.mp4",
+      "image": "/assets/winterword/answers/12.gif",
+      "video": "/assets/winterword/answers/12.mp4",
       "alt": "WinterWord Answer 12",
       "audio": ""
     }
