@@ -1,182 +1,3 @@
-export function renderAnswerPage(app, data = {}, navigate) {
-  const {
-    clueId = 1,
-    answer = {}
-  } = data;
-
-  const {
-    title = `Answer ${String(clueId).padStart(2, "0")}`,
-    variant = "plain",
-    image = "",
-    alt = title,
-    audio = ""
-  } = answer;
-
-  function esc(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#39;");
-  }
-
-  const numericClueId = Number(clueId);
-  const isAnswerThree = numericClueId === 3;
-
-  const hasMedia = Boolean(image);
-  const hasAudio = Boolean(audio);
-  const isVideo = variant === "video" || variant === "video-audio";
-  const hasPlayableMedia = isVideo || hasAudio;
-
-  const clueThreeText = `
-A quiet glass left beside the sink,
-A bell once sung, now still,
-A static TV, no one in sight —
-The silence seems to spill.
-A jigsaw lies beneath the steps,
-A box once twice the size.
-The wooden edge meets flecks of ash,
-Each piece sits with nested lies.
-The toast is sliced. The tea is cold.
-The echo fades like stone.
-All feels as it did again,
-Yet something’s not at home.
-`.trim();
-
-  if (isAnswerThree) {
-    const alphabetLetters = [
-      ..."abcdefghijklmnopq",
-      "R",
-      ..."stuvwxyz"
-    ];
-
-    app.innerHTML = `
-<style>
-:root {
-  --ww-left-zone: 19.75rem;
-  --ww-ink-soft: #d8d4c3;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  background: #000;
-}
-
-#wwPortal {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  color: #f5f7fb;
-  background:
-    url("/assets/winterword/shared/fullanswer.png")
-    center center / cover
-    no-repeat;
-}
-
-.ww-mini-shell {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--ww-left-zone);
-  height: 100%;
-  z-index: 30;
-  pointer-events: none;
-}
-
-.ww-mini-core {
-  position: absolute;
-  top: 46%;
-  left: 70%;
-  width: 100%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.ww-mini-play,
-.ww-mini-textlink {
-  pointer-events: auto;
-}
-
-.ww-mini-play {
-  appearance: none;
-  width: 5.4rem;
-  height: 5.4rem;
-  border-radius: 999px;
-  border: 0;
-  padding: 0;
-  background:
-    linear-gradient(
-      145deg,
-      #fff0b8 0%,
-      #e7b24e 17%,
-      #a46724 38%,
-      #f5ca70 62%,
-      #70400f 100%
-    );
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 2.3rem;
-  box-shadow:
-    0 1rem 2rem rgba(0,0,0,0.64),
-    0 0 1rem rgba(239,174,74,0.22);
-  overflow: hidden;
-  transform: translateY(0) scale(1);
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    filter 160ms ease;
-}
-
-.ww-mini-play:hover {
-  transform: translateY(-0.08rem) scale(1.035);
-  filter: brightness(1.08);
-  box-shadow:
-    0 1.15rem 2.35rem rgba(0,0,0,0.72),
-    0 0 1.4rem rgba(239,174,74,0.42);
-}
-
-.ww-mini-play:active {
-  transform: translateY(0.16rem) scale(0.94);
-  filter: brightness(0.88);
-  box-shadow:
-    0 0.45rem 0.95rem rgba(0,0,0,0.78),
-    0 0 0.55rem rgba(239,174,74,0.2);
-}
-
-.ww-mini-play::before {
-  content: "";
-  position: absolute;
-  inset: 0.3rem;
-  border-radius: inherit;
-  background:
-    radial-gradient(circle at 38% 28%, rgba(78,112,94,0.34), transparent 33%),
-    radial-gradient(circle at 52% 58%, rgba(3,9,8,0.9), rgba(8,25,20,0.98) 68%, #020605 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,242,184,0.2),
-    inset 0 0.45rem 0.75rem rgba(255,255,255,0.06),
-    inset 0 -0.75rem 1.05rem rgba(0,0,0,0.6);
-}
-
 .ww-mini-play-glow {
   position: absolute;
   inset: -40%;
@@ -194,12 +15,6 @@ body {
   pointer-events: none;
 }
 
-.ww-mini-play:hover .ww-mini-play-glow {
-  animation: wwButtonGleam 1.25s ease forwards;
-}
-</style>
-`;
-
 .ww-mini-play-icon {
   position: relative;
   z-index: 2;
@@ -211,98 +26,22 @@ body {
   margin-left: 0.24rem;
 }
 
+.ww-mini-play:hover .ww-mini-play-glow {
+  animation: wwButtonGleam 1.25s ease forwards;
+}
+
 .ww-mini-play[data-playing="true"] .ww-mini-play-icon {
   width: 1.2rem;
   height: 1.5rem;
   border: 0;
   margin-left: 0;
   background:
-    linear-gradient(90deg, #fff 0 35%, transparent 35% 65%, #fff 65% 100%);
-}
-
-.ww-mini-textnav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.95rem;
-}
-
-.ww-mini-textlink {
-  appearance: none;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  line-height: 1;
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 800;
-  font-size: 0.82rem;
-  letter-spacing: 0.38em;
-  text-transform: uppercase;
-  color: var(--ww-ink-soft);
-  cursor: pointer;
-  text-align: center;
-  text-shadow:
-    0 2px 5px rgba(0,0,0,0.86),
-    0 0 8px rgba(255,255,255,0.05);
-  transition:
-    color 180ms ease,
-    text-shadow 180ms ease,
-    transform 180ms ease;
-}
-
-.ww-mini-textlink:hover {
-  color: #fff6d7;
-  transform: translateX(0.08rem);
-  text-shadow:
-    0 2px 5px rgba(0,0,0,0.9),
-    0 0 0.75rem rgba(246,186,76,0.36);
-}
-
-.ww-mini-textlink[data-active="true"] {
-  color: #ffffff;
-}
-
-#wwRight {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding:
-    3vh
-    3vw
-    3vh
-    calc(var(--ww-left-zone) + 3rem);
-  z-index: 10;
-}
-
-.ww-answer-stage {
-  width: min(58vw, 1080px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ww-answer-frame {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  padding: 0.42rem;
-  border-radius: 1.2rem;
-  background:
     linear-gradient(
-      145deg,
-      rgba(255,240,184,0.96) 0%,
-      rgba(231,178,78,0.98) 18%,
-      rgba(164,103,36,0.98) 42%,
-      rgba(245,202,112,0.98) 68%,
-      rgba(112,64,15,0.98) 100%
+      90deg,
+      #fff 0 35%,
+      transparent 35% 65%,
+      #fff 65% 100%
     );
-  box-shadow:
-    0 0 0 1px rgba(255,228,155,0.16),
-    0 1.4rem 3rem rgba(0,0,0,0.72),
-    0 0 1.6rem rgba(239,174,74,0.12);
-  position: relative;
 }
 
 .ww-answer-frame::before {
