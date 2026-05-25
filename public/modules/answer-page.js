@@ -1373,7 +1373,8 @@ isGifVideo
   });
 
   const playButton = app.querySelector("#wwPlayButton");
-  const videoElement = app.querySelector("#wwAnswerVideo");
+const videoElement = app.querySelector("#wwAnswerVideo");
+const gifElement = app.querySelector("#wwAnswerGif");
   const audioElement = hasAudio ? new Audio(audio) : null;
 
   function setPlayingState(isPlaying) {
