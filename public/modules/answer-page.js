@@ -45,10 +45,10 @@ Yet something’s not at home.
 `.trim();
 
   if (isAnswerThree) {
+
+    // FIXED: consistent alphabet, no accidental uppercase
     const alphabetLetters = [
-      ..."abcdefghijklmnopq",
-      "R",
-      ..."stuvwxyz"
+      ..."abcdefghijklmnopqrstuvwxyz"
     ];
 
     app.innerHTML = `
@@ -95,6 +95,7 @@ body {
   z-index: 30;
   pointer-events: none;
 }
+
 
 .ww-mini-core {
   position: absolute;
