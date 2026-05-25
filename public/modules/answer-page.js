@@ -444,7 +444,6 @@ body {
 .ww-answer-three-gap {
   width: 100%;
   height: 1px;
-  border-bottom: 2px solid rgba(246,232,205,0);
   opacity: 0;
 }
 
