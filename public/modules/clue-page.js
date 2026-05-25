@@ -23,7 +23,24 @@ export function renderCluePage(app, data = {}, navigate) {
       .replaceAll("'", "&#39;");
   }
 
+  const numericClueId = Number(clueId);
+  const isClueThree = numericClueId === 3;
   const hasAudio = variant === "image-audio" && audio;
+
+  const clueThreeText = `
+A quiet glass left beside the sink,
+A bell once sung, now still,
+A static TV, no one in sight —
+The silence seems to spill.
+A jigsaw lies beneath the steps,
+A box once twice the size.
+The wooden edge meets flecks of ash,
+Each piece sits with nested lies.
+The toast is sliced. The tea is cold.
+The echo fades like stone.
+All feels as it did again,
+Yet something’s not at home.
+`.trim();
 
   const lifelineUnlocked =
     data?.lifeline_live === true ||
@@ -96,6 +113,64 @@ body {
   background-position: center;
   background-size: cover;
   overflow: hidden;
+}
+
+.ww-clue-map.is-clue-three {
+  background-image:
+    radial-gradient(circle at 32% 46%, rgba(255,230,190,0.055), transparent 26%),
+    linear-gradient(90deg, rgba(0,0,0,0.28), rgba(0,0,0,0.04) 44%, rgba(0,0,0,0.12)),
+    url("${esc(image)}");
+  background-position: center center;
+  background-size: cover;
+}
+
+.ww-clue-three-poem {
+  position: absolute;
+  left: 7.4vw;
+  top: 46%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: min(35vw, 620px);
+  color: rgba(246,232,205,0.92);
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(0.92rem, 1.18vw, 1.42rem);
+  line-height: 1.42;
+  letter-spacing: 0.012em;
+  text-align: left;
+  white-space: pre-wrap;
+  text-shadow:
+    0 0 12px rgba(255,220,170,0.14),
+    0 2px 8px rgba(0,0,0,0.78);
+  opacity: 0.92;
+  animation: wwClueThreeBreath 7.4s ease-in-out infinite;
+}
+
+.ww-clue-three-poem::before {
+  content: "";
+  position: absolute;
+  inset: -1.2rem -1.4rem;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 42% 48%, rgba(0,0,0,0.24), transparent 68%);
+  filter: blur(8px);
+  opacity: 0.78;
+}
+
+@keyframes wwClueThreeBreath {
+  0%, 100% {
+    opacity: 0.86;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  45% {
+    opacity: 0.98;
+    transform: translateY(-50%) translateX(1px);
+  }
+
+  72% {
+    opacity: 0.91;
+    transform: translateY(-50%) translateX(-1px);
+  }
 }
 
 .ww-main-clue {
@@ -234,13 +309,6 @@ body {
   animation: wwSilverSweep 900ms ease-out forwards;
 }
 
-.ww-hotspot-base:hover,
-.ww-hotspot-clues:hover,
-.ww-hotspot-life[data-locked="false"]:hover {
-  background: transparent;
-  box-shadow: none;
-}
-
 .ww-hotspot-life[data-locked="true"] {
   cursor: pointer;
 }
@@ -259,7 +327,6 @@ body {
   font-size: 0.86rem;
   font-weight: 800;
   letter-spacing: 0.035em;
-  text-transform: none;
   color: rgba(78,8,8,0.98);
   background: rgba(255,248,244,0.96);
   border: 1px solid rgba(120,20,20,0.35);
@@ -358,25 +425,31 @@ body {
 
 <div id="wwPortal">
   <main class="ww-clue-stage" aria-label="${esc(title)}">
-    <section class="ww-clue-map" aria-label="WinterWord clue page">
+    <section class="ww-clue-map ${isClueThree ? "is-clue-three" : ""}" aria-label="WinterWord clue page">
 
       ${
-        image
+        isClueThree
           ? `
-            <img
-              class="ww-main-clue"
-              src="${esc(image)}"
-              alt="${esc(alt)}"
-              loading="lazy"
-              decoding="async"
-            >
+            <div class="ww-clue-three-poem" aria-label="${esc(clueThreeText)}">
+${esc(clueThreeText)}
+            </div>
           `
-          : `
-            <section class="ww-clue-fallback">
-              <h1>${esc(title)}</h1>
-              <p>${body ? esc(body) : "No clue image has been supplied yet."}</p>
-            </section>
-          `
+          : image
+            ? `
+              <img
+                class="ww-main-clue"
+                src="${esc(image)}"
+                alt="${esc(alt)}"
+                loading="lazy"
+                decoding="async"
+              >
+            `
+            : `
+              <section class="ww-clue-fallback">
+                <h1>${esc(title)}</h1>
+                <p>${body ? esc(body) : "No clue image has been supplied yet."}</p>
+              </section>
+            `
       }
 
       ${
