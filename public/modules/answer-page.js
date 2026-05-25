@@ -45,7 +45,6 @@ Yet something’s not at home.
 `.trim();
 
   if (isAnswerThree) {
-
     const alphabetLetters = [
       ..."abcdefghijklmnopq",
       "R",
@@ -96,7 +95,6 @@ body {
   z-index: 30;
   pointer-events: none;
 }
-`;
 
 .ww-mini-core {
   position: absolute;
@@ -199,6 +197,8 @@ body {
 .ww-mini-play:hover .ww-mini-play-glow {
   animation: wwButtonGleam 1.25s ease forwards;
 }
+</style>
+`;
 
 .ww-mini-play-icon {
   position: relative;
