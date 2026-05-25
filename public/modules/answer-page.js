@@ -27,7 +27,7 @@ export function renderAnswerPage(app, data = {}, navigate) {
   const hasMedia = Boolean(image);
   const hasAudio = Boolean(audio);
   const isVideo = variant === "video" || variant === "video-audio";
-  const hasPlayableMedia = isVideo || hasAudio;
+  const hasPlayableMedia = isVideo || isGifVideo || hasAudio;
 
   const clueThreeText = `
 A quiet glass left beside the sink,
