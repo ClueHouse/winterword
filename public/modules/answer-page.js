@@ -1337,15 +1337,22 @@ body {
               <div class="ww-answer-inner">
                 <div class="ww-answer-media">
                   ${
-isVideo || isGifVideo
+isGifVideo
   ? `
-                        <video id="wwAnswerVideo" playsinline preload="metadata" aria-label="${esc(alt)}">
-                          <source src="${esc(image)}" type="video/mp4">
-                        </video>
-                      `
-                      : `
-                        <img src="${esc(image)}" alt="${esc(alt)}" loading="lazy" decoding="async">
-                      `
+        <img id="wwAnswerGif" src="${esc(image)}" alt="${esc(alt)}" loading="lazy" decoding="async">
+        <video id="wwAnswerVideo" playsinline preload="metadata" aria-label="${esc(alt)}" hidden>
+          <source src="${esc(answer.video || "")}" type="video/mp4">
+        </video>
+      `
+  : isVideo
+    ? `
+        <video id="wwAnswerVideo" playsinline preload="metadata" aria-label="${esc(alt)}">
+          <source src="${esc(image)}" type="video/mp4">
+        </video>
+      `
+    : `
+        <img src="${esc(image)}" alt="${esc(alt)}" loading="lazy" decoding="async">
+      `
                   }
                 </div>
               </div>
