@@ -99,7 +99,7 @@ body {
 .ww-mini-core {
   position: absolute;
   top: 46%;
-  left: 65%;
+  left: 70%;
   width: 100%;
   transform: translate(-50%, -50%);
   display: flex;
