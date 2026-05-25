@@ -45,7 +45,11 @@ Yet something’s not at home.
 `.trim();
 
   if (isAnswerThree) {
-    const alphabetLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const alphabetLetters = [
+      ..."abcdefghijklmnopq",
+      "R",
+      ..."stuvwxyz"
+    ];
 
     app.innerHTML = `
 <style>
@@ -95,7 +99,7 @@ body {
 .ww-mini-core {
   position: absolute;
   top: 46%;
-  left: 58%;
+  left: 50%;
   width: 100%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -460,7 +464,37 @@ body {
   line-height: 1;
   color: rgba(255,244,212,0);
   opacity: 0;
+  text-align: center;
   pointer-events: none;
+}
+
+.ww-answer-three-answer-top {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - clamp(4.8rem, 9vw, 9rem));
+  z-index: 9;
+  transform:
+    translateX(-50%)
+    translateY(-0.7rem);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.82rem, 1.1vw, 1.08rem);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(246,232,205,0);
+  opacity: 0;
+  text-shadow:
+    0 2px 10px rgba(0,0,0,0.82),
+    0 0 18px rgba(255,200,120,0.08);
+}
+
+#wwPortal.ww-answer-three-start .ww-answer-three-answer-top {
+  animation:
+    wwAnswerThreeLabelTopIn
+    0.9s
+    ease
+    4.9s
+    forwards;
 }
 
 #wwPortal.ww-answer-three-start .ww-answer-three-reveal {
@@ -475,18 +509,21 @@ body {
 .ww-answer-three-answer-label {
   position: absolute;
   left: 50%;
-  top: calc(50% + clamp(3.6rem, 8vw, 8rem));
+  top: calc(50% + clamp(3.8rem, 8vw, 8rem));
   z-index: 9;
   transform:
     translateX(-50%)
     translateY(0.7rem);
-  font-family: "Courier New", Courier, monospace;
-  font-size: clamp(0.62rem, 1vw, 1rem);
-  font-weight: 700;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.92rem, 1.25vw, 1.25rem);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   color: rgba(246,232,205,0);
   opacity: 0;
+  text-shadow:
+    0 2px 10px rgba(0,0,0,0.82),
+    0 0 18px rgba(255,200,120,0.08);
 }
 
 #wwPortal.ww-answer-three-start .ww-answer-three-answer-label {
@@ -595,6 +632,24 @@ body {
   }
 }
 
+@keyframes wwAnswerThreeLabelTopIn {
+  0% {
+    opacity: 0;
+    transform:
+      translateX(-50%)
+      translateY(-0.7rem);
+    color: rgba(246,232,205,0);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translateX(-50%)
+      translateY(0);
+    color: rgba(246,232,205,0.82);
+  }
+}
+
 @keyframes wwButtonGleam {
   0% {
     opacity: 0;
@@ -700,12 +755,18 @@ body {
                   <span
                     class="ww-answer-three-slot"
                     data-letter="${letter}"
-                    aria-hidden="true"
+                    aria-hidden
+
+
+                    ="true"
                   >
-                    ${letter === "R" ? `<span class="ww-answer-three-gap"></span>` : ""}
                   </span>
                 `).join("")
               }
+            </div>
+
+            <div class="ww-answer-three-answer-top">
+              The letter
             </div>
 
             <div class="ww-answer-three-reveal" aria-label="Answer R">
@@ -713,7 +774,7 @@ body {
             </div>
 
             <div class="ww-answer-three-answer-label">
-              Answer
+              is not at home
             </div>
 
           </div>
@@ -801,7 +862,7 @@ body {
           );
 
           slots.forEach((slot, slotIndex) => {
-            const targetLetter = slot.getAttribute("data-letter");
+            const targetLetter = String(slot.getAttribute("data-letter") || "").toUpperCase();
 
             if (!targetLetter || targetLetter === "R") {
               return;
