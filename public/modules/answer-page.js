@@ -1248,12 +1248,7 @@ body {
 .ww-answer-media {
   position: relative;
   width: 100%;
-}
-
-#wwAnswerGif,
-#wwAnswerVideo {
-  display: block;
-  width: 100%;
+  line-height: 0;
 }
 
 .ww-answer-media img,
@@ -1262,17 +1257,36 @@ body {
   width: 100%;
   max-height: 75vh;
   object-fit: contain;
+  background: transparent;
+}
+
+.ww-answer-media.is-gif-video {
+  aspect-ratio: 16 / 9;
   background: #000;
 }
 
-#wwAnswerGif,
-#wwAnswerVideo {
-  display: block;
+.ww-answer-media.is-gif-video #wwAnswerGif,
+.ww-answer-media.is-gif-video #wwAnswerVideo {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  max-height: 75vh;
+  height: 100%;
+  max-height: none;
   object-fit: contain;
-  background: #000;
+}
+
+.ww-answer-media.is-gif-video #wwAnswerGif {
+  z-index: 1;
+}
+
+.ww-answer-media.is-gif-video #wwAnswerVideo {
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ww-answer-media.is-gif-video #wwAnswerVideo.is-ready {
+  opacity: 1;
 }
 
 #wwAnswerGif[hidden],
@@ -1354,7 +1368,7 @@ body {
           ? `
             <div class="ww-answer-frame">
               <div class="ww-answer-inner">
-                <div class="ww-answer-media">
+                <div class="ww-answer-media${isGifVideo ? " is-gif-video" : ""}">
                   ${
 isGifVideo
   ? `
@@ -1425,49 +1439,75 @@ const gifElement = app.querySelector("#wwAnswerGif");
           (videoElement ? videoElement.paused : true) &&
           (audioElement ? audioElement.paused : true);
 
-if (shouldPlay) {
+        if (shouldPlay) {
+          if (videoElement) {
+            videoElement.pause();
+            videoElement.currentTime = 0;
+            videoElement.classList.remove("is-ready");
+            videoElement.hidden = false;
+            videoElement.style.display = "block";
 
-  if (videoElement) {
-    videoElement.hidden = false;
-    videoElement.style.display = "block";
-    videoElement.currentTime = 0;
-    videoElement.load();
+            const revealVideo = () => {
+              videoElement.classList.add("is-ready");
 
-    try {
-await videoElement.play();
+              if (isGifVideo && gifElement) {
+                gifElement.hidden = true;
+                gifElement.style.display = "none";
+              }
 
-videoElement.addEventListener("playing", () => {
+              setPlayingState(true);
+            };
 
-  if (gifElement) {
-    gifElement.hidden = true;
-  }
+            videoElement.addEventListener("playing", revealVideo, { once: true });
 
-  setPlayingState(true);
+            try {
+              await videoElement.play();
+            } catch (err) {
+              videoElement.removeEventListener("playing", revealVideo);
+              videoElement.classList.remove("is-ready");
+              videoElement.hidden = true;
+              videoElement.style.display = "none";
 
-}, { once: true });
+              if (isGifVideo && gifElement) {
+                gifElement.hidden = false;
+                gifElement.style.display = "block";
+              }
 
-    } catch (err) {
+              setPlayingState(false);
+              console.error("WinterWord video failed:", err);
+            }
+          }
 
-      console.error("WinterWord video failed:", err);
-
-      if (gifElement) {
-        gifElement.hidden = false;
-      }
-
-      videoElement.hidden = true;
-      setPlayingState(false);
-    }
-  }
-
-  if (audioElement) {
-    await audioElement.play();
-  }
-
-} else {
+          if (audioElement) {
+            await audioElement.play();
+          }
+        } else {
           pauseAll();
+
+          if (isGifVideo && gifElement) {
+            gifElement.hidden = false;
+            gifElement.style.display = "block";
+          }
+
+          if (videoElement) {
+            videoElement.classList.remove("is-ready");
+            videoElement.hidden = true;
+            videoElement.style.display = "none";
+          }
         }
       } catch {
         pauseAll();
+
+        if (isGifVideo && gifElement) {
+          gifElement.hidden = false;
+          gifElement.style.display = "block";
+        }
+
+        if (videoElement) {
+          videoElement.classList.remove("is-ready");
+          videoElement.hidden = true;
+          videoElement.style.display = "none";
+        }
       }
     });
   }
