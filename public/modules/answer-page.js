@@ -21,16 +21,32 @@ export function renderAnswerPage(app, data = {}, navigate) {
       .replaceAll("'", "&#39;");
   }
 
-  function renderArchiveParagraphs(value) {
-    return String(value ?? "")
-      .trim()
-      .split(/\n\s*\n/)
-      .map((paragraph) => {
-        const safeParagraph = esc(paragraph.trim()).replace(/\n/g, "<br>");
-        return safeParagraph ? `<p>${safeParagraph}</p>` : "";
-      })
-      .join("");
-  }
+function renderArchiveParagraphs(value) {
+  return String(value ?? "")
+    .replace(
+      /your own map/gi,
+      `
+      <span class="ww-archive-map-trigger">
+        your own map
+        <span class="ww-archive-map-preview">
+          <img
+            src="/assets/winterword/answers/06b.png"
+            alt="Recovered map"
+            loading="lazy"
+            decoding="async"
+          >
+        </span>
+      </span>
+      `
+    )
+    .trim()
+    .split(/\n\s*\n/)
+    .map((paragraph) => {
+      const safeParagraph = paragraph.trim().replace(/\n/g, "<br>");
+      return safeParagraph ? `<p>${safeParagraph}</p>` : "";
+    })
+    .join("");
+}
 
   const numericClueId = Number(clueId);
   const isAnswerThree = numericClueId === 3;
