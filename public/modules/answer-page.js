@@ -1422,9 +1422,19 @@ const gifElement = app.querySelector("#wwAnswerGif");
           (audioElement ? audioElement.paused : true);
 
         if (shouldPlay) {
-if (gifElement) gifElement.hidden = true;
+if (gifElement) {
+  gifElement.hidden = true;
+}
+
 if (videoElement) {
   videoElement.hidden = false;
+  videoElement.style.display = "block";
+  videoElement.currentTime = 0;
+
+  await new Promise((resolve) => {
+    requestAnimationFrame(resolve);
+  });
+
   await videoElement.play();
 }
           if (audioElement) await audioElement.play();
