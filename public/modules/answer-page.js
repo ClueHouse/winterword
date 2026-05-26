@@ -1794,10 +1794,6 @@ max-height: 94vh;
                     <article class="ww-archive-copy">
                       ${renderArchiveParagraphs(answerSixText)}
                     </article>
-                    <div class="ww-map-modal" id="wwMapModal" aria-hidden="true">
-                      <button class="ww-map-modal-close" id="wwMapModalClose" type="button" aria-label="Close map">×</button>
-                      <img src="/assets/winterword/answers/06b.png" alt="Recovered map" loading="lazy" decoding="async">
-                    </div>
                   </div>
                 </div>
               </div>
