@@ -1673,8 +1673,8 @@ body {
 
 .ww-map-modal img {
   display: block;
-  max-width: min(86vw, 980px);
-  max-height: 86vh;
+max-width: min(96vw, 1600px);
+max-height: 94vh;
   border-radius: 0.9rem;
   border: 1px solid rgba(255,220,150,0.22);
   box-shadow:
