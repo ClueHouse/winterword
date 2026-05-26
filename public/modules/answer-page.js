@@ -1421,28 +1421,41 @@ const gifElement = app.querySelector("#wwAnswerGif");
           (videoElement ? videoElement.paused : true) &&
           (audioElement ? audioElement.paused : true);
 
-        if (shouldPlay) {
-if (gifElement) {
-  gifElement.hidden = true;
-}
+if (shouldPlay) {
 
-if (videoElement) {
-  videoElement.hidden = false;
-  videoElement.style.display = "block";
-  videoElement.currentTime = 0;
-  videoElement.load();
+  if (videoElement) {
+    videoElement.hidden = false;
+    videoElement.style.display = "block";
+    videoElement.currentTime = 0;
+    videoElement.load();
 
-  setTimeout(async () => {
     try {
       await videoElement.play();
+
+      if (gifElement) {
+        gifElement.hidden = true;
+      }
+
+      setPlayingState(true);
+
     } catch (err) {
-      console.error(err);
+
+      console.error("WinterWord video failed:", err);
+
+      if (gifElement) {
+        gifElement.hidden = false;
+      }
+
+      videoElement.hidden = true;
+      setPlayingState(false);
     }
-  }, 50);
-}
-          if (audioElement) await audioElement.play();
-          setPlayingState(true);
-        } else {
+  }
+
+  if (audioElement) {
+    await audioElement.play();
+  }
+
+} else {
           pauseAll();
         }
       } catch {
