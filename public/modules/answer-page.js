@@ -1663,7 +1663,7 @@ body {
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 4vh 4vw;
+padding: 1.5vh 1.5vw;
   background: rgba(0,0,0,0.72);
 }
 
