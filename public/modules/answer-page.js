@@ -1261,6 +1261,17 @@ body {
   background: #000;
 }
 
+#wwAnswerVideo[hidden] {
+  display: none;
+}
+
+#wwAnswerGif {
+  width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  background: #000;
+}
+
 .ww-answer-empty {
   padding: 3rem;
   color: rgba(245,247,251,0.78);
