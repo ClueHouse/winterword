@@ -1430,13 +1430,17 @@ if (shouldPlay) {
     videoElement.load();
 
     try {
-      await videoElement.play();
+await videoElement.play();
 
-      if (gifElement) {
-        gifElement.hidden = true;
-      }
+videoElement.addEventListener("playing", () => {
 
-      setPlayingState(true);
+  if (gifElement) {
+    gifElement.hidden = true;
+  }
+
+  setPlayingState(true);
+
+}, { once: true });
 
     } catch (err) {
 
