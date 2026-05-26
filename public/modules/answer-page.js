@@ -1845,36 +1845,74 @@ isGifVideo
     });
   });
 
-  const mapLink = app.querySelector("#wwArchiveMapLink");
-  const mapModal = app.querySelector("#wwMapModal");
-  const mapClose = app.querySelector("#wwMapModalClose");
+const answerSixScroll = app.querySelector("#wwAnswerSixScroll");
 
-  if (mapLink && mapModal && mapClose) {
-    const openMap = () => {
-      mapModal.classList.add("is-open");
-      mapModal.setAttribute("aria-hidden", "false");
+if (answerSixScroll) {
+  requestAnimationFrame(() => {
+    answerSixScroll.scrollTop = 0;
+  });
+}
+
+const mapLink = app.querySelector("#wwArchiveMapLink");
+
+if (mapLink) {
+  mapLink.addEventListener("click", () => {
+    const existingModal = document.querySelector("#wwMapModal");
+
+    if (existingModal) {
+      existingModal.classList.add("is-open");
+      existingModal.setAttribute("aria-hidden", "false");
+      return;
+    }
+
+    const modal = document.createElement("div");
+    modal.className = "ww-map-modal is-open";
+    modal.id = "wwMapModal";
+    modal.setAttribute("aria-hidden", "false");
+
+    modal.innerHTML = `
+      <button
+        class="ww-map-modal-close"
+        type="button"
+        aria-label="Close map"
+      >×</button>
+
+      <img
+        src="/assets/winterword/answers/06b.png"
+        alt="Recovered map"
+        loading="lazy"
+        decoding="async"
+      >
+    `;
+
+    document.body.appendChild(modal);
+
+    const closeButton = modal.querySelector(".ww-map-modal-close");
+
+    const closeModal = () => {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+
+      setTimeout(() => {
+        modal.remove();
+      }, 180);
     };
 
-    const closeMap = () => {
-      mapModal.classList.remove("is-open");
-      mapModal.setAttribute("aria-hidden", "true");
-    };
+    closeButton.addEventListener("click", closeModal);
 
-    mapLink.addEventListener("click", openMap);
-    mapClose.addEventListener("click", closeMap);
-
-    mapModal.addEventListener("click", (event) => {
-      if (event.target === mapModal) {
-        closeMap();
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeModal();
       }
     });
 
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        closeMap();
+        closeModal();
       }
     });
-  }
+  });
+}
 
   const playButton = app.querySelector("#wwPlayButton");
   const videoElement = app.querySelector("#wwAnswerVideo");
