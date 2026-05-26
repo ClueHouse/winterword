@@ -144,6 +144,7 @@ export function renderAnswerList(app, data = {}, navigate) {
             }
       )
       .toUpperCase();
+
   }
 
   const answers =
@@ -167,6 +168,7 @@ export function renderAnswerList(app, data = {}, navigate) {
           releaseDate:
             formatReleaseDate(index)
         };
+
       }
     );
 
@@ -513,6 +515,27 @@ body{
   padding-top:.72rem;
 }
 
+.ww-answer-number{
+  margin-bottom:.38rem;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:.7rem;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+
+  color:
+    rgba(120,78,38,.88);
+
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.24);
+}
+
 .ww-answer-release-date{
   display:flex;
   align-items:center;
@@ -834,6 +857,11 @@ body{
       1.2rem;
   }
 
+  .ww-answer-number{
+    font-size:.64rem;
+    letter-spacing:.24em;
+  }
+
   .ww-answer-release-date{
     font-size:.72rem;
     letter-spacing:.1em;
@@ -884,6 +912,11 @@ body{
     min-width:min(100%, 24rem);
   }
 
+  .ww-answer-number{
+    font-size:.6rem;
+    letter-spacing:.22em;
+  }
+
   .ww-answer-release-date{
     font-size:.68rem;
     letter-spacing:.08em;
@@ -931,6 +964,12 @@ body{
   .ww-answer-word::before,
   .ww-answer-word::after{
     display:none;
+  }
+
+  .ww-answer-number{
+    margin-bottom:.32rem;
+    font-size:.56rem;
+    letter-spacing:.18em;
   }
 
   .ww-answer-release-date{
@@ -1025,6 +1064,10 @@ body{
           </div>
 
           <div class="ww-answer-meta">
+
+            <div class="ww-answer-number">
+              CLUE ${answer.number}
+            </div>
 
             <div class="ww-answer-release-date">
               ${escapeHtml(answer.releaseDate)}
