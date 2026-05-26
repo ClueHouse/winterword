@@ -1246,10 +1246,14 @@ body {
 }
 
 .ww-answer-media {
+  position: relative;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+#wwAnswerGif,
+#wwAnswerVideo {
+  display: block;
+  width: 100%;
 }
 
 .ww-answer-media img,
