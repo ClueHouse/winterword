@@ -1263,7 +1263,9 @@ body {
 
 #wwAnswerGif,
 #wwAnswerVideo {
+  display: block;
   width: 100%;
+  height: auto;
   max-height: 75vh;
   object-fit: contain;
   background: #000;
@@ -1271,7 +1273,7 @@ body {
 
 #wwAnswerGif[hidden],
 #wwAnswerVideo[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .ww-answer-empty {
