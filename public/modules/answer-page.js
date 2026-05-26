@@ -1432,7 +1432,13 @@ if (videoElement) {
   videoElement.currentTime = 0;
   videoElement.load();
 
-  await videoElement.play();
+  setTimeout(async () => {
+    try {
+      await videoElement.play();
+    } catch (err) {
+      console.error(err);
+    }
+  }, 50);
 }
           if (audioElement) await audioElement.play();
           setPlayingState(true);
