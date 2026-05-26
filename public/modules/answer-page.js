@@ -23,26 +23,16 @@ export function renderAnswerPage(app, data = {}, navigate) {
 
 function renderArchiveParagraphs(value) {
   return String(value ?? "")
-    .replace(
-      /your own map/gi,
-      `
-      <span class="ww-archive-map-trigger">
-        your own map
-        <span class="ww-archive-map-preview">
-          <img
-            src="/assets/winterword/answers/06b.png"
-            alt="Recovered map"
-            loading="lazy"
-            decoding="async"
-          >
-        </span>
-      </span>
-      `
-    )
     .trim()
     .split(/\n\s*\n/)
     .map((paragraph) => {
-      const safeParagraph = paragraph.trim().replace(/\n/g, "<br>");
+      let safeParagraph = esc(paragraph.trim()).replace(/\n/g, "<br>");
+
+      safeParagraph = safeParagraph.replace(
+        /your own map/gi,
+        `<button class="ww-archive-map-link" type="button" id="wwArchiveMapLink">your own map</button>`
+      );
+
       return safeParagraph ? `<p>${safeParagraph}</p>` : "";
     })
     .join("");
@@ -1644,68 +1634,68 @@ body {
   margin-bottom: 0;
 }
 
-.ww-archive-map-trigger {
-  position: relative;
-  display: inline-block;
-  color: rgba(255,224,160,0.96);
+.ww-archive-map-link {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: rgba(255,224,160,0.98);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
   text-shadow:
     0 0 0.45rem rgba(255,198,92,0.22),
     0 2px 8px rgba(0,0,0,0.82);
-  cursor: help;
 }
 
-.ww-archive-map-trigger::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.08rem;
-  height: 1px;
-  background: rgba(255,214,140,0.42);
-  opacity: 0.7;
+.ww-archive-map-link:hover,
+.ww-archive-map-link:focus-visible {
+  color: #fff1bd;
 }
 
-.ww-archive-map-preview {
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 1.4rem);
-  transform:
-    translateX(-50%)
-    translateY(0.8rem)
-    scale(0.94);
-  width: min(38vw, 640px);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 40;
-  transition:
-    opacity 220ms ease,
-    transform 220ms ease;
+.ww-map-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 4vw;
+  background: rgba(0,0,0,0.72);
 }
 
-.ww-archive-map-preview img {
+.ww-map-modal.is-open {
+  display: flex;
+}
+
+.ww-map-modal img {
   display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 0.8rem;
-  background: rgba(12,10,8,0.98);
-  border: 1px solid rgba(255,220,150,0.18);
+  max-width: min(86vw, 980px);
+  max-height: 86vh;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255,220,150,0.22);
   box-shadow:
-    0 1.8rem 3.2rem rgba(0,0,0,0.78),
-    0 0 1.2rem rgba(255,196,84,0.14);
+    0 2rem 4rem rgba(0,0,0,0.85),
+    0 0 1.4rem rgba(255,196,84,0.16);
 }
 
-.ww-archive-map-trigger:hover .ww-archive-map-preview {
-  opacity: 1;
-  transform:
-    translateX(-50%)
-    translateY(0)
-    scale(1);
-}
-
-@media (max-width: 900px) {
-  .ww-archive-map-preview {
-    width: min(72vw, 520px);
-  }
+.ww-map-modal-close {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.6rem;
+  appearance: none;
+  border: 0;
+  background: rgba(20,16,10,0.92);
+  color: #fff1bd;
+  font-size: 2rem;
+  line-height: 1;
+  border-radius: 999px;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
 }
 
 .ww-answer-empty {
@@ -1804,6 +1794,10 @@ body {
                     <article class="ww-archive-copy">
                       ${renderArchiveParagraphs(answerSixText)}
                     </article>
+                    <div class="ww-map-modal" id="wwMapModal" aria-hidden="true">
+                      <button class="ww-map-modal-close" id="wwMapModalClose" type="button" aria-label="Close map">×</button>
+                      <img src="/assets/winterword/answers/06b.png" alt="Recovered map" loading="lazy" decoding="async">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1849,6 +1843,37 @@ isGifVideo
       if (typeof navigate === "function") navigate(target);
     });
   });
+
+  const mapLink = app.querySelector("#wwArchiveMapLink");
+  const mapModal = app.querySelector("#wwMapModal");
+  const mapClose = app.querySelector("#wwMapModalClose");
+
+  if (mapLink && mapModal && mapClose) {
+    const openMap = () => {
+      mapModal.classList.add("is-open");
+      mapModal.setAttribute("aria-hidden", "false");
+    };
+
+    const closeMap = () => {
+      mapModal.classList.remove("is-open");
+      mapModal.setAttribute("aria-hidden", "true");
+    };
+
+    mapLink.addEventListener("click", openMap);
+    mapClose.addEventListener("click", closeMap);
+
+    mapModal.addEventListener("click", (event) => {
+      if (event.target === mapModal) {
+        closeMap();
+      }
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeMap();
+      }
+    });
+  }
 
   const playButton = app.querySelector("#wwPlayButton");
   const videoElement = app.querySelector("#wwAnswerVideo");
