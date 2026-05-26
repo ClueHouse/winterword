@@ -1355,7 +1355,7 @@ body {
 isGifVideo
   ? `
         <img id="wwAnswerGif" src="${esc(image)}" alt="${esc(alt)}" loading="lazy" decoding="async">
-        <video id="wwAnswerVideo" playsinline preload="metadata" aria-label="${esc(alt)}" hidden>
+<video id="wwAnswerVideo" playsinline muted preload="metadata" aria-label="${esc(alt)}" hidden>
           <source src="${esc(answer.video || "")}" type="video/mp4">
         </video>
       `
