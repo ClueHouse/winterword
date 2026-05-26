@@ -1644,6 +1644,70 @@ body {
   margin-bottom: 0;
 }
 
+.ww-archive-map-trigger {
+  position: relative;
+  display: inline-block;
+  color: rgba(255,224,160,0.96);
+  text-shadow:
+    0 0 0.45rem rgba(255,198,92,0.22),
+    0 2px 8px rgba(0,0,0,0.82);
+  cursor: help;
+}
+
+.ww-archive-map-trigger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.08rem;
+  height: 1px;
+  background: rgba(255,214,140,0.42);
+  opacity: 0.7;
+}
+
+.ww-archive-map-preview {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 1.4rem);
+  transform:
+    translateX(-50%)
+    translateY(0.8rem)
+    scale(0.94);
+  width: min(38vw, 640px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 40;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.ww-archive-map-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.8rem;
+  background: rgba(12,10,8,0.98);
+  border: 1px solid rgba(255,220,150,0.18);
+  box-shadow:
+    0 1.8rem 3.2rem rgba(0,0,0,0.78),
+    0 0 1.2rem rgba(255,196,84,0.14);
+}
+
+.ww-archive-map-trigger:hover .ww-archive-map-preview {
+  opacity: 1;
+  transform:
+    translateX(-50%)
+    translateY(0)
+    scale(1);
+}
+
+@media (max-width: 900px) {
+  .ww-archive-map-preview {
+    width: min(72vw, 520px);
+  }
+}
+
 .ww-answer-empty {
   padding: 3rem;
   color: rgba(245,247,251,0.78);
