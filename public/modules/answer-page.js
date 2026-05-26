@@ -1261,15 +1261,17 @@ body {
   background: #000;
 }
 
-#wwAnswerVideo[hidden] {
-  display: none;
-}
-
-#wwAnswerGif {
+#wwAnswerGif,
+#wwAnswerVideo {
   width: 100%;
   max-height: 75vh;
   object-fit: contain;
   background: #000;
+}
+
+#wwAnswerGif[hidden],
+#wwAnswerVideo[hidden] {
+  display: none;
 }
 
 .ww-answer-empty {
