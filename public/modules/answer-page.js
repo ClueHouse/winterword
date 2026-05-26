@@ -21,14 +21,26 @@ export function renderAnswerPage(app, data = {}, navigate) {
       .replaceAll("'", "&#39;");
   }
 
+  function renderArchiveParagraphs(value) {
+    return String(value ?? "")
+      .trim()
+      .split(/\n\s*\n/)
+      .map((paragraph) => {
+        const safeParagraph = esc(paragraph.trim()).replace(/\n/g, "<br>");
+        return safeParagraph ? `<p>${safeParagraph}</p>` : "";
+      })
+      .join("");
+  }
+
   const numericClueId = Number(clueId);
   const isAnswerThree = numericClueId === 3;
+  const isAnswerSix = numericClueId === 6;
 
   const hasMedia = Boolean(image);
   const hasAudio = Boolean(audio);
-const isVideo = variant === "video" || variant === "video-audio";
-const isGifVideo = variant === "gif-video";
-const hasPlayableMedia = isVideo || isGifVideo || hasAudio;
+  const isVideo = variant === "video" || variant === "video-audio";
+  const isGifVideo = variant === "gif-video";
+  const hasPlayableMedia = isVideo || isGifVideo || hasAudio;
 
   const clueThreeText = `
 A quiet glass left beside the sink,
@@ -44,6 +56,213 @@ The echo fades like stone.
 All feels as it did again,
 Yet something’s not at home.
 `.trim();
+
+  const answerSixText = String(
+    answer.text ||
+    answer.copy ||
+    answer.body ||
+    `
+You trace the first line with a fingertip.
+“Old Scratch’s number,” it says.
+You pause, just long enough to wonder what kind of game you’ve stepped into.
+You’ve heard that number whispered in firelit stories.
+And at the end of two bad dreams.
+You walk the first six hundred and sixty-six metres,
+counting each as if sin had weight.
+
+The next line catches you off guard.
+“Two barleycorns.”
+You shake off Beelzebub as you swivel the 180.
+Your boots shift forward a hair.
+Barleycorns — barely enough to matter.
+A symbolic motion.
+A tip of the hat to forgotten systems.
+The path doesn’t notice.
+But you do.
+
+Then comes this:
+“The width of sixteen Olympic pools.”
+One pool — you remember.
+Cold tiles, echoing ceilings, the bite of chlorine.
+Multiply it.
+You do the math in your head: four hundred metres.
+You take a breath…
+deliberately filling your lungs.
+You count your steps with care — the satchel bouncing lightly at your side.
+With one hand, you pull paper from it and begin to write it all — direction, distance, doubt.
+If you ever need to retrace this path,
+you’ll have your own map — one written by your own boots.
+You’re not trusting memory alone.
+
+You face the place maps begin.
+The lines that follow… a mess of measures.
+Margins crammed with units — chains, rods, perches.
+Scribbled. Struck through. Underlined again.
+It starts with a Hungarian mile.
+You pause, trying to place it.
+Then remember a line from an old atlas:
+„Egy magyar mérföld 8 353 méternek felel meg.”
+You nod and begin walking.
+With each step, the math tightens.
+It all lands cleanly: 8,870 metres.
+You walk it as something unseen shifts in the grass.
+
+The next line says nothing but:
+“Turn your back.”
+So, you do.
+No walking.
+Just facing the opposite direction.
+Sometimes that's all it takes to unsettle a soul.
+
+Scrawled in black ink:
+“La longueur des Champs-Élysées.”
+You mutter it out loud.
+No clue what it means.
+Then it hits — a quiz night, years back.
+Paris. Famous street. Starts at the Arc, ends at the obelisk.
+Someone on your team shouted it right before last call.
+1.91 kilometres.
+That’s what stuck.
+You start the walk with memories of pint glasses and cigarette smoke.
+But then the avenue forms in your mind — kings, protests, parades.
+The pavement beneath you seems to remember the weight of silk and ceremony.
+You walk it.
+The ghosts of grandeur fall in beside you.
+
+The isthmus line offers nothing measurable.
+You read it twice.
+Then again.
+No numbers.
+No arrows.
+Just stillness.
+This part isn’t about motion.
+It’s about not filling space.
+So, you don’t.
+And as the quiet stretches, something surfaces —
+not from the list, but from before:
+A soft Sunday.
+Roasted barley tea, still warm in their hand.
+The sound of the back door closing softly behind them.
+No footsteps after. Just that.
+Some distances aren’t measured in metres.
+Some are felt in what’s no longer there.
+Some distances… are where you were left.
+
+Next: a calculation.
+The Eiffel Tower, minus the Titanic.
+Steel and iron. Tower and ship.
+You weigh the distance in thought,
+and it settles at sixty-one.
+You walk that difference
+like a challenge answered in your chest, not your head.
+
+Then it says:
+“Strip the glamour from your steps — and strut where Sin made its bed.”
+Vegas.
+You know it without thinking.
+The Strip.
+Not a guess — a memory.
+Quinn once told you it was the same distance
+from their front door to the only coffee worth drinking.
+Stretching in the sheets, one finger raised:
+“Not good coffee — decent.”
+Voice rough.
+Morning voice.
+Night voice.
+Same thing.
+You didn’t believe it.
+But one foggy Wednesday,
+while the city yawned grey
+and the shape of Quinn ghosted your pillow,
+you walked it.
+And yes — 6.8 km.
+Infuriatingly accurate.
+Quinn always wore truth like a luxury scent —
+not for attention, just because it clung.
+Expensive. Intoxicating. A little dangerous.
+Quinn's bed was all texture —
+creased linen, warm skin, and everything unsaid.
+Quinn winked:
+“We’ve never been good at half-measures, have we.”
+You didn’t answer.
+Your mouth was busy.
+Now?
+Now you walk The Strip again.
+For Christ’s sake.
+Quinn is going to be on your mind the whole damn way.
+
+A new line now:
+“A nautical mile.”
+Not the kind sung by drunks in harbour towns.
+The kind that is measured twice before dawn.
+There are souls aboard.
+One minute of latitude.
+1,852 metres.
+Due north.
+You’ve crossed water before.
+It has no bottom you can trust.
+
+An Irish mile, minus Old Scratch again.
+You pause.
+That name. Again.
+You thought it was a one-off —
+some cruel flourish in the ink.
+But here he is, twice now.
+Old Scratch.
+Twice in two lines.
+That’s not flair.
+That’s a pattern.
+You do the math anyway —
+2,048 minus 666.
+1,382 metres.
+But it doesn’t feel like a calculation.
+It feels like a warning.
+Your eyes drift back up the line —
+to where you passed the letter H.
+That’s where the grass shifted.
+Not wind — you were sure of that.
+Something watching. Or waiting.
+Just for a moment.
+Then gone.
+You try to shake it.
+You follow the logic.
+Not because it makes sense —
+but because arguing with paper gets you nowhere.
+The wind tugs at your collar.
+Like it remembers what stirred,
+even if you’re pretending not to.
+
+The final line reads:
+“Take one Fokker’s measure south — a hundred pilots dream of this sky.”
+You smile.
+First time in hours.
+You know the plane.
+Fokker 100.
+You owned one once —
+won it on a bet you had no business making.
+Your chest was tight
+as you offered up a deed,
+a promise,
+and one favour you still haven’t repaid.
+You look up.
+Thirty-five metres and change.
+You round up.
+Walk thirty-six.
+Then stop.
+Exactly 1,600 metres from where you began.
+Four glyphs behind.
+The fifth one stares up at you.
+And still —
+your mind drifts back to the letter H.
+Where the grass shifted.
+Where something unseen pressed close.
+You don’t know why it lingers.
+But somehow,
+you get the feeling
+that whatever this whole thing is…
+it started there.
+`
+  ).trim();
 
   if (isAnswerThree) {
     const alphabetLetters = [
@@ -1294,6 +1513,121 @@ body {
   display: none !important;
 }
 
+.ww-answer-stage.is-archive {
+  width: min(62vw, 1120px);
+}
+
+.ww-answer-frame.is-archive {
+  aspect-ratio: 16 / 9;
+  height: min(75vh, 720px);
+}
+
+.ww-answer-inner.is-archive {
+  position: relative;
+  height: 100%;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(224,191,122,0.14), transparent 38%),
+    linear-gradient(180deg, rgba(37,27,17,0.92), rgba(10,8,6,0.98));
+}
+
+.ww-archive-panel {
+  position: absolute;
+  inset: clamp(1rem, 2.2vw, 2rem);
+  border-radius: 0.72rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 36% 14%, rgba(255,246,211,0.13), transparent 34%),
+    linear-gradient(180deg, rgba(34,28,20,0.88), rgba(18,15,11,0.94));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,221,151,0.15),
+    inset 0 0 2.2rem rgba(0,0,0,0.38),
+    0 0.9rem 2.2rem rgba(0,0,0,0.38);
+}
+
+.ww-archive-panel::before,
+.ww-archive-panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0.9rem;
+  z-index: 5;
+  height: clamp(2.2rem, 5vh, 3.6rem);
+  pointer-events: none;
+}
+
+.ww-archive-panel::before {
+  top: 0;
+  background: linear-gradient(180deg, rgba(21,17,12,0.98), rgba(21,17,12,0));
+}
+
+.ww-archive-panel::after {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(12,10,8,0.98), rgba(12,10,8,0));
+}
+
+.ww-archive-scroll {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding:
+    clamp(2.3rem, 4.2vh, 3.4rem)
+    clamp(2rem, 4.5vw, 4.2rem)
+    clamp(2.6rem, 4.8vh, 3.8rem)
+    clamp(2rem, 4.5vw, 4.2rem);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(222,168,79,0.88) rgba(80,50,22,0.52);
+}
+
+.ww-archive-scroll::-webkit-scrollbar {
+  width: 0.72rem;
+}
+
+.ww-archive-scroll::-webkit-scrollbar-track {
+  background:
+    linear-gradient(180deg, rgba(56,36,17,0.72), rgba(25,18,12,0.72));
+  border-left: 1px solid rgba(255,224,154,0.09);
+  box-shadow: inset 0 0 0.38rem rgba(0,0,0,0.5);
+}
+
+.ww-archive-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 0.18rem solid rgba(43,28,14,0.96);
+  background:
+    linear-gradient(180deg, rgba(255,227,151,0.98), rgba(185,116,39,0.95));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,246,196,0.24),
+    0 0 0.45rem rgba(241,177,80,0.22);
+}
+
+.ww-archive-scroll::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(180deg, rgba(255,239,176,1), rgba(207,136,49,0.98));
+}
+
+.ww-archive-copy {
+  width: min(100%, 46rem);
+  margin: 0 auto;
+  color: rgba(239,226,199,0.94);
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(0.74rem, 1.02vw, 1.02rem);
+  line-height: 1.72;
+  letter-spacing: 0.012em;
+  text-align: left;
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.78),
+    0 0 12px rgba(255,220,156,0.06);
+}
+
+.ww-archive-copy p {
+  margin: 0 0 1.25rem;
+}
+
+.ww-archive-copy p:last-child {
+  margin-bottom: 0;
+}
+
 .ww-answer-empty {
   padding: 3rem;
   color: rgba(245,247,251,0.78);
@@ -1342,6 +1676,23 @@ body {
   .ww-answer-stage {
     width: min(64vw, 980px);
   }
+
+  .ww-answer-stage.is-archive {
+    width: min(68vw, 980px);
+  }
+
+  .ww-archive-scroll {
+    padding:
+      clamp(2rem, 4vh, 3rem)
+      clamp(1.5rem, 3.6vw, 3rem)
+      clamp(2.4rem, 4.6vh, 3.4rem)
+      clamp(1.5rem, 3.6vw, 3rem);
+  }
+
+  .ww-archive-copy {
+    font-size: clamp(0.66rem, 1.14vw, 0.88rem);
+    line-height: 1.62;
+  }
 }
 </style>
 
@@ -1362,10 +1713,24 @@ body {
   </div>
 
   <main id="wwRight">
-    <section class="ww-answer-stage" aria-label="${esc(title)}">
+    <section class="ww-answer-stage${isAnswerSix ? " is-archive" : ""}" aria-label="${esc(title)}">
       ${
-        hasMedia
+        isAnswerSix
           ? `
+            <div class="ww-answer-frame is-archive">
+              <div class="ww-answer-inner is-archive">
+                <div class="ww-archive-panel">
+                  <div class="ww-archive-scroll" id="wwAnswerSixScroll" tabindex="0" aria-label="${esc(title)} archive text">
+                    <article class="ww-archive-copy">
+                      ${renderArchiveParagraphs(answerSixText)}
+                    </article>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `
+          : hasMedia
+            ? `
             <div class="ww-answer-frame">
               <div class="ww-answer-inner">
                 <div class="ww-answer-media${isGifVideo ? " is-gif-video" : ""}">
@@ -1391,7 +1756,7 @@ isGifVideo
               </div>
             </div>
           `
-          : `<div class="ww-answer-empty">No answer media found.</div>`
+            : `<div class="ww-answer-empty">No answer media found.</div>`
       }
     </section>
   </main>
@@ -1406,8 +1771,8 @@ isGifVideo
   });
 
   const playButton = app.querySelector("#wwPlayButton");
-const videoElement = app.querySelector("#wwAnswerVideo");
-const gifElement = app.querySelector("#wwAnswerGif");
+  const videoElement = app.querySelector("#wwAnswerVideo");
+  const gifElement = app.querySelector("#wwAnswerGif");
   const audioElement = hasAudio ? new Audio(audio) : null;
 
   function setPlayingState(isPlaying) {
