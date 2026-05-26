@@ -1430,10 +1430,7 @@ if (videoElement) {
   videoElement.hidden = false;
   videoElement.style.display = "block";
   videoElement.currentTime = 0;
-
-  await new Promise((resolve) => {
-    requestAnimationFrame(resolve);
-  });
+  videoElement.load();
 
   await videoElement.play();
 }
