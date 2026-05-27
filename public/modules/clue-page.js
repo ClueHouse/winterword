@@ -181,21 +181,27 @@ body {
   border-radius: 999px;
 }
 
+.ww-clue-six-inner {
+  width: 70%;
+  margin: 0 auto;
+}
+
 .ww-clue-six-image {
   display: block;
 
-  width: 70%;
-  min-width: 70%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 
   height: auto;
 
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
 
-  object-fit: unset;
+  border-radius: 14px;
 
-  filter:
-    drop-shadow(0 10px 30px rgba(0,0,0,0.45));
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.55);
 }
 
 /* ================================
