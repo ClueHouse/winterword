@@ -363,6 +363,8 @@ if (!orgState || orgState.ok !== true) {
           Somewhere beyond the snow, the correct trail still waits.
           This just isn’t the right door.
         </p>
+
+
 <p style="
   margin:0;
   font-size:16px;
@@ -381,11 +383,6 @@ if (!orgState || orgState.ok !== true) {
   </a>.
 </p>
 
-      </section>
-    </main>
-  `;
-  return;
-}
 
     const airtableStatus = normaliseStatus(orgState.status);
     const endpointSeasonState = normaliseStatus(orgState.season_state);
