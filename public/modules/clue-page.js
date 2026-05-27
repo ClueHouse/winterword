@@ -282,6 +282,8 @@ Yet something’s not at home.
     org?.lifelineLive === true ||
     org?.lifelineLive === "true";
 
+alert("NEW renderCluePage file is running");
+
   app.innerHTML = `
 <style>
 :root {
