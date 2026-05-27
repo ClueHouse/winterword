@@ -163,9 +163,12 @@ body {
 }
 
 .ww-main-clue-image {
-  width: 100%;
+  width: auto;
+  max-width: none;
   height: auto;
+  min-height: 140vh;
   display: block;
+  margin: 0 auto;
 }
 
 .ww-clue-three-frame {
