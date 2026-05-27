@@ -367,7 +367,7 @@ if (!orgState || orgState.ok === false) {
         ">
           Need a lantern?
           <a
-            href="mailto:cluehousehq@gmail.com"
+            href="mailto:fix@cluehouse.co.nz"
             style="
               color:#f0b36a;
               text-decoration:none;
