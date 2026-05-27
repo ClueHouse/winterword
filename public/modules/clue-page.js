@@ -498,16 +498,14 @@ ${esc(clueThreeText)}
           `
           : image
             ? `
-              <div class="ww-main-clue">
-                <img
-                  class="ww-main-clue-image"
-                  src="${esc(image)}"
-                  alt="${esc(alt)}"
-                  loading="lazy"
-                  decoding="async"
-                  style="display:block;width:100%;min-width:100%;max-width:100%;height:auto;margin:0;padding:0;"
-                >
-              </div>
+<div class="ww-main-clue" aria-label="${esc(alt)}">
+  <div
+    class="ww-main-clue-image"
+    role="img"
+    aria-label="${esc(alt)}"
+    style="background-image:url('${esc(image)}');"
+  ></div>
+</div>
             `
             : `
               <section class="ww-clue-fallback">
