@@ -279,13 +279,13 @@ if (isAnswerThree) {
     ..."abcdefghijklmnopqrstuvwxyz"
   ];
 
-
-    app.innerHTML = `
+  app.innerHTML = `
 <style>
 :root {
   --ww-left-zone: 19.75rem;
   --ww-ink-soft: #d8d4c3;
 }
+
 
 * {
   box-sizing: border-box;
