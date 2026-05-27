@@ -162,38 +162,10 @@ body {
     inset 0 0 24px rgba(0,0,0,0.55);
 }
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(24,24,24,0.98) 0%,
-      rgba(10,10,10,1) 18%,
-      rgba(38,38,38,0.96) 36%,
-      rgba(6,6,6,1) 58%,
-      rgba(28,28,28,0.96) 78%,
-      rgba(0,0,0,1) 100%
-    ),
-    repeating-linear-gradient(
-      45deg,
-      rgba(255,255,255,0.018) 0px,
-      rgba(255,255,255,0.018) 2px,
-      transparent 2px,
-      transparent 6px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(255,255,255,0.012) 0px,
-      rgba(255,255,255,0.012) 2px,
-      transparent 2px,
-      transparent 6px
-    );
-
-  border: 2px solid rgba(70,70,70,0.35);
-
-  box-shadow:
-    0 0 0 2px rgba(0,0,0,0.92),
-    0 12px 32px rgba(0,0,0,0.72),
-    inset 0 0 10px rgba(255,255,255,0.03),
-    inset 0 0 24px rgba(0,0,0,0.55);
+.ww-main-clue-image {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .ww-clue-three-frame {
@@ -550,20 +522,15 @@ ${esc(clueThreeText)}
           `
           : image
             ? `
-<div class="ww-main-clue">
-  <img
-    class="ww-main-clue-image"
-    src="${esc(image)}"
-    alt="${esc(alt)}"
-    loading="lazy"
-    decoding="async"
-  >
-</div>
-                src="${esc(image)}"
-                alt="${esc(alt)}"
-                loading="lazy"
-                decoding="async"
-              >
+              <div class="ww-main-clue">
+                <img
+                  class="ww-main-clue-image"
+                  src="${esc(image)}"
+                  alt="${esc(alt)}"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </div>
             `
             : `
               <section class="ww-clue-fallback">
