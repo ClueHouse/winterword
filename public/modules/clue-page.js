@@ -142,39 +142,59 @@ body {
 .ww-clue-six-scroll-panel {
   position: absolute;
 
-  top: 2vh;
-  bottom: 2vh;
+  top: 7vh;
+  bottom: 7vh;
 
-  left: 29vw;
-  right: 1.2vw;
+  left: 38vw;
+  right: 8vw;
 
   z-index: 2;
 
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 
-  padding: 0;
+  padding: 1.2rem;
 
-  background: #020202;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8,12,20,0.96) 0%,
+      rgba(4,6,12,0.985) 100%
+    );
 
-  border: none;
+  border: 1px solid rgba(255,255,255,0.06);
+
+  border-radius: 18px;
 
   box-shadow:
-    0 0 40px rgba(0,0,0,0.75);
+    0 24px 60px rgba(0,0,0,0.72),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.ww-clue-six-scroll-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ww-clue-six-scroll-panel::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.16);
+  border-radius: 999px;
 }
 
 .ww-clue-six-image {
   display: block;
 
-  width: 100%;
-  min-width: 100%;
+  width: 70%;
+  min-width: 70%;
 
   height: auto;
 
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
 
   object-fit: unset;
+
+  filter:
+    drop-shadow(0 10px 30px rgba(0,0,0,0.45));
 }
 
 /* ================================
