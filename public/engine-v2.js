@@ -183,7 +183,7 @@ You've wandered off the map.
             color:#cfd6df;
           ">
             Somewhere beyond the snow, the correct trail still waits.
-            This just isn’t the right door.
+This just isn't the right door.
           </p>
 
           <p style="
