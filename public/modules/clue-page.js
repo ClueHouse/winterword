@@ -550,8 +550,15 @@ ${esc(clueThreeText)}
           `
           : image
             ? `
-              <img
-                class="ww-main-clue"
+<div class="ww-main-clue">
+  <img
+    class="ww-main-clue-image"
+    src="${esc(image)}"
+    alt="${esc(alt)}"
+    loading="lazy"
+    decoding="async"
+  >
+</div>
                 src="${esc(image)}"
                 alt="${esc(alt)}"
                 loading="lazy"
