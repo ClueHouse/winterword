@@ -126,7 +126,7 @@ body {
   overflow-x: hidden;
   display: block;
   z-index: 2;
-  padding: 0.9rem;
+padding: 0.35rem;
 
   background:
     linear-gradient(
