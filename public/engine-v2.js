@@ -146,17 +146,13 @@
   }
 
   function renderOffMap() {
-    const subject = encodeURIComponent("I'm lost!");
-    const body = encodeURIComponent(
-      [
-        "I can't find my way back to WinterWord!",
-        "",
-        "The URL I am trying is this:",
-        window.location.href,
-        "",
-        "Curator, please help."
-      ].join("\r\n")
-    );
+const subject = "Im%20lost%21";
+
+const body =
+  "I%20cant%20find%20my%20way%20back%20to%20WinterWord%21%0D%0A%0D%0A" +
+  "The%20URL%20I%20am%20trying%20is%20this%3A%0D%0A%0D%0A" +
+  encodeURIComponent(window.location.href) +
+  "%0D%0A%0D%0ACurator%2C%20please%20help.";
 
     app.innerHTML = `
       <main style="
