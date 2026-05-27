@@ -326,10 +326,63 @@
     const modules = await loadModules();
     const orgState = await loadOrgState(slug);
 
-    if (!orgState || orgState.ok === false) {
-      renderError("Organisation not found", "No Airtable state could be loaded for this WinterWord.");
-      return;
-    }
+if (!orgState || orgState.ok === false) {
+  app.innerHTML = `
+    <main style="
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+      background:#10141b;
+      color:#f5f7fb;
+      font-family:Arial,sans-serif;
+      text-align:center;
+      box-sizing:border-box;
+    ">
+      <section style="max-width:720px;">
+
+        <h1 style="
+          margin:0 0 18px;
+          font-size:42px;
+          line-height:1.1;
+        ">
+          You’ve wandered off the map.
+        </h1>
+
+        <p style="
+          margin:0 0 18px;
+          font-size:18px;
+          line-height:1.65;
+          color:#cfd6df;
+        ">
+          Somewhere beyond the snow, the correct trail still waits.
+          This just isn’t the right door.
+        </p>
+
+        <p style="
+          margin:0;
+          font-size:16px;
+          color:#f0b36a;
+        ">
+          Need a lantern?
+          <a
+            href="mailto:cluehousehq@gmail.com"
+            style="
+              color:#f0b36a;
+              text-decoration:none;
+              border-bottom:1px solid rgba(240,179,106,0.45);
+            "
+          >
+            Contact Clue House
+          </a>.
+        </p>
+
+      </section>
+    </main>
+  `;
+  return;
+}
 
     const airtableStatus = normaliseStatus(orgState.status);
     const endpointSeasonState = normaliseStatus(orgState.season_state);
