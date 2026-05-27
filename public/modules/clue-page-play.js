@@ -99,9 +99,7 @@ body {
   overflow: hidden;
 }
 
-/* ================================
-   STANDARD CLUE IMAGE
-================================ */
+/* STANDARD CLUES */
 
 .ww-main-clue {
   position: absolute;
@@ -115,30 +113,15 @@ body {
   z-index: 2;
   padding: 0.9rem;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(24,24,24,0.98) 0%,
-      rgba(10,10,10,1) 18%,
-      rgba(38,38,38,0.96) 36%,
-      rgba(6,6,6,1) 58%,
-      rgba(28,28,28,0.96) 78%,
-      rgba(0,0,0,1) 100%
-    ),
-    repeating-linear-gradient(
-      45deg,
-      rgba(255,255,255,0.018) 0px,
-      rgba(255,255,255,0.018) 2px,
-      transparent 2px,
-      transparent 6px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(255,255,255,0.012) 0px,
-      rgba(255,255,255,0.012) 2px,
-      transparent 2px,
-      transparent 6px
-    );
+  background: linear-gradient(
+    145deg,
+    rgba(24,24,24,0.98) 0%,
+    rgba(10,10,10,1) 18%,
+    rgba(38,38,38,0.96) 36%,
+    rgba(6,6,6,1) 58%,
+    rgba(28,28,28,0.96) 78%,
+    rgba(0,0,0,1) 100%
+  );
 
   border: 2px solid rgba(70,70,70,0.35);
 
@@ -149,55 +132,40 @@ body {
     inset 0 0 24px rgba(0,0,0,0.55);
 }
 
-/* ================================
-   CLUE 6 SPECIAL LAYOUT
-   Replace this whole section only
-   for future Clue 6 attempts.
-================================ */
+/* CLUE 6 ONLY */
 
 .ww-clue-six-scroll-panel {
   position: absolute;
-  right: 7vw;
+  left: 38vw;
+  right: 4vw;
   top: 50%;
+  height: 82vh;
   transform: translateY(-50%);
-  width: min(54vw, 1088px);
-  height: 78vh;
   z-index: 2;
+
   overflow-y: auto;
   overflow-x: hidden;
+
   padding: 0.35rem;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(24,24,24,0.98) 0%,
-      rgba(10,10,10,1) 18%,
-      rgba(38,38,38,0.96) 36%,
-      rgba(6,6,6,1) 58%,
-      rgba(28,28,28,0.96) 78%,
-      rgba(0,0,0,1) 100%
-    );
-
-  border: 2px solid rgba(70,70,70,0.35);
+  background: rgba(0,0,0,0.88);
+  border: 1px solid rgba(120,120,120,0.35);
 
   box-shadow:
-    0 0 0 2px rgba(0,0,0,0.92),
-    0 12px 32px rgba(0,0,0,0.72),
-    inset 0 0 10px rgba(255,255,255,0.03),
-    inset 0 0 24px rgba(0,0,0,0.55);
+    0 0 0 2px rgba(0,0,0,0.85),
+    0 14px 34px rgba(0,0,0,0.7);
 }
 
 .ww-clue-six-image {
-  width: 100%;
-  height: auto;
   display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
   margin: 0;
   padding: 0;
 }
 
-/* ================================
-   FALLBACK
-================================ */
+/* FALLBACK */
 
 .ww-clue-fallback {
   position: absolute;
@@ -237,10 +205,6 @@ body {
   cursor: pointer;
   transform: translate(-50%, -50%);
   overflow: visible;
-  transition:
-    transform 140ms ease,
-    background 180ms ease,
-    box-shadow 180ms ease;
 }
 
 .ww-hotspot:active {
@@ -289,12 +253,6 @@ body {
   animation: wwSilverSweep 900ms ease-out forwards;
 }
 
-.ww-hotspot-base:hover,
-.ww-hotspot-clues:hover,
-.ww-hotspot-life[data-locked="false"]:hover {
-  box-shadow: none;
-}
-
 .ww-hotspot-life[data-locked="true"] {
   cursor: pointer;
 }
@@ -317,15 +275,11 @@ body {
   background: rgba(255,248,244,0.96);
   border: 1px solid rgba(120,20,20,0.35);
   border-radius: 0.55rem;
-  box-shadow:
-    0 8px 22px rgba(0,0,0,0.45),
-    0 0 18px rgba(255,235,225,0.18);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition:
-    opacity 180ms ease,
-    transform 180ms ease;
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .ww-hotspot-life[data-locked="true"]:hover::after {
@@ -338,7 +292,6 @@ body {
   box-shadow:
     0 0 0 1px rgba(180,50,50,0.45),
     0 0 22px rgba(180,35,35,0.34),
-    0 0 44px rgba(120,12,12,0.24),
     inset 0 0 22px rgba(255,80,80,0.08);
 }
 
@@ -490,10 +443,6 @@ body {
         image
           ? isClueSix
             ? `
-              <!-- ================================
-                   CLUE 6 SPECIAL RENDER BLOCK
-                   Replace this block only for future Clue 6 attempts.
-              ================================= -->
               <section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
                 <img
                   class="ww-clue-six-image"
@@ -593,9 +542,7 @@ body {
     let flashTimer = null;
 
     function flashPlayButton() {
-      if (!playButton) {
-        return;
-      }
+      if (!playButton) return;
 
       if (flashTimer) {
         window.clearTimeout(flashTimer);
