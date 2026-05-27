@@ -138,35 +138,43 @@ body {
 /* ================================
    CLUE 6 SPECIAL LAYOUT
 ================================ */
+
 .ww-clue-six-scroll-panel {
   position: absolute;
-  left: 35vw;
-  right: 3vw;
-  top: 50%;
-  height: 84vh;
-  transform: translateY(-50%);
+
+  top: 2vh;
+  bottom: 2vh;
+
+  left: 29vw;
+  right: 1.2vw;
+
   z-index: 2;
 
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
 
-  padding: 0.25rem;
+  padding: 0;
 
-  background: rgba(0,0,0,0.92);
-  border: 1px solid rgba(90,90,90,0.45);
+  background: #020202;
+
+  border: none;
 
   box-shadow:
-    0 0 0 2px rgba(0,0,0,0.9),
-    0 14px 34px rgba(0,0,0,0.75);
+    0 0 40px rgba(0,0,0,0.75);
 }
 
 .ww-clue-six-image {
   display: block;
+
   width: 100%;
+  min-width: 100%;
+
   height: auto;
-  max-width: none;
+
   margin: 0;
   padding: 0;
+
+  object-fit: unset;
 }
 
 /* ================================
