@@ -267,6 +267,10 @@ But somehow,
 you get the feeling
 that whatever this whole thing is…
 it started there.
+
+Unnerved, you scratch the letter E on the list.
+
+You turn south.
 `
   ).trim();
 
