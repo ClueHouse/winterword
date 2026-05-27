@@ -149,13 +149,11 @@ body {
 }
 
 .ww-main-clue-image {
-  display: block !important;
-  width: 100% !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
-  height: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  width: 100%;
+  min-height: 180vh;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 112% auto;
 }
 
 .ww-clue-three-frame {
