@@ -271,13 +271,14 @@ it started there.
 Unnerved, you scratch the letter E on the list.
 
 You turn south.
+`
+).trim();
 
-  ).trim();
+if (isAnswerThree) {
+  const alphabetLetters = [
+    ..."abcdefghijklmnopqrstuvwxyz"
+  ];
 
-  if (isAnswerThree) {
-    const alphabetLetters = [
-      ..."abcdefghijklmnopqrstuvwxyz"
-    ];
 
     app.innerHTML = `
 <style>
