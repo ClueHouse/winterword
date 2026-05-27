@@ -1919,38 +1919,25 @@ if (mapLink) {
   });
 }
 
-  const playButton = app.querySelector("#wwPlayButton");
+   const playButton = app.querySelector("#wwPlayButton");
   const videoElement = app.querySelector("#wwAnswerVideo");
   const gifElement = app.querySelector("#wwAnswerGif");
   const audioElement = hasAudio ? new Audio(audio) : null;
 
   function setPlayingState(isPlaying) {
     if (!playButton) return;
-    playButton.setAttribute("data-playing", isPlaying ? "true" : "false");
-    playButton.setAttribute("aria-label", isPlaying ? "Pause answer media" : "Play answer media");
-  }
 
-  function pauseAll() {
-    if (videoElement && !videoElement.paused) {
-      videoElement.pause();
-      videoElement.currentTime = 0;
+    playButton.setAttribute(
+      "data-playing",
+      isPlaying ? "true" : "false"
+    );
 
-      if (isGifVideo && gifElement) {
-        videoElement.classList.remove("is-ready");
-        videoElement.hidden = true;
-        videoElement.style.display = "none";
-
-        gifElement.hidden = false;
-        gifElement.style.display = "block";
-      }
-    }
-
-    if (audioElement && !audioElement.paused) {
-      audioElement.pause();
-      audioElement.currentTime = 0;
-    }
-
-    setPlayingState(false);
+    playButton.setAttribute(
+      "aria-label",
+      isPlaying
+        ? "Pause answer media"
+        : "Play answer media"
+    );
   }
 
   function stopVideoOnly() {
@@ -1959,8 +1946,9 @@ if (mapLink) {
     videoElement.pause();
     videoElement.currentTime = 0;
 
+    videoElement.classList.remove("is-ready");
+
     if (isGifVideo && gifElement) {
-      videoElement.classList.remove("is-ready");
       videoElement.hidden = true;
       videoElement.style.display = "none";
 
@@ -1968,144 +1956,109 @@ if (mapLink) {
       gifElement.style.display = "block";
     }
 
-    setPlayingState(Boolean(audioElement && !audioElement.paused));
+    setPlayingState(
+      Boolean(audioElement && !audioElement.paused)
+    );
+  }
+
+  function stopAudioOnly() {
+    if (!audioElement) return;
+
+    audioElement.pause();
+    audioElement.currentTime = 0;
+
+    setPlayingState(
+      Boolean(videoElement && !videoElement.paused)
+    );
+  }
+
+  function stopEverything() {
+    stopVideoOnly();
+    stopAudioOnly();
+    setPlayingState(false);
   }
 
   if (playButton) {
     playButton.addEventListener("click", async () => {
       if (!hasPlayableMedia) return;
 
+      const anythingPlaying =
+        (videoElement && !videoElement.paused) ||
+        (audioElement && !audioElement.paused);
+
+      if (anythingPlaying) {
+        stopEverything();
+        return;
+      }
+
       try {
-        const shouldPlay =
-          (videoElement ? videoElement.paused : true) &&
-          (audioElement ? audioElement.paused : true);
-
-        if (shouldPlay) {
-          if (videoElement) {
-            videoElement.pause();
-            videoElement.currentTime = 0;
-            videoElement.classList.remove("is-ready");
-            videoElement.hidden = false;
-            videoElement.style.display = "block";
-
-            const revealVideo = () => {
-              videoElement.classList.add("is-ready");
-
-              if (isGifVideo && gifElement) {
-                gifElement.hidden = true;
-                gifElement.style.display = "none";
-              }
-
-              setPlayingState(true);
-            };
-
-            videoElement.addEventListener("playing", revealVideo, { once: true });
-
-            try {
-              await videoElement.play();
-            } catch (err) {
-              videoElement.removeEventListener("playing", revealVideo);
-              videoElement.classList.remove("is-ready");
-              videoElement.hidden = true;
-              videoElement.style.display = "none";
-
-              if (isGifVideo && gifElement) {
-                gifElement.hidden = false;
-                gifElement.style.display = "block";
-              }
-
-              setPlayingState(false);
-              console.error("WinterWord video failed:", err);
-            }
-          }
-
-          if (audioElement) {
-            await audioElement.play();
-          }
-        } else {
-          pauseAll();
-
-          if (isGifVideo && gifElement) {
-            gifElement.hidden = false;
-            gifElement.style.display = "block";
-          }
-
-          if (videoElement) {
-            videoElement.classList.remove("is-ready");
-            videoElement.hidden = true;
-            videoElement.style.display = "none";
-          }
-        }
-      } catch {
-        pauseAll();
-
-        if (isGifVideo && gifElement) {
-          gifElement.hidden = false;
-          gifElement.style.display = "block";
-        }
-
         if (videoElement) {
+          videoElement.pause();
+          videoElement.currentTime = 0;
+
           videoElement.classList.remove("is-ready");
-          videoElement.hidden = true;
-          videoElement.style.display = "none";
+
+          videoElement.hidden = false;
+          videoElement.style.display = "block";
+
+          const revealVideo = () => {
+            videoElement.classList.add("is-ready");
+
+            if (isGifVideo && gifElement) {
+              gifElement.hidden = true;
+              gifElement.style.display = "none";
+            }
+
+            setPlayingState(true);
+          };
+
+          videoElement.addEventListener(
+            "playing",
+            revealVideo,
+            { once: true }
+          );
+
+          await videoElement.play();
         }
+
+        if (audioElement) {
+          audioElement.pause();
+          audioElement.currentTime = 0;
+
+          await audioElement.play();
+
+          setPlayingState(true);
+        }
+
+      } catch (err) {
+        console.error("WinterWord media failed:", err);
+
+        stopEverything();
       }
     });
   }
 
-  function resetVideoOnly() {
-    if (videoElement) {
-      videoElement.pause();
-      videoElement.currentTime = 0;
-      videoElement.classList.remove("is-ready");
-
-      if (isGifVideo) {
-        videoElement.hidden = true;
-        videoElement.style.display = "none";
-
-        if (gifElement) {
-          gifElement.hidden = false;
-          gifElement.style.display = "block";
-        }
-      }
-    }
-
-    setPlayingState(Boolean(audioElement && !audioElement.paused));
-  }
-
-  function resetAudioOnly() {
-    if (audioElement) {
-      audioElement.pause();
-      audioElement.currentTime = 0;
-    }
-
-    setPlayingState(Boolean(videoElement && !videoElement.paused));
-  }
-
   if (videoElement) {
     videoElement.addEventListener("ended", () => {
-      videoElement.pause();
-      videoElement.currentTime = 0;
 
-      if (isGifVideo && gifElement) {
-        videoElement.classList.remove("is-ready");
-        videoElement.hidden = true;
-        videoElement.style.display = "none";
+      if (numericClueId === 4) {
+        videoElement.pause();
+        videoElement.currentTime = 0;
 
-        gifElement.hidden = false;
-        gifElement.style.display = "block";
+        setPlayingState(
+          Boolean(audioElement && !audioElement.paused)
+        );
+
+        return;
       }
 
-      setPlayingState(Boolean(audioElement && !audioElement.paused));
+      stopVideoOnly();
     });
   }
 
   if (audioElement) {
     audioElement.addEventListener("ended", () => {
-      audioElement.pause();
-      audioElement.currentTime = 0;
-
-      setPlayingState(Boolean(videoElement && !videoElement.paused));
+      stopAudioOnly();
     });
   }
 }
