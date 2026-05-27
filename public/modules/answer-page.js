@@ -2026,11 +2026,40 @@ if (mapLink) {
     });
   }
 
+  function resetVideoOnly() {
+    if (videoElement) {
+      videoElement.pause();
+      videoElement.currentTime = 0;
+      videoElement.classList.remove("is-ready");
+
+      if (isGifVideo) {
+        videoElement.hidden = true;
+        videoElement.style.display = "none";
+
+        if (gifElement) {
+          gifElement.hidden = false;
+          gifElement.style.display = "block";
+        }
+      }
+    }
+
+    setPlayingState(Boolean(audioElement && !audioElement.paused));
+  }
+
+  function resetAudioOnly() {
+    if (audioElement) {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+    }
+
+    setPlayingState(Boolean(videoElement && !videoElement.paused));
+  }
+
   if (videoElement) {
-    videoElement.addEventListener("ended", pauseAll);
+    videoElement.addEventListener("ended", resetVideoOnly);
   }
 
   if (audioElement) {
-    audioElement.addEventListener("ended", pauseAll);
+    audioElement.addEventListener("ended", resetAudioOnly);
   }
 }
