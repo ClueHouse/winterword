@@ -938,7 +938,7 @@ export function renderCluePage(app, data = {}, navigate) {
 
   const numericClueId = Number(clueId);
   const isClueThree = numericClueId === 3;
-  const isClueSix = numericClueId === 6;
+const isClueSix = String(clueId) === "6" || String(clue?.id) === "6";
   const hasAudio = variant === "image-audio" && audio;
 
   const clueThreeText = `
