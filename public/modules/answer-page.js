@@ -271,7 +271,7 @@ it started there.
 Unnerved, you scratch the letter E on the list.
 
 You turn south.
-`
+
   ).trim();
 
   if (isAnswerThree) {
