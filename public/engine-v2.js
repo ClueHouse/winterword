@@ -371,7 +371,7 @@ if (!orgState || orgState.ok !== true) {
 ">
   Need a lantern?
   <a
-href="mailto:fix@cluehouse.co.nz?subject=Im%20lost!&body=I%20cant%20find%20my%20way%20back%20to%20WinterWord!%0D%0A%0D%0AThe%20URL%20I%20am%20trying%20is%20this:%0D%0A%0D%0ACurator,%20please%20help."
+href="mailto:fix@cluehouse.co.nz?subject=Im%20lost%21&body=I%20cant%20find%20my%20way%20back%20to%20WinterWord%21%0D%0A%0D%0AThe%20URL%20I%20am%20trying%20is%20this%3A%0D%0A%0D%0ACurator%2C%20please%20help."
     style="
       color:#f0b36a;
       text-decoration:none;
