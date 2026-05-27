@@ -1,4 +1,4 @@
-// WinterWord Clean Engine v1.4
+// WinterWord Clean Engine v1.5
 // Pop clues render as overlays inside the standard Base Station.
 
 (async function winterwordEngine() {
@@ -22,6 +22,15 @@
   const GAME_DATA_PATH = "/data/game.json";
 
   const app = document.getElementById("app") || document.body;
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
 
   function renderTechDiff() {
     app.innerHTML = `
@@ -136,13 +145,71 @@
     `;
   }
 
-  function escapeHtml(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  function renderOffMap() {
+    const subject = encodeURIComponent("I'm lost!");
+    const body = encodeURIComponent(
+      [
+        "I can't find my way back to WinterWord!",
+        "",
+        "The URL I am trying is this:",
+        window.location.href,
+        "",
+        "Curator, please help."
+      ].join("\r\n")
+    );
+
+    app.innerHTML = `
+      <main style="
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:40px;
+        background:#10141b;
+        color:#f5f7fb;
+        font-family:Arial,sans-serif;
+        text-align:center;
+        box-sizing:border-box;
+      ">
+        <section style="max-width:720px;">
+          <h1 style="
+            margin:0 0 18px;
+            font-size:42px;
+            line-height:1.1;
+          ">
+            You’ve wandered off the map.
+          </h1>
+
+          <p style="
+            margin:0 0 18px;
+            font-size:18px;
+            line-height:1.65;
+            color:#cfd6df;
+          ">
+            Somewhere beyond the snow, the correct trail still waits.
+            This just isn’t the right door.
+          </p>
+
+          <p style="
+            margin:0;
+            font-size:16px;
+            color:#f0b36a;
+          ">
+            Need a lantern?
+            <a
+              href="mailto:fix@cluehouse.co.nz?subject=${subject}&body=${body}"
+              style="
+                color:#f0b36a;
+                text-decoration:none;
+                border-bottom:1px solid rgba(240,179,106,0.45);
+              "
+            >
+              Contact Clue House
+            </a>.
+          </p>
+        </section>
+      </main>
+    `;
   }
 
   function getSlug() {
@@ -165,13 +232,13 @@
     return response.json();
   }
 
-async function loadOrgState(slug) {
-  try {
-    return await loadJson(`${ORG_STATE_ENDPOINT}?slug=${encodeURIComponent(slug)}`);
-  } catch {
-    return { ok: false };
+  async function loadOrgState(slug) {
+    try {
+      return await loadJson(`${ORG_STATE_ENDPOINT}?slug=${encodeURIComponent(slug)}`);
+    } catch {
+      return { ok: false };
+    }
   }
-}
 
   async function loadGame() {
     return loadJson(GAME_DATA_PATH);
@@ -206,6 +273,16 @@ async function loadOrgState(slug) {
     }
   }
 
+  function getNowMs(orgState) {
+    const serverNow = orgState?.now_iso ? new Date(orgState.now_iso) : null;
+
+    if (serverNow && !Number.isNaN(serverNow.getTime())) {
+      return serverNow.getTime();
+    }
+
+    return Date.now();
+  }
+
   function computeResolvedFallback(orgState, totalClues) {
     const seasonStart = orgState?.season_start
       ? new Date(orgState.season_start)
@@ -227,7 +304,7 @@ async function loadOrgState(slug) {
     const resolveTime =
       seasonStart.getTime() + Number(totalClues || 12) * intervalMs;
 
-    return Date.now() >= resolveTime;
+    return getNowMs(orgState) >= resolveTime;
   }
 
   function getWelcomeStorageKey(slug) {
@@ -316,6 +393,7 @@ async function loadOrgState(slug) {
       variant: found?.variant || "plain",
       body: found?.body || "No answer content yet.",
       image: found?.image || "",
+      video: found?.video || "",
       alt: found?.alt || found?.title || `WinterWord Answer ${clueId}`,
       audio: found?.audio || "",
       letter: found?.letter || "",
@@ -327,62 +405,14 @@ async function loadOrgState(slug) {
     app.innerHTML = "Loading...";
 
     const slug = getSlug();
-    const modules = await loadModules();
     const orgState = await loadOrgState(slug);
 
-if (!orgState || orgState.ok !== true) {
-  app.innerHTML = `
-    <main style="
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:40px;
-      background:#10141b;
-      color:#f5f7fb;
-      font-family:Arial,sans-serif;
-      text-align:center;
-      box-sizing:border-box;
-    ">
-      <section style="max-width:720px;">
+    if (!orgState || orgState.ok !== true) {
+      renderOffMap();
+      return;
+    }
 
-        <h1 style="
-          margin:0 0 18px;
-          font-size:42px;
-          line-height:1.1;
-        ">
-          You’ve wandered off the map.
-        </h1>
-
-        <p style="
-          margin:0 0 18px;
-          font-size:18px;
-          line-height:1.65;
-          color:#cfd6df;
-        ">
-          Somewhere beyond the snow, the correct trail still waits.
-          This just isn’t the right door.
-        </p>
-
-
-<p style="
-  margin:0;
-  font-size:16px;
-  color:#f0b36a;
-">
-  Need a lantern?
-  <a
-    href="mailto:fix@cluehouse.co.nz?subject=Im%20lost%21&amp;body=I%20cant%20find%20my%20way%20back%20to%20WinterWord%21%0D%0A%0D%0AThe%20URL%20I%20am%20trying%20is%20this%3A%0D%0A%0D%0ACurator%2C%20please%20help."
-    style="
-      color:#f0b36a;
-      text-decoration:none;
-      border-bottom:1px solid rgba(240,179,106,0.45);
-    "
-  >
-    Contact Clue House
-  </a>.
-</p>
-
+    const modules = await loadModules();
 
     const airtableStatus = normaliseStatus(orgState.status);
     const endpointSeasonState = normaliseStatus(orgState.season_state);
@@ -831,7 +861,6 @@ if (!orgState || orgState.ok !== true) {
     } else {
       navigate("welcome");
     }
-
   } catch (error) {
     renderError(
       "WinterWord could not load",
