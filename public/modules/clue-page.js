@@ -126,7 +126,7 @@ body {
   overflow-x: hidden;
   display: block;
   z-index: 2;
-padding: 0.35rem;
+  padding: 0.35rem;
 
   background:
     linear-gradient(
@@ -137,20 +137,6 @@ padding: 0.35rem;
       rgba(6,6,6,1) 58%,
       rgba(28,28,28,0.96) 78%,
       rgba(0,0,0,1) 100%
-    ),
-    repeating-linear-gradient(
-      45deg,
-      rgba(255,255,255,0.018) 0px,
-      rgba(255,255,255,0.018) 2px,
-      transparent 2px,
-      transparent 6px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(255,255,255,0.012) 0px,
-      rgba(255,255,255,0.012) 2px,
-      transparent 2px,
-      transparent 6px
     );
 
   border: 2px solid rgba(70,70,70,0.35);
@@ -163,10 +149,13 @@ padding: 0.35rem;
 }
 
 .ww-main-clue-image {
-  width: calc(min(54vw, 1088px) - 0.7rem);
-  max-width: none;
-  height: auto;
-  display: block;
+  display: block !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .ww-clue-three-frame {
@@ -190,20 +179,6 @@ padding: 0.35rem;
       rgba(6,6,6,1) 58%,
       rgba(28,28,28,0.96) 78%,
       rgba(0,0,0,1) 100%
-    ),
-    repeating-linear-gradient(
-      45deg,
-      rgba(255,255,255,0.018) 0px,
-      rgba(255,255,255,0.018) 2px,
-      transparent 2px,
-      transparent 6px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(255,255,255,0.012) 0px,
-      rgba(255,255,255,0.012) 2px,
-      transparent 2px,
-      transparent 6px
     );
 
   border: 2px solid rgba(70,70,70,0.35);
@@ -530,6 +505,7 @@ ${esc(clueThreeText)}
                   alt="${esc(alt)}"
                   loading="lazy"
                   decoding="async"
+                  style="display:block;width:100%;min-width:100%;max-width:100%;height:auto;margin:0;padding:0;"
                 >
               </div>
             `
