@@ -1934,6 +1934,15 @@ if (mapLink) {
     if (videoElement && !videoElement.paused) {
       videoElement.pause();
       videoElement.currentTime = 0;
+
+      if (isGifVideo && gifElement) {
+        videoElement.classList.remove("is-ready");
+        videoElement.hidden = true;
+        videoElement.style.display = "none";
+
+        gifElement.hidden = false;
+        gifElement.style.display = "block";
+      }
     }
 
     if (audioElement && !audioElement.paused) {
@@ -1942,6 +1951,24 @@ if (mapLink) {
     }
 
     setPlayingState(false);
+  }
+
+  function stopVideoOnly() {
+    if (!videoElement) return;
+
+    videoElement.pause();
+    videoElement.currentTime = 0;
+
+    if (isGifVideo && gifElement) {
+      videoElement.classList.remove("is-ready");
+      videoElement.hidden = true;
+      videoElement.style.display = "none";
+
+      gifElement.hidden = false;
+      gifElement.style.display = "block";
+    }
+
+    setPlayingState(Boolean(audioElement && !audioElement.paused));
   }
 
   if (playButton) {
