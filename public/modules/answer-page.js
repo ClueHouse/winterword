@@ -1919,7 +1919,7 @@ if (mapLink) {
   });
 }
 
-   const playButton = app.querySelector("#wwPlayButton");
+  const playButton = app.querySelector("#wwPlayButton");
   const videoElement = app.querySelector("#wwAnswerVideo");
   const gifElement = app.querySelector("#wwAnswerGif");
   const audioElement = hasAudio ? new Audio(audio) : null;
@@ -1927,16 +1927,10 @@ if (mapLink) {
   function setPlayingState(isPlaying) {
     if (!playButton) return;
 
-    playButton.setAttribute(
-      "data-playing",
-      isPlaying ? "true" : "false"
-    );
-
+    playButton.setAttribute("data-playing", isPlaying ? "true" : "false");
     playButton.setAttribute(
       "aria-label",
-      isPlaying
-        ? "Pause answer media"
-        : "Play answer media"
+      isPlaying ? "Pause answer media" : "Play answer media"
     );
   }
 
@@ -1945,7 +1939,6 @@ if (mapLink) {
 
     videoElement.pause();
     videoElement.currentTime = 0;
-
     videoElement.classList.remove("is-ready");
 
     if (isGifVideo && gifElement) {
@@ -1956,9 +1949,7 @@ if (mapLink) {
       gifElement.style.display = "block";
     }
 
-    setPlayingState(
-      Boolean(audioElement && !audioElement.paused)
-    );
+    setPlayingState(Boolean(audioElement && !audioElement.paused));
   }
 
   function stopAudioOnly() {
@@ -1967,9 +1958,7 @@ if (mapLink) {
     audioElement.pause();
     audioElement.currentTime = 0;
 
-    setPlayingState(
-      Boolean(videoElement && !videoElement.paused)
-    );
+    setPlayingState(Boolean(videoElement && !videoElement.paused));
   }
 
   function stopEverything() {
@@ -1995,9 +1984,7 @@ if (mapLink) {
         if (videoElement) {
           videoElement.pause();
           videoElement.currentTime = 0;
-
           videoElement.classList.remove("is-ready");
-
           videoElement.hidden = false;
           videoElement.style.display = "block";
 
@@ -2012,11 +1999,7 @@ if (mapLink) {
             setPlayingState(true);
           };
 
-          videoElement.addEventListener(
-            "playing",
-            revealVideo,
-            { once: true }
-          );
+          videoElement.addEventListener("playing", revealVideo, { once: true });
 
           await videoElement.play();
         }
@@ -2029,10 +2012,8 @@ if (mapLink) {
 
           setPlayingState(true);
         }
-
       } catch (err) {
         console.error("WinterWord media failed:", err);
-
         stopEverything();
       }
     });
@@ -2040,15 +2021,12 @@ if (mapLink) {
 
   if (videoElement) {
     videoElement.addEventListener("ended", () => {
-
       if (numericClueId === 4) {
         videoElement.pause();
         videoElement.currentTime = 0;
+        videoElement.classList.remove("is-ready");
 
-        setPlayingState(
-          Boolean(audioElement && !audioElement.paused)
-        );
-
+        setPlayingState(Boolean(audioElement && !audioElement.paused));
         return;
       }
 
