@@ -173,7 +173,7 @@ const body =
             font-size:42px;
             line-height:1.1;
           ">
-            You’ve wandered off the map.
+You've wandered off the map.
           </h1>
 
           <p style="
