@@ -330,7 +330,7 @@ async function loadOrgState(slug) {
     const modules = await loadModules();
     const orgState = await loadOrgState(slug);
 
-if (!orgState || orgState.ok === false) {
+if (!orgState || orgState.ok !== true) {
   app.innerHTML = `
     <main style="
       min-height:100vh;
