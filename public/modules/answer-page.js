@@ -2083,10 +2083,29 @@ if (mapLink) {
   }
 
   if (videoElement) {
-    videoElement.addEventListener("ended", resetVideoOnly);
+    videoElement.addEventListener("ended", () => {
+      videoElement.pause();
+      videoElement.currentTime = 0;
+
+      if (isGifVideo && gifElement) {
+        videoElement.classList.remove("is-ready");
+        videoElement.hidden = true;
+        videoElement.style.display = "none";
+
+        gifElement.hidden = false;
+        gifElement.style.display = "block";
+      }
+
+      setPlayingState(Boolean(audioElement && !audioElement.paused));
+    });
   }
 
   if (audioElement) {
-    audioElement.addEventListener("ended", resetAudioOnly);
+    audioElement.addEventListener("ended", () => {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+
+      setPlayingState(Boolean(videoElement && !videoElement.paused));
+    });
   }
 }
