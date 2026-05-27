@@ -364,23 +364,23 @@ if (!orgState || orgState.ok !== true) {
           This just isn’t the right door.
         </p>
 
-        <p style="
-          margin:0;
-          font-size:16px;
-          color:#f0b36a;
-        ">
-          Need a lantern?
-          <a
-            href="mailto:fix@cluehouse.co.nz"
-            style="
-              color:#f0b36a;
-              text-decoration:none;
-              border-bottom:1px solid rgba(240,179,106,0.45);
-            "
-          >
-            Contact Clue House
-          </a>.
-        </p>
+<p style="
+  margin:0;
+  font-size:16px;
+  color:#f0b36a;
+">
+  Need a lantern?
+  <a
+    href="mailto:fix@cluehouse.co.nz?subject=I%27m%20lost!&body=I%20can%27t%20find%20my%20way%20back%20to%20WinterWord!%0D%0A%0D%0AThe%20URL%20I%20am%20trying%20is%20this:%20%0D%0A%0D%0ACurator%2C%20please%20help."
+    style="
+      color:#f0b36a;
+      text-decoration:none;
+      border-bottom:1px solid rgba(240,179,106,0.45);
+    "
+  >
+    Contact Clue House
+  </a>.
+</p>
 
       </section>
     </main>
