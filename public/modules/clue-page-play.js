@@ -23,6 +23,7 @@ export function renderCluePage(app, data = {}, navigate) {
       .replaceAll("'", "&#39;");
   }
 
+  const isClueSix = String(clueId) === "6" || String(clue?.id) === "6";
   const hasAudio = variant === "image-audio" && audio;
 
   const lifelineUnlocked =
@@ -98,6 +99,10 @@ body {
   overflow: hidden;
 }
 
+/* ================================
+   STANDARD CLUE IMAGE
+================================ */
+
 .ww-main-clue {
   position: absolute;
   right: 7vw;
@@ -143,6 +148,56 @@ body {
     inset 0 0 10px rgba(255,255,255,0.03),
     inset 0 0 24px rgba(0,0,0,0.55);
 }
+
+/* ================================
+   CLUE 6 SPECIAL LAYOUT
+   Replace this whole section only
+   for future Clue 6 attempts.
+================================ */
+
+.ww-clue-six-scroll-panel {
+  position: absolute;
+  right: 7vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(54vw, 1088px);
+  height: 78vh;
+  z-index: 2;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.35rem;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(24,24,24,0.98) 0%,
+      rgba(10,10,10,1) 18%,
+      rgba(38,38,38,0.96) 36%,
+      rgba(6,6,6,1) 58%,
+      rgba(28,28,28,0.96) 78%,
+      rgba(0,0,0,1) 100%
+    );
+
+  border: 2px solid rgba(70,70,70,0.35);
+
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,0.92),
+    0 12px 32px rgba(0,0,0,0.72),
+    inset 0 0 10px rgba(255,255,255,0.03),
+    inset 0 0 24px rgba(0,0,0,0.55);
+}
+
+.ww-clue-six-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================================
+   FALLBACK
+================================ */
 
 .ww-clue-fallback {
   position: absolute;
@@ -433,15 +488,31 @@ body {
 
       ${
         image
-          ? `
-            <img
-              class="ww-main-clue"
-              src="${esc(image)}"
-              alt="${esc(alt)}"
-              loading="lazy"
-              decoding="async"
-            >
-          `
+          ? isClueSix
+            ? `
+              <!-- ================================
+                   CLUE 6 SPECIAL RENDER BLOCK
+                   Replace this block only for future Clue 6 attempts.
+              ================================= -->
+              <section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
+                <img
+                  class="ww-clue-six-image"
+                  src="${esc(image)}"
+                  alt="${esc(alt)}"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </section>
+            `
+            : `
+              <img
+                class="ww-main-clue"
+                src="${esc(image)}"
+                alt="${esc(alt)}"
+                loading="lazy"
+                decoding="async"
+              >
+            `
           : `
             <section class="ww-clue-fallback">
               <h1>${esc(title)}</h1>
