@@ -163,7 +163,8 @@ padding: 0.35rem;
 }
 
 .ww-main-clue-image {
-  width: 100%;
+  width: calc(min(54vw, 1088px) - 0.7rem);
+  max-width: none;
   height: auto;
   display: block;
 }
