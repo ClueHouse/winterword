@@ -165,9 +165,13 @@
     return response.json();
   }
 
-  async function loadOrgState(slug) {
-    return loadJson(`${ORG_STATE_ENDPOINT}?slug=${encodeURIComponent(slug)}`);
+async function loadOrgState(slug) {
+  try {
+    return await loadJson(`${ORG_STATE_ENDPOINT}?slug=${encodeURIComponent(slug)}`);
+  } catch {
+    return { ok: false };
   }
+}
 
   async function loadGame() {
     return loadJson(GAME_DATA_PATH);
