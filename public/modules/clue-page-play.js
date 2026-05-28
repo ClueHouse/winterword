@@ -49,8 +49,8 @@ export function renderCluePage(app, data = {}, navigate) {
   --ww-clue-bg: url("${clueBackground}");
 
   --ww-hotspot-group-left: 17.7%;
-  --ww-hotspot-group-top: 50.2%;
-  --ww-hotspot-gap: 8.9%;
+  --ww-hotspot-group-top: 50.1%;
+  --ww-hotspot-gap: 9%;
 
   --ww-hotspot-play-top: 81.8%;
 
