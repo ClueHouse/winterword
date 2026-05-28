@@ -1551,7 +1551,7 @@ body {
 
 .ww-archive-panel {
   position: absolute;
-  inset: clamp(1rem, 2.2vw, 2rem);
+  inset: 0.6rem;
   border-radius: 0.72rem;
   overflow: hidden;
   background:
