@@ -140,7 +140,6 @@ body {
 ================================ */
 
 .ww-clue-six-scroll-panel {
-  background: red !important;
   position: absolute;
 
   top: 7vh;
