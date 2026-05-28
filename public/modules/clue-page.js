@@ -494,15 +494,16 @@ body {
     margin:0 auto;
   ">
 
-    <img
+<img
       class="ww-clue-six-image"
       src="${esc(image)}"
       alt="${esc(alt)}"
       loading="lazy"
       decoding="async"
       style="
-        width:100%;
+        width:58%;
         display:block;
+        margin:0 auto;
       "
     >
 
