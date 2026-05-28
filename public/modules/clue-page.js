@@ -489,8 +489,8 @@ body {
             ? `
 <section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
 
-  <div style="
-    width:70%;
+<div style="
+    width:58%;
     margin:0 auto;
   ">
 
