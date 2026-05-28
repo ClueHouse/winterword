@@ -458,13 +458,13 @@ body {
 .ww-hotspot-life[data-locked="true"]::after {
   content: "This path remains hidden, for now";
   position: absolute;
-  left: 50%;
-  top: 118%;
-  transform: translateX(-50%);
 
-  width: 46rem;
-  padding: 1rem 4rem;
-  padding-inline: 6rem;
+  left: 112%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: max-content;
+  padding: 1rem 2.6rem;
 
   font-size: 0.82rem;
   font-weight: 700;
