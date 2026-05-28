@@ -68,7 +68,7 @@ Yet something’s not at home.
   --ww-clue-bg: url("${clueBackground}");
 
   --ww-hotspot-group-left: 17.7%;
-  --ww-hotspot-group-top: 50.0%;
+  --ww-hotspot-group-top: 50.2%;
   --ww-hotspot-gap: 9.2%;
 
   --ww-hotspot-play-top: 81%;
@@ -493,7 +493,7 @@ body {
 
 .ww-hotspot-life {
   left: var(--ww-hotspot-group-left);
-  top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2));
+  top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2) + 0.9%);
   width: var(--ww-hotspot-life-width);
   height: var(--ww-hotspot-life-height);
 }
