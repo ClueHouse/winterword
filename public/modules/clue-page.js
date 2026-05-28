@@ -484,9 +484,9 @@ body {
 top: 118%;
   transform: translateX(-50%);
 
-  width: max-content;
-width: 20rem;
-padding: 0.72rem 1.8rem;
+  min-width: 26rem;
+  max-width: 32rem;
+  padding: 1rem 2.4rem;
 
   font-size: 0.82rem;
   font-weight: 700;
