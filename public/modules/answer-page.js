@@ -1530,7 +1530,7 @@ body {
   display: none !important;
 }
 .ww-answer-stage.is-archive {
-  width: calc(100vw - var(--ww-left-zone) - 6vw);
+  width: calc(100vw - var(--ww-left-zone) - 2vw);
   max-width: none;
 }
 
