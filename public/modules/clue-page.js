@@ -499,7 +499,7 @@ body {
 
 .ww-hotspot-life[data-locked="true"]:hover::after {
   opacity: 1;
-  transform: translateX(-50%) translateY(2px);
+  transform: translateY(-50%) translateY(2px);
 }
 
 .ww-hotspot-life[data-locked="true"]:hover {
