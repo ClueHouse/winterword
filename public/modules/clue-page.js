@@ -23,9 +23,16 @@ export function renderCluePage(app, data = {}, navigate) {
       .replaceAll("'", "&#39;");
   }
 
-  const isClueThree = String(clueId) === "3" || String(clue?.id) === "3";
-  const isClueSix = String(clueId) === "6" || String(clue?.id) === "6";
-  const hasAudio = variant === "image-audio" && audio;
+  const resolvedClueId = clue?.id ?? clueId;
+  const clueNumber = Number.parseInt(String(resolvedClueId), 10);
+  const hasPlayButton = clueNumber === 5 || clueNumber === 7;
+  const clueBackground = hasPlayButton
+    ? "/assets/winterword/shared/fullcluesplay.png"
+    : "/assets/winterword/shared/fullclues.png";
+
+  const isClueThree = clueNumber === 3;
+  const isClueSix = clueNumber === 6;
+  const hasAudio = hasPlayButton && Boolean(audio);
 
   const clueThreeText = String(
     body ||
@@ -58,7 +65,7 @@ Yet something’s not at home.
   app.innerHTML = `
 <style>
 :root {
-  --ww-clue-bg: url("/assets/winterword/shared/fullcluesplay.png");
+  --ww-clue-bg: url("${clueBackground}");
 
   --ww-hotspot-group-left: 17.7%;
   --ww-hotspot-group-top: 50.0%;
