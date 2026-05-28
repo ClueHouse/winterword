@@ -1490,7 +1490,7 @@ body {
 .ww-answer-media video {
   display: block;
   width: 100%;
-  max-height: 75vh;
+  max-height: 94vh;
   object-fit: contain;
   background: transparent;
 }
