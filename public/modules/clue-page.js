@@ -79,8 +79,9 @@ Yet something’s not at home.
   --ww-hotspot-clues-width: 17%;
   --ww-hotspot-clues-height: 4.8%;
 
-  --ww-hotspot-life-width: 11%;
-  --ww-hotspot-life-height: 4.8%;
+--ww-hotspot-life-width: 15%;
+--ww-hotspot-life-height: 6%;
+
 
   --ww-hotspot-play-diameter: min(10vw, 10vh);
 }
