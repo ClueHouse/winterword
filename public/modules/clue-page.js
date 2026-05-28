@@ -79,9 +79,8 @@ Yet something’s not at home.
   --ww-hotspot-clues-width: 17%;
   --ww-hotspot-clues-height: 4.8%;
 
---ww-hotspot-life-width: 15%;
---ww-hotspot-life-height: 6%;
-
+  --ww-hotspot-life-width: 15%;
+  --ww-hotspot-life-height: 6%;
 
   --ww-hotspot-play-diameter: min(10vw, 10vh);
 }
@@ -264,31 +263,22 @@ body {
 
 .ww-clue-six-scroll-panel {
   position: absolute;
-
   top: 10vh;
   bottom: 10vh;
-
-  left: 34vw;      /* was 41vw — wider panel */
-  right: 6vw;      /* was 11vw — wider panel */
-
+  left: 34vw;
+  right: 6vw;
   z-index: 2;
-
   overflow-y: auto;
   overflow-x: hidden;
-
   padding: 2rem 2rem 2.5rem;
-
   background:
     linear-gradient(
       180deg,
       rgba(10,14,22,0.96) 0%,
       rgba(4,6,12,0.985) 100%
     );
-
   border: 1px solid rgba(255,255,255,0.05);
-
   border-radius: 22px;
-
   box-shadow:
     0 30px 70px rgba(0,0,0,0.78),
     inset 0 0 0 1px rgba(255,255,255,0.025);
@@ -303,28 +293,23 @@ body {
   border-radius: 999px;
 }
 
-
 .ww-clue-six-scroll-panel::before,
 .ww-clue-six-scroll-panel::after {
   content: "⌄";
   position: sticky;
   top: calc(100% - 3.4rem);
   z-index: 20;
-
   display: block;
   width: 2.4rem;
   height: 2.4rem;
-
   color: rgba(255,255,255,0.86);
   font-size: 2.4rem;
   line-height: 2.1rem;
   text-align: center;
-
   pointer-events: none;
   text-shadow:
     0 0 12px rgba(255,255,255,0.5),
     0 3px 10px rgba(0,0,0,0.9);
-
   animation: wwScrollHint 1.8s ease-in-out infinite;
 }
 
@@ -350,30 +335,23 @@ body {
   }
 }
 
-
 .ww-clue-six-inner {
-  width: 82%;      /* was 70% — allow wider PNG */
+  width: 82%;
   margin: 0 auto;
 }
 
 .ww-clue-six-image {
   display: block;
-
-  width: 100% !important;      /* was 58% */
-  max-width: 100% !important;  /* was 58% */
+  width: 100% !important;
+  max-width: 100% !important;
   min-width: 0 !important;
-
   height: auto;
-
   margin: 0 auto !important;
   padding: 0;
-
   border-radius: 18px;
-
   box-shadow:
     0 24px 60px rgba(0,0,0,0.55);
 }
-
 
 /* ================================
    FALLBACK
@@ -480,18 +458,19 @@ body {
 .ww-hotspot-life[data-locked="true"]::after {
   content: "This path remains hidden, for now";
   position: absolute;
-
   left: 50%;
-top: 118%;
+  top: 118%;
   transform: translateX(-50%);
 
-width: 38rem;
+  width: 46rem;
   padding: 1rem 4rem;
+  padding-inline: 6rem;
 
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.035em;
   text-align: center;
+  white-space: nowrap;
 
   color: rgba(245,238,224,0.96);
 
@@ -503,15 +482,12 @@ width: 38rem;
     );
 
   border: 1px solid rgba(255,255,255,0.16);
-
   border-radius: 999px;
 
   box-shadow:
     0 14px 34px rgba(0,0,0,0.72),
     inset 0 0 0 1px rgba(255,255,255,0.035),
     inset 0 8px 18px rgba(255,255,255,0.035);
-
-white-space: normal;
 
   opacity: 0;
   pointer-events: none;
@@ -523,7 +499,7 @@ white-space: normal;
 
 .ww-hotspot-life[data-locked="true"]:hover::after {
   opacity: 1;
-transform: translateX(-50%) translateY(2px);
+  transform: translateX(-50%) translateY(2px);
 }
 
 .ww-hotspot-life[data-locked="true"]:hover {
