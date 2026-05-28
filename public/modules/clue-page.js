@@ -481,7 +481,7 @@ body {
   position: absolute;
 
   left: 50%;
-  top: 126%;
+top: 118%;
   transform: translateX(-50%);
 
   width: max-content;
