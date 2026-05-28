@@ -23,8 +23,27 @@ export function renderCluePage(app, data = {}, navigate) {
       .replaceAll("'", "&#39;");
   }
 
+  const isClueThree = String(clueId) === "3" || String(clue?.id) === "3";
   const isClueSix = String(clueId) === "6" || String(clue?.id) === "6";
   const hasAudio = variant === "image-audio" && audio;
+
+  const clueThreeText = String(
+    body ||
+    `
+A quiet glass left beside the sink,
+A bell once sung, now still,
+A static TV, no one in sight —
+The silence seems to spill.
+A jigsaw lies beneath the steps,
+A box once twice the size.
+The wooden edge meets flecks of ash,
+Each piece sits with nested lies.
+The toast is sliced. The tea is cold.
+The echo fades like stone.
+All feels as it did again,
+Yet something’s not at home.
+`
+  ).trim();
 
   const lifelineUnlocked =
     data?.lifeline_live === true ||
@@ -133,6 +152,102 @@ body {
     0 12px 32px rgba(0,0,0,0.72),
     inset 0 0 10px rgba(255,255,255,0.03),
     inset 0 0 24px rgba(0,0,0,0.55);
+}
+
+/* ================================
+   CLUE 3 SPECIAL LAYOUT
+================================ */
+
+.ww-clue-three-frame {
+  position: absolute;
+  right: 7vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(54vw, 1088px);
+  aspect-ratio: 16 / 9;
+  z-index: 2;
+  padding: 0.9rem;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(24,24,24,0.98) 0%,
+      rgba(10,10,10,1) 18%,
+      rgba(38,38,38,0.96) 36%,
+      rgba(6,6,6,1) 58%,
+      rgba(28,28,28,0.96) 78%,
+      rgba(0,0,0,1) 100%
+    );
+
+  border: 2px solid rgba(70,70,70,0.35);
+
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,0.92),
+    0 12px 32px rgba(0,0,0,0.72),
+    inset 0 0 10px rgba(255,255,255,0.03),
+    inset 0 0 24px rgba(0,0,0,0.55);
+}
+
+.ww-clue-three-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 28% 45%, rgba(255,230,190,0.055), transparent 28%),
+    linear-gradient(90deg, rgba(0,0,0,0.38), rgba(0,0,0,0.04) 52%, rgba(0,0,0,0.16)),
+    #000;
+}
+
+.ww-clue-three-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 1;
+}
+
+.ww-clue-three-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 52% 48%, transparent 36%, rgba(0,0,0,0.18) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.16), transparent 26%, rgba(0,0,0,0.22));
+}
+
+.ww-clue-three-poem {
+  position: absolute;
+  left: 6.2%;
+  top: 48%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 43%;
+  margin: 0;
+  color: rgba(246,232,205,0.92);
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(0.48rem, 0.82vw, 1rem);
+  line-height: 1.42;
+  letter-spacing: 0.012em;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow: visible;
+  text-shadow:
+    0 0 12px rgba(255,220,170,0.14),
+    0 2px 8px rgba(0,0,0,0.78);
+  opacity: 0.92;
+}
+
+.ww-clue-three-poem::before {
+  content: "";
+  position: absolute;
+  inset: -0.8rem -1rem;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 42% 48%, rgba(0,0,0,0.22), transparent 68%);
+  filter: blur(8px);
+  opacity: 0.78;
 }
 
 /* ================================
@@ -485,31 +600,44 @@ body {
 
       ${
         image
-          ? isClueSix
+          ? isClueThree
             ? `
-<section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
-
-<section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
-
-  <img
-    class="ww-clue-six-image"
-    src="${esc(image)}"
-    alt="${esc(alt)}"
-    loading="lazy"
-    decoding="async"
-  >
-
-</section>
+              <section class="ww-clue-three-frame" aria-label="${esc(alt)}">
+                <div class="ww-clue-three-scene">
+                  <img
+                    class="ww-clue-three-image"
+                    src="${esc(image)}"
+                    alt="${esc(alt)}"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <pre class="ww-clue-three-poem">${esc(clueThreeText)}</pre>
+                </div>
+              </section>
             `
-            : `
-              <img
-                class="ww-main-clue"
-                src="${esc(image)}"
-                alt="${esc(alt)}"
-                loading="lazy"
-                decoding="async"
-              >
-            `
+            : isClueSix
+              ? `
+                <section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
+                  <div class="ww-clue-six-inner">
+                    <img
+                      class="ww-clue-six-image"
+                      src="${esc(image)}"
+                      alt="${esc(alt)}"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                  </div>
+                </section>
+              `
+              : `
+                <img
+                  class="ww-main-clue"
+                  src="${esc(image)}"
+                  alt="${esc(alt)}"
+                  loading="lazy"
+                  decoding="async"
+                >
+              `
           : `
             <section class="ww-clue-fallback">
               <h1>${esc(title)}</h1>
