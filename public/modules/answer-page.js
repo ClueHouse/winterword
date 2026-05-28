@@ -1535,7 +1535,7 @@ body {
 
 .ww-answer-frame.is-archive {
   aspect-ratio: 16 / 9;
-  height: min(75vh, 720px);
+  height: min(88vh, 900px);
 }
 
 .ww-answer-inner.is-archive {
