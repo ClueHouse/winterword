@@ -303,7 +303,7 @@ body {
 }
 
 .ww-clue-six-inner {
-  width: 92%;      /* was 70% — allow wider PNG */
+  width: 85%;      /* was 70% — allow wider PNG */
   margin: 0 auto;
 }
 
