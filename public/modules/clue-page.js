@@ -136,7 +136,7 @@ body {
 }
 
 /* ================================
-   CLUE 6 SPECIAL LAYOUT
+   CLUE 6 SPECIAL LAYOUT — UPDATED
 ================================ */
 
 .ww-clue-six-scroll-panel {
@@ -153,17 +153,19 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
 
-  padding: 2rem 2rem 2.5rem;
+  padding: 1.4rem 1.6rem 2rem;
 
   background:
-    linear-gradient(
-      180deg,
-      rgba(10,14,22,0.96) 0%,
-      rgba(4,6,12,0.985) 100%
-    );
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.06) 0%,
+      rgba(0,0,0,0.55) 100%
+    ),
+    rgba(10,14,22,0.72);
 
-  border: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
 
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 22px;
 
   box-shadow:
@@ -171,25 +173,16 @@ body {
     inset 0 0 0 1px rgba(255,255,255,0.025);
 }
 
-.ww-clue-six-scroll-panel::-webkit-scrollbar {
-  width: 8px;
-}
-
-.ww-clue-six-scroll-panel::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.16);
-  border-radius: 999px;
-}
-
 .ww-clue-six-inner {
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
 }
 
 .ww-clue-six-image {
   display: block;
 
-  width: 58% !important;
-  max-width: 58% !important;
+  width: 40% !important;
+  max-width: 40% !important;
   min-width: 0 !important;
 
   height: auto;
@@ -200,7 +193,8 @@ body {
   border-radius: 18px;
 
   box-shadow:
-    0 24px 60px rgba(0,0,0,0.55);
+    0 18px 48px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(255,255,255,0.05);
 }
 
 /* ================================
@@ -232,6 +226,10 @@ body {
   line-height: 1.6;
   white-space: pre-wrap;
 }
+
+/* ================================
+   HOTSPOTS
+================================ */
 
 .ww-hotspot {
   appearance: none;
@@ -488,17 +486,15 @@ body {
           ? isClueSix
             ? `
 <section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
-
-<section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
-
-  <img
-    class="ww-clue-six-image"
-    src="${esc(image)}"
-    alt="${esc(alt)}"
-    loading="lazy"
-    decoding="async"
-  >
-
+  <div class="ww-clue-six-inner">
+    <img
+      class="ww-clue-six-image"
+      src="${esc(image)}"
+      alt="${esc(alt)}"
+      loading="lazy"
+      decoding="async"
+    >
+  </div>
 </section>
             `
             : `
