@@ -1529,12 +1529,14 @@ body {
 #wwAnswerVideo[hidden] {
   display: none !important;
 }
-
 .ww-answer-stage.is-archive {
-  width: min(82vw, 1600px);
+  width: calc(100vw - var(--ww-left-zone) - 6vw);
+  max-width: none;
 }
 
 .ww-answer-frame.is-archive {
+  width: 100%;
+  max-width: none;
   aspect-ratio: 16 / 9;
   height: min(88vh, 900px);
 }
