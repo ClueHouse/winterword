@@ -33,13 +33,15 @@
       "audio": ""
     },
     {
-      "id": 3,
-      "title": "Clue 03",
-      "variant": "image-only",
-      "image": "/assets/winterword/clues/03.png",
-      "alt": "WinterWord Clue 3",
-      "body": "",
-      "audio": ""
+{
+  "id": 3,
+  "title": "Clue 03",
+  "variant": "image-poem",
+  "image": "/assets/winterword/clues/03.png",
+  "alt": "WinterWord Clue 3",
+  "body": "A quiet glass left beside the sink,\nA bell once sung, now still,\nA static TV, no one in sight —\nThe silence seems to spill.\nA jigsaw lies beneath the steps,\nA box once twice the size.\nThe wooden edge meets flecks of ash,\nEach piece sits with nested lies.\nThe toast is sliced. The tea is cold.\nThe echo fades like stone.\nAll feels as it did again,\nYet something’s not at home.",
+  "audio": ""
+}
     },
     {
       "id": 4,
