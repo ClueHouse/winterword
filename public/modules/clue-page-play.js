@@ -334,7 +334,7 @@ body {
 
 .ww-hotspot-life {
   left: var(--ww-hotspot-group-left);
-  top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2) + 1.2%);
+  top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2) + .9%);
   width: var(--ww-hotspot-life-width);
   height: var(--ww-hotspot-life-height);
 }
