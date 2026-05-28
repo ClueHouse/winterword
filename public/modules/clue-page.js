@@ -188,19 +188,19 @@ body {
 .ww-clue-six-image {
   display: block;
 
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
+  width: 58% !important;
+  max-width: 58% !important;
+  min-width: 0 !important;
 
   height: auto;
 
-  margin: 0;
+  margin: 0 auto !important;
   padding: 0;
 
-  border-radius: 14px;
+  border-radius: 18px;
 
   box-shadow:
-    0 20px 50px rgba(0,0,0,0.55);
+    0 24px 60px rgba(0,0,0,0.55);
 }
 
 /* ================================
