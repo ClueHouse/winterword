@@ -136,59 +136,71 @@ body {
 }
 
 /* ================================
-   CLUE 6 — FINAL FIXED VERSION
+   CLUE 6 SPECIAL LAYOUT
 ================================ */
 
 .ww-clue-six-scroll-panel {
   position: absolute;
+
   top: 10vh;
   bottom: 10vh;
 
-  /* narrow, right-aligned panel */
-  left: 58vw;
-  right: 5vw;
+  left: 41vw;
+  right: 11vw;
 
   z-index: 2;
 
   overflow-y: auto;
   overflow-x: hidden;
 
-  padding: 2rem 2.4rem 2.6rem;
+  padding: 2rem 2rem 2.5rem;
 
   background:
-    radial-gradient(
-      circle at center,
-      rgba(255,255,255,0.18) 0%,
-      rgba(0,0,0,0.84) 100%
-    ),
-    rgba(5,10,18,0.94);
+    linear-gradient(
+      180deg,
+      rgba(10,14,22,0.96) 0%,
+      rgba(4,6,12,0.985) 100%
+    );
 
-  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.05);
 
-  border: 1px solid rgba(255,255,255,0.18);
   border-radius: 22px;
 
   box-shadow:
-    0 30px 70px rgba(0,0,0,0.82),
-    inset 0 0 0 1px rgba(255,255,255,0.06);
+    0 30px 70px rgba(0,0,0,0.78),
+    inset 0 0 0 1px rgba(255,255,255,0.025);
+}
+
+.ww-clue-six-scroll-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ww-clue-six-scroll-panel::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.16);
+  border-radius: 999px;
 }
 
 .ww-clue-six-inner {
-  width: 28%;
+  width: 70%;
   margin: 0 auto;
 }
 
 .ww-clue-six-image {
-  width: 100% !important;
-  max-width: 100% !important;
-  height: auto;
   display: block;
-  margin: 0 auto;
+
+  width: 58% !important;
+  max-width: 58% !important;
+  min-width: 0 !important;
+
+  height: auto;
+
+  margin: 0 auto !important;
+  padding: 0;
+
   border-radius: 18px;
 
   box-shadow:
-    0 18px 48px rgba(0,0,0,0.55),
-    0 0 0 1px rgba(255,255,255,0.05);
+    0 24px 60px rgba(0,0,0,0.55);
 }
 
 /* ================================
@@ -220,10 +232,6 @@ body {
   line-height: 1.6;
   white-space: pre-wrap;
 }
-
-/* ================================
-   HOTSPOTS
-================================ */
 
 .ww-hotspot {
   appearance: none;
@@ -480,15 +488,17 @@ body {
           ? isClueSix
             ? `
 <section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
-  <div class="ww-clue-six-inner">
-    <img
-      class="ww-clue-six-image"
-      src="${esc(image)}"
-      alt="${esc(alt)}"
-      loading="lazy"
-      decoding="async"
-    >
-  </div>
+
+<section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
+
+  <img
+    class="ww-clue-six-image"
+    src="${esc(image)}"
+    alt="${esc(alt)}"
+    loading="lazy"
+    decoding="async"
+  >
+
 </section>
             `
             : `
