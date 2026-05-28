@@ -1429,7 +1429,7 @@ body {
 }
 
 .ww-answer-stage {
-  width: min(58vw, 1080px);
+  width: min(82vw, 1600px);
   display: flex;
   align-items: center;
   justify-content: center;
