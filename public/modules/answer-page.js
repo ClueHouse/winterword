@@ -1437,6 +1437,7 @@ body {
 
 .ww-answer-frame {
   width: 100%;
+  height: min(90vh, 980px);
   padding: 0.42rem;
   border-radius: 1.2rem;
   background:
