@@ -1623,7 +1623,7 @@ body {
 }
 
 .ww-archive-copy {
-  width: min(100%, 46rem);
+width: 100%;
   margin: 0 auto;
   color: rgba(239,226,199,0.94);
   font-family: "Courier New", Courier, monospace;
