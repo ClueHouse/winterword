@@ -487,7 +487,7 @@ top: 118%;
 
   min-width: 26rem;
   max-width: 32rem;
-  padding: 1rem 2.4rem;
+  padding: 1rem 4rem;
 
   font-size: 0.82rem;
   font-weight: 700;
