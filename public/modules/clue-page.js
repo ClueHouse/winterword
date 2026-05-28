@@ -302,6 +302,43 @@ body {
   border-radius: 999px;
 }
 
+
+.ww-clue-six-scroll-panel::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 1.2rem;
+  transform: translateX(-50%);
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0.72;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.42) 0%,
+      rgba(210,230,255,0.12) 42%,
+      transparent 72%
+    );
+
+  animation: wwScrollHint 2.6s ease-in-out infinite;
+}
+
+@keyframes wwScrollHint {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.18;
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(10px);
+    opacity: 0.72;
+  }
+}
+
+
 .ww-clue-six-inner {
   width: 82%;      /* was 70% — allow wider PNG */
   margin: 0 auto;
