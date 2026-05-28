@@ -479,21 +479,36 @@ body {
 .ww-hotspot-life[data-locked="true"]::after {
   content: "This path remains hidden, for now";
   position: absolute;
-left: calc(100% + 1rem);
-top: 50%;
-transform: translateY(-50%);
-  font-size: 0.86rem;
-  font-weight: 800;
-  letter-spacing: 0.035em;
-  color: rgba(78,8,8,0.98);
-  background: rgba(255,248,244,0.96);
-  border: 1px solid rgba(120,20,20,0.35);
+
+  left: 50%;
+  top: 118%;
+  transform: translateX(-50%);
+
+  padding: 0.42rem 0.9rem;
+
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+
+  color: rgba(255,235,215,0.92);
+
+  background: rgba(18,18,18,0.94);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
   border-radius: 0.55rem;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+
+  box-shadow:
+    0 8px 22px rgba(0,0,0,0.45);
+
   white-space: nowrap;
+
   opacity: 0;
   pointer-events: none;
-  transition: opacity 180ms ease, transform 180ms ease;
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 .ww-hotspot-life[data-locked="true"]:hover::after {
