@@ -267,8 +267,8 @@ body {
   top: 10vh;
   bottom: 10vh;
 
-  left: 41vw;
-  right: 11vw;
+  left: 34vw;      /* was 41vw — wider panel */
+  right: 6vw;      /* was 11vw — wider panel */
 
   z-index: 2;
 
@@ -303,15 +303,15 @@ body {
 }
 
 .ww-clue-six-inner {
-  width: 70%;
+  width: 92%;      /* was 70% — allow wider PNG */
   margin: 0 auto;
 }
 
 .ww-clue-six-image {
   display: block;
 
-  width: 58% !important;
-  max-width: 58% !important;
+  width: 100% !important;      /* was 58% */
+  max-width: 100% !important;  /* was 58% */
   min-width: 0 !important;
 
   height: auto;
@@ -324,6 +324,7 @@ body {
   box-shadow:
     0 24px 60px rgba(0,0,0,0.55);
 }
+
 
 /* ================================
    FALLBACK
