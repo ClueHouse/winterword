@@ -138,57 +138,49 @@ body {
 /* ================================
    CLUE 6 SPECIAL LAYOUT — UPDATED
 ================================ */
-
 .ww-clue-six-scroll-panel {
   position: absolute;
-
   top: 10vh;
   bottom: 10vh;
-
-  left: 41vw;
-  right: 11vw;
-
+  left: 48vw;          /* moved right so panel is narrower */
+  right: 6vw;          /* tighter right edge */
   z-index: 2;
 
   overflow-y: auto;
   overflow-x: hidden;
 
-  padding: 1.4rem 1.6rem 2rem;
+  padding: 1.8rem 2.2rem 2.4rem;
 
   background:
     radial-gradient(
       circle at center,
-      rgba(255,255,255,0.06) 0%,
-      rgba(0,0,0,0.55) 100%
+      rgba(255,255,255,0.10) 0%,
+      rgba(0,0,0,0.70) 100%
     ),
-    rgba(10,14,22,0.72);
+    rgba(8,12,20,0.85);
 
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(10px);
 
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
   border-radius: 22px;
 
   box-shadow:
     0 30px 70px rgba(0,0,0,0.78),
-    inset 0 0 0 1px rgba(255,255,255,0.025);
+    inset 0 0 0 1px rgba(255,255,255,0.04);
 }
 
 .ww-clue-six-inner {
-  width: 60%;
+  width: 38%;      /* was 60% — now MUCH smaller */
   margin: 0 auto;
 }
 
 .ww-clue-six-image {
-  display: block;
-
-  width: 40% !important;
-  max-width: 40% !important;
-  min-width: 0 !important;
-
+  width: 100% !important;     /* fills the inner wrapper */
+  max-width: 100% !important;
   height: auto;
 
-  margin: 0 auto !important;
-  padding: 0;
+  display: block;
+  margin: 0 auto;
 
   border-radius: 18px;
 
@@ -196,6 +188,7 @@ body {
     0 18px 48px rgba(0,0,0,0.55),
     0 0 0 1px rgba(255,255,255,0.05);
 }
+
 
 /* ================================
    FALLBACK
