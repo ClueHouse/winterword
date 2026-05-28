@@ -303,38 +303,49 @@ body {
 }
 
 
+.ww-clue-six-scroll-panel::before,
 .ww-clue-six-scroll-panel::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 1.2rem;
-  transform: translateX(-50%);
-  width: 2.2rem;
-  height: 2.2rem;
-  border-radius: 999px;
+  content: "⌄";
+  position: sticky;
+  top: calc(100% - 3.4rem);
+  z-index: 20;
+
+  display: block;
+  width: 2.4rem;
+  height: 2.4rem;
+
+  color: rgba(255,255,255,0.86);
+  font-size: 2.4rem;
+  line-height: 2.1rem;
+  text-align: center;
+
   pointer-events: none;
-  opacity: 0.72;
+  text-shadow:
+    0 0 12px rgba(255,255,255,0.5),
+    0 3px 10px rgba(0,0,0,0.9);
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,0.42) 0%,
-      rgba(210,230,255,0.12) 42%,
-      transparent 72%
-    );
+  animation: wwScrollHint 1.8s ease-in-out infinite;
+}
 
-  animation: wwScrollHint 2.6s ease-in-out infinite;
+.ww-clue-six-scroll-panel::before {
+  float: left;
+  margin-left: 1rem;
+}
+
+.ww-clue-six-scroll-panel::after {
+  float: right;
+  margin-right: 1rem;
 }
 
 @keyframes wwScrollHint {
   0%, 100% {
-    transform: translateX(-50%) translateY(0);
-    opacity: 0.18;
+    transform: translateY(0);
+    opacity: 0.45;
   }
 
   50% {
-    transform: translateX(-50%) translateY(10px);
-    opacity: 0.72;
+    transform: translateY(10px);
+    opacity: 1;
   }
 }
 
