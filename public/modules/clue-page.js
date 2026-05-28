@@ -481,25 +481,36 @@ body {
   position: absolute;
 
   left: 50%;
-  top: 118%;
+  top: 126%;
   transform: translateX(-50%);
 
-  padding: 0.42rem 0.9rem;
+  width: max-content;
+  min-width: 17rem;
 
-  font-size: 0.74rem;
+  padding: 0.72rem 1.25rem;
+
+  font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.035em;
+  text-align: center;
 
-  color: rgba(255,235,215,0.92);
+  color: rgba(245,238,224,0.96);
 
-  background: rgba(18,18,18,0.94);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(26,28,32,0.98),
+      rgba(8,9,12,0.98)
+    );
 
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
 
-  border-radius: 0.55rem;
+  border-radius: 0.75rem;
 
   box-shadow:
-    0 8px 22px rgba(0,0,0,0.45);
+    0 14px 34px rgba(0,0,0,0.72),
+    inset 0 0 0 1px rgba(255,255,255,0.035),
+    inset 0 8px 18px rgba(255,255,255,0.035);
 
   white-space: nowrap;
 
