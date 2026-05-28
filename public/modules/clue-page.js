@@ -498,7 +498,7 @@ transform: translateY(-50%);
 
 .ww-hotspot-life[data-locked="true"]:hover::after {
   opacity: 1;
-  transform: translateX(-50%) translateY(2px);
+transform: translateY(-50%) translateX(2px);
 }
 
 .ww-hotspot-life[data-locked="true"]:hover {
