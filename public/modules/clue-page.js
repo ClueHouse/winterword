@@ -142,33 +142,33 @@ body {
 .ww-clue-six-scroll-panel {
   position: absolute;
 
-  top: 7vh;
-  bottom: 7vh;
+  top: 10vh;
+  bottom: 10vh;
 
-  left: 38vw;
-  right: 8vw;
+  left: 41vw;
+  right: 11vw;
 
   z-index: 2;
 
   overflow-y: auto;
   overflow-x: hidden;
 
-  padding: 1.2rem;
+  padding: 2rem 2rem 2.5rem;
 
   background:
     linear-gradient(
       180deg,
-      rgba(8,12,20,0.96) 0%,
+      rgba(10,14,22,0.96) 0%,
       rgba(4,6,12,0.985) 100%
     );
 
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.05);
 
-  border-radius: 18px;
+  border-radius: 22px;
 
   box-shadow:
-    0 24px 60px rgba(0,0,0,0.72),
-    inset 0 0 0 1px rgba(255,255,255,0.03);
+    0 30px 70px rgba(0,0,0,0.78),
+    inset 0 0 0 1px rgba(255,255,255,0.025);
 }
 
 .ww-clue-six-scroll-panel::-webkit-scrollbar {
