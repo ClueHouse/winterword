@@ -1530,7 +1530,7 @@ body {
 }
 
 .ww-answer-stage.is-archive {
-  width: min(72vw, 1320px);
+  width: min(82vw, 1600px);
 }
 
 .ww-answer-frame.is-archive {
