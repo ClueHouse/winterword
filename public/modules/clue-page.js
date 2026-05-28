@@ -511,7 +511,7 @@ padding: 0.72rem 1.8rem;
     inset 0 0 0 1px rgba(255,255,255,0.035),
     inset 0 8px 18px rgba(255,255,255,0.035);
 
-  white-space: nowrap;
+white-space: normal;
 
   opacity: 0;
   pointer-events: none;
