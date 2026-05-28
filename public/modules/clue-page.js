@@ -566,7 +566,7 @@ transform: translateX(-50%) translateY(2px);
 }
 
 .ww-hotspot-life {
-  left: var(--ww-hotspot-group-left);
+  left: calc(var(--ww-hotspot-group-left) - 1%);
   top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2) + 0.65%);
   width: var(--ww-hotspot-life-width);
   height: var(--ww-hotspot-life-height);
