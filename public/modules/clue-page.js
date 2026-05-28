@@ -489,25 +489,15 @@ body {
             ? `
 <section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
 
-<div style="
-    width:58%;
-    margin:0 auto;
-  ">
+<section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
 
-<img
-      class="ww-clue-six-image"
-      src="${esc(image)}"
-      alt="${esc(alt)}"
-      loading="lazy"
-      decoding="async"
-      style="
-        width:58%;
-        display:block;
-        margin:0 auto;
-      "
-    >
-
-  </div>
+  <img
+    class="ww-clue-six-image"
+    src="${esc(image)}"
+    alt="${esc(alt)}"
+    loading="lazy"
+    decoding="async"
+  >
 
 </section>
             `
