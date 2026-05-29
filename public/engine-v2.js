@@ -15,7 +15,7 @@
     lifeline: "/modules/lifeline.js",
     leaderboard: "/modules/leaderboard.js",
     welcomeIntro: "/modules/welcomeIntro.js"
-  };
+  }; 
 
   const ORG_STATE_ENDPOINT = "/api/org-state";
   const LEADERBOARD_ENDPOINT = "/api/leaderboard";
