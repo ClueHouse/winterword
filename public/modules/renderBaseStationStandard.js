@@ -1452,6 +1452,22 @@ font-size:clamp(8px,.72vw,15px);
   outline:none;
 }
 
+
+@media (max-height:760px){
+
+  .ww-word-link{
+    font-size:clamp(14px,1.25vw,24px);
+    min-height:clamp(1.1rem,2.2vh,1.55rem);
+  }
+
+  .ww-word-solve{
+    font-size:clamp(15px,1.35vw,26px);
+    padding:.36rem .85rem;
+  }
+
+}
+
+
 @media (max-width:760px){
 
   .ww-pop-alert-card{
