@@ -1468,6 +1468,53 @@ font-size:clamp(8px,.72vw,15px);
 }
 
 
+
+@media (max-height:760px){
+
+  .ww-title-sub{
+    display:none;
+  }
+
+  .ww-left-stack{
+    top:3.2%;
+    bottom:1.6%;
+    gap:.35rem;
+  }
+
+  .ww-title-org{
+    margin-bottom:.45rem;
+  }
+
+  .ww-left-panel{
+    padding-top:.35rem;
+  }
+
+  .ww-word-nav{
+    gap:.32rem;
+  }
+
+  .ww-rule{
+    margin:.16rem 0;
+  }
+
+  .ww-guidepost{
+    min-height:0;
+    padding:.75rem 1rem;
+    gap:.45rem;
+  }
+
+  .ww-guidepost-copy{
+    min-height:0;
+    max-height:16vh;
+    overflow-y:auto;
+    padding-right:.35rem;
+    gap:.42rem;
+    line-height:1.32;
+  }
+
+}
+
+
 @media (max-width:760px){
 
   .ww-pop-alert-card{
