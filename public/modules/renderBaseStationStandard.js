@@ -764,7 +764,7 @@ justify-content:flex-start;
   text-align:center;
   gap:clamp(.45rem,1.3vh,1.45rem);
   margin-top:clamp(.2rem,.8vh,.5rem);
-  padding:clamp(.9rem,2.1vh,2rem) clamp(1rem,2.2vw,2.2rem);
+padding:clamp(1.25rem,2.7vh,2.4rem) clamp(1rem,2.2vw,2.2rem);
   border-radius:1.8rem;
   overflow:hidden;
 
