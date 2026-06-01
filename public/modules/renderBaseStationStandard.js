@@ -432,11 +432,11 @@ html,body{
 
 }
 
-line-height:1.45;
+.ww-title-sub{
   margin-top:clamp(.35rem,1.35vh,1rem);
   max-width:88%;
   font-family:Georgia,serif;
-font-size:clamp(8px,.72vw,15px);
+  font-size:clamp(8px,.72vw,15px);
   line-height:1.45;
   font-style:italic;
   color:rgba(255,218,166,.88);
