@@ -298,7 +298,7 @@ html,body{
   display:flex;
   flex-direction:column;
   align-items:center;
-justify-content:center;
+justify-content:flex-start;
   gap:clamp(.55rem,1.2vh,1.15rem);
   overflow:hidden;
 }
