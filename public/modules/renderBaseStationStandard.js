@@ -836,25 +836,16 @@ justify-content:flex-start;
 
 .ww-guidepost-copy{
   max-width:94%;
-  min-height:0;
-  overflow:visible;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  gap:clamp(.82rem,1.65vh,1.75rem);
+  align-items:center;   /* centre horizontally */
+  text-align:center;    /* centre text */
 
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:clamp(11px,.95vw,17px);
-  line-height:1.62;
-  font-weight:750;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-
-  color:rgba(255,255,255,.94);
-
-  text-shadow:0 2px 10px rgba(0,0,0,.92);
-  scrollbar-width:thin;
+  font-size:clamp(13px,1.1vw,20px); /* larger text */
+  line-height:1.7;
 }
+
 
 
 
