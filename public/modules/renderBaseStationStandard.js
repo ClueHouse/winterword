@@ -432,7 +432,7 @@ html,body{
 
 }
 
-.ww-title-sub{
+line-height:1.45;
   margin-top:clamp(.35rem,1.35vh,1rem);
   max-width:88%;
   font-family:Georgia,serif;
