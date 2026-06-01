@@ -288,24 +288,36 @@ html,body{
   pointer-events:none;
 }
 
-.ww-title-meta{
+.ww-left-stack{
   position:absolute;
   z-index:24;
   left:0;
   top:4.4%;
+  bottom:2.8%;
   width:39.3%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:clamp(.55rem,1.2vh,1.15rem);
+  overflow:hidden;
+}
+
+.ww-title-meta{
+  width:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
   pointer-events:none;
+  flex:0 0 auto;
 }
 
 .ww-title-org{
-  max-width:100%;
-  margin-bottom:2.3rem;
-  font-size:clamp(9px,.64vw,13px);
+  max-width:94%;
+  margin-bottom:clamp(.65rem,3.1vh,2.3rem);
+  font-size:clamp(8px,.64vw,13px);
   line-height:1.35;
   letter-spacing:.22em;
   text-transform:uppercase;
@@ -317,7 +329,7 @@ html,body{
 .ww-title-main{
   width:100%;
   font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(1.84rem,3.45vw,3.82rem);
+  font-size:clamp(1.55rem,3.45vw,3.82rem);
   line-height:.94;
   font-weight:400;
   letter-spacing:.02em;
@@ -327,13 +339,13 @@ html,body{
 }
 
 .ww-title-status{
-  margin-top:1.1rem;
+  margin-top:clamp(.45rem,1.6vh,1.1rem);
   width:68%;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:1rem;
-  font-size:clamp(.62rem,.84vw,.84rem);
+  font-size:clamp(.54rem,.84vw,.84rem);
   font-weight:800;
   letter-spacing:.34em;
   text-transform:uppercase;
@@ -421,11 +433,11 @@ html,body{
 }
 
 .ww-title-sub{
-  margin-top:1rem;
+  margin-top:clamp(.35rem,1.35vh,1rem);
   max-width:88%;
   font-family:Georgia,serif;
-  font-size:clamp(11px,.78vw,15px);
-  line-height:1.5;
+  font-size:clamp(9px,.78vw,15px);
+  line-height:1.45;
   font-style:italic;
   color:rgba(255,218,166,.88);
   text-shadow:0 2px 10px rgba(0,0,0,.9);
@@ -623,30 +635,30 @@ html,body{
 }
 
 .ww-left-panel{
-  position:absolute;
-  z-index:24;
-  left:0;
-  top:29.2%;
-  width:39.3%;
-  height:50%;
+  width:100%;
+  min-height:0;
+  flex:1 1 auto;
   display:flex;
   flex-direction:column;
   align-items:center;
+  overflow:hidden;
 }
 
 .ww-word-nav{
   width:100%;
+  height:100%;
+  min-height:0;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:1.8vh;
+  gap:clamp(.35rem,1.05vh,1.25rem);
   pointer-events:auto;
 }
 
 .ww-rule{
   width:88%;
   height:1px;
-  margin:1.9vh 0;
+  margin:clamp(.18rem,.85vh,.95rem) 0;
   background:linear-gradient(
     90deg,
     transparent,
@@ -656,6 +668,7 @@ html,body{
     transparent
   );
   position:relative;
+  flex:0 0 auto;
 }
 
 .ww-rule::after{
@@ -676,22 +689,22 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:center;
-  width:13rem;
-  min-height:2rem;
+  width:clamp(9.4rem,12vw,13rem);
+  min-height:clamp(1.45rem,3.2vh,2rem);
   border:0;
   background:transparent;
   cursor:pointer;
   text-decoration:none;
   font-family:"Courier New",monospace;
-  font-size:clamp(23px,1.64vw,32px);
+  font-size:clamp(17px,1.64vw,32px);
   font-weight:700;
   line-height:1;
-
-    letter-spacing:.34em;
+  letter-spacing:.34em;
   text-transform:uppercase;
   color:rgba(250,250,247,.95);
   text-shadow:0 2px 10px rgba(0,0,0,.88);
   transition:transform 170ms ease,color 170ms ease;
+  flex:0 0 auto;
 }
 
 .ww-word-link:hover,
@@ -721,8 +734,8 @@ html,body{
 }
 
 .ww-word-solve{
-  width:12rem;
-  padding:.68rem 1rem .68rem 1.2rem;
+  width:clamp(9rem,11.5vw,12rem);
+  padding:clamp(.42rem,1.05vh,.68rem) 1rem;
   border:1px solid rgba(255,197,111,.44);
   border-radius:1rem;
   background:linear-gradient(
@@ -734,22 +747,25 @@ html,body{
     inset 0 0 0 1px rgba(255,255,255,.035),
     0 0 18px rgba(255,185,80,.055);
 
-  font-size:clamp(22px,1.58vw,33px);
+  font-size:clamp(17px,1.58vw,33px);
   letter-spacing:.34em;
   color:#ffc56f;
 }
 
 .ww-guidepost{
   width:88%;
+  min-height:0;
+  flex:1 1 auto;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
+  justify-content:flex-start;
   text-align:center;
-  gap:1.45rem;
-  margin-top:.5rem;
-  padding:2rem 2.2rem 2.1rem;
+  gap:clamp(.45rem,1.3vh,1.45rem);
+  margin-top:clamp(.2rem,.8vh,.5rem);
+  padding:clamp(.9rem,2.1vh,2rem) clamp(1rem,2.2vw,2.2rem);
   border-radius:1.8rem;
+  overflow:hidden;
 
   background:
     radial-gradient(
@@ -781,9 +797,10 @@ html,body{
   justify-content:center;
   position:relative;
   padding-bottom:.25rem;
+  flex:0 0 auto;
 
   font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(20px,1.42vw,32px);
+  font-size:clamp(15px,1.42vw,32px);
   line-height:1;
   letter-spacing:.22em;
   text-transform:uppercase;
@@ -818,13 +835,15 @@ html,body{
 
 .ww-guidepost-copy{
   max-width:92%;
+  min-height:0;
+  overflow-y:auto;
   display:flex;
   flex-direction:column;
-  gap:1.35rem;
+  gap:clamp(.55rem,1.25vh,1.35rem);
 
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:clamp(10px,.72vw,14px);
-  line-height:1.62;
+  font-size:clamp(8px,.72vw,14px);
+  line-height:1.55;
   font-weight:700;
   letter-spacing:.08em;
   text-transform:uppercase;
@@ -832,6 +851,43 @@ html,body{
   color:rgba(255,255,255,.92);
 
   text-shadow:0 2px 10px rgba(0,0,0,.92);
+  scrollbar-width:thin;
+}
+
+@media (max-height:760px){
+
+  .ww-left-stack{
+    top:3.2%;
+    bottom:2%;
+    gap:.35rem;
+  }
+
+  .ww-title-org{
+    margin-bottom:.45rem;
+  }
+
+  .ww-title-sub{
+    line-height:1.25;
+  }
+
+  .ww-word-nav{
+    gap:.35rem;
+  }
+
+  .ww-rule{
+    margin:.18rem 0;
+  }
+
+  .ww-guidepost{
+    padding:.75rem 1rem;
+    gap:.45rem;
+  }
+
+  .ww-guidepost-copy{
+    gap:.45rem;
+    line-height:1.35;
+  }
+
 }
 
 .ww-tooltip{
@@ -1445,63 +1501,68 @@ html,body{
 
       <img class="ww-shell" src="/assets/winterword/shared/BS1.png" alt="WinterWord Base Station" draggable="false">
 
-      <div class="ww-title-meta">
+      <div class="ww-left-stack">
 
-        <div class="ww-title-org">
+        <div class="ww-title-meta">
+
+          <div class="ww-title-org">
 ${safeText(displaySeasonLabel)} ✧ ${safeText(orgName)}
-        </div>
-
-        <div class="ww-title-main">
-          WINTERWORD
-        </div>
-
-        <div class="ww-title-status">
-          LIVE
-        </div>
-        <div class="ww-title-sub">
-          A letter per week from a wintry scroll.<br>
-          Piece them together — reveal the whole.
-        </div>
-
-      </div>
-
-      <div class="ww-left-panel">
-
-        <nav class="ww-word-nav">
-
-          <button class="ww-word-link" type="button" data-nav="clues" data-tooltip="clue">
-            CLUE
-          </button>
-
-          <button class="ww-word-link ${lifelineIsAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="lifeline" data-tooltip="life" data-disabled="${lifelineIsAvailable ? "false" : "true"}">
-            LIFE
-          </button>
-
-          <button class="ww-word-link ${leaderboardAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="leaderboard" data-tooltip="leader" data-disabled="${leaderboardAvailable ? "false" : "true"}">
-            LEAD
-          </button>
-
-          <div class="ww-rule"></div>
-
-          <button class="ww-word-link ww-word-solve" type="button" id="wwSolveOpen" data-tooltip="solve">
-            SOLVE
-          </button>
-
-          <div class="ww-rule"></div>
-
-          <div class="ww-guidepost">
-
-            <div class="ww-guidepost-title">
-              The Guidepost
-            </div>
-
-            <div class="ww-guidepost-copy">
-              ${guidepostLines}
-            </div>
-
           </div>
 
-        </nav>
+          <div class="ww-title-main">
+            WINTERWORD
+          </div>
+
+          <div class="ww-title-status">
+            LIVE
+          </div>
+
+          <div class="ww-title-sub">
+            A letter per week from a wintry scroll.<br>
+            Piece them together — reveal the whole.
+          </div>
+
+        </div>
+
+        <div class="ww-left-panel">
+
+          <nav class="ww-word-nav">
+
+            <button class="ww-word-link" type="button" data-nav="clues" data-tooltip="clue">
+              CLUE
+            </button>
+
+            <button class="ww-word-link ${lifelineIsAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="lifeline" data-tooltip="life" data-disabled="${lifelineIsAvailable ? "false" : "true"}">
+              LIFE
+            </button>
+
+            <button class="ww-word-link ${leaderboardAvailable ? "" : "ww-word-disabled"}" type="button" data-nav="leaderboard" data-tooltip="leader" data-disabled="${leaderboardAvailable ? "false" : "true"}">
+              LEAD
+            </button>
+
+            <div class="ww-rule"></div>
+
+            <button class="ww-word-link ww-word-solve" type="button" id="wwSolveOpen" data-tooltip="solve">
+              SOLVE
+            </button>
+
+            <div class="ww-rule"></div>
+
+            <div class="ww-guidepost">
+
+              <div class="ww-guidepost-title">
+                The Guidepost
+              </div>
+
+              <div class="ww-guidepost-copy">
+                ${guidepostLines}
+              </div>
+
+            </div>
+
+          </nav>
+
+        </div>
 
       </div>
 
