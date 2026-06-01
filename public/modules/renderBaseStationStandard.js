@@ -626,12 +626,13 @@ html,body{
   position:absolute;
   z-index:24;
   left:0;
-  top:29.2%;
+  top:28.5%;
   width:39.3%;
-  height:50%;
+  height:68%;
   display:flex;
   flex-direction:column;
   align-items:center;
+  overflow:visible;
 }
 
 .ww-word-nav{
