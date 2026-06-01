@@ -843,8 +843,8 @@ justify-content:flex-start;
   gap:clamp(.55rem,1.25vh,1.35rem);
 
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:clamp(10px,.82vw,16px);
-  line-height:1.55;
+font-size:clamp(11px,.88vw,17px);
+line-height:1.7;
   font-weight:700;
   letter-spacing:.08em;
   text-transform:uppercase;
