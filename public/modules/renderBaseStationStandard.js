@@ -626,22 +626,20 @@ html,body{
   position:absolute;
   z-index:24;
   left:0;
-  top:28.5%;
+  top:29.2%;
   width:39.3%;
-  height:68%;
+  height:50%;
   display:flex;
   flex-direction:column;
   align-items:center;
-  overflow:visible;
 }
 
 .ww-word-nav{
   width:100%;
-  height:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:clamp(.55rem,1.35vh,1.8vh);
+  gap:1.8vh;
   pointer-events:auto;
 }
 
