@@ -642,6 +642,7 @@ font-size:clamp(8px,.72vw,15px);
   flex-direction:column;
   align-items:center;
   overflow:hidden;
+  padding-top:clamp(.55rem,2vh,1.35rem);
 }
 
 .ww-word-nav{
