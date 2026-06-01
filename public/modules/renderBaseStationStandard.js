@@ -840,7 +840,7 @@ justify-content:flex-start;
   overflow-y:auto;
   display:flex;
   flex-direction:column;
-  gap:clamp(.55rem,1.25vh,1.35rem);
+gap:clamp(.75rem,1.6vh,1.7rem);
 
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
 font-size:clamp(11px,.88vw,17px);
