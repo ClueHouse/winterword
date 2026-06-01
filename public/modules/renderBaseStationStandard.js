@@ -637,10 +637,11 @@ html,body{
 
 .ww-word-nav{
   width:100%;
+  height:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:1.8vh;
+  gap:clamp(.55rem,1.35vh,1.8vh);
   pointer-events:auto;
 }
 
