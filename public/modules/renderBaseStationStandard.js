@@ -1472,13 +1472,18 @@ justify-content:flex-start;
     justify-content:center;
   }
 
-  .ww-guidepost-copy{
-    max-height:none;
-    overflow:visible;
-    gap:.58rem;
-    font-size:clamp(9px,.82vw,15px);
-    line-height:1.42;
-  }
+.ww-guidepost-copy{
+  max-height:none;
+  overflow:visible;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  gap:.9rem;
+  font-size:clamp(13px,1vw,19px);
+  line-height:1.6;
+}
 
 }
 
