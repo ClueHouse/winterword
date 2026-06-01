@@ -1503,14 +1503,14 @@ line-height:1.7;
     gap:.45rem;
   }
 
-  .ww-guidepost-copy{
-    min-height:0;
-    max-height:16vh;
-    overflow-y:auto;
-    padding-right:.35rem;
-    gap:.42rem;
-    line-height:1.32;
-  }
+.ww-guidepost-copy{
+  min-height:0;
+  max-height:none;
+  overflow:visible;
+  padding-right:0;
+  gap:.55rem;
+  line-height:1.45;
+}
 
 }
 
