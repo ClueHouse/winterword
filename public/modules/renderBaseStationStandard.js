@@ -834,18 +834,18 @@ justify-content:flex-start;
     );
 }
 .ww-guidepost-copy{
-  width:100%;
   flex:1;
 
   display:flex;
   flex-direction:column;
+
   align-items:center;
   justify-content:center;
 
   text-align:center;
 
   font-size:clamp(15px,1.25vw,24px);
-  line-height:1.75;
+  line-height:1.8;
 
   color:rgba(245,239,227,.96);
 }
