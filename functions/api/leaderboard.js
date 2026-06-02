@@ -12,88 +12,58 @@ export async function onRequestGet(context) {
       );
     }
 
-    const AIRTABLE_TOKEN = env.AIRTABLE_TOKEN;
-    const AIRTABLE_BASE_ID = env.AIRTABLE_BASE_ID;
+    const SUPABASE_URL = env.SUPABASE_URL;
+    const SUPABASE_ANON_KEY = env.SUPABASE_ANON_KEY;
 
-    const AIRTABLE_LEADERBOARD_TABLE_NAME =
-      env.AIRTABLE_LEADERBOARD_TABLE_NAME ||
-      env.AIRTABLE_LEADERBOARD_TABLE ||
-      "Leaderboard";
-
-    if (
-      !AIRTABLE_TOKEN ||
-      !AIRTABLE_BASE_ID ||
-      !AIRTABLE_LEADERBOARD_TABLE_NAME
-    ) {
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
       return Response.json(
-        {
-          ok: false,
-          error: "Missing Airtable environment variables"
-        },
+        { ok: false, error: "Missing Supabase environment variables" },
         { status: 500 }
       );
     }
 
-    function escapeAirtableFormulaString(value) {
-      return String(value)
-        .replace(/\\/g, "\\\\")
-        .replace(/"/g, '\\"');
-    }
-
-    const safeSlug = escapeAirtableFormulaString(slug);
-
-    const params = new URLSearchParams();
-    params.set("filterByFormula", `{org}="${safeSlug}"`);
-    params.set("sort[0][field]", "rank");
-    params.set("sort[0][direction]", "asc");
-    params.set("pageSize", "100");
-
     const endpoint =
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
-        AIRTABLE_LEADERBOARD_TABLE_NAME
-      )}?${params.toString()}`;
+      `${SUPABASE_URL}/rest/v1/leaderboard` +
+      `?org=eq.${encodeURIComponent(slug)}` +
+      `&select=*` +
+      `&order=rank.asc`;
 
-    const airtableRes = await fetch(endpoint, {
+    const res = await fetch(endpoint, {
       headers: {
-        Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
         Accept: "application/json"
       }
     });
 
-    if (!airtableRes.ok) {
-      const detail = await airtableRes.text();
+    if (!res.ok) {
+      const detail = await res.text();
 
       return Response.json(
         {
           ok: false,
-          error: "Airtable request failed",
+          error: "Supabase request failed",
           detail
         },
         { status: 502 }
       );
     }
 
-    const airtableData = await airtableRes.json();
+    const data = await res.json();
 
-    const records = Array.isArray(airtableData.records)
-      ? airtableData.records
+    const rows = Array.isArray(data)
+      ? data
+          .map((record) => ({
+            id: record.id || "",
+            org: record.org || "",
+            rank: Number(record.rank || 0),
+            player_name: record.player_name || "",
+            timestamp: record.timestamp || "",
+            solved_at: record.solved_at || record.timestamp || ""
+          }))
+          .filter((row) => row.rank > 0)
+          .sort((a, b) => a.rank - b.rank)
       : [];
-
-    const rows = records
-      .map((record) => {
-        const fields = record.fields || {};
-
-        return {
-          id: record.id || "",
-          org: fields.org || "",
-          rank: Number(fields.rank || 0),
-          player_name: fields.player_name || "",
-          timestamp: fields.timestamp || "",
-          solved_at: fields.solved_at || fields.timestamp || ""
-        };
-      })
-      .filter((row) => row.rank > 0)
-      .sort((a, b) => a.rank - b.rank);
 
     return Response.json({
       ok: true,
