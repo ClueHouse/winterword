@@ -1,7 +1,7 @@
 export function renderBaseStationStandard(app, data = {}, navigate) {
   const {
-    orgName = "Banana",
-    seasonLabel = "Banana",
+    orgName = "WinterWord",
+    seasonLabel = "WINTERWORD",
     guidepost = "",
     guidepostText = "",
     updates_content = "",
