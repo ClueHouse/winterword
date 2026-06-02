@@ -77,19 +77,19 @@ Yet something’s not at home.
   ================================================== */
   --ww-overlay-base-left: 35%;
   --ww-overlay-base-top: 60%;
-  --ww-overlay-base-width: 11%;
+  --ww-overlay-base-width: 20%;
   --ww-overlay-base-height: 4.8%;
 
   /* CLUES overlay */
   --ww-overlay-clues-left: 5%;
   --ww-overlay-clues-top: 60%;
-  --ww-overlay-clues-width: 17%;
+  --ww-overlay-clues-width: 30%;
   --ww-overlay-clues-height: 4.8%;
 
   /* LIFE overlay */
   --ww-overlay-life-left: 5%;
   --ww-overlay-life-top: 65%;
-  --ww-overlay-life-width: 15%;
+  --ww-overlay-life-width: 20%;
   --ww-overlay-life-height: 6%;
 
   /* PLAY overlay — only appears on clue 5 and clue 7 */
