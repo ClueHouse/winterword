@@ -65,7 +65,7 @@ Yet something’s not at home.
   app.innerHTML = `
 <style>
 :root {
-  --ww-clue-bg: url("${clueBackground}");
+  --ww-clue-bg-src: "${clueBackground}";
 
   --ww-hotspot-group-left: 12%;
   --ww-hotspot-group-top: 50.6%;
@@ -82,7 +82,7 @@ Yet something’s not at home.
   --ww-hotspot-life-width: 15%;
   --ww-hotspot-life-height: 6%;
 
-  --ww-hotspot-play-diameter: min(10vw, 10vh);
+  --ww-hotspot-play-diameter: 6%;
 }
 
 * {
@@ -118,11 +118,29 @@ body {
 .ww-clue-map {
   position: absolute;
   inset: 0;
-  background-image: var(--ww-clue-bg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
   overflow: hidden;
+}
+
+.ww-clue-artboard {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(100vw, 177.7778vh);
+  height: min(100vh, 56.25vw);
+  transform: translate(-50%, -50%);
+  overflow: visible;
+}
+
+.ww-clue-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  z-index: 0;
+  user-select: none;
+  pointer-events: none;
 }
 
 /* ================================
@@ -131,11 +149,11 @@ body {
 
 .ww-main-clue {
   position: absolute;
-  right: 7vw;
+  right: 4.1%;
   top: 50%;
   transform: translateY(-50%);
-  width: min(54vw, 1088px);
-  max-height: 78vh;
+  width: 54%;
+  max-height: 78%;
   object-fit: contain;
   display: block;
   z-index: 2;
@@ -167,10 +185,10 @@ body {
 
 .ww-clue-three-frame {
   position: absolute;
-  right: 7vw;
+  right: 4.1%;
   top: 50%;
   transform: translateY(-50%);
-  width: min(54vw, 1088px);
+  width: 54%;
   aspect-ratio: 16 / 9;
   z-index: 2;
   padding: 0.9rem;
@@ -263,10 +281,10 @@ body {
 
 .ww-clue-six-scroll-panel {
   position: absolute;
-  top: 10vh;
-  bottom: 10vh;
-  left: 34vw;
-  right: 6vw;
+  top: 10%;
+  bottom: 10%;
+  left: 34%;
+  right: 3.5%;
   z-index: 2;
   overflow-y: auto;
   overflow-x: hidden;
@@ -359,10 +377,10 @@ body {
 
 .ww-clue-fallback {
   position: absolute;
-  right: 7vw;
+  right: 4.1%;
   top: 50%;
   transform: translateY(-50%);
-  width: min(54vw, 760px);
+  width: min(54%, 760px);
   padding: 2rem;
   border-radius: 1rem;
   background: rgba(255,255,255,0.08);
@@ -541,7 +559,7 @@ body {
 }
 
 .ww-hotspot-life {
-  left: calc(var(--ww-hotspot-group-left) - 12%);
+  left: var(--ww-hotspot-group-left);
   top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2) + 0.65%);
   width: var(--ww-hotspot-life-width);
   height: var(--ww-hotspot-life-height);
@@ -653,6 +671,15 @@ body {
 <div id="wwPortal">
   <main class="ww-clue-stage" aria-label="${esc(title)}">
     <section class="ww-clue-map" aria-label="WinterWord clue page">
+      <div class="ww-clue-artboard">
+        <img
+          class="ww-clue-bg-image"
+          src="${esc(clueBackground)}"
+          alt=""
+          aria-hidden="true"
+          loading="eager"
+          decoding="async"
+        >
 
       ${
         image
@@ -749,6 +776,7 @@ body {
         </span>
       </button>
 
+      </div>
     </section>
   </main>
 </div>
