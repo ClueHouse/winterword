@@ -420,9 +420,7 @@ body {
     transform 140ms ease,
     background 180ms ease,
     box-shadow 180ms ease;
-}
-  cursor: pointer;
-  transform: translate(-50%, -50%);
+
   overflow: visible;
   transition:
     transform 140ms ease,
