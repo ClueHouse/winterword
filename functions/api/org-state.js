@@ -9,104 +9,59 @@ export async function onRequestGet(context) {
       return Response.json({ ok: false, error: "Missing slug" }, { status: 400 });
     }
 
-    const AIRTABLE_TOKEN = env.AIRTABLE_TOKEN;
-    const AIRTABLE_BASE_ID = env.AIRTABLE_BASE_ID;
-    const AIRTABLE_TABLE_NAME = env.AIRTABLE_TABLE_NAME;
+    const SUPABASE_URL = env.SUPABASE_URL;
+    const SUPABASE_ANON_KEY = env.SUPABASE_ANON_KEY;
 
-    const AIRTABLE_LEADERBOARD_TABLE_NAME =
-      env.AIRTABLE_LEADERBOARD_TABLE_NAME ||
-      env.AIRTABLE_LEADERBOARD_TABLE ||
-      "Leaderboard";
-
-    if (!AIRTABLE_TOKEN || !AIRTABLE_BASE_ID || !AIRTABLE_TABLE_NAME) {
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
       return Response.json({
         ok: false,
-        error: "Missing Airtable environment variables"
+        error: "Missing Supabase environment variables"
       });
     }
 
-    function escapeAirtableFormulaString(value) {
-      return String(value)
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
-    }
-
-    function truthyAirtableValue(value) {
+    function truthyValue(value) {
       return value === true || value === "true" || value === "TRUE" || value === 1 || value === "1";
     }
 
-    function getAirtableField(fields, names, fallback = undefined) {
-      for (const name of names) {
-        if (Object.prototype.hasOwnProperty.call(fields, name)) {
-          return fields[name];
+    async function supabaseGet(path) {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          Accept: "application/json"
         }
-      }
-
-      return fallback;
-    }
-
-    const safeSlug = escapeAirtableFormulaString(slug);
-
-    const endpoint =
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}` +
-      `?filterByFormula=${encodeURIComponent(`{slug}='${safeSlug}'`)}`;
-
-    const res = await fetch(endpoint, {
-      headers: {
-        Authorization: `Bearer ${AIRTABLE_TOKEN}`
-      }
-    });
-
-    if (!res.ok) {
-      const text = await res.text();
-
-      return Response.json({
-        ok: false,
-        error: "Airtable request failed",
-        detail: text
       });
+
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(text || `Supabase request failed: ${response.status}`);
+      }
+
+      return response.json();
     }
 
-    const data = await res.json();
+    const rows = await supabaseGet(
+      `organisations?slug=eq.${encodeURIComponent(slug)}&select=*&limit=1`
+    );
 
-    if (!data.records || data.records.length === 0) {
+    if (!Array.isArray(rows) || rows.length === 0) {
       return Response.json({
         ok: false,
         error: "Organisation not found"
       });
     }
 
-    const record = data.records[0].fields;
+    const record = rows[0];
 
     async function getLeaderboardCount() {
       try {
-        const leaderboardEndpoint =
-          `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_LEADERBOARD_TABLE_NAME)}` +
-          `?filterByFormula=${encodeURIComponent(`{org}='${safeSlug}'`)}` +
-          `&pageSize=1`;
+        const leaderboardRows = await supabaseGet(
+          `leaderboard?org=eq.${encodeURIComponent(slug)}&select=rank&limit=100`
+        );
 
-        const leaderboardRes = await fetch(leaderboardEndpoint, {
-          headers: {
-            Authorization: `Bearer ${AIRTABLE_TOKEN}`
-          }
-        });
-
-        if (!leaderboardRes.ok) {
-          console.error(
-            "Leaderboard check failed:",
-            leaderboardRes.status,
-            await leaderboardRes.text()
-          );
-
-          return 0;
-        }
-
-        const leaderboardData = await leaderboardRes.json();
-
-        return Array.isArray(leaderboardData.records)
-          ? leaderboardData.records.length
+        return Array.isArray(leaderboardRows)
+          ? leaderboardRows.length
           : 0;
-
       } catch (error) {
         console.error("Leaderboard check error:", error);
         return 0;
@@ -119,48 +74,31 @@ export async function onRequestGet(context) {
     const totalClues = Number(record.total_clues || 12);
 
     function parseFrequency(freq) {
-
       if (freq === "weekly") {
-        return {
-          type: "fixed",
-          ms: 7 * 24 * 60 * 60 * 1000
-        };
+        return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
       }
 
       if (freq === "hourly") {
-        return {
-          type: "fixed",
-          ms: 60 * 60 * 1000
-        };
+        return { type: "fixed", ms: 60 * 60 * 1000 };
       }
 
       if (freq === "quarter_hourly") {
-        return {
-          type: "fixed",
-          ms: 15 * 60 * 1000
-        };
+        return { type: "fixed", ms: 15 * 60 * 1000 };
       }
 
       if (freq === "daily_weekdays") {
-        return {
-          type: "weekdays"
-        };
+        return { type: "weekdays" };
       }
 
-      return {
-        type: "fixed",
-        ms: 7 * 24 * 60 * 60 * 1000
-      };
+      return { type: "fixed", ms: 7 * 24 * 60 * 60 * 1000 };
     }
 
     function calculateCurrentClue() {
-
       if (
         record.current_clue_override !== null &&
         record.current_clue_override !== undefined &&
         record.current_clue_override !== ""
       ) {
-
         const override = Number(record.current_clue_override);
 
         if (!Number.isNaN(override)) {
@@ -186,12 +124,10 @@ export async function onRequestGet(context) {
       const parsed = parseFrequency(record.drop_frequency);
 
       if (parsed.type === "weekdays") {
-
         let count = 0;
         const cursor = new Date(startMs);
 
         while (cursor.getTime() <= nowMs && count < totalClues) {
-
           const day = cursor.getDay();
 
           if (day !== 0 && day !== 6) {
@@ -213,21 +149,11 @@ export async function onRequestGet(context) {
     const current_clue = calculateCurrentClue();
 
     function getSeasonState() {
-
-      if (record.status === "paused") {
-        return "paused";
-      }
-
-      if (record.status === "tech_diff") {
-        return "tech_diff";
-      }
-
-      if (record.status === "complete") {
-        return "complete";
-      }
+      if (record.status === "paused") return "paused";
+      if (record.status === "tech_diff") return "tech_diff";
+      if (record.status === "complete") return "complete";
 
       if (record.season_end) {
-
         const endMs = new Date(record.season_end).getTime();
 
         if (!Number.isNaN(endMs) && Date.now() > endMs) {
@@ -246,10 +172,9 @@ export async function onRequestGet(context) {
     const is_complete = season_state === "complete";
 
     function calculateIsResolved() {
-
       const override = record.base_station_resolved_override;
 
-      if (truthyAirtableValue(override)) {
+      if (truthyValue(override)) {
         return true;
       }
 
@@ -278,12 +203,8 @@ export async function onRequestGet(context) {
       let durationMs = 0;
 
       if (parsed.type === "fixed") {
-
-        durationMs =
-          (totalClues - 1) * parsed.ms;
-
+        durationMs = (totalClues - 1) * parsed.ms;
       } else if (parsed.type === "weekdays") {
-
         durationMs =
           (totalClues + Math.floor(totalClues / 5) * 2) *
           24 *
@@ -297,49 +218,26 @@ export async function onRequestGet(context) {
       let resolvedDelayMs = 0;
 
       if (parsed.type === "fixed") {
-
         resolvedDelayMs = parsed.ms;
-
       } else if (parsed.type === "weekdays") {
-
-        resolvedDelayMs =
-          24 * 60 * 60 * 1000;
+        resolvedDelayMs = 24 * 60 * 60 * 1000;
       }
 
-      const resolvedTime =
-        lastClueTime + resolvedDelayMs;
+      const resolvedTime = lastClueTime + resolvedDelayMs;
 
       return Date.now() >= resolvedTime;
     }
 
     const is_resolved = calculateIsResolved();
 
-    const lifelineRaw = getAirtableField(record, [
-      "life",
-      "lifeline_live",
-      "lifelineLive",
-      "Lifeline Live",
-      "Lifeline live",
-      "lifeline live",
-      "lifeline"
-    ], false);
+    const lifelineLive = truthyValue(
+      record.life ?? record.lifeline_live ?? record.lifelineLive ?? false
+    );
 
-    const lifelineLive =
-      truthyAirtableValue(lifelineRaw);
+    const pop1 = truthyValue(record.pop1);
+    const pop2 = truthyValue(record.pop2);
 
-    const pop1Raw = getAirtableField(record, [
-      "pop1",
-      "POP1",
-      "Pop 1",
-      "pop_1"
-    ], false);
-
-    const pop2Raw = getAirtableField(record, [
-      "pop2",
-      "POP2",
-      "Pop 2",
-      "pop_2"
-    ], false);
+    const nowIso = new Date().toISOString();
 
     return Response.json({
       ok: true,
@@ -367,13 +265,10 @@ export async function onRequestGet(context) {
       total_clues: totalClues,
       totalClues: totalClues,
 
-      current_clue_override:
-        record.current_clue_override ?? null,
+      current_clue_override: record.current_clue_override ?? null,
+      currentClueOverride: record.current_clue_override ?? null,
 
-      currentClueOverride:
-        record.current_clue_override ?? null,
-
-      current_clue: current_clue,
+      current_clue,
       currentClue: current_clue,
 
       season_end: record.season_end || "",
@@ -381,45 +276,37 @@ export async function onRequestGet(context) {
 
       notes: record.notes || "",
 
-      season_state: season_state,
+      season_state,
       seasonState: season_state,
 
-      is_complete: is_complete,
+      is_complete,
       isComplete: is_complete,
 
-      is_resolved: is_resolved,
+      is_resolved,
       isResolved: is_resolved,
 
       lifeline_live: lifelineLive,
-      lifelineLive: lifelineLive,
+      lifelineLive,
       lifelineAvailable: lifelineLive,
 
-      pop1: truthyAirtableValue(pop1Raw),
-      pop2: truthyAirtableValue(pop2Raw),
+      pop1,
+      pop2,
 
-      has_leaderboard_entries:
-        has_leaderboard_entries,
+      has_leaderboard_entries,
+      leaderboard_count,
 
-      leaderboard_count:
-        leaderboard_count,
+      hasLeaderboardEntries: has_leaderboard_entries,
+      leaderboardCount: leaderboard_count,
 
-      hasLeaderboardEntries:
-        has_leaderboard_entries,
-
-      leaderboardCount:
-        leaderboard_count,
-
-      now_iso: new Date().toISOString(),
-      nowIso: new Date().toISOString()
+      now_iso: nowIso,
+      nowIso
     });
 
   } catch (err) {
-
     return Response.json({
       ok: false,
       error: "Server error",
       detail: err.message
     });
-
   }
 }
