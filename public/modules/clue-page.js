@@ -548,22 +548,25 @@ body {
 }
 
 .ww-hotspot-base {
-  left: 10%;
-  top: var(--ww-hotspot-group-top);
+  left: 20%;
+    top: 50%;
+
   width: var(--ww-hotspot-base-width);
   height: var(--ww-hotspot-base-height);
 }
 
 .ww-hotspot-clues {
-  left: 21.0%;
-  top: calc(var(--ww-hotspot-group-top) + var(--ww-hotspot-gap));
+  left: 15%;
+    top: 60%;
+
   width: var(--ww-hotspot-clues-width);
   height: var(--ww-hotspot-clues-height);
 }
 
 .ww-hotspot-life {
-  left: 21.7%;
-  top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2) + 0.65%);
+  left: 15%;
+    top: 70%;
+
   width: var(--ww-hotspot-life-width);
   height: var(--ww-hotspot-life-height);
 }
