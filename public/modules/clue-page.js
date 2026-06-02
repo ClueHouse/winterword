@@ -422,8 +422,8 @@ body {
   padding: 0;
   margin: 0;
 
-  border: 2px solid rgba(255,0,0,0.85);
-  background: rgba(255,0,0,0.12);
+  border: none;
+  background: transparent;
 
   cursor: pointer;
   transform: translate(-50%, -50%);
