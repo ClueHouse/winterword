@@ -58,25 +58,25 @@ export function renderCluePage(app, data = {}, navigate) {
 
   /* BASE overlay */
   --ww-overlay-base-left: 17%;
-  --ww-overlay-base-top: 50.5%;
+  --ww-overlay-base-top: 50%;
   --ww-overlay-base-width: 20%;
   --ww-overlay-base-height: 4.8%;
 
   /* CLUES overlay */
   --ww-overlay-clues-left: 17%;
-  --ww-overlay-clues-top: 59%;
+  --ww-overlay-clues-top: 58.5%;
   --ww-overlay-clues-width: 30%;
   --ww-overlay-clues-height: 4.8%;
 
   /* LIFE overlay */
   --ww-overlay-life-left: 17%;
-  --ww-overlay-life-top: 68%;
+  --ww-overlay-life-top: 67.5%;
   --ww-overlay-life-width: 20%;
-  --ww-overlay-life-height: 6%;
+  --ww-overlay-life-height: 4.8%;
 
   /* PLAY overlay — only appears on clue 5 and clue 7 */
-  --ww-overlay-play-left: 19.4%;
-  --ww-overlay-play-top: 81.8%;
+  --ww-overlay-play-left: 18.5%;
+  --ww-overlay-play-top: 81%;
   --ww-overlay-play-diameter: 6%;
 }
 
