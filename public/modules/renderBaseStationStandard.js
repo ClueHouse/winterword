@@ -875,8 +875,8 @@ justify-content:flex-start;
 
 .ww-guidepost-copy{
   position:absolute;
-  left:0;
-  right:0;
+  left:8%;
+  right:8%;
   top:34%;
   bottom:8%;
 
@@ -884,16 +884,23 @@ justify-content:flex-start;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:.85rem;
+  gap:1.15rem;
 
   text-align:center;
 
-  font-size:clamp(16px,1.28vw,24px);
-  line-height:1.9;
+  font-size:clamp(17px,1.32vw,25px);
+  line-height:2;
 
   color:rgba(245,239,227,.96);
 
+  letter-spacing:.01em;
 
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.65);
+}
+
+.ww-guidepost-copy span{
+  max-width:92%;
 }
 
 
