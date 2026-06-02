@@ -850,6 +850,29 @@ justify-content:flex-start;
     0 0 34px rgba(255,180,75,.08);
 }
 
+.ww-guidepost-title::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-1rem;
+
+  width:90px;
+  height:2px;
+
+  transform:translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,223,166,.95),
+      transparent
+    );
+
+  box-shadow:
+    0 0 10px rgba(255,190,95,.35);
+}
+
 .ww-guidepost-copy{
   position:absolute;
   left:0;
