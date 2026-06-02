@@ -76,7 +76,7 @@ export function renderCluePage(app, data = {}, navigate) {
 
   /* PLAY overlay — only appears on clue 5 and clue 7 */
   --ww-overlay-play-left: 17.5%;
-  --ww-overlay-play-top: 79%;
+  --ww-overlay-play-top: 79.5%;
   --ww-overlay-play-diameter: 6%;
 }
 
