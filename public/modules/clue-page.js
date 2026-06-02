@@ -67,9 +67,9 @@ Yet something’s not at home.
 :root {
   --ww-clue-bg-src: "${clueBackground}";
 
-  --ww-hotspot-group-left: 30%;
-  --ww-hotspot-group-top: 49%;
-  --ww-hotspot-gap: 9.2%;
+  --ww-hotspot-group-left: 19.4%;
+  --ww-hotspot-group-top: 49.7%;
+  --ww-hotspot-gap: 9.3%;
 
   --ww-hotspot-play-top: 81%;
 
@@ -416,12 +416,6 @@ body {
   transform: translate(-50%, -50%);
   overflow: visible;
 
-  transition:
-    transform 140ms ease,
-    background 180ms ease,
-    box-shadow 180ms ease;
-
-  overflow: visible;
   transition:
     transform 140ms ease,
     background 180ms ease,
