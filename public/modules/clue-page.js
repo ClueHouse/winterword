@@ -73,7 +73,7 @@ Yet something’s not at home.
 
   --ww-hotspot-play-top: 81%;
 
-  --ww-hotspot-base-width: 11%;
+  --ww-hotspot-base-width: 40%;
   --ww-hotspot-base-height: 4.8%;
 
   --ww-hotspot-clues-width: 17%;
