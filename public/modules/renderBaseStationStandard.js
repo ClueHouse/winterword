@@ -842,7 +842,11 @@ justify-content:flex-start;
   text-transform:uppercase;
   font-weight:700;
 
-  color:red;
+  color:rgba(255,236,198,.98);
+
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.92),
+    0 0 18px rgba(255,180,75,.18);
 }
 
 .ww-guidepost-title::after{
@@ -870,10 +874,8 @@ justify-content:flex-start;
 
 .ww-guidepost-copy{
   position:absolute;
-  left:8%;
-  right:8%;
-  top:34%;
-  bottom:8%;
+  inset:0;
+  padding:clamp(5.5rem,9vh,7.5rem) 8% clamp(1.4rem,3vh,2.4rem);
 
   display:flex;
   flex-direction:column;
@@ -887,7 +889,6 @@ justify-content:flex-start;
   line-height:2;
 
   color:rgba(245,239,227,.96);
-
   letter-spacing:.01em;
 
   text-shadow:
