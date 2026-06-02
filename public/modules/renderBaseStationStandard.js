@@ -779,11 +779,11 @@ justify-content:flex-start;
 }
 
 .ww-word-solve::before{
-  left:1.12rem;
+  display:none;
 }
 
 .ww-word-solve::after{
-  right:1.12rem;
+  display:none;
 }
 
 .ww-word-solve:hover,
