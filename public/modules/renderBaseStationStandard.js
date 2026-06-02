@@ -766,6 +766,10 @@ justify-content:flex-start;
     0 0 14px rgba(255,196,100,.48);
 }
 
+.ww-word-solve::after{
+  content:none !important;
+}
+
 .ww-word-solve::before,
 .ww-word-solve::after{
   content:"✦";
