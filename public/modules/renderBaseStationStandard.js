@@ -735,22 +735,64 @@ justify-content:flex-start;
 }
 
 .ww-word-solve{
-  width:clamp(9rem,11.5vw,12rem);
-  padding:clamp(.42rem,1.05vh,.68rem) 1rem;
-  border:1px solid rgba(255,197,111,.44);
-  border-radius:1rem;
-  background:linear-gradient(
-    180deg,
-    rgba(255,197,111,.105),
-    rgba(255,197,111,.035)
-  );
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.035),
-    0 0 18px rgba(255,185,80,.055);
+  width:clamp(10.2rem,13.4vw,14.4rem);
+  min-height:clamp(2.15rem,4.25vh,3rem);
+  padding:clamp(.56rem,1.18vh,.86rem) 1.45rem;
 
-  font-size:clamp(17px,1.58vw,33px);
-  letter-spacing:.34em;
-  color:#ffc56f;
+  border:1px solid rgba(255,210,132,.72);
+  border-radius:999px;
+
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,236,178,.24), rgba(255,236,178,0) 48%),
+    linear-gradient(180deg, rgba(120,76,26,.92) 0%, rgba(72,43,16,.96) 44%, rgba(28,18,9,.98) 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,246,214,.28),
+    inset 0 -10px 18px rgba(0,0,0,.36),
+    0 10px 24px rgba(0,0,0,.34),
+    0 0 24px rgba(255,185,80,.13);
+
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(18px,1.72vw,35px);
+  letter-spacing:.24em;
+  color:#ffe1a6;
+
+  text-shadow:
+    0 2px 4px rgba(0,0,0,.86),
+    0 0 12px rgba(255,190,95,.18);
+}
+
+.ww-word-solve::before,
+.ww-word-solve::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  width:7px;
+  height:7px;
+  border:1px solid rgba(255,220,154,.72);
+  background:rgba(255,197,111,.18);
+  transform:translateY(-50%) rotate(45deg);
+  box-shadow:0 0 9px rgba(255,190,95,.18);
+}
+
+.ww-word-solve::before{
+  left:1rem;
+}
+
+.ww-word-solve::after{
+  right:1rem;
+}
+
+.ww-word-solve:hover,
+.ww-word-solve:focus-visible{
+  transform:translateY(-3px);
+  color:#fff2cf;
+  border-color:rgba(255,226,164,.92);
+  box-shadow:
+    inset 0 1px 0 rgba(255,246,214,.34),
+    inset 0 -10px 18px rgba(0,0,0,.32),
+    0 14px 30px rgba(0,0,0,.4),
+    0 0 34px rgba(255,185,80,.22);
 }
 
 .ww-guidepost{
@@ -824,9 +866,6 @@ justify-content:flex-start;
 
   color:rgba(245,239,227,.96);
 
-outline:4px solid red !important;
-transform:translateY(100px) !important;
-  
 }
 
 
@@ -834,20 +873,28 @@ transform:translateY(100px) !important;
 .ww-tooltip{
   position:absolute;
   z-index:100;
-  left:26.7%;
-  width:18%;
-  min-width:190px;
-  padding:.82rem .92rem;
+
+  /* One shared tooltip home for all four left buttons. */
+  left:43.5%;
+  top:43%;
+
+  width:min(24vw,360px);
+  min-width:230px;
+  padding:.9rem 1rem;
+
   border:1px solid rgba(230,230,230,.92);
-  border-radius:.75rem;
+  border-radius:.82rem;
   background:rgba(255,255,255,.96);
   color:rgba(0,0,0,.88);
-  font-size:clamp(9px,.72vw,13px);
+
+  font-size:clamp(10px,.74vw,14px);
   line-height:1.42;
+
   box-shadow:0 16px 44px rgba(0,0,0,.38);
   opacity:0;
   pointer-events:none;
-  transform:translateY(-50%) translateX(-6px);
+
+  transform:translateY(-50%) translateX(-8px);
   transition:opacity 150ms ease, transform 150ms ease;
 }
 
@@ -884,10 +931,12 @@ transform:translateY(100px) !important;
   margin-top:.22rem;
 }
 
-.ww-clue-tooltip{ top:33%; }
-.ww-life-tooltip{ top:38%; }
-.ww-leader-tooltip{ top:44%; }
-.ww-solve-tooltip{ top:55%; }
+.ww-clue-tooltip,
+.ww-life-tooltip,
+.ww-leader-tooltip,
+.ww-solve-tooltip{
+  top:43%;
+}
 
 .ww-solve-overlay{
   position:fixed;
@@ -1435,8 +1484,9 @@ transform:translateY(100px) !important;
   }
 
   .ww-word-solve{
-    font-size:clamp(15px,1.35vw,26px);
-    padding:.36rem .85rem;
+    font-size:clamp(16px,1.45vw,28px);
+    min-height:clamp(1.85rem,3.55vh,2.45rem);
+    padding:.44rem 1.05rem;
   }
 
   .ww-guidepost{
