@@ -548,15 +548,15 @@ body {
 }
 
 .ww-hotspot-base {
-  left: 20%;
-    top: 50%;
+  left: 25%;
+    top: 51%;
 
   width: var(--ww-hotspot-base-width);
   height: var(--ww-hotspot-base-height);
 }
 
 .ww-hotspot-clues {
-  left: 15%;
+  left: 12%;
     top: 60%;
 
   width: var(--ww-hotspot-clues-width);
@@ -564,8 +564,8 @@ body {
 }
 
 .ww-hotspot-life {
-  left: 15%;
-    top: 70%;
+  left: 12%;
+    top: 68%;
 
   width: var(--ww-hotspot-life-width);
   height: var(--ww-hotspot-life-height);
