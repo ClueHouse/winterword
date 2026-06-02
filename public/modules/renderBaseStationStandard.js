@@ -757,14 +757,14 @@ justify-content:flex-start;
   width:88%;
   min-height:0;
   flex:1 1 auto;
+
   display:flex;
   flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  gap:clamp(.85rem,1.8vh,1.75rem);
+
   margin-top:clamp(.2rem,.8vh,.5rem);
+
   padding:clamp(1.15rem,2.5vh,2.3rem) clamp(1rem,2.2vw,2.2rem);
+
   border-radius:1.8rem;
   overflow:hidden;
 
