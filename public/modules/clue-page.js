@@ -67,13 +67,13 @@ Yet something’s not at home.
 :root {
   --ww-clue-bg-src: "${clueBackground}";
 
-  --ww-hotspot-group-left: 60%;
+  --ww-hotspot-group-left: 30%;
   --ww-hotspot-group-top: 49%;
   --ww-hotspot-gap: 9.2%;
 
   --ww-hotspot-play-top: 81%;
 
-  --ww-hotspot-base-width: 40%;
+  --ww-hotspot-base-width: 11%;
   --ww-hotspot-base-height: 4.8%;
 
   --ww-hotspot-clues-width: 17%;
