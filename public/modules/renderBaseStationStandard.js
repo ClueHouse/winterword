@@ -905,7 +905,7 @@ justify-content:flex-start;
   z-index:100;
 
   /* FIXED SHARED TOOLTIP POSITION — all four left buttons use this one spot */
-  left:42%;
+  left:32%;
   top:36.5%;
 
   width:clamp(260px,24vw,420px);
