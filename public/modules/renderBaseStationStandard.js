@@ -885,7 +885,7 @@ padding:clamp(4.2rem,7vh,6rem) 8% clamp(2.2rem,4vh,3.4rem);
 
   text-align:center;
 
-  font-size:clamp(17px,1.32vw,25px);
+font-size:clamp(15px,1.08vw,21px);
   line-height:2;
 
   color:rgba(245,239,227,.96);
