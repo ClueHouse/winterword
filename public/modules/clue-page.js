@@ -75,19 +75,19 @@ Yet something’s not at home.
 
      BASE overlay
   ================================================== */
-  --ww-overlay-base-left: 16%;
-  --ww-overlay-base-top: 48%;
+  --ww-overlay-base-left: 18%;
+  --ww-overlay-base-top: 53%;
   --ww-overlay-base-width: 20%;
   --ww-overlay-base-height: 4.8%;
 
   /* CLUES overlay */
-  --ww-overlay-clues-left: 16%;
-  --ww-overlay-clues-top: 58%;
+  --ww-overlay-clues-left: 18%;
+  --ww-overlay-clues-top: 60%;
   --ww-overlay-clues-width: 30%;
   --ww-overlay-clues-height: 4.8%;
 
   /* LIFE overlay */
-  --ww-overlay-life-left: 16%;
+  --ww-overlay-life-left: 18%;
   --ww-overlay-life-top: 68%;
   --ww-overlay-life-width: 20%;
   --ww-overlay-life-height: 6%;
