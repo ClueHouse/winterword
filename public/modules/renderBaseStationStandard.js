@@ -835,23 +835,23 @@ justify-content:flex-start;
 }
 .ww-guidepost-copy{
   flex:1;
-
 .ww-guidepost-copy{
   width:100%;
   flex:1 1 auto;
-  min-height:220px;
 
-  display:grid;
-  place-items:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 
   text-align:center;
+
+  padding-top:6vh;
 
   font-size:clamp(16px,1.28vw,24px);
   line-height:1.9;
 
   color:rgba(245,239,227,.96);
-
-  transform:translateY(42px);
 }
 
 
