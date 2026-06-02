@@ -76,13 +76,13 @@ Yet something’s not at home.
      BASE overlay
   ================================================== */
   --ww-overlay-base-left: 17%;
-  --ww-overlay-base-top: 51%;
+  --ww-overlay-base-top: 50.5%;
   --ww-overlay-base-width: 20%;
   --ww-overlay-base-height: 4.8%;
 
   /* CLUES overlay */
   --ww-overlay-clues-left: 17%;
-  --ww-overlay-clues-top: 60%;
+  --ww-overlay-clues-top: 59.5%;
   --ww-overlay-clues-width: 30%;
   --ww-overlay-clues-height: 4.8%;
 
