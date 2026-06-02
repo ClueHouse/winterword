@@ -82,7 +82,7 @@ Yet something’s not at home.
 
   /* CLUES overlay */
   --ww-overlay-clues-left: 17%;
-  --ww-overlay-clues-top: 59.5%;
+  --ww-overlay-clues-top: 59%;
   --ww-overlay-clues-width: 30%;
   --ww-overlay-clues-height: 4.8%;
 
