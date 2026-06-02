@@ -408,8 +408,19 @@ body {
   display: block;
   padding: 0;
   margin: 0;
-  border: none;
-  background: transparent;
+
+  border: 2px solid rgba(255,0,0,0.85);
+  background: rgba(255,0,0,0.12);
+
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+
+  transition:
+    transform 140ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
   cursor: pointer;
   transform: translate(-50%, -50%);
   overflow: visible;
