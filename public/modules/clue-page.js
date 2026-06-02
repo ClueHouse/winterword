@@ -548,21 +548,21 @@ body {
 }
 
 .ww-hotspot-base {
-  left: var(--ww-hotspot-group-left);
+  left: 22.2%;
   top: var(--ww-hotspot-group-top);
   width: var(--ww-hotspot-base-width);
   height: var(--ww-hotspot-base-height);
 }
 
 .ww-hotspot-clues {
-  left: var(--ww-hotspot-group-left);
+  left: 21.0%;
   top: calc(var(--ww-hotspot-group-top) + var(--ww-hotspot-gap));
   width: var(--ww-hotspot-clues-width);
   height: var(--ww-hotspot-clues-height);
 }
 
 .ww-hotspot-life {
-  left: var(--ww-hotspot-group-left);
+  left: 21.7%;
   top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2) + 0.65%);
   width: var(--ww-hotspot-life-width);
   height: var(--ww-hotspot-life-height);
