@@ -75,8 +75,8 @@ Yet something’s not at home.
 
      BASE overlay
   ================================================== */
-  --ww-overlay-base-left: 45%;
-  --ww-overlay-base-top: 55%;
+  --ww-overlay-base-left: 35%;
+  --ww-overlay-base-top: 60%;
   --ww-overlay-base-width: 11%;
   --ww-overlay-base-height: 4.8%;
 
