@@ -842,12 +842,7 @@ justify-content:flex-start;
   text-transform:uppercase;
   font-weight:700;
 
-  color:rgba(255,236,198,.98);
-
-  text-shadow:
-    0 2px 10px rgba(0,0,0,.92),
-    0 0 18px rgba(255,180,75,.18),
-    0 0 34px rgba(255,180,75,.08);
+  color:red;
 }
 
 .ww-guidepost-title::after{
