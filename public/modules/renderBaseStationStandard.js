@@ -833,17 +833,21 @@ justify-content:flex-start;
       transparent
     );
 }
-
 .ww-guidepost-copy{
-  max-width:94%;
+  width:100%;
+  flex:1;
+
   display:flex;
   flex-direction:column;
+  align-items:center;
   justify-content:center;
-  align-items:center;   /* centre horizontally */
-  text-align:center;    /* centre text */
 
-  font-size:clamp(13px,1.1vw,20px); /* larger text */
-  line-height:1.7;
+  text-align:center;
+
+  font-size:clamp(15px,1.25vw,24px);
+  line-height:1.75;
+
+  color:rgba(245,239,227,.96);
 }
 
 
