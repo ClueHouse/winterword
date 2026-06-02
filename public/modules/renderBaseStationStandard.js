@@ -875,7 +875,7 @@ justify-content:flex-start;
 .ww-guidepost-copy{
   position:absolute;
   inset:0;
-  padding:clamp(5.5rem,9vh,7.5rem) 8% clamp(1.4rem,3vh,2.4rem);
+padding:clamp(4.2rem,7vh,6rem) 8% clamp(2.2rem,4vh,3.4rem);
 
   display:flex;
   flex-direction:column;
