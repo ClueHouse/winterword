@@ -772,22 +772,8 @@ justify-content:flex-start;
 
 .ww-word-solve::before,
 .ww-word-solve::after{
-  content:"✦";
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:.62em;
-  letter-spacing:0;
-  color:rgba(255,226,168,.94);
-  text-shadow:0 0 12px rgba(255,190,88,.42);
-}
-
-.ww-word-solve::before{
-  display:none;
-}
-
-.ww-word-solve::after{
-  display:none;
+  content:none !important;
+  display:none !important;
 }
 
 .ww-word-solve:hover,
