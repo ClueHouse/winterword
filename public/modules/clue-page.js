@@ -67,7 +67,7 @@ Yet something’s not at home.
 :root {
   --ww-clue-bg-src: "${clueBackground}";
 
-  --ww-hotspot-group-left: 26%;
+  --ww-hotspot-group-left: 33%;
   --ww-hotspot-group-top: 49%;
   --ww-hotspot-gap: 9.2%;
 
