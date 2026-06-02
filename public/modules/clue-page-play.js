@@ -46,24 +46,38 @@ export function renderCluePage(app, data = {}, navigate) {
   app.innerHTML = `
 <style>
 :root {
-  --ww-clue-bg: url("${clueBackground}");
+  --ww-clue-bg-src: "${clueBackground}";
 
-  --ww-hotspot-group-left: 17.7%;
-  --ww-hotspot-group-top: 50.1%;
-  --ww-hotspot-gap: 9%;
+  /* ==================================================
+     STEADFAST OVERLAYS — edit these only
 
-  --ww-hotspot-play-top: 81.8%;
+     left/top place the CENTRE of each overlay.
+     width/height control the clickable rectangle.
+     These are locked to the 16:9 artboard, not the browser window.
+  ================================================== */
 
-  --ww-hotspot-base-width: 11%;
-  --ww-hotspot-base-height: 4.8%;
+  /* BASE overlay */
+  --ww-overlay-base-left: 17%;
+  --ww-overlay-base-top: 50.5%;
+  --ww-overlay-base-width: 20%;
+  --ww-overlay-base-height: 4.8%;
 
-  --ww-hotspot-clues-width: 17%;
-  --ww-hotspot-clues-height: 4.8%;
+  /* CLUES overlay */
+  --ww-overlay-clues-left: 17%;
+  --ww-overlay-clues-top: 59%;
+  --ww-overlay-clues-width: 30%;
+  --ww-overlay-clues-height: 4.8%;
 
-  --ww-hotspot-life-width: 11%;
-  --ww-hotspot-life-height: 4.8%;
+  /* LIFE overlay */
+  --ww-overlay-life-left: 17%;
+  --ww-overlay-life-top: 68%;
+  --ww-overlay-life-width: 20%;
+  --ww-overlay-life-height: 6%;
 
-  --ww-hotspot-play-diameter: min(10vw, 10vh);
+  /* PLAY overlay — only appears on clue 5 and clue 7 */
+  --ww-overlay-play-left: 19.4%;
+  --ww-overlay-play-top: 81.8%;
+  --ww-overlay-play-diameter: 6%;
 }
 
 * {
@@ -99,22 +113,40 @@ body {
 .ww-clue-map {
   position: absolute;
   inset: 0;
-  background-image: var(--ww-clue-bg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
   overflow: hidden;
+}
+
+.ww-clue-artboard {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(100vw, 177.7778vh);
+  height: min(100vh, 56.25vw);
+  transform: translate(-50%, -50%);
+  overflow: visible;
+}
+
+.ww-clue-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  z-index: 0;
+  user-select: none;
+  pointer-events: none;
 }
 
 /* STANDARD CLUES */
 
 .ww-main-clue {
   position: absolute;
-  right: 7vw;
+  right: 4.1%;
   top: 50%;
   transform: translateY(-50%);
-  width: min(54vw, 1088px);
-  max-height: 78vh;
+  width: 54%;
+  max-height: 78%;
   object-fit: contain;
   display: block;
   z-index: 2;
@@ -143,11 +175,10 @@ body {
 
 .ww-clue-six-scroll-panel {
   position: absolute;
-  left: 38vw;
-  right: 4vw;
-  top: 50%;
-  height: 82vh;
-  transform: translateY(-50%);
+  top: 10%;
+  bottom: 10%;
+  left: 34%;
+  right: 3.5%;
   z-index: 2;
 
   overflow-y: auto;
@@ -176,10 +207,10 @@ body {
 
 .ww-clue-fallback {
   position: absolute;
-  right: 7vw;
+  right: 4.1%;
   top: 50%;
   transform: translateY(-50%);
-  width: min(54vw, 760px);
+  width: min(54%, 760px);
   padding: 2rem;
   border-radius: 1rem;
   background: rgba(255,255,255,0.08);
@@ -207,11 +238,18 @@ body {
   display: block;
   padding: 0;
   margin: 0;
-  border: none;
-  background: transparent;
+
+  border: 2px solid rgba(255,0,0,0.85);
+  background: rgba(255,0,0,0.12);
+
   cursor: pointer;
   transform: translate(-50%, -50%);
   overflow: visible;
+
+  transition:
+    transform 140ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .ww-hotspot:active {
@@ -271,27 +309,48 @@ body {
 .ww-hotspot-life[data-locked="true"]::after {
   content: "This path remains hidden, for now";
   position: absolute;
-  left: 50%;
-  top: 155%;
-  transform: translateX(-50%);
-  padding: 0.58rem 1.25rem;
-  font-size: 0.86rem;
-  font-weight: 800;
+
+  left: 112%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: max-content;
+  padding: 1rem 2.6rem;
+
+  font-size: 0.82rem;
+  font-weight: 700;
   letter-spacing: 0.035em;
-  color: rgba(78,8,8,0.98);
-  background: rgba(255,248,244,0.96);
-  border: 1px solid rgba(120,20,20,0.35);
-  border-radius: 0.55rem;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+  text-align: center;
   white-space: nowrap;
+
+  color: rgba(245,238,224,0.96);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(26,28,32,0.98),
+      rgba(8,9,12,0.98)
+    );
+
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 999px;
+
+  box-shadow:
+    0 14px 34px rgba(0,0,0,0.72),
+    inset 0 0 0 1px rgba(255,255,255,0.035),
+    inset 0 8px 18px rgba(255,255,255,0.035);
+
   opacity: 0;
   pointer-events: none;
-  transition: opacity 180ms ease, transform 180ms ease;
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 .ww-hotspot-life[data-locked="true"]:hover::after {
   opacity: 1;
-  transform: translateX(-50%) translateY(2px);
+  transform: translateY(-50%) translateY(2px);
 }
 
 .ww-hotspot-life[data-locked="true"]:hover {
@@ -319,31 +378,34 @@ body {
 }
 
 .ww-hotspot-base {
-  left: var(--ww-hotspot-group-left);
-  top: var(--ww-hotspot-group-top);
-  width: var(--ww-hotspot-base-width);
-  height: var(--ww-hotspot-base-height);
+  left: var(--ww-overlay-base-left);
+  top: var(--ww-overlay-base-top);
+
+  width: var(--ww-overlay-base-width);
+  height: var(--ww-overlay-base-height);
 }
 
 .ww-hotspot-clues {
-  left: var(--ww-hotspot-group-left);
-  top: calc(var(--ww-hotspot-group-top) + var(--ww-hotspot-gap));
-  width: var(--ww-hotspot-clues-width);
-  height: var(--ww-hotspot-clues-height);
+  left: var(--ww-overlay-clues-left);
+  top: var(--ww-overlay-clues-top);
+
+  width: var(--ww-overlay-clues-width);
+  height: var(--ww-overlay-clues-height);
 }
 
 .ww-hotspot-life {
-  left: var(--ww-hotspot-group-left);
-  top: calc(var(--ww-hotspot-group-top) + (var(--ww-hotspot-gap) * 2) + .9%);
-  width: var(--ww-hotspot-life-width);
-  height: var(--ww-hotspot-life-height);
+  left: var(--ww-overlay-life-left);
+  top: var(--ww-overlay-life-top);
+
+  width: var(--ww-overlay-life-width);
+  height: var(--ww-overlay-life-height);
 }
 
 .ww-hotspot-play {
-  left: var(--ww-hotspot-group-left);
-  top: var(--ww-hotspot-play-top);
-  width: var(--ww-hotspot-play-diameter);
-  height: var(--ww-hotspot-play-diameter);
+  left: var(--ww-overlay-play-left);
+  top: var(--ww-overlay-play-top);
+  width: var(--ww-overlay-play-diameter);
+  height: var(--ww-overlay-play-diameter);
   border-radius: 999px;
   overflow: visible;
 }
@@ -445,85 +507,94 @@ body {
 <div id="wwPortal">
   <main class="ww-clue-stage" aria-label="${esc(title)}">
     <section class="ww-clue-map" aria-label="WinterWord clue page">
+      <div class="ww-clue-artboard">
+        <img
+          class="ww-clue-bg-image"
+          src="${esc(clueBackground)}"
+          alt=""
+          aria-hidden="true"
+          loading="eager"
+          decoding="async"
+        >
 
-      ${
-        image
-          ? isClueSix
-            ? `
-              <section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
+        ${
+          image
+            ? isClueSix
+              ? `
+                <section class="ww-clue-six-scroll-panel" aria-label="${esc(alt)}">
+                  <img
+                    class="ww-clue-six-image"
+                    src="${esc(image)}"
+                    alt="${esc(alt)}"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                </section>
+              `
+              : `
                 <img
-                  class="ww-clue-six-image"
+                  class="ww-main-clue"
                   src="${esc(image)}"
                   alt="${esc(alt)}"
                   loading="lazy"
                   decoding="async"
                 >
+              `
+            : `
+              <section class="ww-clue-fallback">
+                <h1>${esc(title)}</h1>
+                <p>${body ? esc(body) : "No clue image has been supplied yet."}</p>
               </section>
             `
-            : `
-              <img
-                class="ww-main-clue"
-                src="${esc(image)}"
-                alt="${esc(alt)}"
-                loading="lazy"
-                decoding="async"
+        }
+
+        ${
+          hasAudio
+            ? `
+              <button
+                class="ww-hotspot ww-hotspot-play"
+                id="wwPlayButton"
+                type="button"
+                aria-label="Play clue audio"
+                data-playing="false"
+                data-flash="false"
               >
+                <span class="ww-screen-reader-only">Play clue audio</span>
+              </button>
             `
-          : `
-            <section class="ww-clue-fallback">
-              <h1>${esc(title)}</h1>
-              <p>${body ? esc(body) : "No clue image has been supplied yet."}</p>
-            </section>
-          `
-      }
+            : ""
+        }
 
-      ${
-        hasAudio
-          ? `
-            <button
-              class="ww-hotspot ww-hotspot-play"
-              id="wwPlayButton"
-              type="button"
-              aria-label="Play clue audio"
-              data-playing="false"
-              data-flash="false"
-            >
-              <span class="ww-screen-reader-only">Play clue audio</span>
-            </button>
-          `
-          : ""
-      }
+        <button
+          class="ww-hotspot ww-hotspot-base"
+          type="button"
+          data-nav="base-station"
+          aria-label="Go to Base Station"
+        >
+          <span class="ww-screen-reader-only">Base Station</span>
+        </button>
 
-      <button
-        class="ww-hotspot ww-hotspot-base"
-        type="button"
-        data-nav="base-station"
-        aria-label="Go to Base Station"
-      >
-        <span class="ww-screen-reader-only">Base Station</span>
-      </button>
+        <button
+          class="ww-hotspot ww-hotspot-clues"
+          type="button"
+          data-nav="clues"
+          aria-label="Go to Clues"
+        >
+          <span class="ww-screen-reader-only">Clues</span>
+        </button>
 
-      <button
-        class="ww-hotspot ww-hotspot-clues"
-        type="button"
-        data-nav="clues"
-        aria-label="Go to Clues"
-      >
-        <span class="ww-screen-reader-only">Clues</span>
-      </button>
-
-      <button
-        class="ww-hotspot ww-hotspot-life"
-        type="button"
-        data-nav="lifeline"
-        data-locked="${lifelineUnlocked ? "false" : "true"}"
-        aria-label="${lifelineUnlocked ? "Go to Lifeline" : "Lifeline unavailable"}"
-      >
-        <span class="ww-screen-reader-only">
-          ${lifelineUnlocked ? "Lifeline" : "Lifeline unavailable"}
-        </span>
-      </button>
-
+        <button
+          class="ww-hotspot ww-hotspot-life"
+          type="button"
+          data-nav="lifeline"
+          data-locked="${lifelineUnlocked ? "false" : "true"}"
+          aria-label="${lifelineUnlocked ? "Go to Lifeline" : "Lifeline unavailable"}"
+        >
+          <span class="ww-screen-reader-only">
+            ${lifelineUnlocked ? "Lifeline" : "Lifeline unavailable"}
+          </span>
+        </button>
+      </div>
     </section>
   </main>
 </div>
