@@ -888,7 +888,7 @@ padding:clamp(4.2rem,7vh,6rem) 8% clamp(2.2rem,4vh,3.4rem);
 font-size:clamp(15px,1.08vw,21px);
   line-height:2;
 
-  color:rgba(245,239,227,.96);
+color:rgba(238,232,220,.92);
   letter-spacing:.01em;
 
   text-shadow:
