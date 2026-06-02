@@ -548,7 +548,7 @@ body {
 }
 
 .ww-hotspot-base {
-  left: 20%;
+  left: 10%;
   top: var(--ww-hotspot-group-top);
   width: var(--ww-hotspot-base-width);
   height: var(--ww-hotspot-base-height);
