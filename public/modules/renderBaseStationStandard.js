@@ -735,64 +735,70 @@ justify-content:flex-start;
 }
 
 .ww-word-solve{
-  width:clamp(10.2rem,13.4vw,14.4rem);
-  min-height:clamp(2.15rem,4.25vh,3rem);
-  padding:clamp(.56rem,1.18vh,.86rem) 1.45rem;
+  width:clamp(9.8rem,12.6vw,13.4rem);
+  min-height:clamp(2.05rem,4.2vh,2.9rem);
+  padding:clamp(.5rem,1.15vh,.78rem) 1.25rem;
 
   border:1px solid rgba(255,210,132,.72);
   border-radius:999px;
 
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(255,236,178,.24), rgba(255,236,178,0) 48%),
-    linear-gradient(180deg, rgba(120,76,26,.92) 0%, rgba(72,43,16,.96) 44%, rgba(28,18,9,.98) 100%);
+    radial-gradient(circle at 50% 0%, rgba(255,236,180,.22), transparent 46%),
+    linear-gradient(
+      180deg,
+      rgba(95,59,18,.88),
+      rgba(33,24,15,.94) 48%,
+      rgba(13,10,8,.96)
+    );
 
   box-shadow:
-    inset 0 1px 0 rgba(255,246,214,.28),
-    inset 0 -10px 18px rgba(0,0,0,.36),
-    0 10px 24px rgba(0,0,0,.34),
-    0 0 24px rgba(255,185,80,.13);
+    inset 0 1px 0 rgba(255,239,197,.28),
+    inset 0 -10px 18px rgba(0,0,0,.34),
+    0 0 0 1px rgba(255,197,111,.1),
+    0 12px 30px rgba(0,0,0,.36),
+    0 0 26px rgba(255,180,72,.16);
 
   font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(18px,1.72vw,35px);
-  letter-spacing:.24em;
-  color:#ffe1a6;
+  font-size:clamp(16px,1.42vw,30px);
+  letter-spacing:.28em;
+  color:#ffe2a8;
 
   text-shadow:
-    0 2px 4px rgba(0,0,0,.86),
-    0 0 12px rgba(255,190,95,.18);
+    0 1px 0 rgba(0,0,0,.9),
+    0 0 12px rgba(255,190,92,.34);
 }
 
 .ww-word-solve::before,
 .ww-word-solve::after{
-  content:"";
+  content:"✦";
   position:absolute;
   top:50%;
-  width:7px;
-  height:7px;
-  border:1px solid rgba(255,220,154,.72);
-  background:rgba(255,197,111,.18);
-  transform:translateY(-50%) rotate(45deg);
-  box-shadow:0 0 9px rgba(255,190,95,.18);
+  transform:translateY(-50%);
+  font-size:.58em;
+  letter-spacing:0;
+  color:rgba(255,214,142,.82);
+  text-shadow:0 0 10px rgba(255,185,74,.26);
 }
 
 .ww-word-solve::before{
-  left:1rem;
+  left:1.05rem;
 }
 
 .ww-word-solve::after{
-  right:1rem;
+  right:1.05rem;
 }
 
 .ww-word-solve:hover,
 .ww-word-solve:focus-visible{
-  transform:translateY(-3px);
-  color:#fff2cf;
-  border-color:rgba(255,226,164,.92);
+  transform:translateY(-3px) scale(1.015);
+  color:#fff0c8;
+  border-color:rgba(255,226,168,.9);
   box-shadow:
-    inset 0 1px 0 rgba(255,246,214,.34),
-    inset 0 -10px 18px rgba(0,0,0,.32),
-    0 14px 30px rgba(0,0,0,.4),
-    0 0 34px rgba(255,185,80,.22);
+    inset 0 1px 0 rgba(255,245,210,.34),
+    inset 0 -10px 18px rgba(0,0,0,.3),
+    0 0 0 1px rgba(255,214,142,.16),
+    0 15px 34px rgba(0,0,0,.42),
+    0 0 34px rgba(255,190,88,.24);
 }
 
 .ww-guidepost{
@@ -866,6 +872,9 @@ justify-content:flex-start;
 
   color:rgba(245,239,227,.96);
 
+outline:4px solid red !important;
+transform:translateY(100px) !important;
+  
 }
 
 
@@ -874,33 +883,38 @@ justify-content:flex-start;
   position:absolute;
   z-index:100;
 
-  /* One shared tooltip home for all four left buttons. */
-  left:43.5%;
-  top:43%;
+  left:30%;
+  top:39%;
 
-  width:min(24vw,360px);
-  min-width:230px;
-  padding:.9rem 1rem;
+  width:22%;
+  min-width:240px;
+
+  padding:1rem 1.1rem;
 
   border:1px solid rgba(230,230,230,.92);
-  border-radius:.82rem;
+  border-radius:.75rem;
+
   background:rgba(255,255,255,.96);
   color:rgba(0,0,0,.88);
 
-  font-size:clamp(10px,.74vw,14px);
+  font-size:clamp(9px,.72vw,13px);
   line-height:1.42;
 
   box-shadow:0 16px 44px rgba(0,0,0,.38);
+
   opacity:0;
   pointer-events:none;
 
-  transform:translateY(-50%) translateX(-8px);
-  transition:opacity 150ms ease, transform 150ms ease;
+  transform:translateX(-6px);
+
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
 }
 
 .ww-tooltip.is-visible{
   opacity:1;
-  transform:translateY(-50%) translateX(0);
+  transform:translateX(0);
 }
 
 .ww-tooltip--locked{
@@ -929,13 +943,6 @@ justify-content:flex-start;
 
 .ww-tooltip-line + .ww-tooltip-line{
   margin-top:.22rem;
-}
-
-.ww-clue-tooltip,
-.ww-life-tooltip,
-.ww-leader-tooltip,
-.ww-solve-tooltip{
-  top:43%;
 }
 
 .ww-solve-overlay{
@@ -1484,9 +1491,8 @@ justify-content:flex-start;
   }
 
   .ww-word-solve{
-    font-size:clamp(16px,1.45vw,28px);
-    min-height:clamp(1.85rem,3.55vh,2.45rem);
-    padding:.44rem 1.05rem;
+    font-size:clamp(15px,1.35vw,26px);
+    padding:.36rem .85rem;
   }
 
   .ww-guidepost{
