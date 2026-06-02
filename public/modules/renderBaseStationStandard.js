@@ -234,6 +234,7 @@ The WinterWord is:`
 
   app.innerHTML = `
 <style>
+/* ROBERT VERIFIED CHANGE: shared tooltip position + premium SOLVE button */
 
 *{ box-sizing:border-box; }
 
@@ -735,37 +736,34 @@ justify-content:flex-start;
 }
 
 .ww-word-solve{
-  width:clamp(9.8rem,12.6vw,13.4rem);
-  min-height:clamp(2.05rem,4.2vh,2.9rem);
-  padding:clamp(.5rem,1.15vh,.78rem) 1.25rem;
+  width:clamp(10.8rem,14vw,15.2rem);
+  min-height:clamp(2.35rem,4.8vh,3.35rem);
+  padding:clamp(.58rem,1.25vh,.88rem) 1.55rem;
 
-  border:1px solid rgba(255,210,132,.72);
+  border:1px solid rgba(255,222,155,.92);
   border-radius:999px;
 
   background:
-    radial-gradient(circle at 50% 0%, rgba(255,236,180,.22), transparent 46%),
-    linear-gradient(
-      180deg,
-      rgba(95,59,18,.88),
-      rgba(33,24,15,.94) 48%,
-      rgba(13,10,8,.96)
-    );
+    linear-gradient(90deg, rgba(255,220,150,.08), rgba(255,220,150,.28), rgba(255,220,150,.08)),
+    radial-gradient(circle at 50% 0%, rgba(255,242,205,.34), transparent 42%),
+    linear-gradient(180deg, rgba(132,83,25,.96), rgba(57,37,18,.98) 48%, rgba(14,11,9,.99));
 
   box-shadow:
-    inset 0 1px 0 rgba(255,239,197,.28),
-    inset 0 -10px 18px rgba(0,0,0,.34),
-    0 0 0 1px rgba(255,197,111,.1),
-    0 12px 30px rgba(0,0,0,.36),
-    0 0 26px rgba(255,180,72,.16);
+    inset 0 1px 0 rgba(255,246,214,.42),
+    inset 0 -12px 20px rgba(0,0,0,.42),
+    0 0 0 1px rgba(255,197,111,.18),
+    0 16px 36px rgba(0,0,0,.48),
+    0 0 34px rgba(255,184,76,.26);
 
   font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(16px,1.42vw,30px);
-  letter-spacing:.28em;
-  color:#ffe2a8;
+  font-size:clamp(17px,1.52vw,32px);
+  font-weight:800;
+  letter-spacing:.24em;
+  color:#fff0c4;
 
   text-shadow:
-    0 1px 0 rgba(0,0,0,.9),
-    0 0 12px rgba(255,190,92,.34);
+    0 1px 0 rgba(0,0,0,.92),
+    0 0 14px rgba(255,196,100,.48);
 }
 
 .ww-word-solve::before,
@@ -774,31 +772,31 @@ justify-content:flex-start;
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  font-size:.58em;
+  font-size:.62em;
   letter-spacing:0;
-  color:rgba(255,214,142,.82);
-  text-shadow:0 0 10px rgba(255,185,74,.26);
+  color:rgba(255,226,168,.94);
+  text-shadow:0 0 12px rgba(255,190,88,.42);
 }
 
 .ww-word-solve::before{
-  left:1.05rem;
+  left:1.12rem;
 }
 
 .ww-word-solve::after{
-  right:1.05rem;
+  right:1.12rem;
 }
 
 .ww-word-solve:hover,
 .ww-word-solve:focus-visible{
-  transform:translateY(-3px) scale(1.015);
-  color:#fff0c8;
-  border-color:rgba(255,226,168,.9);
+  transform:translateY(-4px) scale(1.025);
+  color:#fff8df;
+  border-color:rgba(255,239,200,1);
   box-shadow:
-    inset 0 1px 0 rgba(255,245,210,.34),
-    inset 0 -10px 18px rgba(0,0,0,.3),
-    0 0 0 1px rgba(255,214,142,.16),
-    0 15px 34px rgba(0,0,0,.42),
-    0 0 34px rgba(255,190,88,.24);
+    inset 0 1px 0 rgba(255,250,224,.5),
+    inset 0 -12px 20px rgba(0,0,0,.36),
+    0 0 0 1px rgba(255,226,168,.26),
+    0 20px 42px rgba(0,0,0,.54),
+    0 0 46px rgba(255,195,94,.38);
 }
 
 .ww-guidepost{
@@ -872,9 +870,7 @@ justify-content:flex-start;
 
   color:rgba(245,239,227,.96);
 
-outline:4px solid red !important;
-transform:translateY(100px) !important;
-  
+
 }
 
 
@@ -883,29 +879,36 @@ transform:translateY(100px) !important;
   position:absolute;
   z-index:100;
 
-  left:30%;
-  top:39%;
+  /* FIXED SHARED TOOLTIP POSITION — all four left buttons use this one spot */
+  left:42%;
+  top:36.5%;
 
-  width:22%;
-  min-width:240px;
+  width:clamp(260px,24vw,420px);
+  min-width:260px;
 
-  padding:1rem 1.1rem;
+  padding:1rem 1.15rem;
 
-  border:1px solid rgba(230,230,230,.92);
-  border-radius:.75rem;
+  border:1px solid rgba(255,238,203,.86);
+  border-radius:.95rem;
 
-  background:rgba(255,255,255,.96);
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255,220,150,.16), transparent 42%),
+    linear-gradient(180deg, rgba(255,255,255,.98), rgba(235,228,214,.98));
+
   color:rgba(0,0,0,.88);
 
-  font-size:clamp(9px,.72vw,13px);
-  line-height:1.42;
+  font-size:clamp(10px,.78vw,14px);
+  line-height:1.48;
 
-  box-shadow:0 16px 44px rgba(0,0,0,.38);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.72),
+    0 18px 48px rgba(0,0,0,.42),
+    0 0 28px rgba(255,190,95,.12);
 
   opacity:0;
   pointer-events:none;
 
-  transform:translateX(-6px);
+  transform:translateX(-8px);
 
   transition:
     opacity 150ms ease,
