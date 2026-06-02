@@ -67,22 +67,35 @@ Yet something’s not at home.
 :root {
   --ww-clue-bg-src: "${clueBackground}";
 
-  --ww-hotspot-group-left: 19.4%;
-  --ww-hotspot-group-top: 49.7%;
-  --ww-hotspot-gap: 9.3%;
+  /* ==================================================
+     OVERLAYS — edit these only
 
-  --ww-hotspot-play-top: 81%;
+     left/top place the CENTRE of each overlay.
+     width/height control the clickable rectangle.
 
-  --ww-hotspot-base-width: 11%;
-  --ww-hotspot-base-height: 4.8%;
+     BASE overlay
+  ================================================== */
+  --ww-overlay-base-left: 45%;
+  --ww-overlay-base-top: 55%;
+  --ww-overlay-base-width: 11%;
+  --ww-overlay-base-height: 4.8%;
 
-  --ww-hotspot-clues-width: 17%;
-  --ww-hotspot-clues-height: 4.8%;
+  /* CLUES overlay */
+  --ww-overlay-clues-left: 5%;
+  --ww-overlay-clues-top: 60%;
+  --ww-overlay-clues-width: 17%;
+  --ww-overlay-clues-height: 4.8%;
 
-  --ww-hotspot-life-width: 15%;
-  --ww-hotspot-life-height: 6%;
+  /* LIFE overlay */
+  --ww-overlay-life-left: 5%;
+  --ww-overlay-life-top: 65%;
+  --ww-overlay-life-width: 15%;
+  --ww-overlay-life-height: 6%;
 
-  --ww-hotspot-play-diameter: 6%;
+  /* PLAY overlay — only appears on clue 5 and clue 7 */
+  --ww-overlay-play-left: 19.4%;
+  --ww-overlay-play-top: 81%;
+  --ww-overlay-play-diameter: 6%;
 }
 
 * {
@@ -548,34 +561,34 @@ body {
 }
 
 .ww-hotspot-base {
-  left: 45%;
-    top: 55%;
+  left: var(--ww-overlay-base-left);
+  top: var(--ww-overlay-base-top);
 
-  width: var(--ww-hotspot-base-width);
-  height: var(--ww-hotspot-base-height);
+  width: var(--ww-overlay-base-width);
+  height: var(--ww-overlay-base-height);
 }
 
 .ww-hotspot-clues {
-  left: 5%;
-    top: 60%;
+  left: var(--ww-overlay-clues-left);
+  top: var(--ww-overlay-clues-top);
 
-  width: var(--ww-hotspot-clues-width);
-  height: var(--ww-hotspot-clues-height);
+  width: var(--ww-overlay-clues-width);
+  height: var(--ww-overlay-clues-height);
 }
 
 .ww-hotspot-life {
-  left: 5%;
-    top: 65%;
+  left: var(--ww-overlay-life-left);
+  top: var(--ww-overlay-life-top);
 
-  width: var(--ww-hotspot-life-width);
-  height: var(--ww-hotspot-life-height);
+  width: var(--ww-overlay-life-width);
+  height: var(--ww-overlay-life-height);
 }
 
 .ww-hotspot-play {
-  left: var(--ww-hotspot-group-left);
-  top: var(--ww-hotspot-play-top);
-  width: var(--ww-hotspot-play-diameter);
-  height: var(--ww-hotspot-play-diameter);
+  left: var(--ww-overlay-play-left);
+  top: var(--ww-overlay-play-top);
+  width: var(--ww-overlay-play-diameter);
+  height: var(--ww-overlay-play-diameter);
   border-radius: 999px;
   overflow: visible;
 }
