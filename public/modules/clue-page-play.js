@@ -447,12 +447,9 @@ body {
   opacity: 0;
 }
 
-.ww-hotspot-play:hover {
-  background: rgba(225,238,255,0.08);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.42),
-    0 0 24px rgba(220,235,255,0.34),
-    0 0 52px rgba(210,230,255,0.24);
+.ww-hotspot-play:hover::before {
+  animation: none;
+  opacity: 0.35;
 }
 
 .ww-hotspot-play:hover::before {
