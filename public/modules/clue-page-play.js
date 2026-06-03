@@ -415,15 +415,25 @@ body {
 .ww-hotspot-play::before {
   content: "";
   position: absolute;
-  inset: -12%;
-  border-radius: 999px;
+
+  left: 50%;
+  top: 50%;
+
+  width: 180%;
+  height: 180%;
+
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+
   background:
     radial-gradient(
       circle,
-      rgba(245,248,255,0.26) 0%,
-      rgba(220,232,245,0.18) 40%,
-      transparent 78%
+      rgba(255,255,255,0.42) 0%,
+      rgba(255,255,255,0.22) 35%,
+      rgba(255,255,255,0.10) 60%,
+      rgba(255,255,255,0.00) 100%
     );
+
   pointer-events: none;
   opacity: 0;
   animation: wwPlayIdlePulse 4s ease-in-out infinite;
