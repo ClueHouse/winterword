@@ -13,7 +13,7 @@
     answerList: "/modules/answer-list.js",
     answerPage: "/modules/answer-page.js",
     lifeline: "/modules/lifeline.js",
-    leaderboard: "/modules/leaderboard.js",
+    leaderboard: "/modules/leaderboardv2.js",
     welcomeIntro: "/modules/welcomeIntro.js"
   }; 
 
