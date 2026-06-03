@@ -338,22 +338,28 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           0 0 18px rgba(255, 213, 105, 0.26),
           0 4px 12px rgba(0,0,0,0.82);
       }
+.ww-first-time {
+  grid-area: time;
+  position: relative;
+  z-index: 1;
 
-      .ww-first-time {
-        grid-area: time;
-        position: relative;
-        z-index: 1;
+  padding-top: 0.1rem;
 
-        padding-top: 0.15rem;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: rgba(255, 240, 196, 0.72);
+  font-size: clamp(0.72rem, 0.85vw, 0.92rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 
-        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-        color: rgba(255, 240, 196, 0.82);
-        font-size: clamp(0.68rem, 0.78vw, 0.86rem);
-        font-weight: 650;
-        letter-spacing: 0.075em;
-        white-space: nowrap;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.76);
-      }
+  text-shadow:
+    0 2px 10px rgba(0,0,0,0.76);
+}
+
+.ww-first-time span {
+  color: rgba(255,240,196,0.95);
+  font-weight: 800;
+}
 
       .ww-ranks {
         position: relative;
