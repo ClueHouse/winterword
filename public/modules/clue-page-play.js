@@ -409,7 +409,6 @@ body {
   border-radius: 999px;
   overflow: visible;
 
-  border: 2px solid red;
 }
 
 .ww-hotspot-play::before {
