@@ -450,7 +450,7 @@ body {
 .ww-hotspot-play:hover::before {
   animation: none;
   opacity: 0.58;
-  transform: scale(1.36);
+  transform: translate(-50%, -50%) scale(1.36);
 }
 
 
