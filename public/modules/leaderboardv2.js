@@ -61,9 +61,22 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       }
 
       .ww-leaderboard-v2 {
-        --ww-ink: rgba(238, 247, 255, 0.97);
+        /*
+          QUICK TUNING CONTROLS
+          These lock the live leaderboard content to the baked artwork.
+          Change these first before touching individual rows.
+        */
+        --ww-board-left: 36.0%;
+        --ww-board-top: 19.2%;
+        --ww-board-width: 40.8%;
+        --ww-board-height: 57.2%;
+
+        --ww-board-nudge-x: 0%;
+        --ww-board-nudge-y: 0%;
+
+        --ww-ink: rgba(244, 249, 255, 0.97);
         --ww-muted: rgba(226, 238, 249, 0.74);
-        --ww-gold: #f5d98f;
+        --ww-gold: #f1d18a;
         --ww-gold-hot: #fff0bd;
         --ww-blue: #67dcff;
 
@@ -72,7 +85,14 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         min-height: 100vh;
         overflow: hidden;
 
-        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-family:
+          "Georgia",
+          "Times New Roman",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+
         color: var(--ww-ink);
 
         background:
@@ -98,8 +118,8 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         z-index: 1;
         pointer-events: none;
         background:
-          radial-gradient(ellipse at 50% 43%, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.04) 45%, rgba(0,0,0,0.58) 100%),
-          linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.28));
+          radial-gradient(ellipse at 50% 43%, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.035) 45%, rgba(0,0,0,0.56) 100%),
+          linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.26));
       }
 
       .ww-crack-glow {
@@ -150,41 +170,46 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         }
       }
 
-      .ww-lb-stage {
-        position: relative;
+      .ww-board-artboard {
+        position: absolute;
         z-index: 5;
-        width: min(76rem, 77vw);
-        min-height: 100vh;
-        margin: 0 auto;
+
+        left: calc(var(--ww-board-left) + var(--ww-board-nudge-x));
+        top: calc(var(--ww-board-top) + var(--ww-board-nudge-y));
+        width: var(--ww-board-width);
+        height: var(--ww-board-height);
 
         display: flex;
-        align-items: center;
-        justify-content: center;
+        align-items: stretch;
+        justify-content: stretch;
 
-        padding: clamp(5.2rem, 8.5vh, 7rem) clamp(1rem, 2vw, 2rem) clamp(8.5rem, 14vh, 11rem);
+        pointer-events: auto;
       }
 
       .ww-lb-panel {
         position: relative;
-        width: min(45rem, 55vw);
-        margin-left: clamp(4rem, 7.2vw, 7.5rem);
-        transform: translateY(-6.2vh);
+        width: 100%;
+        height: 100%;
 
-        padding: clamp(1.05rem, 1.75vw, 1.55rem);
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+
+        padding: clamp(0.75rem, 1.25vw, 1.25rem);
         border-radius: 1rem;
 
         background:
-          linear-gradient(180deg, rgba(4, 13, 22, 0.34), rgba(1, 6, 12, 0.58)),
-          radial-gradient(circle at 50% 0%, rgba(120, 210, 255, 0.08), transparent 48%);
+          linear-gradient(180deg, rgba(4, 13, 22, 0.16), rgba(1, 6, 12, 0.34)),
+          radial-gradient(circle at 50% 0%, rgba(120, 210, 255, 0.05), transparent 52%);
 
-        border: 1px solid rgba(158, 227, 255, 0.20);
+        border: 1px solid rgba(158, 227, 255, 0.14);
 
         box-shadow:
-          0 0 24px rgba(80, 190, 255, 0.12),
-          0 26px 90px rgba(0, 0, 0, 0.42),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.032);
+          0 0 20px rgba(80, 190, 255, 0.08),
+          0 24px 80px rgba(0, 0, 0, 0.30),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.022);
 
-        backdrop-filter: blur(2.5px);
+        backdrop-filter: blur(1.8px);
       }
 
       .ww-lb-panel::before {
@@ -194,9 +219,9 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         border-radius: inherit;
         pointer-events: none;
         background:
-          linear-gradient(90deg, transparent, rgba(130, 226, 255, 0.15), transparent),
-          linear-gradient(180deg, rgba(255,255,255,0.08), transparent 18%, transparent 82%, rgba(120,220,255,0.12));
-        opacity: 0.78;
+          linear-gradient(90deg, transparent, rgba(130, 226, 255, 0.11), transparent),
+          linear-gradient(180deg, rgba(255,255,255,0.055), transparent 18%, transparent 82%, rgba(120,220,255,0.08));
+        opacity: 0.62;
         padding: 1px;
         -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
         -webkit-mask-composite: xor;
@@ -206,27 +231,33 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
 
       .ww-first-place {
         position: relative;
+        flex: 0 0 auto;
+
         display: grid;
-        grid-template-columns: auto auto 1fr auto;
+        grid-template-columns: auto auto minmax(0, 1fr);
+        grid-template-areas:
+          "crown rank name"
+          "crown rank time";
         align-items: center;
-        gap: clamp(0.7rem, 1.2vw, 1.2rem);
+        column-gap: clamp(0.55rem, 1vw, 1rem);
+        row-gap: 0.2rem;
 
-        margin-bottom: clamp(0.9rem, 1.4vh, 1.2rem);
-        padding: clamp(0.86rem, 1.25vw, 1.1rem) clamp(1rem, 1.7vw, 1.45rem);
+        margin-bottom: clamp(0.78rem, 1.2vh, 1rem);
+        padding: clamp(0.62rem, 1vw, 0.95rem) clamp(0.75rem, 1.35vw, 1.25rem);
 
-        border-radius: 0.95rem;
+        border-radius: 0.85rem;
         overflow: hidden;
 
         background:
-          radial-gradient(circle at 12% 0%, rgba(255, 225, 150, 0.20), transparent 34%),
-          linear-gradient(135deg, rgba(116, 91, 45, 0.48), rgba(7, 18, 28, 0.46), rgba(3, 10, 18, 0.42));
+          radial-gradient(circle at 16% 0%, rgba(255, 224, 150, 0.13), transparent 36%),
+          linear-gradient(135deg, rgba(113, 88, 43, 0.27), rgba(7, 18, 28, 0.30), rgba(3, 10, 18, 0.22));
 
-        border: 1px solid rgba(255, 224, 154, 0.21);
+        border: 1px solid rgba(255, 224, 154, 0.16);
 
         box-shadow:
-          inset 0 1px 0 rgba(255,255,255,0.13),
-          0 0 22px rgba(255, 207, 101, 0.10),
-          0 18px 42px rgba(0,0,0,0.24);
+          inset 0 1px 0 rgba(255,255,255,0.09),
+          0 0 20px rgba(255, 207, 101, 0.08),
+          0 14px 34px rgba(0,0,0,0.22);
       }
 
       .ww-first-place::after {
@@ -235,7 +266,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         inset: 0;
         pointer-events: none;
         background:
-          linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.08) 42%, transparent 58%);
+          linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.055) 42%, transparent 58%);
         transform: translateX(-110%);
         animation: wwHeroSheen 8.5s ease-in-out infinite;
       }
@@ -246,7 +277,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           opacity: 0;
         }
         70% {
-          opacity: 0.8;
+          opacity: 0.7;
         }
         86% {
           transform: translateX(120%);
@@ -255,54 +286,70 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       }
 
       .ww-first-crown {
+        grid-area: crown;
         position: relative;
         z-index: 1;
-        font-size: clamp(1.85rem, 3.2vw, 3rem);
-        line-height: 1;
-        filter:
-          drop-shadow(0 0 10px rgba(255, 208, 82, 0.28))
-          drop-shadow(0 3px 7px rgba(0,0,0,0.64));
+
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.25rem, 3.7vw, 4.2rem);
+        line-height: 0.8;
+        color: var(--ww-gold);
+
+        text-shadow:
+          0 0 16px rgba(255, 213, 105, 0.28),
+          0 4px 12px rgba(0,0,0,0.78);
       }
 
       .ww-first-rank {
+        grid-area: rank;
         position: relative;
         z-index: 1;
-        font-size: clamp(2.3rem, 4.3vw, 4rem);
-        line-height: 0.9;
-        font-weight: 1000;
+
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.25rem, 4.1vw, 4.7rem);
+        line-height: 0.86;
+        font-weight: 900;
         color: var(--ww-gold);
+
         text-shadow:
-          0 0 16px rgba(255, 213, 105, 0.26),
+          0 0 16px rgba(255, 213, 105, 0.25),
           0 4px 12px rgba(0,0,0,0.78);
       }
 
       .ww-first-name {
+        grid-area: name;
         position: relative;
         z-index: 1;
+
         min-width: 0;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
 
-        font-size: clamp(2rem, 3.6vw, 3.35rem);
-        line-height: 1;
-        font-weight: 1000;
-        letter-spacing: 0.045em;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2rem, 3.55vw, 4rem);
+        line-height: 0.95;
+        font-weight: 900;
+        letter-spacing: 0.035em;
         color: var(--ww-gold-hot);
         text-transform: uppercase;
+
         text-shadow:
-          0 0 18px rgba(255, 213, 105, 0.27),
+          0 0 18px rgba(255, 213, 105, 0.26),
           0 4px 12px rgba(0,0,0,0.82);
       }
 
       .ww-first-time {
+        grid-area: time;
         position: relative;
         z-index: 1;
-        align-self: end;
-        padding-bottom: 0.25rem;
-        text-align: right;
+
+        padding-top: 0.15rem;
+
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
         color: rgba(255, 240, 196, 0.82);
-        font-size: clamp(0.7rem, 0.8vw, 0.86rem);
+        font-size: clamp(0.68rem, 0.78vw, 0.86rem);
+        font-weight: 650;
         letter-spacing: 0.075em;
         white-space: nowrap;
         text-shadow: 0 2px 10px rgba(0,0,0,0.76);
@@ -310,39 +357,43 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
 
       .ww-ranks {
         position: relative;
-        border-radius: 0.86rem;
+        flex: 1 1 auto;
+        min-height: 0;
+
+        border-radius: 0.82rem;
         overflow: hidden;
 
         background:
-          linear-gradient(180deg, rgba(7, 18, 30, 0.42), rgba(2, 8, 16, 0.55));
+          linear-gradient(180deg, rgba(7, 18, 30, 0.18), rgba(2, 8, 16, 0.30));
 
-        border: 1px solid rgba(154, 225, 255, 0.14);
+        border: 1px solid rgba(154, 225, 255, 0.10);
 
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          inset 0 -40px 90px rgba(0, 0, 0, 0.10);
+          inset 0 1px 0 rgba(255, 255, 255, 0.035),
+          inset 0 -40px 90px rgba(0, 0, 0, 0.07);
       }
 
       .ww-ranks.scrollable {
-        max-height: clamp(21rem, 47vh, 30rem);
         overflow-y: auto;
         overscroll-behavior: contain;
         scrollbar-width: thin;
-        scrollbar-color: rgba(158, 227, 255, 0.38) rgba(255,255,255,0.06);
+        scrollbar-color: rgba(158, 227, 255, 0.34) rgba(255,255,255,0.04);
       }
 
       .ww-rankrow {
-        min-height: clamp(2.6rem, 4.65vh, 3.35rem);
+        min-height: 10.85%;
         display: grid;
-        grid-template-columns: 3.8rem minmax(0, 1fr) minmax(9rem, 1fr);
-        gap: 1.15rem;
+        grid-template-columns: 3.7rem minmax(0, 1fr) minmax(8.5rem, 1fr);
+        gap: 1rem;
         align-items: center;
-        padding: 0.62rem 1.05rem;
+        padding: 0.38rem 0.95rem;
 
-        border-top: 1px solid rgba(216, 238, 255, 0.095);
+        border-top: 1px solid rgba(216, 238, 255, 0.075);
 
         color: var(--ww-ink);
-        text-shadow: 0 2px 10px rgba(0,0,0,0.78);
+        text-shadow:
+          0 2px 10px rgba(0,0,0,0.84),
+          0 0 10px rgba(0,0,0,0.32);
       }
 
       .ww-rankrow:first-child {
@@ -352,13 +403,14 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       .ww-rankrow[data-rank="2"],
       .ww-rankrow.is-second {
         background:
-          linear-gradient(90deg, rgba(255, 223, 148, 0.09), rgba(255, 223, 148, 0.025), transparent 70%);
+          linear-gradient(90deg, rgba(255, 223, 148, 0.06), rgba(255, 223, 148, 0.015), transparent 70%);
       }
 
       .ww-rank {
-        font-weight: 1000;
-        color: rgba(245, 250, 255, 0.96);
-        font-size: clamp(1rem, 1.2vw, 1.2rem);
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 900;
+        color: rgba(250, 253, 255, 0.98);
+        font-size: clamp(1rem, 1.2vw, 1.28rem);
       }
 
       .ww-name {
@@ -366,16 +418,22 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        color: rgba(255,255,255,0.97);
-        font-weight: 780;
-        font-size: clamp(1rem, 1.18vw, 1.22rem);
+
+        font-family: Georgia, "Times New Roman", serif;
+        color: rgba(255,255,255,0.98);
+        font-weight: 800;
+        font-size: clamp(1.02rem, 1.2vw, 1.3rem);
+        letter-spacing: 0.02em;
       }
 
       .ww-solved {
         text-align: right;
-        color: rgba(226, 241, 255, 0.86);
+        color: rgba(226, 241, 255, 0.87);
         white-space: nowrap;
-        font-size: clamp(0.78rem, 0.9vw, 0.96rem);
+
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: clamp(0.72rem, 0.86vw, 0.94rem);
+        font-weight: 520;
       }
 
       .ww-status {
@@ -411,6 +469,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         letter-spacing: 0.18em;
         font-weight: 900;
         font-size: 0.68rem;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 
         box-shadow:
           0 18px 45px rgba(0,0,0,0.42),
@@ -471,35 +530,35 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
 
       .ww-snow-mid {
         z-index: 22;
-        opacity: 0.48;
+        opacity: 0.50;
         background-image:
-          radial-gradient(circle, rgba(255,255,255,0.58) 0 2.6px, transparent 4.8px),
-          radial-gradient(circle, rgba(225,245,255,0.44) 0 3.2px, transparent 5.8px);
+          radial-gradient(circle, rgba(255,255,255,0.58) 0 2.8px, transparent 5px),
+          radial-gradient(circle, rgba(225,245,255,0.44) 0 3.5px, transparent 6.2px);
         background-size: 330px 330px, 460px 460px;
         background-position: 40px 20px, 210px 120px;
-        filter: blur(1.25px);
+        filter: blur(1.35px);
         animation: wwSnowMid 31s linear infinite;
       }
 
       .ww-snow-near {
         z-index: 24;
-        opacity: 0.42;
+        opacity: 0.43;
         background-image:
-          radial-gradient(circle, rgba(255,255,255,0.55) 0 7px, transparent 13px),
-          radial-gradient(circle, rgba(224,242,255,0.40) 0 10px, transparent 18px);
+          radial-gradient(circle, rgba(255,255,255,0.54) 0 7px, transparent 13px),
+          radial-gradient(circle, rgba(224,242,255,0.38) 0 10px, transparent 18px);
         background-size: 620px 620px, 880px 880px;
         background-position: 80px 140px, 500px 60px;
-        filter: blur(4px);
+        filter: blur(4.4px);
         animation: wwSnowNear 24s linear infinite;
       }
 
       .ww-ice-flecks {
         z-index: 23;
-        opacity: 0.18;
+        opacity: 0.14;
         background-image:
-          radial-gradient(ellipse at center, rgba(130, 219, 255, 0.42) 0 2px, transparent 4px),
-          radial-gradient(ellipse at center, rgba(255, 230, 160, 0.22) 0 1.4px, transparent 3px),
-          radial-gradient(ellipse at center, rgba(235, 248, 255, 0.34) 0 1.8px, transparent 3.8px);
+          radial-gradient(ellipse at center, rgba(130, 219, 255, 0.36) 0 2px, transparent 4px),
+          radial-gradient(ellipse at center, rgba(255, 230, 160, 0.18) 0 1.4px, transparent 3px),
+          radial-gradient(ellipse at center, rgba(235, 248, 255, 0.30) 0 1.8px, transparent 3.8px);
         background-size: 280px 230px, 390px 300px, 520px 420px;
         background-position: 40px 60px, 180px 20px, 90px 190px;
         animation: wwFlecksDrift 36s linear infinite;
@@ -543,27 +602,11 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       }
 
       @media (max-width: 1050px) {
-        .ww-lb-stage {
-          width: 100%;
-          padding-top: 5.8rem;
-          padding-bottom: 8.2rem;
-        }
-
-        .ww-lb-panel {
-          width: min(42rem, 75vw);
-          margin-left: clamp(2rem, 6vw, 5rem);
-          transform: translateY(-4.8vh);
-        }
-
-        .ww-first-place {
-          grid-template-columns: auto auto 1fr;
-        }
-
-        .ww-first-time {
-          grid-column: 3;
-          justify-self: start;
-          text-align: left;
-          padding-bottom: 0;
+        .ww-leaderboard-v2 {
+          --ww-board-left: 26%;
+          --ww-board-top: 20%;
+          --ww-board-width: 58%;
+          --ww-board-height: 58%;
         }
 
         .ww-rankrow {
@@ -574,6 +617,11 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       @media (max-width: 760px) {
         .ww-leaderboard-v2 {
           min-height: 100svh;
+
+          --ww-board-left: 5%;
+          --ww-board-top: 28%;
+          --ww-board-width: 90%;
+          --ww-board-height: 54%;
         }
 
         .ww-lb-bg {
@@ -592,28 +640,19 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           width: 16%;
         }
 
-        .ww-lb-stage {
-          min-height: 100svh;
-          align-items: flex-end;
-          padding: 7.2rem 0.95rem 5.1rem;
-        }
-
         .ww-lb-panel {
-          width: 100%;
-          margin-left: 0;
-          transform: translateY(-1.5vh);
-          padding: 0.78rem;
+          padding: 0.72rem;
           border-radius: 0.9rem;
         }
 
         .ww-first-place {
           grid-template-columns: auto auto minmax(0, 1fr);
-          gap: 0.55rem;
-          padding: 0.78rem 0.82rem;
+          column-gap: 0.55rem;
+          padding: 0.7rem 0.78rem;
         }
 
         .ww-first-crown {
-          font-size: 1.55rem;
+          font-size: 1.65rem;
         }
 
         .ww-first-rank {
@@ -625,26 +664,23 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         }
 
         .ww-first-time {
-          grid-column: 1 / -1;
-          justify-self: start;
-          text-align: left;
-          font-size: 0.66rem;
+          font-size: 0.62rem;
         }
 
         .ww-rankrow {
           grid-template-columns: 2.35rem minmax(0,1fr) minmax(5.6rem, 0.74fr);
           gap: 0.55rem;
-          padding: 0.6rem 0.64rem;
-          min-height: 2.58rem;
+          padding: 0.52rem 0.62rem;
+          min-height: 2.35rem;
         }
 
         .ww-rank,
         .ww-name {
-          font-size: 0.92rem;
+          font-size: 0.9rem;
         }
 
         .ww-solved {
-          font-size: 0.66rem;
+          font-size: 0.64rem;
         }
 
         .ww-base-link {
@@ -672,10 +708,10 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       <div class="ww-crack-glow" aria-hidden="true"></div>
       <div class="ww-frame-glow" aria-hidden="true"></div>
 
-      <main class="ww-lb-stage" aria-label="WinterWord Leaderboard">
+      <main class="ww-board-artboard" aria-label="WinterWord Leaderboard">
         <section class="ww-lb-panel">
           <div class="ww-first-place">
-            <div class="ww-first-crown" aria-hidden="true">👑</div>
+            <div class="ww-first-crown" aria-hidden="true">♛</div>
             <div class="ww-first-rank">1</div>
             <div class="ww-first-name" data-winner-name>—</div>
             <div class="ww-first-time" data-winner-time>—</div>
