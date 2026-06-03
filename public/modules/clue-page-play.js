@@ -449,7 +449,8 @@ body {
 
 .ww-hotspot-play:hover::before {
   animation: none;
-  opacity: 0.35;
+  opacity: 0.58;
+  transform: scale(1.36);
 }
 
 .ww-hotspot-play:hover::before {
