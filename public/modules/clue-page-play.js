@@ -453,10 +453,6 @@ body {
   transform: scale(1.36);
 }
 
-.ww-hotspot-play:hover::before {
-  animation: none;
-  opacity: 0.62;
-}
 
 .ww-hotspot-play[data-flash="true"]::after {
   animation: wwPlayClickFlash 420ms ease-out forwards;
