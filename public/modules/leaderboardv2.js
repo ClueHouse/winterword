@@ -66,8 +66,8 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           These lock the live leaderboard content to the baked artwork.
           Change these first before touching individual rows.
         */
-        --ww-board-left: 36.0%;
-        --ww-board-top: 19.2%;
+        --ww-board-left: 30.0%;
+        --ww-board-top: 22.5%;
         --ww-board-width: 40.8%;
         --ww-board-height: 57.2%;
 
