@@ -713,8 +713,11 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           <div class="ww-first-place">
             <div class="ww-first-crown" aria-hidden="true">♛</div>
             <div class="ww-first-rank">1</div>
-            <div class="ww-first-name" data-winner-name>—</div>
-            <div class="ww-first-time" data-winner-time>—</div>
+<div class="ww-first-name" data-winner-name>—</div>
+<div class="ww-first-time">
+  cracked the ice at
+  <span data-winner-time>—</span>
+</div>
           </div>
 
           <div class="ww-ranks" data-ranks-container>
