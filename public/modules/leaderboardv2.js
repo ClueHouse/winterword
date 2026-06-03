@@ -63,12 +63,9 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       .ww-leaderboard-v2 {
         --ww-ink: rgba(233, 244, 255, 0.96);
         --ww-muted: rgba(226, 238, 249, 0.74);
-        --ww-faint: rgba(226, 238, 249, 0.42);
         --ww-gold: #f1d28a;
         --ww-gold-soft: #fff0c4;
-        --ww-blue: #66d8ff;
-        --ww-panel: rgba(3, 10, 18, 0.58);
-        --ww-panel-deep: rgba(0, 4, 10, 0.70);
+        --ww-blue: #67dcff;
 
         position: relative;
         width: 100%;
@@ -79,7 +76,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         color: var(--ww-ink);
 
         background:
-          radial-gradient(circle at 50% 50%, rgba(68, 178, 255, 0.08), transparent 40%),
+          radial-gradient(circle at 50% 46%, rgba(68, 178, 255, 0.10), transparent 42%),
           #030812;
       }
 
@@ -90,8 +87,8 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        transform: scale(1.01);
-        filter: saturate(1.08) contrast(1.03);
+        transform: scale(1.006);
+        filter: saturate(1.10) contrast(1.04) brightness(1.03);
         z-index: 0;
       }
 
@@ -101,38 +98,55 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         z-index: 1;
         pointer-events: none;
         background:
-          radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.08) 48%, rgba(0, 0, 0, 0.62) 100%),
-          linear-gradient(180deg, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.28));
+          radial-gradient(ellipse at 50% 44%, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.05) 46%, rgba(0,0,0,0.60) 100%),
+          linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.30));
       }
 
       .ww-crack-glow {
         position: absolute;
-        left: 23.6%;
-        top: 11%;
-        width: 4.8%;
-        height: 75%;
+        left: 22.4%;
+        top: 10%;
+        width: 7.5%;
+        height: 77%;
         z-index: 2;
         pointer-events: none;
         background:
-          radial-gradient(ellipse at center, rgba(121, 224, 255, 0.54), rgba(57, 172, 255, 0.25) 22%, rgba(57, 172, 255, 0.00) 62%);
-        filter: blur(18px);
-        opacity: 0.72;
+          radial-gradient(ellipse at center, rgba(173, 240, 255, 0.66), rgba(74, 193, 255, 0.36) 20%, rgba(50, 156, 255, 0.12) 44%, rgba(50, 156, 255, 0.00) 72%);
+        filter: blur(20px);
+        opacity: 0.86;
         mix-blend-mode: screen;
         animation: wwCrackBreathe 5.8s ease-in-out infinite;
       }
 
+      .ww-frame-glow {
+        position: absolute;
+        left: 16%;
+        right: 14%;
+        top: 10%;
+        bottom: 12%;
+        z-index: 2;
+        pointer-events: none;
+        border-radius: 1.4rem;
+        box-shadow:
+          0 0 22px rgba(101, 214, 255, 0.17),
+          0 0 56px rgba(65, 166, 255, 0.11),
+          inset 0 0 18px rgba(135, 228, 255, 0.09);
+        opacity: 0.78;
+        mix-blend-mode: screen;
+      }
+
       @keyframes wwCrackBreathe {
         0%, 100% {
-          opacity: 0.46;
-          transform: scaleX(0.88);
+          opacity: 0.58;
+          transform: scaleX(0.92);
         }
         44% {
-          opacity: 0.88;
-          transform: scaleX(1.12);
+          opacity: 0.98;
+          transform: scaleX(1.16);
         }
         58% {
-          opacity: 0.64;
-          transform: scaleX(0.96);
+          opacity: 0.74;
+          transform: scaleX(0.98);
         }
       }
 
@@ -142,26 +156,34 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         width: min(76rem, 77vw);
         min-height: 100vh;
         margin: 0 auto;
+
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: clamp(7.8rem, 13vh, 10.8rem) clamp(1rem, 2vw, 2rem) clamp(5.2rem, 8vh, 7.2rem);
+
+        padding: clamp(6.3rem, 10.5vh, 8.5rem) clamp(1rem, 2vw, 2rem) clamp(7.2rem, 12vh, 10rem);
       }
 
       .ww-lb-panel {
         position: relative;
-        width: min(46rem, 58vw);
-        margin-left: clamp(5rem, 8.5vw, 8.4rem);
-        padding: clamp(1.15rem, 1.9vw, 1.8rem);
-        border-radius: 1.05rem;
+        width: min(45rem, 55vw);
+        margin-left: clamp(4rem, 7.2vw, 7.5rem);
+        transform: translateY(-2.4vh);
+
+        padding: clamp(1.05rem, 1.75vw, 1.55rem);
+        border-radius: 1rem;
+
         background:
-          linear-gradient(180deg, rgba(4, 13, 22, 0.52), rgba(1, 6, 12, 0.72)),
-          radial-gradient(circle at 50% 0%, rgba(120, 210, 255, 0.08), transparent 48%);
-        border: 1px solid rgba(158, 227, 255, 0.22);
+          linear-gradient(180deg, rgba(4, 13, 22, 0.48), rgba(1, 6, 12, 0.70)),
+          radial-gradient(circle at 50% 0%, rgba(120, 210, 255, 0.09), transparent 48%);
+
+        border: 1px solid rgba(158, 227, 255, 0.23);
+
         box-shadow:
-          0 0 30px rgba(80, 190, 255, 0.12),
-          0 26px 90px rgba(0, 0, 0, 0.52),
+          0 0 26px rgba(80, 190, 255, 0.15),
+          0 26px 90px rgba(0, 0, 0, 0.50),
           inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+
         backdrop-filter: blur(3px);
       }
 
@@ -172,29 +194,32 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         border-radius: inherit;
         pointer-events: none;
         background:
-          linear-gradient(90deg, transparent, rgba(130, 226, 255, 0.16), transparent),
-          linear-gradient(180deg, rgba(255,255,255,0.08), transparent 18%, transparent 82%, rgba(120,220,255,0.12));
-        opacity: 0.78;
-        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          linear-gradient(90deg, transparent, rgba(130, 226, 255, 0.17), transparent),
+          linear-gradient(180deg, rgba(255,255,255,0.09), transparent 18%, transparent 82%, rgba(120,220,255,0.13));
+        opacity: 0.85;
         padding: 1px;
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
         -webkit-mask-composite: xor;
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
         mask-composite: exclude;
       }
 
       .ww-record {
         position: relative;
-        border-radius: 1rem;
-        padding: clamp(1rem, 1.5vw, 1.35rem) clamp(1rem, 1.7vw, 1.5rem);
-        margin-bottom: 0.9rem;
+        border-radius: 0.95rem;
+        padding: clamp(0.92rem, 1.35vw, 1.2rem) clamp(1rem, 1.55vw, 1.35rem);
+        margin-bottom: 0.82rem;
         overflow: hidden;
+
         background:
-          radial-gradient(circle at 16% 0%, rgba(255, 225, 150, 0.20), transparent 34%),
-          linear-gradient(135deg, rgba(129, 104, 62, 0.62), rgba(37, 39, 44, 0.58), rgba(3, 12, 20, 0.52));
+          radial-gradient(circle at 12% 0%, rgba(255, 225, 150, 0.19), transparent 34%),
+          linear-gradient(135deg, rgba(129, 104, 62, 0.58), rgba(37, 39, 44, 0.55), rgba(3, 12, 20, 0.50));
+
         border: 1px solid rgba(255, 227, 166, 0.18);
+
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.12),
-          0 18px 42px rgba(0, 0, 0, 0.24);
+          0 16px 40px rgba(0, 0, 0, 0.25);
       }
 
       .ww-record::after {
@@ -223,25 +248,25 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       }
 
       .ww-record-title {
-        margin: 0 0 0.52rem;
-        font-size: clamp(1rem, 1.5vw, 1.35rem);
+        margin: 0 0 0.5rem;
+        font-size: clamp(0.98rem, 1.35vw, 1.22rem);
         line-height: 1.05;
         letter-spacing: 0.13em;
         text-transform: uppercase;
-        font-weight: 800;
-        color: rgba(255,255,255,0.94);
-        text-shadow: 0 2px 12px rgba(0,0,0,0.75);
+        font-weight: 900;
+        color: rgba(255,255,255,0.95);
+        text-shadow: 0 2px 12px rgba(0,0,0,0.76);
       }
 
       .ww-record-meta {
         position: relative;
         z-index: 1;
-        font-size: clamp(0.78rem, 0.88vw, 0.94rem);
+        font-size: clamp(0.74rem, 0.82vw, 0.9rem);
         letter-spacing: 0.105em;
         text-transform: uppercase;
         color: rgba(248, 240, 219, 0.92);
-        line-height: 1.72;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.70);
+        line-height: 1.66;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.72);
       }
 
       .ww-winner {
@@ -249,19 +274,19 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         color: var(--ww-gold);
         letter-spacing: 0.16em;
         text-shadow:
-          0 0 12px rgba(255, 206, 93, 0.28),
-          0 2px 10px rgba(0,0,0,0.75);
+          0 0 12px rgba(255, 206, 93, 0.34),
+          0 2px 10px rgba(0,0,0,0.78);
       }
 
       .ww-divider-centre {
         position: relative;
-        height: 1.2rem;
-        margin: 0.48rem 0 0.48rem;
+        height: 1.1rem;
+        margin: 0.42rem 0 0.45rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: rgba(232, 247, 255, 0.72);
-        font-size: 0.9rem;
+        color: rgba(232, 247, 255, 0.70);
+        font-size: 0.82rem;
         text-shadow: 0 0 12px rgba(128, 220, 255, 0.5);
       }
 
@@ -280,18 +305,21 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
 
       .ww-ranks {
         position: relative;
-        border-radius: 0.9rem;
+        border-radius: 0.86rem;
         overflow: hidden;
+
         background:
-          linear-gradient(180deg, rgba(9, 19, 31, 0.56), rgba(4, 10, 18, 0.66));
+          linear-gradient(180deg, rgba(9, 19, 31, 0.52), rgba(4, 10, 18, 0.64));
+
         border: 1px solid rgba(154, 225, 255, 0.16);
+
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.06),
+          inset 0 1px 0 rgba(255, 255, 255, 0.055),
           inset 0 -40px 90px rgba(0, 0, 0, 0.12);
       }
 
       .ww-ranks.scrollable {
-        max-height: clamp(21rem, 45vh, 29rem);
+        max-height: clamp(20rem, 43vh, 27.8rem);
         overflow-y: auto;
         overscroll-behavior: contain;
         scrollbar-width: thin;
@@ -299,13 +327,15 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       }
 
       .ww-rankrow {
-        min-height: clamp(2.35rem, 4.2vh, 3.05rem);
+        min-height: clamp(2.18rem, 3.9vh, 2.85rem);
         display: grid;
-        grid-template-columns: 3.6rem minmax(0, 1fr) minmax(9rem, 1fr);
+        grid-template-columns: 3.35rem minmax(0, 1fr) minmax(9rem, 1fr);
         gap: 1rem;
         align-items: center;
-        padding: 0.58rem 1rem;
+        padding: 0.5rem 0.95rem;
+
         border-top: 1px solid rgba(216, 238, 255, 0.10);
+
         color: var(--ww-ink);
         text-shadow: 0 2px 10px rgba(0,0,0,0.78);
       }
@@ -323,7 +353,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       .ww-rank {
         font-weight: 1000;
         color: rgba(238, 248, 255, 0.96);
-        font-size: clamp(0.88rem, 1vw, 1rem);
+        font-size: clamp(0.86rem, 0.96vw, 0.98rem);
       }
 
       .ww-name {
@@ -332,14 +362,14 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         white-space: nowrap;
         text-overflow: ellipsis;
         color: rgba(255,255,255,0.96);
-        font-weight: 650;
+        font-weight: 700;
       }
 
       .ww-solved {
         text-align: right;
         color: rgba(226, 241, 255, 0.86);
         white-space: nowrap;
-        font-size: clamp(0.76rem, 0.88vw, 0.94rem);
+        font-size: clamp(0.74rem, 0.84vw, 0.9rem);
       }
 
       .ww-rankrow.is-loaded[data-rank="2"] .ww-rank,
@@ -360,25 +390,32 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         position: fixed;
         left: clamp(1rem, 2.2vw, 2rem);
         bottom: clamp(1rem, 2.2vw, 2rem);
-        z-index: 30;
+        z-index: 40;
+
         display: inline-flex;
         align-items: center;
         justify-content: center;
+
         min-width: 9.5rem;
         min-height: 2.65rem;
         padding: 0.72rem 1.25rem;
+
         border-radius: 999px;
         border: 1px solid rgba(190, 231, 255, 0.25);
+
         background: rgba(1, 8, 16, 0.58);
         color: rgba(255,255,255,0.92);
+
         text-decoration: none;
         text-transform: uppercase;
         letter-spacing: 0.18em;
         font-weight: 900;
         font-size: 0.68rem;
+
         box-shadow:
           0 18px 45px rgba(0,0,0,0.42),
           inset 0 1px 0 rgba(255,255,255,0.08);
+
         backdrop-filter: blur(7px);
       }
 
@@ -394,109 +431,115 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       .ww-lb-foreground {
         position: absolute;
         left: 50%;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
+        bottom: -1.6%;
+        width: 84%;
+        height: 62%;
         z-index: 18;
         transform: translateX(-50%);
+
         background-image: url("${FOREGROUND_URL}");
-        background-size: cover;
+        background-size: contain;
         background-position: center bottom;
         background-repeat: no-repeat;
+
         pointer-events: none;
-        opacity: 0.92;
-        filter: saturate(1.04) contrast(1.02);
+        opacity: 0.84;
+        filter: saturate(0.98) contrast(1.02);
       }
 
-      .ww-snow-near,
-      .ww-snow-far,
-      .ww-debris {
+      .ww-snow-field,
+      .ww-ice-flecks {
         position: absolute;
         inset: -12%;
-        z-index: 20;
         pointer-events: none;
         overflow: hidden;
       }
 
-      .ww-snow-far {
+      .ww-snow-field {
+        z-index: 22;
         opacity: 0.52;
         background-image:
-          radial-gradient(circle, rgba(255,255,255,0.64) 0 1px, transparent 1.6px),
-          radial-gradient(circle, rgba(210,235,255,0.46) 0 1px, transparent 1.8px),
-          radial-gradient(circle, rgba(255,255,255,0.38) 0 1.3px, transparent 2px);
-        background-size: 92px 92px, 138px 138px, 210px 210px;
-        background-position: 0 0, 42px 70px, 110px 24px;
-        animation: wwSnowFar 28s linear infinite;
+          radial-gradient(circle, rgba(255,255,255,0.66) 0 1.1px, transparent 1.8px),
+          radial-gradient(circle, rgba(220,241,255,0.48) 0 1px, transparent 1.7px),
+          radial-gradient(circle, rgba(255,255,255,0.34) 0 1.4px, transparent 2.2px);
+        background-size: 128px 128px, 188px 188px, 286px 286px;
+        background-position: 0 0, 70px 50px, 130px 110px;
+        animation: wwSnowDrift 34s linear infinite;
       }
 
-      .ww-snow-near {
-        z-index: 22;
-        opacity: 0.72;
-        filter: blur(0.4px);
+      .ww-snow-field::before {
+        content: "";
+        position: absolute;
+        inset: -8%;
         background-image:
-          radial-gradient(ellipse, rgba(255,255,255,0.78) 0 1.8px, transparent 2.7px),
-          radial-gradient(ellipse, rgba(225,244,255,0.62) 0 2.3px, transparent 3.2px),
-          radial-gradient(ellipse, rgba(255,255,255,0.56) 0 1.6px, transparent 2.6px);
-        background-size: 180px 180px, 260px 260px, 330px 330px;
-        background-position: 20px 0, 140px 60px, 40px 150px;
-        animation: wwSnowNear 18s linear infinite;
+          radial-gradient(circle, rgba(255,255,255,0.56) 0 1.9px, transparent 3px),
+          radial-gradient(circle, rgba(225,245,255,0.48) 0 2.4px, transparent 3.6px);
+        background-size: 260px 260px, 380px 380px;
+        background-position: 30px 30px, 180px 120px;
+        filter: blur(0.6px);
+        animation: wwSnowDriftNear 26s linear infinite;
       }
 
-      .ww-debris {
+      .ww-ice-flecks {
         z-index: 23;
-        opacity: 0.46;
-        filter: blur(0.15px);
+        opacity: 0.26;
         background-image:
-          linear-gradient(115deg, transparent 0 46%, rgba(235,248,255,0.55) 47% 49%, transparent 50%),
-          linear-gradient(125deg, transparent 0 47%, rgba(120,205,255,0.42) 48% 50%, transparent 51%),
-          linear-gradient(110deg, transparent 0 48%, rgba(255,224,155,0.38) 49% 50%, transparent 51%);
-        background-size: 220px 180px, 310px 240px, 390px 320px;
-        background-position: 30px 50px, 160px 20px, 80px 170px;
-        animation: wwDebrisDrift 22s linear infinite;
+          radial-gradient(ellipse at center, rgba(130, 219, 255, 0.54) 0 1.8px, transparent 3.5px),
+          radial-gradient(ellipse at center, rgba(255, 230, 160, 0.28) 0 1.2px, transparent 2.8px),
+          radial-gradient(ellipse at center, rgba(235, 248, 255, 0.42) 0 1.6px, transparent 3.2px);
+        background-size: 240px 190px, 330px 260px, 420px 340px;
+        background-position: 40px 60px, 160px 20px, 90px 180px;
+        animation: wwFlecksDrift 31s linear infinite;
         mix-blend-mode: screen;
       }
 
-      @keyframes wwSnowFar {
+      @keyframes wwSnowDrift {
         from {
-          transform: translate3d(0, -6%, 0);
+          transform: translate3d(1%, -8%, 0);
         }
         to {
-          transform: translate3d(-5%, 10%, 0);
+          transform: translate3d(-5%, 12%, 0);
         }
       }
 
-      @keyframes wwSnowNear {
+      @keyframes wwSnowDriftNear {
         from {
-          transform: translate3d(2%, -8%, 0);
+          transform: translate3d(3%, -9%, 0);
         }
         to {
-          transform: translate3d(-10%, 14%, 0);
+          transform: translate3d(-7%, 15%, 0);
         }
       }
 
-      @keyframes wwDebrisDrift {
+      @keyframes wwFlecksDrift {
         from {
-          transform: translate3d(4%, -7%, 0) rotate(0.001deg);
+          transform: translate3d(3%, -6%, 0) rotate(0.001deg);
         }
         to {
-          transform: translate3d(-8%, 12%, 0) rotate(0.001deg);
+          transform: translate3d(-6%, 10%, 0) rotate(0.001deg);
         }
       }
 
       @media (max-width: 1050px) {
         .ww-lb-stage {
           width: 100%;
-          padding-top: 7rem;
-          padding-bottom: 5.5rem;
+          padding-top: 6.5rem;
+          padding-bottom: 7.6rem;
         }
 
         .ww-lb-panel {
-          width: min(42rem, 76vw);
-          margin-left: clamp(2rem, 7vw, 5rem);
+          width: min(42rem, 75vw);
+          margin-left: clamp(2rem, 6vw, 5rem);
+          transform: translateY(-1.6vh);
         }
 
         .ww-rankrow {
           grid-template-columns: 3rem minmax(0,1fr) minmax(7rem, 0.9fr);
+        }
+
+        .ww-lb-foreground {
+          width: 94%;
+          height: 58%;
         }
       }
 
@@ -509,48 +552,62 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           background-position: center;
         }
 
+        .ww-frame-glow {
+          left: 6%;
+          right: 6%;
+          top: 10%;
+          bottom: 14%;
+        }
+
+        .ww-crack-glow {
+          left: 10%;
+          width: 16%;
+        }
+
         .ww-lb-stage {
           min-height: 100svh;
           align-items: flex-end;
-          padding: 7.2rem 0.95rem 4.8rem;
+          padding: 7.2rem 0.95rem 5.1rem;
         }
 
         .ww-lb-panel {
           width: 100%;
           margin-left: 0;
-          padding: 0.82rem;
+          transform: translateY(-1vh);
+          padding: 0.78rem;
           border-radius: 0.9rem;
         }
 
         .ww-record {
-          padding: 0.92rem 1rem;
+          padding: 0.88rem 0.95rem;
         }
 
         .ww-record-title {
-          font-size: 0.96rem;
+          font-size: 0.94rem;
           letter-spacing: 0.07em;
         }
 
         .ww-record-meta {
-          font-size: 0.72rem;
+          font-size: 0.70rem;
           letter-spacing: 0.07em;
         }
 
         .ww-rankrow {
           grid-template-columns: 2.35rem minmax(0,1fr) minmax(5.6rem, 0.74fr);
           gap: 0.55rem;
-          padding: 0.54rem 0.68rem;
-          min-height: 2.35rem;
+          padding: 0.52rem 0.64rem;
+          min-height: 2.28rem;
         }
 
         .ww-solved {
-          font-size: 0.68rem;
+          font-size: 0.66rem;
         }
 
         .ww-lb-foreground {
-          background-size: 160% auto;
-          background-position: center bottom;
-          opacity: 0.86;
+          width: 150%;
+          height: 48%;
+          bottom: -0.8%;
+          opacity: 0.74;
         }
 
         .ww-base-link {
@@ -563,9 +620,9 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       @media (prefers-reduced-motion: reduce) {
         .ww-crack-glow,
         .ww-record::after,
-        .ww-snow-far,
-        .ww-snow-near,
-        .ww-debris {
+        .ww-snow-field,
+        .ww-snow-field::before,
+        .ww-ice-flecks {
           animation: none !important;
         }
       }
@@ -575,6 +632,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       <div class="ww-lb-bg" aria-hidden="true"></div>
       <div class="ww-lb-vignette" aria-hidden="true"></div>
       <div class="ww-crack-glow" aria-hidden="true"></div>
+      <div class="ww-frame-glow" aria-hidden="true"></div>
 
       <main class="ww-lb-stage" aria-label="WinterWord Leaderboard">
         <section class="ww-lb-panel">
@@ -600,9 +658,8 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       <a href="#" class="ww-base-link" data-nav-base>Base Station</a>
 
       <div class="ww-lb-foreground" aria-hidden="true"></div>
-      <div class="ww-snow-far" aria-hidden="true"></div>
-      <div class="ww-snow-near" aria-hidden="true"></div>
-      <div class="ww-debris" aria-hidden="true"></div>
+      <div class="ww-snow-field" aria-hidden="true"></div>
+      <div class="ww-ice-flecks" aria-hidden="true"></div>
     </div>
   `;
 
