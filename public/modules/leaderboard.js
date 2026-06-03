@@ -324,7 +324,6 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
                         </div>
 
                         <div class="ww-divider-centre">❄</div>
-                        <div class="ww-status" data-status>Loading leaderboard…</div>
 
                         <div class="ww-ranks" data-ranks-container>
                           ${fixedRows}
