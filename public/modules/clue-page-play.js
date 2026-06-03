@@ -469,17 +469,17 @@ body {
 @keyframes wwPlayIdlePulse {
   0%, 64%, 100% {
     opacity: 0;
-    transform: scale(0.88);
+    transform: translate(-50%, -50%) scale(0.88);
   }
 
   18% {
     opacity: 0.58;
-    transform: scale(1.36);
+    transform: translate(-50%, -50%) scale(1.36);
   }
 
   46% {
     opacity: 0;
-    transform: scale(1.84);
+    transform: translate(-50%, -50%) scale(1.84);
   }
 }
 
