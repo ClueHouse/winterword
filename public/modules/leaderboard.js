@@ -244,13 +244,6 @@ export function renderLeaderboardPage(app, data = {}, navigate) {
         opacity: 0.55;
       }
 
-      .ww-status {
-        margin: 0 0 0.9rem;
-        font-size: 0.9rem;
-        color: var(--ww-gold-soft);
-        min-height: 1.2em;
-      }
-
       .ww-ranks {
         border-radius: 1.05rem;
         overflow: hidden;
