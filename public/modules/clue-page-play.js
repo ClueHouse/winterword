@@ -415,7 +415,7 @@ body {
 .ww-hotspot-play::before {
   content: "";
   position: absolute;
-  inset: -34%;
+  inset: -12%;
   border-radius: 999px;
   background:
     radial-gradient(
