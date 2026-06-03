@@ -327,7 +327,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         text-overflow: ellipsis;
 
         font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(2rem, 3.55vw, 4rem);
+  font-size: clamp(1.2rem, 2vw, 2rem);
         line-height: 0.95;
         font-weight: 900;
         letter-spacing: 0.035em;
