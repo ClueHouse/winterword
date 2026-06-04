@@ -367,29 +367,33 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         scrollbar-width: thin;
         scrollbar-color: rgba(158, 227, 255, 0.34) rgba(255,255,255,0.04);
       }
-
 .ww-ranks.scrollable::after {
-  content: "⌄  ⌄  ⌄";
+  content: "▼     ▼     ▼";
 
   position: sticky;
   bottom: 0;
 
   display: block;
 
-  padding: 0.35rem 0 0.45rem;
+  padding: 0.45rem 0 0.55rem;
 
   text-align: center;
 
-  font-size: 1.15rem;
-  letter-spacing: 0.55em;
+  font-size: 1.45rem;
+  font-weight: 900;
+  letter-spacing: 0.9em;
 
-  color: rgba(255,240,196,0.72);
+  color: rgba(255,240,196,0.92);
+
+  text-shadow:
+    0 0 10px rgba(255,207,101,0.45),
+    0 2px 8px rgba(0,0,0,0.85);
 
   background:
     linear-gradient(
       180deg,
       rgba(3,10,18,0),
-      rgba(3,10,18,0.82)
+      rgba(3,10,18,0.86)
     );
 
   animation: wwScrollHintPulse 1.8s ease-in-out infinite;
