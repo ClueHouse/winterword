@@ -369,25 +369,21 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       }
 
 .ww-ranks.scrollable::after {
-  content: "scroll for more ↓";
+  content: "⌄  ⌄  ⌄";
 
   position: sticky;
   bottom: 0;
 
   display: block;
 
-  padding: 0.45rem 0;
+  padding: 0.35rem 0 0.45rem;
 
   text-align: center;
 
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: 0.68rem;
-  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.55em;
 
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-
-  color: rgba(255,240,196,0.78);
+  color: rgba(255,240,196,0.72);
 
   background:
     linear-gradient(
@@ -396,7 +392,21 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       rgba(3,10,18,0.82)
     );
 
+  animation: wwScrollHintPulse 1.8s ease-in-out infinite;
+
   pointer-events: none;
+}
+
+@keyframes wwScrollHintPulse {
+  0%, 100% {
+    opacity: 0.28;
+    transform: translateY(-1px);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: translateY(2px);
+  }
 }
 
       .ww-rankrow {
