@@ -525,8 +525,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           inset 0 1px 0 rgba(255,255,255,0.08);
       }
 
-      .ww-lb-foreground {
-        display: none;
+.ww-lb-foreground {
         position: absolute;
         left: 50%;
         bottom: -1.6%;
@@ -541,7 +540,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         background-repeat: no-repeat;
 
         pointer-events: none;
-        opacity: 0;
+        opacity: 1;
       }
 
       .ww-snow-back,
