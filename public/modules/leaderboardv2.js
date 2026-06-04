@@ -368,6 +368,37 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         scrollbar-color: rgba(158, 227, 255, 0.34) rgba(255,255,255,0.04);
       }
 
+.ww-ranks.scrollable::after {
+  content: "scroll for more ↓";
+
+  position: sticky;
+  bottom: 0;
+
+  display: block;
+
+  padding: 0.45rem 0;
+
+  text-align: center;
+
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: rgba(255,240,196,0.78);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3,10,18,0),
+      rgba(3,10,18,0.82)
+    );
+
+  pointer-events: none;
+}
+
       .ww-rankrow {
         min-height: 10.85%;
         display: grid;
