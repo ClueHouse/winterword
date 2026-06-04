@@ -67,7 +67,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           Change these first before touching individual rows.
         */
         --ww-board-left: 30.0%;
-        --ww-board-top: 30%;
+        --ww-board-top: 26%;
         --ww-board-width: 40.8%;
         --ww-board-height: 57.2%;
 
