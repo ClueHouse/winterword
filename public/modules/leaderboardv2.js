@@ -595,7 +595,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         background-size: 620px 620px, 880px 880px;
         background-position: 80px 140px, 500px 60px;
         filter: blur(4.4px);
-        animation: wwSnowNear 24s linear infinite;
+        animation: wwSnowNear 18s linear infinite;
       }
 
       .ww-ice-flecks {
