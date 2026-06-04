@@ -485,48 +485,53 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         overflow: hidden;
       }
 
-      .ww-base-link {
-        position: fixed;
-        left: clamp(1rem, 2.2vw, 2rem);
-        bottom: clamp(1rem, 2.2vw, 2rem);
-        z-index: 40;
+.ww-base-link {
+  position: fixed;
+  left: clamp(1rem, 2.2vw, 2rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
 
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-        min-width: 9.5rem;
-        min-height: 2.65rem;
-        padding: 0.72rem 1.25rem;
+  min-width: 10.8rem;
+  min-height: 3rem;
+  padding: 0.82rem 1.45rem;
 
-        border-radius: 999px;
-        border: 1px solid rgba(190, 231, 255, 0.25);
+  border-radius: 999px;
+  border: 1px solid rgba(255,222,155,0.58);
 
-        background: rgba(1, 8, 16, 0.58);
-        color: rgba(255,255,255,0.92);
+  background:
+    linear-gradient(90deg, rgba(255,220,150,0.08), rgba(255,220,150,0.22), rgba(255,220,150,0.08)),
+    linear-gradient(180deg, rgba(21,32,43,0.84), rgba(4,10,18,0.92));
 
-        text-decoration: none;
-        text-transform: uppercase;
-        letter-spacing: 0.18em;
-        font-weight: 900;
-        font-size: 0.68rem;
-        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: rgba(255,240,196,0.95);
 
-        box-shadow:
-          0 18px 45px rgba(0,0,0,0.42),
-          inset 0 1px 0 rgba(255,255,255,0.08);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 950;
+  font-size: 0.72rem;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 
-        backdrop-filter: blur(7px);
-      }
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.16),
+    0 0 24px rgba(255,207,101,0.12),
+    0 18px 45px rgba(0,0,0,0.42);
 
-      .ww-base-link:hover {
-        color: #fff;
-        border-color: rgba(190, 231, 255, 0.45);
-        box-shadow:
-          0 18px 45px rgba(0,0,0,0.42),
-          0 0 28px rgba(80, 190, 255, 0.16),
-          inset 0 1px 0 rgba(255,255,255,0.08);
-      }
+  backdrop-filter: blur(8px);
+}
+
+.ww-base-link:hover {
+  color: #fff5cf;
+  border-color: rgba(255,222,155,0.82);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.20),
+    0 0 34px rgba(255,207,101,0.22),
+    0 18px 45px rgba(0,0,0,0.42);
+}
 
       .ww-lb-foreground {
   position: absolute;
