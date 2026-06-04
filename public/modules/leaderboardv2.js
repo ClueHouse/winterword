@@ -571,7 +571,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         background-size: 170px 170px, 250px 250px;
         background-position: 0 0, 80px 50px;
         filter: blur(0.4px);
-        animation: wwSnowBack 42s linear infinite;
+        animation: wwSnowBack 32s linear infinite;
       }
 
       .ww-snow-mid {
