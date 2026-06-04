@@ -67,7 +67,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           Change these first before touching individual rows.
         */
         --ww-board-left: 30.0%;
-        --ww-board-top: 25%;
+        --ww-board-top: 28%;
         --ww-board-width: 40.8%;
         --ww-board-height: 57.2%;
 
@@ -242,6 +242,9 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         column-gap: clamp(0.55rem, 1vw, 1rem);
         row-gap: 0.2rem;
 
+        width: 92%;
+        margin-left: auto;
+        margin-right: auto;
         margin-bottom: clamp(0.78rem, 1.2vh, 1rem);
         padding: clamp(0.62rem, 1vw, 0.95rem) clamp(0.75rem, 1.35vw, 1.25rem);
 
@@ -327,7 +330,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         text-overflow: ellipsis;
 
         font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.2rem, 2vw, 2rem);
+        font-size: clamp(1rem, 1.7vw, 1.8rem);
         line-height: 0.95;
         font-weight: 900;
         letter-spacing: 0.035em;
@@ -409,7 +412,18 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       .ww-rankrow[data-rank="2"],
       .ww-rankrow.is-second {
         background:
-          linear-gradient(90deg, rgba(255, 223, 148, 0.06), rgba(255, 223, 148, 0.015), transparent 70%);
+          linear-gradient(90deg, rgba(216, 230, 242, 0.12), rgba(216, 230, 242, 0.035), transparent 70%);
+      }
+
+      .ww-rankrow[data-rank="2"] .ww-rank,
+      .ww-rankrow[data-rank="2"] .ww-name,
+      .ww-rankrow.is-second .ww-rank,
+      .ww-rankrow.is-second .ww-name {
+        color: rgba(232, 242, 252, 0.98);
+        font-weight: 900;
+        text-shadow:
+          0 0 12px rgba(190, 225, 255, 0.12),
+          0 2px 10px rgba(0,0,0,0.82);
       }
 
       .ww-rank {
