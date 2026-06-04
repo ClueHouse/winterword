@@ -607,7 +607,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           radial-gradient(ellipse at center, rgba(235, 248, 255, 0.30) 0 1.8px, transparent 3.8px);
         background-size: 280px 230px, 390px 300px, 520px 420px;
         background-position: 40px 60px, 180px 20px, 90px 190px;
-        animation: wwFlecksDrift 36s linear infinite;
+        animation: wwFlecksDrift 26s linear infinite;
         mix-blend-mode: screen;
       }
 
