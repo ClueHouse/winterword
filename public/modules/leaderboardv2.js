@@ -258,52 +258,10 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         border: 1px solid rgba(255, 224, 154, 0.16);
 
         box-shadow:
-          inset 0 1px 0 rgba(255,255,255,0.09),
-          0 0 20px rgba(255, 207, 101, 0.08),
-          0 14px 34px rgba(0,0,0,0.22);
-
-        animation: wwWinnerPulse 14s ease-in-out infinite;
-      }
-
-      @keyframes wwWinnerPulse {
-        0%, 100% {
-          box-shadow:
-            inset 0 1px 0 rgba(255,255,255,0.09),
-            0 0 20px rgba(255,207,101,0.08),
-            0 14px 34px rgba(0,0,0,0.22);
-        }
-
-        50% {
-          box-shadow:
-            inset 0 1px 0 rgba(255,255,255,0.09),
-            0 0 36px rgba(255,207,101,0.18),
-            0 14px 34px rgba(0,0,0,0.22);
-        }
-      }
-
-      .ww-first-place::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background:
-          linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.055) 42%, transparent 58%);
-        transform: translateX(-110%);
-        animation: wwHeroSheen 8.5s ease-in-out infinite;
-      }
-
-      @keyframes wwHeroSheen {
-        0%, 58%, 100% {
-          transform: translateX(-120%);
-          opacity: 0;
-        }
-        70% {
-          opacity: 0.7;
-        }
-        86% {
-          transform: translateX(120%);
-          opacity: 0;
-        }
+          inset 0 1px 0 rgba(255,255,255,0.12),
+          0 0 30px rgba(255,207,101,0.18),
+          0 0 58px rgba(255,207,101,0.08),
+          0 14px 34px rgba(0,0,0,0.24);
       }
 
       .ww-first-crown {
@@ -317,7 +275,8 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         color: var(--ww-gold);
 
         text-shadow:
-          0 0 16px rgba(255, 213, 105, 0.28),
+          0 0 18px rgba(255,213,105,0.38),
+          0 0 34px rgba(255,207,101,0.16),
           0 4px 12px rgba(0,0,0,0.78);
       }
 
@@ -333,7 +292,8 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         color: var(--ww-gold);
 
         text-shadow:
-          0 0 16px rgba(255, 213, 105, 0.25),
+          0 0 18px rgba(255,213,105,0.36),
+          0 0 34px rgba(255,207,101,0.15),
           0 4px 12px rgba(0,0,0,0.78);
       }
 
@@ -356,10 +316,11 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         text-transform: uppercase;
 
         text-shadow:
-          0 0 18px rgba(255, 213, 105, 0.26),
+          0 0 20px rgba(255,213,105,0.40),
+          0 0 38px rgba(255,207,101,0.18),
           0 4px 12px rgba(0,0,0,0.82);
       }
-.ww-first-time {
+      .ww-first-time {
   grid-area: time;
   position: relative;
   z-index: 1;
@@ -377,7 +338,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
     0 2px 10px rgba(0,0,0,0.76);
 }
 
-.ww-first-time span {
+      .ww-first-time span {
   color: rgba(255,240,196,0.95);
   font-weight: 800;
 }
@@ -430,17 +391,18 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       .ww-rankrow[data-rank="2"],
       .ww-rankrow.is-second {
         background:
-          linear-gradient(90deg, rgba(216, 230, 242, 0.12), rgba(216, 230, 242, 0.035), transparent 70%);
+          linear-gradient(90deg, rgba(225, 238, 252, 0.18), rgba(216, 230, 242, 0.06), transparent 72%);
       }
 
       .ww-rankrow[data-rank="2"] .ww-rank,
       .ww-rankrow[data-rank="2"] .ww-name,
       .ww-rankrow.is-second .ww-rank,
       .ww-rankrow.is-second .ww-name {
-        color: #dfe8f3;
-        font-weight: 900;
+        color: #f2f7ff;
+        font-weight: 950;
         text-shadow:
-          0 0 18px rgba(220,235,255,0.28),
+          0 0 18px rgba(220,235,255,0.34),
+          0 0 34px rgba(170,205,240,0.18),
           0 2px 10px rgba(0,0,0,0.82);
       }
 
@@ -525,7 +487,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           inset 0 1px 0 rgba(255,255,255,0.08);
       }
 
-.ww-lb-foreground {
+      .ww-lb-foreground {
   position: absolute;
   left: 50%;
   bottom: -6%;
@@ -571,7 +533,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         background-size: 170px 170px, 250px 250px;
         background-position: 0 0, 80px 50px;
         filter: blur(0.4px);
-        animation: wwSnowBack 32s linear infinite;
+        animation: wwSnowBack 38s linear infinite;
       }
 
       .ww-snow-mid {
@@ -583,7 +545,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         background-size: 330px 330px, 460px 460px;
         background-position: 40px 20px, 210px 120px;
         filter: blur(1.35px);
-        animation: wwSnowMid 24s linear infinite;
+        animation: wwSnowMid 29s linear infinite;
       }
 
       .ww-snow-near {
@@ -595,7 +557,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         background-size: 620px 620px, 880px 880px;
         background-position: 80px 140px, 500px 60px;
         filter: blur(4.4px);
-        animation: wwSnowNear 18s linear infinite;
+        animation: wwSnowNear 23s linear infinite;
       }
 
       .ww-ice-flecks {
@@ -607,7 +569,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           radial-gradient(ellipse at center, rgba(235, 248, 255, 0.30) 0 1.8px, transparent 3.8px);
         background-size: 280px 230px, 390px 300px, 520px 420px;
         background-position: 40px 60px, 180px 20px, 90px 190px;
-        animation: wwFlecksDrift 26s linear infinite;
+        animation: wwFlecksDrift 32s linear infinite;
         mix-blend-mode: screen;
       }
 
@@ -738,8 +700,6 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
 
       @media (prefers-reduced-motion: reduce) {
         .ww-crack-glow,
-        .ww-first-place,
-        .ww-first-place::after,
         .ww-snow-back,
         .ww-snow-mid,
         .ww-snow-near,
