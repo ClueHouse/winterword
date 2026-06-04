@@ -528,13 +528,13 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
 .ww-lb-foreground {
   position: absolute;
   left: 50%;
-  bottom: -5%;
+  bottom: -6%;
 
-  width: 115%;
-  height: 88%;
+  width: 125%;
+  height: 95%;
 
   z-index: 18;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scaleX(1.12);
 
   background-image: url("${FOREGROUND_URL}");
   background-size: contain;
