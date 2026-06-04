@@ -526,30 +526,31 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       }
 
 .ww-lb-foreground {
-        position: absolute;
-        left: 50%;
-        bottom: -3.5%;
+  position: absolute;
+  left: 50%;
+  bottom: -5%;
 
-        width: 98%;
-        height: 72%;
+  width: 115%;
+  height: 88%;
 
-        z-index: 18;
-        transform: translateX(-50%);
+  z-index: 18;
+  transform: translateX(-50%);
 
-        background-image: url("${FOREGROUND_URL}");
-        background-size: contain;
-        background-position: center bottom;
-        background-repeat: no-repeat;
+  background-image: url("${FOREGROUND_URL}");
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
 
-        pointer-events: none;
-        opacity: 0.72;
+  pointer-events: none;
 
-        filter:
-          saturate(0.45)
-          brightness(0.78)
-          contrast(0.92)
-          blur(0.4px);
-      }
+  opacity: 0.82;
+
+  filter:
+    saturate(0.62)
+    brightness(0.84)
+    contrast(0.95)
+    blur(0.6px);
+}
 
       .ww-snow-back,
       .ww-snow-mid,
