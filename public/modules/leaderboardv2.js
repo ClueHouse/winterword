@@ -583,7 +583,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         background-size: 330px 330px, 460px 460px;
         background-position: 40px 20px, 210px 120px;
         filter: blur(1.35px);
-        animation: wwSnowMid 31s linear infinite;
+        animation: wwSnowMid 24s linear infinite;
       }
 
       .ww-snow-near {
