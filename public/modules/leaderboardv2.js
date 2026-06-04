@@ -500,32 +500,47 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
   align-items: center;
   justify-content: center;
 
-  min-width: 10.8rem;
-  min-height: 3rem;
-  padding: 0.82rem 1.45rem;
+  min-width: 12rem;
+  min-height: 3.35rem;
+  padding: 0.85rem 1.8rem;
 
   border-radius: 999px;
-  border: 1px solid rgba(255,222,155,0.58);
+  border: 1px solid rgba(255,225,160,0.86);
 
   background:
-    linear-gradient(90deg, rgba(255,220,150,0.08), rgba(255,220,150,0.22), rgba(255,220,150,0.08)),
-    linear-gradient(180deg, rgba(21,32,43,0.84), rgba(4,10,18,0.92));
+    radial-gradient(circle at 50% 0%, rgba(255,236,190,0.38), transparent 42%),
+    linear-gradient(
+      180deg,
+      rgba(118,80,30,0.98),
+      rgba(42,27,12,0.98) 55%,
+      rgba(16,11,7,0.98)
+    );
 
-  color: rgba(255,240,196,0.95);
+  color: rgba(255,246,218,0.98);
 
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   font-weight: 950;
-  font-size: 0.72rem;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.82rem;
+  font-family: Georgia, "Times New Roman", serif;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.16),
-    0 0 24px rgba(255,207,101,0.12),
-    0 18px 45px rgba(0,0,0,0.42);
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    inset 0 -10px 18px rgba(0,0,0,0.32),
+    0 0 22px rgba(255,207,101,0.22),
+    0 18px 45px rgba(0,0,0,0.44);
+
+  text-shadow:
+    0 0 10px rgba(255,226,160,0.48),
+    0 2px 8px rgba(0,0,0,0.9);
 
   backdrop-filter: blur(8px);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
 }
 
 .ww-base-link:hover {
