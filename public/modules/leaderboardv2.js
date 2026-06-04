@@ -67,7 +67,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           Change these first before touching individual rows.
         */
         --ww-board-left: 30.0%;
-        --ww-board-top: 28%;
+        --ww-board-top: 30%;
         --ww-board-width: 40.8%;
         --ww-board-height: 57.2%;
 
@@ -242,7 +242,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
         column-gap: clamp(0.55rem, 1vw, 1rem);
         row-gap: 0.2rem;
 
-        width: 92%;
+        width: 86%;
         margin-left: auto;
         margin-right: auto;
         margin-bottom: clamp(0.78rem, 1.2vh, 1rem);
@@ -261,6 +261,24 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           inset 0 1px 0 rgba(255,255,255,0.09),
           0 0 20px rgba(255, 207, 101, 0.08),
           0 14px 34px rgba(0,0,0,0.22);
+
+        animation: wwWinnerPulse 14s ease-in-out infinite;
+      }
+
+      @keyframes wwWinnerPulse {
+        0%, 100% {
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.09),
+            0 0 20px rgba(255,207,101,0.08),
+            0 14px 34px rgba(0,0,0,0.22);
+        }
+
+        50% {
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.09),
+            0 0 36px rgba(255,207,101,0.18),
+            0 14px 34px rgba(0,0,0,0.22);
+        }
       }
 
       .ww-first-place::after {
@@ -419,10 +437,10 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
       .ww-rankrow[data-rank="2"] .ww-name,
       .ww-rankrow.is-second .ww-rank,
       .ww-rankrow.is-second .ww-name {
-        color: rgba(232, 242, 252, 0.98);
+        color: #dfe8f3;
         font-weight: 900;
         text-shadow:
-          0 0 12px rgba(190, 225, 255, 0.12),
+          0 0 18px rgba(220,235,255,0.28),
           0 2px 10px rgba(0,0,0,0.82);
       }
 
@@ -639,7 +657,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
           min-height: 100svh;
 
           --ww-board-left: 5%;
-          --ww-board-top: 28%;
+          --ww-board-top: 30%;
           --ww-board-width: 90%;
           --ww-board-height: 54%;
         }
@@ -712,6 +730,7 @@ export function renderLeaderboardV2Page(app, data = {}, navigate) {
 
       @media (prefers-reduced-motion: reduce) {
         .ww-crack-glow,
+        .ww-first-place,
         .ww-first-place::after,
         .ww-snow-back,
         .ww-snow-mid,
